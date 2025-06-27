@@ -1,16 +1,62 @@
+import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, MapPin, Users, Award, Mail, Phone, MapPin as MapPinIcon, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, Users, Award, Mail, Phone, MapPin as MapPinIcon, ExternalLink, CheckCircle, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Summit = () => {
+  const [showNewsletter, setShowNewsletter] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes('@')) {
+      setSubmitStatus('error');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/newsletter-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setEmail('');
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+          setShowNewsletter(false);
+          setSubmitStatus('idle');
+        }, 3000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white" id="main-content" role="main">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-50 to-white py-16">
+      <section className="bg-gradient-to-br from-gray-50 to-white py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
             SLxAI <span className="text-electric-blue">Summit</span>
@@ -20,8 +66,13 @@ const Summit = () => {
             sign language AI technologies, ethics, and accessibility.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-electric-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold">
-              Subscribe to Newsletter
+            <Button 
+              onClick={() => setShowNewsletter(!showNewsletter)}
+              size="lg" 
+              className="bg-electric-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold"
+            >
+              <Mail className="w-5 h-5 mr-2" />
+              {showNewsletter ? 'Cancel' : 'Subscribe to Newsletter'}
             </Button>
             <Link to="/sponsorship">
               <Button size="lg" className="bg-electric-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold">
@@ -29,6 +80,61 @@ const Summit = () => {
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Newsletter Subscription Section */}
+      <section 
+        className={`w-full bg-gradient-to-r from-electric-blue to-blue-600 text-white overflow-hidden transition-all duration-500 ease-in-out mb-6 ${
+          showNewsletter ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <h3 className="text-2xl font-bold mb-2 text-center">
+            Stay Updated with SLxAI
+          </h3>
+          <p className="text-blue-100 text-lg text-center mb-6">
+            Get the latest news about our summit, benchmarks, and initiatives in sign language AI.
+          </p>
+          
+          <form onSubmit={handleNewsletterSubmit} className="max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white/10 border-white/20 text-white placeholder:text-blue-200 focus:bg-white/20"
+                  required
+                  disabled={isSubmitting}
+                />
+              </div>
+              
+              <Button 
+                type="submit" 
+                className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 font-semibold whitespace-nowrap"
+                disabled={isSubmitting || !email}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit'}
+              </Button>
+            </div>
+
+            {/* Status Messages */}
+            {submitStatus === 'success' && (
+              <div className="flex items-center justify-center gap-2 text-green-300 text-sm mt-3">
+                <CheckCircle className="w-4 h-4" />
+                <span>Successfully subscribed! Thank you.</span>
+              </div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <div className="flex items-center justify-center gap-2 text-red-300 text-sm mt-3">
+                <XCircle className="w-4 h-4" />
+                <span>Something went wrong. Please try again.</span>
+              </div>
+            )}
+          </form>
         </div>
       </section>
 
