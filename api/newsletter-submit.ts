@@ -7,7 +7,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const body = req.body;
 
+  console.log('Environment:', process.env.TEST);
   console.log('Received form data:', body);
 
-  res.status(200).json({ success: true });
+  res.status(200).json({ success: process.env.TEST });
 }
