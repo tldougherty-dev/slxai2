@@ -25,7 +25,7 @@ const Navigation = () => {
   return (
     <>
       <a href="#main-content" className="sr-only focus:not-sr-only absolute left-2 top-2 z-50 bg-white text-electric-blue px-4 py-2 rounded shadow-lg">Skip to main content</a>
-      <nav className="bg-white shadow-lg sticky top-0 z-50" role="navigation" aria-label="Main navigation">
+      <nav className="bg-electric-blue shadow-lg sticky top-0 z-50" role="navigation" aria-label="Main navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
@@ -43,10 +43,10 @@ const Navigation = () => {
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-electric-blue ${
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-white ${
                     isActiveRoute(item.path)
-                      ? 'text-electric-blue border-b-2 border-electric-blue pb-1'
-                      : 'text-gray-700'
+                      ? 'text-white border-b-2 border-white pb-1'
+                      : 'text-blue-100'
                   }`}
                 >
                   {item.name}
@@ -58,7 +58,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="lg:hidden"
+              className="lg:hidden text-white hover:bg-blue-600 hover:text-white"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -67,16 +67,16 @@ const Navigation = () => {
 
           {/* Mobile Navigation */}
           {isOpen && (
-            <div className="lg:hidden bg-white border-t border-gray-200">
+            <div className="lg:hidden bg-blue-600 border-t border-blue-500">
               <div className="px-2 pt-2 pb-3 space-y-1">
                 {navItems.map((item) => (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`block px-3 py-2 text-base font-medium transition-colors duration-200 hover:text-electric-blue hover:bg-gray-50 rounded-md ${
+                    className={`block px-3 py-2 text-base font-medium transition-colors duration-200 hover:text-white hover:bg-blue-700 rounded-md ${
                       isActiveRoute(item.path)
-                        ? 'text-electric-blue bg-blue-50'
-                        : 'text-gray-700'
+                        ? 'text-white bg-blue-700'
+                        : 'text-blue-100'
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
