@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+
+POST {{baseUrl}}/api/newsletter-submit
+Content-Type: application/json
+Accept: text/plain
+
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful code interpreter."
+    },
+    {
+      "role": "user",
+      "content": "Convert this JavaScript snippet into Python:\n\n```js\nconsole.log('Hello, world!');\n```"
+    }
+  ]
+}
