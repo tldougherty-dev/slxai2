@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white" id="main-content" role="main">
+    <div className="min-h-screen" id="main-content" role="main">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-50 to-white py-6 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-600 to-electric-blue py-6 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="mb-8 animate-fade-in">
@@ -20,19 +20,19 @@ const Index = () => {
                 className="h-48 w-auto mx-auto mb-6"
               />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
               <span className="block">Building the future of</span>
-              <span className="block text-electric-blue">sign language and AI</span>
-              <span className="block text-gray-900 text-6xl md:text-7xl font-extrabold mt-2">together.</span>
+              <span className="block text-blue-200">sign language and AI</span>
+              <span className="block text-white text-6xl md:text-7xl font-extrabold mt-2">together.</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
+            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
               SLxAI is a global cooperative nonprofit creating standards, community, and advocacy around sign language AI technologies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
               <Link to="/membership">
                 <Button 
                   size="lg" 
-                  className="bg-electric-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   Become a Member
                 </Button>
@@ -40,7 +40,7 @@ const Index = () => {
               <Link to="/about">
                 <Button 
                   size="lg" 
-                  className="bg-electric-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   Learn More
                 </Button>
@@ -122,7 +122,7 @@ const Index = () => {
       </section>
 
       {/* Membership CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-electric-blue to-blue-600">
+      <section className="py-20 bg-gradient-to-r from-blue-700 to-electric-blue">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
             Subscribe to Learn More of Our Latest Progress

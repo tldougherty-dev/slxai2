@@ -33,16 +33,16 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white" id="main-content" role="main">
+    <div className="min-h-screen" id="main-content" role="main">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-50 to-white py-16">
+      <section className="bg-gradient-to-br from-blue-600 to-electric-blue py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            About <span className="text-electric-blue">SLxAI</span>
+          <h1 className="text-5xl font-bold text-white mb-6">
+            About <span className="text-blue-200">SLxAI</span>
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed">
+          <p className="text-xl text-blue-100 leading-relaxed">
             We are a global cooperative nonprofit uniting companies, researchers, and Deaf-led innovators 
             to shape the future of sign language AI technologies through ethical standards and community collaboration.
           </p>
