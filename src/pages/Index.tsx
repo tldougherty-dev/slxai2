@@ -1,200 +1,417 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
-import { Calendar, Users, Award, BookOpen, ArrowUp } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText } from 'lucide-react';
 
 const Index = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      // No header offset needed since there's no navigation bar
+      const elementPosition = element.offsetTop;
+      
+      // Scroll to the element
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+      
+      // Reset scroll behavior after animation
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = 'auto';
+      }, 2000);
+    }
+  };
+
   return (
-    <div className="min-h-screen" id="main-content" role="main">
+    <div className="min-h-screen bg-white" id="main-content" role="main">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 to-electric-blue py-6 overflow-hidden">
+      <section id="home" className="relative bg-gradient-to-br from-gray-50 to-white py-6 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="mb-8 animate-fade-in">
               <img 
                 src="/lovable-uploads/0941509f-be4a-49e7-b472-735a4942f89a.png" 
                 alt="SLxAI Logo" 
-                className="h-48 w-auto mx-auto mb-6"
+                className="h-40 w-auto mx-auto mb-6"
               />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-              <span className="block">Building the future of</span>
-              <span className="block text-blue-200">sign language and AI</span>
-              <span className="block text-white text-6xl md:text-7xl font-extrabold mt-2">together.</span>
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
+              <span className="block mb-2">Uniting industry leaders to</span>
+              <span className="block text-electric-blue mb-2">establish the future of</span>
+              <span className="block text-gray-900 text-6xl md:text-7xl font-extrabold">sign language x AI.</span>
             </h1>
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
-              SLxAI is a global cooperative nonprofit creating standards, community, and advocacy around sign language AI technologies.
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
+              Join us at the inaugural SLxAI Summit where we'll bring together the world's leading companies 
+              to form a cooperative nonprofit that will shape the future of sign language x AI technologies.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-              <Link to="/membership">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Become a Member
-                </Button>
-              </Link>
-              <Link to="/about">
-                <Button 
-                  size="lg" 
-                  className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  Learn More
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Key Features Section */}
-      <section className="py-1 bg-white">
+      {/* About Section */}
+      <section id="about" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Summit 2026 */}
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-electric-blue flex flex-col">
-              <CardHeader className="text-center">
-                <Calendar className="h-12 w-12 text-electric-blue mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="flex justify-center mb-2">
-                  <img src="/slxai-footer-logo.png" alt="SLxAI Logo" className="h-8 w-auto" />
-                </div>
-                <CardTitle className="text-2xl font-bold text-gray-900">Summit</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center flex-grow flex flex-col">
-                <p className="text-gray-600 mb-6">
-                  Join researchers, companies, and Deaf-led innovators for our inaugural summit on sign language AI technologies.
-                </p>
-                <p className="text-sm text-gray-500 mb-4">Date & Location TBD</p>
-                <div className="mt-auto">
-                  <Link to="/summit">
-                    <Button className="bg-electric-blue hover:bg-blue-600 text-white w-full">
-                      RSVP Now
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Benchmarks */}
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-electric-blue flex flex-col">
-              <CardHeader className="text-center">
-                <Award className="h-12 w-12 text-electric-blue mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                <CardTitle className="text-2xl font-bold text-gray-900">Benchmarks Launching Soon</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center flex-grow flex flex-col">
-                <p className="text-gray-600 mb-6">
-                  Industry-standard grading system for AI avatars and Sign Language Recognition tools, ensuring quality and accessibility.
-                </p>
-                <div className="mt-auto">
-                  <Link to="/benchmarks">
-                    <Button className="bg-electric-blue hover:bg-blue-600 text-white w-full">
-                      Learn About Standards
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Education */}
-            <Card className="group hover:shadow-xl transition-all duration-300 border-l-4 border-l-electric-blue flex flex-col">
-              <CardHeader className="text-center">
-                <BookOpen className="h-12 w-12 text-electric-blue mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                <CardTitle className="text-2xl font-bold text-gray-900">Educational Videos</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center flex-grow flex flex-col">
-                <p className="text-gray-600 mb-6">
-                  AI literacy content in multiple sign languages: ASL, LSF, BSL, and more, created by and for Deaf communities.
-                </p>
-                <div className="mt-auto">
-                  <Link to="/education">
-                    <Button className="bg-electric-blue hover:bg-blue-600 text-white w-full">
-                      Explore Content
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Membership CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-700 to-electric-blue">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Subscribe to Learn More of Our Latest Progress
-          </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Stay updated on our initiatives, research, and developments in ethical sign language AI technologies.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-white text-electric-blue hover:bg-gray-100 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Subscribe to Newsletter
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-white text-white hover:bg-white hover:text-electric-blue px-8 py-3 text-lg font-semibold transition-all duration-300"
-            >
-              View Member Benefits
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12" role="contentinfo" aria-label="Footer">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-2">
+              About
               <img 
                 src="/slxai-footer-logo.png" 
-                alt="SLxAI: Sign Language AI Global Cooperative Logo" 
-                className="h-8 w-auto mb-4"
+                alt="SLxAI Logo" 
+                className="h-8 w-auto inline-block align-middle"
               />
-              <div className="h-8 mb-4 text-white font-bold text-lg" style={{display: 'none'}}>
-                SLxAI
-              </div>
-              <p className="text-gray-400">
-                Building the future of sign language AI through global cooperation and ethical standards.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Organization</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link to="/membership" className="hover:text-white transition-colors">Membership</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Programs</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="/summit" className="hover:text-white transition-colors">SLxAI Summit</Link></li>
-                <li><Link to="/benchmarks" className="hover:text-white transition-colors">Benchmarks</Link></li>
-                <li><Link to="/education" className="hover:text-white transition-colors">Education</Link></li>
-                <li><Link to="/policy" className="hover:text-white transition-colors">Policy</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Connect</h3>
-              <p className="text-gray-400 mb-2">Stay updated on our latest initiatives</p>
-              <Button className="bg-electric-blue hover:bg-blue-600 text-white">
-                Subscribe to Newsletter
-              </Button>
-            </div>
+            </h2>
+            <p className="text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
+              We are bringing together the world's leading sign language x AI companies to establish 
+              a cooperative nonprofit where each company will have a board seat, ensuring collaborative 
+              decision-making and ethical development of sign language x AI technologies.
+            </p>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 SLxAI. All rights reserved. | A Global Cooperative Nonprofit</p>
+
+          {/* Mission, Vision, Goals */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <Card className="border-l-4 border-l-electric-blue">
+              <CardHeader className="text-center">
+                <Target className="h-12 w-12 text-electric-blue mx-auto mb-4" aria-hidden="true" />
+                <CardTitle className="text-2xl font-bold text-gray-900">Mission</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">
+                  To unite industry leaders through a cooperative nonprofit structure, establishing 
+                  ethical standards and driving innovation in sign language x AI technologies through 
+                  equal representation and collaborative decision-making.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-l-electric-blue">
+              <CardHeader className="text-center">
+                <Eye className="h-12 w-12 text-electric-blue mx-auto mb-4" aria-hidden="true" />
+                <CardTitle className="text-2xl font-bold text-gray-900">Vision</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">
+                  A world where sign language x AI technologies are developed through industry-wide 
+                  collaboration, with each company having an equal voice in shaping the future 
+                  of accessible technology.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-l-4 border-l-electric-blue">
+              <CardHeader className="text-center">
+                <ArrowUp className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <CardTitle className="text-2xl font-bold text-gray-900">Goals</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-gray-600 space-y-2">
+                  <li>• Establish cooperative nonprofit structure</li>
+                  <li>• Create industry-wide ethical standards</li>
+                  <li>• Foster collaborative innovation</li>
+                  <li>• Ensure equal company representation</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Summit Focus Section */}
+          <div className="text-center mb-12">
+          </div>
+          
+          {/* The grid of cards is now empty, so remove the entire grid div. */}
+
+          {/* Cooperative Structure Details */}
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Cooperative Structure</h3>
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+                <Users className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Equal Representation</h4>
+                <p className="text-gray-600 text-sm">
+                  Each participating company will have one board seat, ensuring equal voice in decisions.
+                </p>
+              </Card>
+
+              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+                <Target className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Collaborative Decision-Making</h4>
+                <p className="text-gray-600 text-sm">
+                  All major decisions will be made through consensus among board members.
+                </p>
+              </Card>
+
+              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+                <Eye className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Transparent Governance</h4>
+                <p className="text-gray-600 text-sm">
+                  Open communication and transparent processes for all cooperative activities.
+                </p>
+              </Card>
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Summit Section */}
+      <section id="summit" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-6xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-2">
+              <img 
+                src="/slxai-footer-logo.png" 
+                alt="SLxAI Logo" 
+                className="h-14 w-auto inline-block align-middle"
+              />
+              Summit 2026
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              The historic gathering where industry leaders will establish the cooperative nonprofit 
+              that will shape the future of sign language x AI technologies.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">What to Expect</h3>
+              <ul className="space-y-4 text-gray-600">
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Formal establishment of the cooperative nonprofit structure</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Creation of bylaws and governance framework</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Development of standardized benchmarks for avatar quality and SLR performance grading</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Interactive workshops on technical standards and best practices</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Roundtable discussions on accessibility, ethics, and industry challenges</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Networking and collaboration opportunities</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Technology demonstrations and showcase sessions</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Panel discussions with industry experts and advocates</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-6 w-6 text-electric-blue mr-3 mt-0.5 flex-shrink-0" />
+                  <span>Working groups to establish technical specifications and interoperability standards</span>
+                </li>
+              </ul>
+            </div>
+
+            <Card className="p-8 bg-gradient-to-br from-electric-blue to-blue-600 text-white">
+              <CardHeader className="text-center">
+                <Calendar className="h-16 w-16 text-white mx-auto mb-4" />
+                <CardTitle className="text-2xl">Summit Details</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold mb-2">Date</h4>
+                    <p className="text-blue-100">To be announced</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Location</h4>
+                    <p className="text-blue-100">To be announced</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Format</h4>
+                    <p className="text-blue-100">In-person only</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Capacity</h4>
+                    <p className="text-blue-100">Open to professionals working in the field of sign language and AI technologies</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Membership Section */}
+      <section id="membership" className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Become a Founding Member</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Join the inaugural group of companies that will establish the SLxAI cooperative nonprofit. 
+              Each founding member receives one board seat, ensuring equal representation in shaping the future of sign language x AI technologies.
+            </p>
+          </div>
+
+          {/* Founding Member Benefits */}
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Founding Member Benefits</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+              As a founding member, your company will have a unique opportunity to shape the cooperative's structure and future direction.
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <Star className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Founding Status</h4>
+                <p className="text-gray-600">
+                  Be recognized as one of the original companies that established the cooperative.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <Award className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Board Representation</h4>
+                <p className="text-gray-600">
+                  Guaranteed board seat with equal voting rights on all cooperative decisions.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <Globe className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Industry Leadership</h4>
+                <p className="text-gray-600">
+                  Help establish industry standards and ethical guidelines for sign language x AI.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <BookOpen className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Benchmarking & Standardization</h4>
+                <p className="text-gray-600">
+                  Play a key role in establishing benchmarks and standards for avatar and sign language recognition (SLR) technologies, helping to guide the industry toward greater interoperability and quality.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <ArrowUp className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Early Access & Influence</h4>
+                <p className="text-gray-600">
+                  Gain early access to new research, datasets, and tools developed by the cooperative. Founding members can pilot and shape upcoming initiatives, ensuring your needs and feedback are prioritized in the development of industry resources.
+                </p>
+              </Card>
+
+              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+                <Users className="h-12 w-12 text-electric-blue mx-auto mb-4" />
+                <h4 className="text-xl font-semibold text-gray-900 mb-2">Global Recognition & Networking</h4>
+                <p className="text-gray-600">
+                  Be publicly recognized as a founding leader in the sign language x AI community. Enjoy exclusive networking opportunities with other industry pioneers, researchers, and advocates at cooperative events and through ongoing collaborations.
+                </p>
+              </Card>
+            </div>
+
+            {/* Companies Already Interested */}
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">Companies Already Interested</h3>
+              <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+                Leading companies in the sign language x AI space have already expressed interest in becoming founding members.
+              </p>
+
+              <div className="grid md:grid-cols-5 gap-6 mb-8">
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    GS
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">GoSign.ai</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    MA
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Migam.ai</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    SS
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Sign-Speak</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    OB
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Omnibridge</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    DA
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">DeepSignAI</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+              </div>
+
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Join these industry leaders and be part of the founding group that will establish the cooperative nonprofit.
+              </p>
+            </div>
+          </div>
+
+          {/* Founding Member Application */}
+          <div className="max-w-4xl mx-auto">
+            <Card className="shadow-lg">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">Founding Member Application</CardTitle>
+                <p className="text-gray-600">
+                  Complete the form below to apply for founding member status
+                </p>
+              </CardHeader>
+              <CardContent>
+                <iframe 
+                  src="https://docs.google.com/forms/d/e/1FAIpQLSdYLiovv551vZcQ7qkemKwRYweQXoMncXyicGnnBRbQFjb4ug/viewform?embedded=true" 
+                  width="100%" 
+                  height="980px" 
+                  frameBorder="0" 
+                  marginHeight={0} 
+                  marginWidth={0}
+                  title="SLxAI Founding Member Application"
+                >
+                  Loading…
+                </iframe>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Summit CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-electric-blue to-blue-600">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold text-white mb-6">
+            Be Part of History: Join the Inaugural Summit
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            This is your opportunity to help establish the cooperative nonprofit that will 
+            shape the future of sign language x AI technologies. Secure your company's board seat.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
