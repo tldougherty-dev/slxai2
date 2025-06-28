@@ -1,73 +1,110 @@
-# Welcome to your Lovable project
+# SLxAI Summit Website
 
-## Project info
+## About SLxAI
 
-**URL**: https://lovable.dev/projects/3e56fb05-986b-4ae4-a2a8-9e079d74b843
+SLxAI (Sign Language x AI) is an initiative to unite industry leaders in establishing the future of sign language x AI technologies. The project brings together the world's leading companies to form a cooperative nonprofit where each company will have a board seat, ensuring collaborative decision-making and ethical development of sign language x AI technologies.
 
-## How can I edit this code?
+## Project Overview
 
-There are several ways of editing your application.
+This website serves as the official platform for the inaugural SLxAI Summit, where industry leaders will:
 
-**Use Lovable**
+- Establish a cooperative nonprofit structure
+- Create industry-wide ethical standards
+- Foster collaborative innovation
+- Ensure equal company representation
+- Develop standardized benchmarks for avatar quality and SLR performance grading
+- Establish technical specifications and interoperability standards
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3e56fb05-986b-4ae4-a2a8-9e079d74b843) and start prompting.
+## Technologies Used
 
-Changes made via Lovable will be committed automatically to this repo.
+This project is built with modern web technologies:
 
-**Use your preferred IDE**
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **State Management**: TanStack Query (React Query)
+- **Form Handling**: React Hook Form with Zod validation
+- **Icons**: Lucide React
+- **Deployment**: Vercel-ready configuration
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js (version 18 or higher)
+- npm or yarn package manager
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd slxai
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. Install dependencies:
+```bash
+npm install
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open your browser and navigate to `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint for code quality
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   └── Navigation.tsx  # Main navigation component
+├── pages/              # Page components
+│   └── Index.tsx       # Main landing page
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── App.tsx             # Main app component
+```
 
-This project is built with:
+## Key Features
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Accessibility**: Built with accessibility in mind using shadcn/ui
+- **Form Integration**: Google Forms integration for founding member applications
+- **Modern UI**: Clean, professional design with smooth animations
+- **SEO Optimized**: Proper meta tags and semantic HTML structure
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/3e56fb05-986b-4ae4-a2a8-9e079d74b843) and click on Share -> Publish.
+The project is configured for easy deployment on Vercel:
 
-## Can I connect a custom domain to my Lovable project?
+1. Connect your repository to Vercel
+2. Vercel will automatically detect the Vite configuration
+3. Deploy with a single click
 
-Yes, you can!
+## Contributing
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+This is a collaborative project for the SLxAI initiative. For contributions:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## Contact
+
+For questions about the SLxAI Summit or this website, please use the contact information provided on the website or reach out through the founding member application form.
+
+## License
+
+This project is part of the SLxAI initiative and is subject to the project's licensing terms.
