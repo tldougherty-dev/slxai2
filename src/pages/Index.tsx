@@ -365,6 +365,46 @@ const Index = () => {
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">DeepSignAI</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    AW
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">AvocadoWeb Services</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    DI
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Dillo.ai</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    SV
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignaVision Solutions</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    SA
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignAvatar</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    360
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">360 Direct Access</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
               </div>
 
               <p className="text-gray-600 max-w-2xl mx-auto">
