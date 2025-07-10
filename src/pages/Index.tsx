@@ -325,44 +325,100 @@ const Index = () => {
                 Leading companies in the sign language x AI space have already expressed interest in becoming founding members.
               </p>
 
-              <div className="grid md:grid-cols-5 gap-6 mb-8">
+              <div className="grid md:grid-cols-4 gap-6 mb-8">
                 <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    GS
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">GoSign.ai</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
 
                 <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    MA
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">Migam.ai</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
 
                 <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    SS
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">Sign-Speak</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
 
                 <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    OB
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">Omnibridge</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
 
                 <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    DA
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-1">DeepSignAI</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">AvocadoWeb Services</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Dillo.ai</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignaVision Solutions</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignAvatar</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">360 Direct Access</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Kara Technologies</h4>
+                  <p className="text-sm text-gray-600">Interested</p>
+                </Card>
+
+                <Card className="text-center p-4 border-l-4 border-l-green-500">
+                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
+                    <CheckCircle className="h-8 w-8" />
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-1">MocapLab</h4>
                   <p className="text-sm text-gray-600">Interested</p>
                 </Card>
               </div>
