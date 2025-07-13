@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
 import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText } from 'lucide-react';
+import InterestedCompanies from '@/components/InterestedCompanies';
 
 const Index = () => {
   const scrollToSection = (sectionId: string) => {
@@ -66,6 +67,7 @@ const Index = () => {
                 src="/slxai-footer-logo.png" 
                 alt="SLxAI Logo" 
                 className="h-8 w-auto inline-block align-middle"
+                style={{ transform: 'scale(1.05)' }}
               />
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
@@ -77,7 +79,13 @@ const Index = () => {
 
           {/* Mission, Vision, Goals */}
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="border-l-4 border-l-electric-blue">
+            <Card 
+              className="border-l-4 border-l-electric-blue shadow-none"
+              style={{
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                transform: 'translateY(-2px)'
+              }}
+            >
               <CardHeader className="text-center">
                 <Target className="h-12 w-12 text-electric-blue mx-auto mb-4" aria-hidden="true" />
                 <CardTitle className="text-2xl font-bold text-gray-900">Mission</CardTitle>
@@ -91,7 +99,13 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-electric-blue">
+            <Card 
+              className="border-l-4 border-l-electric-blue shadow-none"
+              style={{
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                transform: 'translateY(-2px)'
+              }}
+            >
               <CardHeader className="text-center">
                 <Eye className="h-12 w-12 text-electric-blue mx-auto mb-4" aria-hidden="true" />
                 <CardTitle className="text-2xl font-bold text-gray-900">Vision</CardTitle>
@@ -105,7 +119,13 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-electric-blue">
+            <Card 
+              className="border-l-4 border-l-electric-blue shadow-none"
+              style={{
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                transform: 'translateY(-2px)'
+              }}
+            >
               <CardHeader className="text-center">
                 <ArrowUp className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <CardTitle className="text-2xl font-bold text-gray-900">Goals</CardTitle>
@@ -131,7 +151,13 @@ const Index = () => {
           <div className="text-center">
             <h3 className="text-2xl font-semibold text-gray-900 mb-6">Cooperative Structure</h3>
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+              <Card 
+                className="p-6 text-center border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Users className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-lg font-semibold text-gray-900 mb-2">Equal Representation</h4>
                 <p className="text-gray-600 text-sm">
@@ -139,7 +165,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+              <Card 
+                className="p-6 text-center border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Target className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-lg font-semibold text-gray-900 mb-2">Collaborative Decision-Making</h4>
                 <p className="text-gray-600 text-sm">
@@ -147,7 +179,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="p-6 text-center border-l-4 border-l-electric-blue">
+              <Card 
+                className="p-6 text-center border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Eye className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-lg font-semibold text-gray-900 mb-2">Transparent Governance</h4>
                 <p className="text-gray-600 text-sm">
@@ -269,7 +307,13 @@ const Index = () => {
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Star className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Founding Status</h4>
                 <p className="text-gray-600">
@@ -277,7 +321,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Award className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Board Representation</h4>
                 <p className="text-gray-600">
@@ -285,7 +335,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Globe className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Industry Leadership</h4>
                 <p className="text-gray-600">
@@ -293,7 +349,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <BookOpen className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Benchmarking & Standardization</h4>
                 <p className="text-gray-600">
@@ -301,7 +363,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <ArrowUp className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Early Access & Influence</h4>
                 <p className="text-gray-600">
@@ -309,7 +377,13 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="text-center p-6 border-l-4 border-l-electric-blue">
+              <Card 
+                className="text-center p-6 border-l-4 border-l-electric-blue shadow-none"
+                style={{
+                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+                  transform: 'translateY(-2px)'
+                }}
+              >
                 <Users className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Global Recognition & Networking</h4>
                 <p className="text-gray-600">
@@ -319,114 +393,11 @@ const Index = () => {
             </div>
 
             {/* Companies Already Interested */}
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">Companies Already Interested</h3>
-              <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-                Leading companies in the sign language x AI space have already expressed interest in becoming founding members.
-              </p>
+            <InterestedCompanies />
 
-              <div className="grid md:grid-cols-4 gap-6 mb-8">
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">GoSign.ai</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Migam.ai</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Sign-Speak</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Omnibridge</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">DeepSignAI</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">AvocadoWeb Services</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Dillo.ai</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignaVision Solutions</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">SignAvatar</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">360 Direct Access</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">Kara Technologies</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-
-                <Card className="text-center p-4 border-l-4 border-l-green-500">
-                  <div className="h-16 w-16 mx-auto mb-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
-                    <CheckCircle className="h-8 w-8" />
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-1">MocapLab</h4>
-                  <p className="text-sm text-gray-600">Interested</p>
-                </Card>
-              </div>
-
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Join these industry leaders and be part of the founding group that will establish the cooperative nonprofit.
-              </p>
-            </div>
+            <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontSize: 'calc(1rem + 3px)' }}>
+              Join these industry leaders and be part of the founding group that will establish the cooperative nonprofit.
+            </p>
           </div>
 
           {/* Founding Member Application */}
