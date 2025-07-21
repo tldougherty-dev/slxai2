@@ -4,6 +4,7 @@ import { Card } from "./ui/card";
 const companies = [
   { name: "360 Direct Access", country: "USA", code: "us" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
+  { name: "CoSET", country: "USA", code: "us" },
   { name: "DeepSignAI", country: "USA", code: "us" },
   { name: "Dillo.ai", country: "Argentina", code: "ar" },
   { name: "GLWMax", country: "Belgium", code: "be" },
@@ -12,12 +13,15 @@ const companies = [
   { name: "Migam.ai", country: "Poland", code: "pl" },
   { name: "MocapLab", country: "France", code: "fr" },
   { name: "Omnibridge", country: "USA", code: "us" },
+  { name: "Open Mind Software GmbH", country: "Germany", code: "de" },
+  { name: "Sign AI", country: "USA", code: "us" },
   { name: "Sign-Speak", country: "USA", code: "us" },
   { name: "SignAvatar", country: "Serbia", code: "rs" },
-  { name: "SignaVision Solutions", country: "Canada", code: "ca" },
   { name: "SignLab", country: "Norway", code: "no" },
-  { name: "Sign.mt", country: "Switzerland", code: "ch" },
-  { name: "Sign AI", country: "USA", code: "us" },
+  { name: "SignaVision Solutions", country: "Canada", code: "ca" },
+  { name: "Sign.mt", country: "Israel", code: "il" },
+  { name: "Signapse", country: "UK", code: "gb" },
+  { name: "SignWave Hub", country: "UK", code: "gb" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "VSL Labs", country: "Israel", code: "il" },
 ];
@@ -75,17 +79,19 @@ export default function InterestedCompanies() {
                    company.code === 'be' ? '/flags/belgium.webp' :
                    company.code === 'se' ? '/flags/sweden.webp' :
                    company.code === 'ch' ? '/flags/switzerland.webp' :
+                   company.code === 'de' ? '/flags/germany-flag.webp' :
+                   company.code === 'gb' ? '/flags/british-flag.svg' : 
                    `/flags/${company.code}.svg`}
               alt={`${company.country} flag`}
               style={{ 
-                height: (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch') ? '3.3em' : '3em', 
+                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch') ? '3.3em' : '3em', 
                 width: 'auto', 
                 display: 'block', 
                 margin: '0 auto 1em auto',
                 filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))',
                 transform: 'translateY(-4px)',
                 objectFit: 'contain',
-                maxHeight: (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch') ? '3.3em' : '3em'
+                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch') ? '3.3em' : '3em'
               }}
               loading="lazy"
               onError={(e) => {
