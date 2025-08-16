@@ -49,9 +49,16 @@ const Index = () => {
               <span className="block text-electric-blue mb-2">establish the future of</span>
               <span className="block text-gray-900 text-6xl md:text-7xl font-extrabold">sign language x AI.</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
-              Join us at the inaugural SLxAI Summit where we'll bring together the world's leading companies 
-              to form a cooperative nonprofit that will shape the future of sign language x AI technologies.
+            <p className="text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in">
+              Join us at the inaugural SLxAI Summit 
+              <br />
+              where we'll bring industry leaders together 
+              <br />
+              to form a cooperative nonprofit 
+              <br />
+              that will shape the future of 
+              <br />
+              sign language x AI technologies.
             </p>
           </div>
         </div>
@@ -70,11 +77,11 @@ const Index = () => {
                 style={{ transform: 'scale(1.05)' }}
               />
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
-              We are bringing together the world's leading sign language x AI companies to establish 
-              a cooperative nonprofit where each company will have a board seat, ensuring collaborative 
-              decision-making and ethical development of sign language x AI technologies.
-            </p>
+                         <p className="text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
+               We are bringing together industry leaders in the sign language x AI space to establish 
+               a cooperative nonprofit where each member will have a board seat, ensuring collaborative 
+               decision-making and ethical development of sign language x AI technologies.
+             </p>
           </div>
 
           {/* Mission, Vision, Goals */}
@@ -293,18 +300,18 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Become a Founding Member</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Join the inaugural group of companies that will establish the SLxAI cooperative nonprofit. 
-              Each founding member receives one board seat, ensuring equal representation in shaping the future of sign language x AI technologies.
-            </p>
+                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+               Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit. 
+               Each founding member receives one board seat, ensuring equal representation in shaping the future of sign language x AI technologies.
+             </p>
           </div>
 
           {/* Founding Member Benefits */}
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">Founding Member Benefits</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              As a founding member, your company will have a unique opportunity to shape the cooperative's structure and future direction.
-            </p>
+                         <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+               As a founding member, your organization will have a unique opportunity to shape the cooperative's structure and future direction.
+             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               <Card 
@@ -316,9 +323,9 @@ const Index = () => {
               >
                 <Star className="h-12 w-12 text-electric-blue mx-auto mb-4" />
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Founding Status</h4>
-                <p className="text-gray-600">
-                  Be recognized as one of the original companies that established the cooperative.
-                </p>
+                                 <p className="text-gray-600">
+                   Be recognized as one of the original industry leaders that established the cooperative.
+                 </p>
               </Card>
 
               <Card 
@@ -433,10 +440,10 @@ const Index = () => {
           <h2 className="text-4xl font-bold text-white mb-6">
             Be Part of History: Join the Inaugural Summit
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
-            This is your opportunity to help establish the cooperative nonprofit that will 
-            shape the future of sign language x AI technologies. Secure your company's board seat.
-          </p>
+                     <p className="text-xl text-blue-100 mb-8">
+             This is your opportunity to help establish the cooperative nonprofit that will 
+             shape the future of sign language x AI technologies. Secure your organization's board seat.
+           </p>
         </div>
       </section>
     </div>

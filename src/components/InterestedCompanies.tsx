@@ -39,7 +39,7 @@ export default function InterestedCompanies() {
 
   return (
     <section className="py-12">
-      <h2 className="text-3xl font-bold mb-4 text-center text-gray-900">Companies Already Interested</h2>
+      <h2 className="text-3xl font-bold mb-4 text-center text-gray-900">Members Already Interested</h2>
       
       {/* Infographics */}
       <div className="flex justify-center gap-8 mb-8">
@@ -50,8 +50,8 @@ export default function InterestedCompanies() {
             transform: 'translateY(-2px)'
           }}
         >
-          <div className="text-4xl font-bold text-blue-600">{companyCount}</div>
-          <div className="text-sm text-muted-foreground">Companies</div>
+                     <div className="text-4xl font-bold text-blue-600">{companyCount}</div>
+           <div className="text-sm text-muted-foreground">Members</div>
         </Card>
         <Card 
           className="text-center p-6 border-2 border-blue-500 shadow-none w-32"
@@ -66,7 +66,9 @@ export default function InterestedCompanies() {
       </div>
 
       <p className="text-center mb-8 text-muted-foreground max-w-2xl mx-auto">
-        Leading companies in the sign language x AI space have already expressed interest in becoming founding members.
+        Leading industry leaders in the sign language x AI space 
+        <br />
+        have already expressed interest in becoming founding members.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
         {companies.map((company) => (
