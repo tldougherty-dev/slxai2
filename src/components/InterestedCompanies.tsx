@@ -4,7 +4,7 @@ import { Card } from "./ui/card";
 const companies = [
   { name: "360 Direct Access", country: "USA", code: "us" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
-  { name: "Boston University", country: "USA", code: "us" },
+  { name: "Deaf Studies at\nBoston University", country: "USA", code: "us" },
   { name: "CoSET", country: "USA", code: "us" },
   { name: "DeepSignAI", country: "USA", code: "us" },
   { name: "Dillo.ai", country: "Argentina", code: "ar" },
