@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <!-- Dark blue background -->
+  <rect width="1200" height="600" fill="#00008B"/>
+  
+  <!-- Union Jack in upper hoist quarter -->
+  <!-- St. George's Cross (red cross with white border) -->
+  <rect x="0" y="250" width="400" height="50" fill="white"/>
+  <rect x="0" y="260" width="400" height="30" fill="#C8102E"/>
+  <rect x="175" y="0" width="50" height="300" fill="white"/>
+  <rect x="185" y="0" width="30" height="300" fill="#C8102E"/>
+  
+  <!-- St. Andrew's Cross (white diagonal) -->
+  <polygon points="0,0 200,100 0,200" fill="white"/>
+  <polygon points="400,0 200,100 400,200" fill="white"/>
+  <polygon points="0,200 200,300 0,400" fill="white"/>
+  <polygon points="400,200 200,300 400,400" fill="white"/>
+  
+  <!-- St. Patrick's Cross (red diagonal) -->
+  <polygon points="0,0 200,100 0,200" fill="#C8102E"/>
+  <polygon points="400,0 200,100 400,200" fill="#C8102E"/>
+  <polygon points="0,200 200,300 0,400" fill="#C8102E"/>
+  <polygon points="400,200 200,300 400,400" fill="#C8102E"/>
+  
+  <!-- Commonwealth Star (7-pointed) in lower hoist quarter -->
+  <g transform="translate(200,450)">
+    <polygon points="0,-25 7.2,-10.1 23.8,-7.8 11.9,3.6 14.8,19.8 0,12.5 -14.8,19.8 -11.9,3.6 -23.8,-7.8 -7.2,-10.1" fill="white"/>
+  </g>
+  
+  <!-- Southern Cross constellation in fly half -->
+  <!-- Alpha Crucis (top star) -->
+  <g transform="translate(700,120)">
+    <polygon points="0,-15 4.4,-5.3 13.3,-4.0 6.6,2.1 7.8,11.9 0,7.5 -7.8,11.9 -6.6,2.1 -13.3,-4.0 -4.4,-5.3" fill="white"/>
+  </g>
+  
+  <!-- Beta Crucis (right star) -->
+  <g transform="translate(800,100)">
+    <polygon points="0,-12 3.5,-4.2 10.6,-3.2 5.3,1.7 6.2,9.5 0,6.0 -6.2,9.5 -5.3,1.7 -10.6,-3.2 -3.5,-4.2" fill="white"/>
+  </g>
+  
+  <!-- Gamma Crucis (bottom star) -->
+  <g transform="translate(750,180)">
+    <polygon points="0,-12 3.5,-4.2 10.6,-3.2 5.3,1.7 6.2,9.5 0,6.0 -6.2,9.5 -5.3,1.7 -10.6,-3.2 -3.5,-4.2" fill="white"/>
+  </g>
+  
+  <!-- Delta Crucis (left star) -->
+  <g transform="translate(650,140)">
+    <polygon points="0,-10 2.9,-3.5 8.8,-2.7 4.4,1.4 5.2,7.9 0,5.0 -5.2,7.9 -4.4,1.4 -8.8,-2.7 -2.9,-3.5" fill="white"/>
+  </g>
+  
+  <!-- Epsilon Crucis (smaller 5-pointed star) -->
+  <g transform="translate(720,150)">
+    <polygon points="0,-8 2.3,-2.8 7.0,-2.2 3.5,1.1 4.2,6.3 0,4.0 -4.2,6.3 -3.5,1.1 -7.0,-2.2 -2.3,-2.8" fill="white"/>
+  </g>
+</svg>
