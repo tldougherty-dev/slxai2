@@ -107,4 +107,4 @@ For questions about the SLxAI Summit or this website, please use the contact inf
 
 ## License
 
-This project is part of the SLxAI initiative and is subject to the project's licensing terms.
+This project is part of the SLxAI initiative and is subject to the project's licensing terms
