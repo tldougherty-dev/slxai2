@@ -31,6 +31,7 @@ const companies = [
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "VSL Labs", country: "Israel", code: "il" },
+  { name: "Lingvano", country: "Austria", code: "at" },
 ];
 
 export default function InterestedCompanies() {
@@ -91,17 +92,18 @@ export default function InterestedCompanies() {
                    company.code === 'de' ? '/flags/germany-flag.webp' :
                    company.code === 'gb' ? '/flags/british-flag.svg' :
                    company.code === 'au' ? '/flags/Flag_of_Australia.png' :
+                   company.code === 'at' ? '/flags/Austria.svg' :
                    `/flags/${company.code}.svg`}
               alt={`${company.country} flag`}
               style={{ 
-                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au') ? '3.3em' : '3em', 
+                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at') ? '3.3em' : '3em', 
                 width: 'auto', 
                 display: 'block', 
                 margin: '0 auto 1em auto',
                 filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))',
                 transform: 'translateY(-4px)',
                 objectFit: 'contain',
-                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au') ? '3.3em' : '3em'
+                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at') ? '3.3em' : '3em'
               }}
               loading="lazy"
               onError={(e) => {
