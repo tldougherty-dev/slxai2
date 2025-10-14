@@ -15,9 +15,11 @@ const companies = [
   { name: "Hands United", country: "USA", code: "us" },
   { name: "Handy Signs", country: "Italy", code: "it" },
   { name: "Kara Technologies", country: "New Zealand", code: "nz" },
+  { name: "Lingvano", country: "Austria", code: "at" },
   { name: "Migam.ai", country: "Poland", code: "pl" },
   { name: "MocapLab", country: "France", code: "fr" },
   { name: "NHK Enterprises", country: "Japan", code: "jp" },
+  { name: "NVIDIA", country: "USA", code: "us" },
   { name: "Omnibridge", country: "USA", code: "us" },
   { name: "Open Mind Software", country: "Germany", code: "de" },
   { name: "Sign AI", country: "USA", code: "us" },
@@ -30,8 +32,8 @@ const companies = [
   { name: "SignWave Hub", country: "UK", code: "gb" },
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
+  { name: "University of Surrey", country: "UK", code: "gb" },
   { name: "VSL Labs", country: "Israel", code: "il" },
-  { name: "Lingvano", country: "Austria", code: "at" },
 ];
 
 export default function InterestedCompanies() {
