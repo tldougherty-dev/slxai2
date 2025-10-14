@@ -204,8 +204,15 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Interested Companies Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <InterestedCompanies />
+        </div>
+      </section>
+
       {/* Summit Section */}
-      <section id="summit" className="py-16 bg-white">
+      <section id="summit" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-6xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-2">
@@ -274,11 +281,11 @@ const Index = () => {
                 <div className="space-y-4">
                   <div>
                     <h4 className="font-semibold mb-2">Date</h4>
-                    <p className="text-blue-100">To be announced</p>
+                    <p className="text-blue-100">April 16-17, 2026</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Location</h4>
-                    <p className="text-blue-100">To be announced</p>
+                    <p className="text-blue-100">Boston University</p>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Format</h4>
@@ -296,7 +303,7 @@ const Index = () => {
       </section>
 
       {/* Membership Section */}
-      <section id="membership" className="py-16 bg-gray-50">
+      <section id="membership" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Become a Founding Member</h2>
@@ -398,9 +405,6 @@ const Index = () => {
                 </p>
               </Card>
             </div>
-
-            {/* Companies Already Interested */}
-            <InterestedCompanies />
 
             <p className="text-gray-600 max-w-2xl mx-auto" style={{ fontSize: 'calc(1rem + 3px)' }}>
               Join these industry leaders and be part of the founding group that will establish the cooperative nonprofit.
