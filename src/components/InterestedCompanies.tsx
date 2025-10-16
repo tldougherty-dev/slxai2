@@ -8,7 +8,10 @@ const companies = [
   { name: "Convo", country: "Australia", code: "au" },
   { name: "Deaf Studies at\nBoston University", country: "USA", code: "us" },
   { name: "DeepSignAI", country: "USA", code: "us" },
+  { name: "DeafSkills International Association", country: "Canada", code: "ca" },
   { name: "Dillo.ai", country: "Argentina", code: "ar" },
+  { name: "dozanü innovations", country: "USA", code: "us" },
+  { name: "German Deaf Association", country: "Germany", code: "de" },
   { name: "GLWMax", country: "Belgium", code: "be" },
   { name: "GoSign.AI", country: "USA", code: "us" },
   { name: "Hand Talk", country: "Brazil", code: "br" },
@@ -32,6 +35,7 @@ const companies = [
   { name: "SignWave Hub", country: "UK", code: "gb" },
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
+  { name: "The ASL Shop", country: "USA", code: "us" },
   { name: "University of Surrey", country: "UK", code: "gb" },
   { name: "VSL Labs", country: "Israel", code: "il" },
 ];
