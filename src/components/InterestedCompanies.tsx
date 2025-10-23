@@ -3,6 +3,7 @@ import { Card } from "./ui/card";
 
 const companies = [
   { name: "360 Direct Access", country: "USA", code: "us" },
+  { name: "Action & Brain Lab, Gallaudet University", country: "USA", code: "us" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
   { name: "CoSET", country: "USA", code: "us" },
   { name: "Convo", country: "Australia", code: "au" },
@@ -10,17 +11,20 @@ const companies = [
   { name: "DeepSignAI", country: "USA", code: "us" },
   { name: "DeafSkills International Association", country: "Canada", code: "ca" },
   { name: "Dillo.ai", country: "Argentina", code: "ar" },
-  { name: "dozanü innovations", country: "USA", code: "us" },
+  { name: "Dozanü Innovations", country: "USA", code: "us" },
   { name: "German Deaf Association", country: "Germany", code: "de" },
   { name: "GLWMax", country: "Belgium", code: "be" },
   { name: "GoSign.AI", country: "USA", code: "us" },
   { name: "Hand Talk", country: "Brazil", code: "br" },
   { name: "Hands United", country: "USA", code: "us" },
   { name: "Handy Signs", country: "Italy", code: "it" },
+  { name: "HU University of Applied Sciences Utrecht", country: "Netherlands", code: "nl" },
+  { name: "Inclusic.co", country: "Pakistan", code: "pk" },
   { name: "Kara Technologies", country: "New Zealand", code: "nz" },
   { name: "Lingvano", country: "Austria", code: "at" },
   { name: "Migam.ai", country: "Poland", code: "pl" },
   { name: "MocapLab", country: "France", code: "fr" },
+  { name: "Motionsign", country: "USA", code: "us" },
   { name: "NHK Enterprises", country: "Japan", code: "jp" },
   { name: "NVIDIA", country: "USA", code: "us" },
   { name: "Omnibridge", country: "USA", code: "us" },
@@ -28,12 +32,15 @@ const companies = [
   { name: "Sign AI", country: "USA", code: "us" },
   { name: "Sign-Speak", country: "USA", code: "us" },
   { name: "SignAvatar", country: "Serbia", code: "rs" },
+  { name: "SignForDeaf", country: "Turkey", code: "tr" },
   { name: "SignLab", country: "Norway", code: "no" },
   { name: "SignaVision Solutions", country: "Canada", code: "ca" },
   { name: "Sign.mt", country: "Israel", code: "il" },
   { name: "Signapse", country: "UK", code: "gb" },
   { name: "SignWave Hub", country: "UK", code: "gb" },
+  { name: "SignWow", country: "USA", code: "us" },
   { name: "Sorenson", country: "USA", code: "us" },
+  { name: "Spokhand", country: "United States", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "The ASL Shop", country: "USA", code: "us" },
   { name: "University of Surrey", country: "UK", code: "gb" },
@@ -99,17 +106,20 @@ export default function InterestedCompanies() {
                    company.code === 'gb' ? '/flags/british-flag.svg' :
                    company.code === 'au' ? '/flags/Flag_of_Australia.png' :
                    company.code === 'at' ? '/flags/Austria.svg' :
+                   company.code === 'nl' ? '/flags/Flag_of_the_Netherlands.svg' :
+                   company.code === 'pk' ? '/flags/Flag_of_Pakistan.svg' :
+                   company.code === 'tr' ? '/flags/Flag_of_Turkey.svg' :
                    `/flags/${company.code}.svg`}
               alt={`${company.country} flag`}
               style={{ 
-                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at') ? '3.3em' : '3em', 
+                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr') ? '3.3em' : '3em', 
                 width: 'auto', 
                 display: 'block', 
                 margin: '0 auto 1em auto',
                 filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))',
                 transform: 'translateY(-4px)',
                 objectFit: 'contain',
-                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at') ? '3.3em' : '3em'
+                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr') ? '3.3em' : '3em'
               }}
               loading="lazy"
               onError={(e) => {
