@@ -46,7 +46,7 @@ const companies = [
   { name: "SignWave Hub", country: "UK", code: "gb" },
   { name: "SignWow", country: "USA", code: "us" },
   { name: "Sorenson", country: "USA", code: "us" },
-  { name: "Spokhand", country: "United States", code: "us" },
+  { name: "Spokhand", country: "USA", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "The ASL Shop", country: "USA", code: "us" },
   { name: "Ugunja Deaf Self Help Group", country: "Kenya", code: "ke" },
