@@ -4,9 +4,12 @@ import { Card } from "./ui/card";
 const companies = [
   { name: "360 Direct Access", country: "USA", code: "us" },
   { name: "Action & Brain Lab, Gallaudet University", country: "USA", code: "us" },
+  { name: "American Corner of Zinder/Maradi", country: "Niger", code: "ne" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
   { name: "CoSET", country: "USA", code: "us" },
   { name: "Convo", country: "Australia", code: "au" },
+  { name: "Deaf eLima Plus", country: "Kenya", code: "ke" },
+  { name: "Deaf Inclusion and Development Initiative", country: "Nigeria", code: "ng" },
   { name: "Deaf Studies at\nBoston University", country: "USA", code: "us" },
   { name: "DeepSignAI", country: "USA", code: "us" },
   { name: "DeafSkills International Association", country: "Canada", code: "ca" },
@@ -34,15 +37,19 @@ const companies = [
   { name: "SignAvatar", country: "Serbia", code: "rs" },
   { name: "SignForDeaf", country: "Turkey", code: "tr" },
   { name: "SignLab", country: "Norway", code: "no" },
+  { name: "SignLang Consultancy", country: "South Africa", code: "za" },
   { name: "SignaVision Solutions", country: "Canada", code: "ca" },
   { name: "Sign.mt", country: "Israel", code: "il" },
   { name: "Signapse", country: "UK", code: "gb" },
+  { name: "SignUp Media", country: "USA", code: "us" },
   { name: "SignWave Hub", country: "UK", code: "gb" },
   { name: "SignWow", country: "USA", code: "us" },
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Spokhand", country: "United States", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "The ASL Shop", country: "USA", code: "us" },
+  { name: "Ugunja Deaf Self Help Group", country: "Kenya", code: "ke" },
+  { name: "University College London", country: "UK", code: "gb" },
   { name: "University of Surrey", country: "UK", code: "gb" },
   { name: "VSL Labs", country: "Israel", code: "il" },
 ];
@@ -109,17 +116,21 @@ export default function InterestedCompanies() {
                    company.code === 'nl' ? '/flags/Flag_of_the_Netherlands.svg' :
                    company.code === 'pk' ? '/flags/Flag_of_Pakistan.svg' :
                    company.code === 'tr' ? '/flags/Flag_of_Turkey.svg' :
+                   company.code === 'ke' ? '/flags/Flag_of_Kenya.svg' :
+                   company.code === 'ne' ? '/flags/Flag_of_Niger.svg' :
+                   company.code === 'ng' ? '/flags/Flag_of_Nigeria.svg' :
+                   company.code === 'za' ? '/flags/Flag_of_South_Africa.svg' :
                    `/flags/${company.code}.svg`}
               alt={`${company.country} flag`}
               style={{ 
-                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr') ? '3.3em' : '3em', 
+                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za') ? '3.3em' : '3em', 
                 width: 'auto', 
                 display: 'block', 
                 margin: '0 auto 1em auto',
                 filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))',
                 transform: 'translateY(-4px)',
                 objectFit: 'contain',
-                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr') ? '3.3em' : '3em'
+                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za') ? '3.3em' : '3em'
               }}
               loading="lazy"
               onError={(e) => {
