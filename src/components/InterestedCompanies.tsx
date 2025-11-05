@@ -43,7 +43,7 @@ const companies = [
   { name: "Sign.mt", country: "Israel", code: "il" },
   { name: "Signapse", country: "UK", code: "gb" },
   { name: "SignUp Media", country: "USA", code: "us" },
-  { name: "SignWave Hub", country: "UK", code: "gb" },
+  { name: "SignWave AI", country: "UK", code: "gb" },
   { name: "SignWow", country: "USA", code: "us" },
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Spokhand", country: "USA", code: "us" },
