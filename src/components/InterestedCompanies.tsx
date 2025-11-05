@@ -28,6 +28,7 @@ const companies = [
   { name: "Migam.ai", country: "Poland", code: "pl" },
   { name: "MocapLab", country: "France", code: "fr" },
   { name: "Motionsign", country: "USA", code: "us" },
+  { name: "Nagish", country: "USA", code: "us" },
   { name: "NHK Enterprises", country: "Japan", code: "jp" },
   { name: "NVIDIA", country: "USA", code: "us" },
   { name: "Omnibridge", country: "USA", code: "us" },
