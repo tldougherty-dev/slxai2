@@ -6,18 +6,23 @@ const companies = [
   { name: "Action & Brain Lab, Gallaudet University", country: "USA", code: "us" },
   { name: "American Corner of Zinder/Maradi", country: "Niger", code: "ne" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
+  { name: "Cisco Systems", country: "USA", code: "us" },
   { name: "CoSET", country: "USA", code: "us" },
   { name: "Convo", country: "Australia", code: "au" },
   { name: "Deaf eLima Plus", country: "Kenya", code: "ke" },
   { name: "Deaf Inclusion and Development Initiative", country: "Nigeria", code: "ng" },
   { name: "Deaf Studies at\nBoston University", country: "USA", code: "us" },
   { name: "DeepSignAI", country: "USA", code: "us" },
+  { name: "DeepVisionTech.AI", country: "India", code: "in" },
+  { name: "DeafCloud Communications", country: "Canada", code: "ca" },
   { name: "DeafSkills International Association", country: "Canada", code: "ca" },
   { name: "Dillo.ai", country: "Argentina", code: "ar" },
   { name: "Dozanü Innovations", country: "USA", code: "us" },
+  { name: "Framingham State University", country: "USA", code: "us" },
   { name: "German Deaf Association", country: "Germany", code: "de" },
   { name: "GLWMax", country: "Belgium", code: "be" },
   { name: "GoSign.AI", country: "USA", code: "us" },
+  { name: "GoVoBo.ai", country: "USA", code: "us" },
   { name: "Hand Talk", country: "Brazil", code: "br" },
   { name: "Hands United", country: "USA", code: "us" },
   { name: "Handy Signs", country: "Italy", code: "it" },
@@ -45,14 +50,17 @@ const companies = [
   { name: "SignUp Media", country: "USA", code: "us" },
   { name: "SignWave AI", country: "UK", code: "gb" },
   { name: "SignWow", country: "USA", code: "us" },
+  { name: "Silence Speaks", country: "UK", code: "gb" },
   { name: "Sorenson", country: "USA", code: "us" },
   { name: "Spokhand", country: "USA", code: "us" },
+  { name: "TDIforAccess", country: "USA", code: "us" },
   { name: "Teckenbro", country: "Sweden", code: "se" },
   { name: "The ASL Shop", country: "USA", code: "us" },
   { name: "Ugunja Deaf Self Help Group", country: "Kenya", code: "ke" },
   { name: "University College London", country: "UK", code: "gb" },
   { name: "University of Surrey", country: "UK", code: "gb" },
   { name: "VSL Labs", country: "Israel", code: "il" },
+  { name: "With Direction", country: "USA", code: "us" },
 ];
 
 export default function InterestedCompanies() {
@@ -121,17 +129,18 @@ export default function InterestedCompanies() {
                    company.code === 'ne' ? '/flags/Flag_of_Niger.svg' :
                    company.code === 'ng' ? '/flags/Flag_of_Nigeria.svg' :
                    company.code === 'za' ? '/flags/Flag_of_South_Africa.svg' :
+                   company.code === 'in' ? '/flags/Flag_of_India.svg' :
                    `/flags/${company.code}.svg`}
               alt={`${company.country} flag`}
               style={{ 
-                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za') ? '3.3em' : '3em', 
+                height: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za' || company.code === 'in') ? '3.3em' : '3em', 
                 width: 'auto', 
                 display: 'block', 
                 margin: '0 auto 1em auto',
                 filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6))',
                 transform: 'translateY(-4px)',
                 objectFit: 'contain',
-                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za') ? '3.3em' : '3em'
+                maxHeight: company.code === 'gb' ? '3.069em' : (company.code === 'il' || company.code === 'be' || company.code === 'se' || company.code === 'ch' || company.code === 'au' || company.code === 'at' || company.code === 'nl' || company.code === 'pk' || company.code === 'tr' || company.code === 'ke' || company.code === 'ne' || company.code === 'ng' || company.code === 'za' || company.code === 'in') ? '3.3em' : '3em'
               }}
               loading="lazy"
               onError={(e) => {
