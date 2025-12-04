@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "वैश्विक फ़ीड",
+    "summit2026": "शिखर सम्मेलन 2026",
+    "discussions": "चर्चाएं",
+    "voting": "मतदान",
+    "files": "फ़ाइलें",
+    "memberDirectory": "सदस्य निर्देशिका",
+    "myProfile": "मेरी प्रोफ़ाइल",
+    "myOrganization": "मेरा संगठन",
+    "summitPlanning": "शिखर सम्मेलन योजना",
+    "admin": "व्यवस्थापक",
+    "feedback": "प्रतिक्रिया",
+    "darkMode": "डार्क मोड",
+    "logOut": "लॉग आउट",
+    "privacyPolicy": "गोपनीयता नीति",
+    "termsOfService": "सेवा की शर्तें",
+    "language": "भाषा",
+    "selectLanguage": "भाषा चुनें"
+  }
+}
+

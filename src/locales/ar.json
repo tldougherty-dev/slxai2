@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "الخلاصة العامة",
+    "summit2026": "القمة 2026",
+    "discussions": "المناقشات",
+    "voting": "التصويت",
+    "files": "الملفات",
+    "memberDirectory": "دليل الأعضاء",
+    "myProfile": "ملفي الشخصي",
+    "myOrganization": "منظمتي",
+    "summitPlanning": "تخطيط القمة",
+    "admin": "المسؤول",
+    "feedback": "التعليقات",
+    "darkMode": "الوضع الداكن",
+    "logOut": "تسجيل الخروج",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfService": "شروط الخدمة",
+    "language": "اللغة",
+    "selectLanguage": "اختر اللغة"
+  }
+}
+

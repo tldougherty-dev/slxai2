@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "Globaler Feed",
+    "summit2026": "Gipfel 2026",
+    "discussions": "Diskussionen",
+    "voting": "Abstimmung",
+    "files": "Dateien",
+    "memberDirectory": "Mitgliederverzeichnis",
+    "myProfile": "Mein Profil",
+    "myOrganization": "Meine Organisation",
+    "summitPlanning": "Gipfelplanung",
+    "admin": "Administrator",
+    "feedback": "Feedback",
+    "darkMode": "Dunkler Modus",
+    "logOut": "Abmelden",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "language": "Sprache",
+    "selectLanguage": "Sprache Auswählen"
+  }
+}
+

@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "Fil d'Actualité",
+    "summit2026": "Sommet 2026",
+    "discussions": "Discussions",
+    "voting": "Vote",
+    "files": "Fichiers",
+    "memberDirectory": "Annuaire des Membres",
+    "myProfile": "Mon Profil",
+    "myOrganization": "Mon Organisation",
+    "summitPlanning": "Planification du Sommet",
+    "admin": "Administrateur",
+    "feedback": "Commentaires",
+    "darkMode": "Mode Sombre",
+    "logOut": "Se Déconnecter",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "language": "Langue",
+    "selectLanguage": "Sélectionner la Langue"
+  }
+}
+

@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "전체 피드",
+    "summit2026": "2026 서밋",
+    "discussions": "토론",
+    "voting": "투표",
+    "files": "파일",
+    "memberDirectory": "회원 디렉토리",
+    "myProfile": "내 프로필",
+    "myOrganization": "내 조직",
+    "summitPlanning": "서밋 계획",
+    "admin": "관리자",
+    "feedback": "피드백",
+    "darkMode": "다크 모드",
+    "logOut": "로그아웃",
+    "privacyPolicy": "개인정보 보호정책",
+    "termsOfService": "서비스 약관",
+    "language": "언어",
+    "selectLanguage": "언어 선택"
+  }
+}
+

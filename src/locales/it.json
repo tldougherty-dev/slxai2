@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "Feed Globale",
+    "summit2026": "Vertice 2026",
+    "discussions": "Discussioni",
+    "voting": "Votazione",
+    "files": "File",
+    "memberDirectory": "Elenco Membri",
+    "myProfile": "Il Mio Profilo",
+    "myOrganization": "La Mia Organizzazione",
+    "summitPlanning": "Pianificazione Vertice",
+    "admin": "Amministratore",
+    "feedback": "Feedback",
+    "darkMode": "Modalità Scura",
+    "logOut": "Esci",
+    "privacyPolicy": "Informativa sulla Privacy",
+    "termsOfService": "Termini di Servizio",
+    "language": "Lingua",
+    "selectLanguage": "Seleziona Lingua"
+  }
+}
+

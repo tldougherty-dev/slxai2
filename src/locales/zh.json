@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "全球动态",
+    "summit2026": "2026峰会",
+    "discussions": "讨论",
+    "voting": "投票",
+    "files": "文件",
+    "memberDirectory": "成员目录",
+    "myProfile": "我的资料",
+    "myOrganization": "我的组织",
+    "summitPlanning": "峰会规划",
+    "admin": "管理员",
+    "feedback": "反馈",
+    "darkMode": "深色模式",
+    "logOut": "登出",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款",
+    "language": "语言",
+    "selectLanguage": "选择语言"
+  }
+}
+

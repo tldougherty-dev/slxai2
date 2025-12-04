@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "グローバルフィード",
+    "summit2026": "サミット2026",
+    "discussions": "ディスカッション",
+    "voting": "投票",
+    "files": "ファイル",
+    "memberDirectory": "メンバー一覧",
+    "myProfile": "マイプロフィール",
+    "myOrganization": "マイ組織",
+    "summitPlanning": "サミット計画",
+    "admin": "管理者",
+    "feedback": "フィードバック",
+    "darkMode": "ダークモード",
+    "logOut": "ログアウト",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "language": "言語",
+    "selectLanguage": "言語を選択"
+  }
+}
+

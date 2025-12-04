@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "Глобальная лента",
+    "summit2026": "Саммит 2026",
+    "discussions": "Обсуждения",
+    "voting": "Голосование",
+    "files": "Файлы",
+    "memberDirectory": "Каталог участников",
+    "myProfile": "Мой профиль",
+    "myOrganization": "Моя организация",
+    "summitPlanning": "Планирование саммита",
+    "admin": "Администратор",
+    "feedback": "Обратная связь",
+    "darkMode": "Темный режим",
+    "logOut": "Выйти",
+    "privacyPolicy": "Политика конфиденциальности",
+    "termsOfService": "Условия использования",
+    "language": "Язык",
+    "selectLanguage": "Выбрать язык"
+  }
+}
+

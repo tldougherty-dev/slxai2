@@ -1,0 +1,22 @@
+{
+  "common": {
+    "globalFeed": "Feed Global",
+    "summit2026": "Cúpula 2026",
+    "discussions": "Discussões",
+    "voting": "Votação",
+    "files": "Arquivos",
+    "memberDirectory": "Diretório de Membros",
+    "myProfile": "Meu Perfil",
+    "myOrganization": "Minha Organização",
+    "summitPlanning": "Planejamento da Cúpula",
+    "admin": "Administrador",
+    "feedback": "Comentários",
+    "darkMode": "Modo Escuro",
+    "logOut": "Sair",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço",
+    "language": "Idioma",
+    "selectLanguage": "Selecionar Idioma"
+  }
+}
+

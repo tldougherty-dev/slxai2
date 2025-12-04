@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Avatars Bucket</title>
+</head>
+<body>
+    <h1>Test Avatars Bucket Access</h1>
+    <button onclick="testBucket()">Test Bucket Access</button>
+    <div id="result"></div>
+
+    <script type="module">
+        // Replace with your Supabase credentials
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // Replace
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace
+        
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        window.testBucket = async function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                // Test 1: List bucket
+                console.log('Test 1: Listing bucket...');
+                const { data: listData, error: listError } = await supabase.storage
+                    .from('avatars')
+                    .list('profile-pictures', { limit: 1 });
+                
+                console.log('List result:', { listData, listError });
+                
+                if (listError) {
+                    resultDiv.innerHTML = `
+                        <h3>❌ Bucket Access Failed</h3>
+                        <p><strong>Error:</strong> ${listError.message}</p>
+                        <p><strong>Status:</strong> ${listError.statusCode}</p>
+                        <h4>Possible Issues:</h4>
+                        <ul>
+                            <li>Bucket doesn't exist</li>
+                            <li>Bucket is private and RLS policies aren't set</li>
+                            <li>You're not authenticated</li>
+                        </ul>
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Go to Supabase Dashboard → Storage</li>
+                            <li>Find the "avatars" bucket</li>
+                            <li>Make sure it's set to <strong>Public</strong></li>
+                            <li>Or set up RLS policies if it's private</li>
+                        </ol>
+                    `;
+                    return;
+                }
+                
+                // Test 2: Try uploading a small test file
+                console.log('Test 2: Uploading test file...');
+                const testBlob = new Blob(['test'], { type: 'text/plain' });
+                const testFileName = `test-${Date.now()}.txt`;
+                
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('avatars')
+                    .upload(`profile-pictures/${testFileName}`, testBlob, {
+                        cacheControl: '3600',
+                        upsert: false,
+                    });
+                
+                console.log('Upload result:', { uploadData, uploadError });
+                
+                if (uploadError) {
+                    resultDiv.innerHTML = `
+                        <h3>⚠️ Bucket Exists But Upload Failed</h3>
+                        <p><strong>Error:</strong> ${uploadError.message}</p>
+                        <p><strong>Status:</strong> ${uploadError.statusCode}</p>
+                        <h4>Issue:</h4>
+                        <p>The bucket exists but you don't have permission to upload.</p>
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Go to Supabase Dashboard → Storage → avatars bucket</li>
+                            <li>Click on "Policies" tab</li>
+                            <li>Make sure there's a policy allowing INSERT for authenticated users</li>
+                            <li>Or set the bucket to <strong>Public</strong></li>
+                        </ol>
+                        <h4>Quick Fix (Public Bucket):</h4>
+                        <ol>
+                            <li>Go to Storage → avatars bucket</li>
+                            <li>Click the settings/gear icon</li>
+                            <li>Toggle "Public bucket" to ON</li>
+                            <li>Save</li>
+                        </ol>
+                    `;
+                    return;
+                }
+                
+                // Test 3: Get public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('avatars')
+                    .getPublicUrl(`profile-pictures/${testFileName}`);
+                
+                // Clean up test file
+                await supabase.storage
+                    .from('avatars')
+                    .remove([`profile-pictures/${testFileName}`]);
+                
+                resultDiv.innerHTML = `
+                    <h3>✅ Bucket is Working!</h3>
+                    <p>Bucket access: ✅</p>
+                    <p>Upload: ✅</p>
+                    <p>Public URL: ${publicUrl}</p>
+                    <p><strong>Your bucket is configured correctly!</strong></p>
+                `;
+                
+            } catch (error) {
+                console.error('Test error:', error);
+                resultDiv.innerHTML = `
+                    <h3>❌ Test Failed</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p>Check the browser console for details.</p>
+                `;
+            }
+        };
+    </script>
+</body>
+</html>
+
