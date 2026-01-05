@@ -2,6 +2,8 @@
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser } from '@/lib/auth';
 import { isUserVotingRepresentative } from '@/data/membersData';
+import { sendNewVoteNotification } from '@/lib/email';
+import { notifyAllUsers } from '@/lib/emailNotifications';
 
 export interface VoteOption {
   id: string;
@@ -162,6 +164,27 @@ export async function addVote(vote: Vote): Promise<void> {
         .insert(optionsToInsert);
 
       if (optionsError) throw optionsError;
+    }
+
+    // Send email notifications to all users who want vote notifications
+    if (vote.status === 'active') {
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+      const voteUrl = `${baseUrl}/membership-portal/voting`;
+      
+      // Send notifications asynchronously (don't block vote creation)
+      notifyAllUsers('voteNew', async (email, userId) => {
+        return sendNewVoteNotification(
+          email,
+          vote.title,
+          vote.description,
+          voteUrl,
+          userId
+        );
+      }).catch(err => {
+        if (import.meta.env.DEV) {
+          console.error('Error sending vote notifications:', err);
+        }
+      });
     }
   } catch (error) {
     console.error('Error adding vote to Supabase:', error);

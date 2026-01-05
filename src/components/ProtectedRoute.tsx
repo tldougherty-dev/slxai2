@@ -56,7 +56,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           role: role,
         });
       }
-      return <Navigate to="/membership-portal" replace />;
+      return <Navigate to="/membership-portal/feed" replace />;
     }
   }
 

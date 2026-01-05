@@ -1,5 +1,7 @@
 // Feed system data management
 import { supabase } from '@/lib/supabase';
+import { sendNewPostNotification } from '@/lib/email';
+import { notifyAllUsers } from '@/lib/emailNotifications';
 
 export type PostType = 'video' | 'document' | 'link' | 'text';
 export type ReactionType = 'like' | 'love' | 'celebrate' | 'insightful' | 'curious';
@@ -354,28 +356,32 @@ export async function createPost(post: {
     }).select();
 
     if (error) {
-      // Log full error details
-      console.error('Supabase insert error:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        organizationId: post.organizationId,
-        userOrgId: user.user_metadata?.organization_id,
-      });
+      // Log full error details (dev only)
+      if (import.meta.env.DEV) {
+        console.error('Supabase insert error:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          organizationId: post.organizationId,
+          userOrgId: user.user_metadata?.organization_id,
+        });
+      }
       
       // Provide more detailed error messages
       if (error.code === '42501') {
-        // Log the full error for debugging
-        console.error('RLS Permission Denied - Full Error:', {
-          errorCode: error.code,
-          errorMessage: error.message,
-          errorDetails: error.details,
-          errorHint: error.hint,
-          organizationId: post.organizationId,
-          userOrgIdFromToken: user.user_metadata?.organization_id,
-          userId: user.id,
-        });
+        // Log the full error for debugging (dev only)
+        if (import.meta.env.DEV) {
+          console.error('RLS Permission Denied - Full Error:', {
+            errorCode: error.code,
+            errorMessage: error.message,
+            errorDetails: error.details,
+            errorHint: error.hint,
+            organizationId: post.organizationId,
+            userOrgIdFromToken: user.user_metadata?.organization_id,
+            userId: user.id,
+          });
+        }
         throw new Error(`Permission denied (RLS): Your org_id in token: ${user.user_metadata?.organization_id || 'null'}, Trying to post for: ${post.organizationId}. The RLS policy is blocking this.`);
       } else if (error.code === '23503') {
         throw new Error('Invalid organization: The organization ID does not exist.');
@@ -387,6 +393,26 @@ export async function createPost(post: {
     if (!data || data.length === 0) {
       throw new Error('Post was not created. Please try again.');
     }
+
+    // Send email notifications to all users who want feed notifications
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+    const postUrl = `${baseUrl}/membership-portal`;
+    const authorName = user.user_metadata?.name || user.email?.split('@')[0] || 'User';
+    
+    // Send notifications asynchronously (don't block post creation)
+    notifyAllUsers('feedNewPost', async (email, userId) => {
+      return sendNewPostNotification(
+        email,
+        authorName,
+        post.content,
+        postUrl,
+        userId
+      );
+    }).catch(err => {
+      if (import.meta.env.DEV) {
+        console.error('Error sending post notifications:', err);
+      }
+    });
   } catch (error: any) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error creating post:', error);
@@ -444,6 +470,35 @@ export async function addComment(postId: string, content: string): Promise<void>
     });
 
     if (error) throw error;
+
+    // Get post author to notify them
+    const { data: postData } = await supabase
+      .from('feed_posts')
+      .select('author_email, author_id, author_name, content')
+      .eq('id', postId)
+      .single();
+
+    if (postData && postData.author_email && postData.author_email !== user.email) {
+      const commentAuthorName = user.user_metadata?.name || user.email?.split('@')[0] || 'User';
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+      const postUrl = `${baseUrl}/membership-portal`;
+      
+      // Send notification asynchronously
+      import('@/lib/email').then(({ sendReplyNotification }) => {
+        sendReplyNotification(
+          postData.author_email,
+          commentAuthorName,
+          content,
+          postUrl,
+          false, // isCommentReply
+          postData.author_id
+        ).catch(err => {
+          if (import.meta.env.DEV) {
+            console.error('Error sending reply notification:', err);
+          }
+        });
+      });
+    }
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error adding comment:', error);
@@ -570,7 +625,9 @@ export async function deletePost(postId: string): Promise<void> {
     // Refresh session to ensure we have latest user metadata
     const { data: { session }, error: sessionError } = await supabase.auth.refreshSession();
     if (sessionError) {
-      console.warn('Session refresh error:', sessionError);
+      if (import.meta.env.DEV) {
+        console.warn('Session refresh error:', sessionError);
+      }
     }
     
     const user = session?.user;

@@ -102,14 +102,16 @@ export async function submitWorkshop(data: Omit<WorkshopSubmission, 'id' | 'stat
       .single();
 
     if (error) {
-      console.error('Supabase error details:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        userId: session?.user?.id,
-        userEmail: session?.user?.email,
-      });
+      if (import.meta.env.DEV) {
+        console.error('Supabase error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          userId: session?.user?.id,
+          userEmail: session?.user?.email,
+        });
+      }
       
       // Provide more specific error messages
       if (error.code === '42501' || error.message?.includes('permission') || error.message?.includes('denied')) {
@@ -313,12 +315,14 @@ export async function submitSponsor(data: Omit<SponsorSubmission, 'id' | 'status
       .single();
 
     if (error) {
-      console.error('Supabase error details:', {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-      });
+      if (import.meta.env.DEV) {
+        console.error('Supabase error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+        });
+      }
       
       // Provide more specific error messages
       if (error.code === '42501') {

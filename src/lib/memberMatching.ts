@@ -58,7 +58,9 @@ export async function findMemberByEmail(email: string): Promise<MemberMatch | nu
       isVotingRep: personData.is_voting_rep || false,
     };
   } catch (error) {
-    console.error('Error finding member by email:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error finding member by email:', error);
+    }
     return null;
   }
 }
@@ -93,11 +95,15 @@ export async function linkUserToMember(userId: string, match: MemberMatch, exist
     });
 
     if (updateError) {
-      console.error('Error updating user metadata:', updateError);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error updating user metadata:', updateError);
+      }
       throw updateError;
     }
   } catch (error) {
-    console.error('Error linking user to member:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error linking user to member:', error);
+    }
     // Don't throw - this is a background operation
   }
 }
@@ -161,7 +167,14 @@ export async function createOrganizationForUser(
         console.error('Error creating member person:', personError);
       }
       // Try to clean up the member if person creation fails
-      await supabase.from('members').delete().eq('id', memberData.id);
+      try {
+        await supabase.from('members').delete().eq('id', memberData.id);
+      } catch (cleanupError) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error cleaning up member after person creation failure:', cleanupError);
+        }
+      }
+      // Return null to indicate failure, but don't throw - let caller handle gracefully
       return null;
     }
 

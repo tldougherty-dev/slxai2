@@ -427,6 +427,42 @@ export async function addFile(file: FileResource): Promise<void> {
       });
 
     if (error) throw error;
+
+    // Get category name for notification
+    let categoryName = 'Files';
+    if (file.categoryId) {
+      const { data: categoryData } = await supabase
+        .from('file_categories')
+        .select('name')
+        .eq('id', file.categoryId)
+        .single();
+      
+      if (categoryData) {
+        categoryName = categoryData.name;
+      }
+    }
+
+    // Send email notifications to all users who want file notifications
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+    const fileUrl = `${baseUrl}/membership-portal/files`;
+    
+    import('@/lib/emailNotifications').then(({ notifyAllUsers }) => {
+      import('@/lib/email').then(({ sendNewFileNotification }) => {
+        notifyAllUsers('fileNewUpload', async (email, userId) => {
+          return sendNewFileNotification(
+            email,
+            file.name,
+            categoryName,
+            fileUrl,
+            userId
+          );
+        }).catch(err => {
+          if (import.meta.env.DEV) {
+            console.error('Error sending file notifications:', err);
+          }
+        });
+      });
+    });
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error adding file to Supabase:', error);
