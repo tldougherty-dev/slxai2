@@ -26,6 +26,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { Member, MemberPerson } from '@/data/members';
 import { getAllMembers, deleteMember as deleteMemberData, updateMember, addMember as addMemberData } from '@/data/membersData';
+import { sendEmail, createEmailTemplate } from '@/lib/email';
 import { useMemo, useState as useReactState } from 'react';
 import { getCountryFlag } from '@/lib/countryFlags';
 import {
@@ -111,31 +112,21 @@ interface InterestSubmission {
   created_at: string;
 }
 
-// Placeholder email sending function
-async function sendApprovalEmail(email: string, name: string, signupUrl: string, passcode: string): Promise<void> {
-  // TODO: Implement actual email sending system
-  // This is a placeholder function
-  if (process.env.NODE_ENV === 'development') {
-    console.log('📧 Approval Email (Placeholder):');
-    console.log('To:', email);
-    console.log('Subject: Welcome to SLxAI - Your Signup Code');
-    console.log('Body:', `
-Dear ${name},
+// Email sending function using Resend
+import { sendApprovalEmail as sendApprovalEmailService } from '@/lib/email';
 
-Congratulations! Your interest in joining SLxAI has been approved.
-
-Your signup passcode is: ${passcode}
-
-Please use this code to create your account at: ${signupUrl}
-
-We look forward to having you as part of our community!
-
-Best regards,
-The SLxAI Team
-    `);
+async function sendApprovalEmail(email: string, name: string, signupUrl: string, passcode: string, userId?: string): Promise<void> {
+  try {
+    const success = await sendApprovalEmailService(email, name, signupUrl, passcode, userId);
+    if (!success && import.meta.env.DEV) {
+      console.warn('Email sending failed. Check Resend API key configuration.');
+    }
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.error('Error sending approval email:', error);
+    }
+    throw error;
   }
-  // Simulate email sending delay
-  await new Promise(resolve => setTimeout(resolve, 500));
 }
 
 // Interest Submissions Tab Component
@@ -977,6 +968,10 @@ export default function Admin() {
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState<Set<string>>(new Set());
+  const [showMergeDialog, setShowMergeDialog] = useState(false);
+  const [mergeTargetName, setMergeTargetName] = useState('');
+  const [mergeNameOption, setMergeNameOption] = useState<'select' | 'custom'>('select');
+  const [isMerging, setIsMerging] = useState(false);
   const [portalSettings, setPortalSettings] = useState<PortalSettings>({
     memberRegistration: true,
     publicDirectory: true,
@@ -1003,7 +998,11 @@ export default function Admin() {
   const [isLoadingChannels, setIsLoadingChannels] = useState(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [selectedChannelForMessages, setSelectedChannelForMessages] = useState<string | null>(null);
-  const [memberSection, setMemberSection] = useState<'companies' | 'individuals'>('individuals');
+  const [memberSection, setMemberSection] = useState<'companies' | 'individuals' | 'email'>('individuals');
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailBody, setEmailBody] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [summitMembers, setSummitMembers] = useState<SummitMember[]>([]);
   const [summitSearchQuery, setSummitSearchQuery] = useState('');
   const [isLoadingSummitMembers, setIsLoadingSummitMembers] = useState(false);
@@ -2197,13 +2196,221 @@ export default function Admin() {
         title: "Member deleted",
         description: `Organization "${member?.organizationName || 'Unknown'}" has been removed.`,
       });
-    } catch (error) {
+    } catch (error: any) {
+      let errorMessage = "Failed to delete member. Please try again.";
+      if (error?.code === '23503') {
+        errorMessage = "Cannot delete organization: It is still referenced in other tables (e.g., summit members). The organization has been unlinked from those references.";
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to delete member. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       setMemberToDelete(null);
+    }
+  };
+
+  // Send email to all members
+  const handleSendEmailToAll = async () => {
+    if (!emailSubject.trim() || !emailBody.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in both subject and body.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSendingEmail(true);
+    try {
+      // Get all unique email addresses from all members
+      const allEmails = new Set<string>();
+      members.forEach(member => {
+        // Add POC email
+        if (member.pocEmail) {
+          allEmails.add(member.pocEmail.toLowerCase());
+        }
+        // Add all member person emails
+        member.members.forEach(person => {
+          if (person.email) {
+            allEmails.add(person.email.toLowerCase());
+          }
+        });
+      });
+
+      const emailList = Array.from(allEmails);
+      let successCount = 0;
+      let failCount = 0;
+
+      // Send emails in batches to avoid rate limits
+      const batchSize = 10;
+      for (let i = 0; i < emailList.length; i += batchSize) {
+        const batch = emailList.slice(i, i + batchSize);
+        const results = await Promise.all(
+          batch.map(async (email) => {
+            const htmlContent = createEmailTemplate(emailSubject, emailBody.replace(/\n/g, '<br>'));
+            const success = await sendEmail({
+              to: email,
+              subject: emailSubject,
+              html: htmlContent,
+            });
+            return { email, success };
+          })
+        );
+
+        results.forEach(result => {
+          if (result.success) {
+            successCount++;
+          } else {
+            failCount++;
+          }
+        });
+
+        // Small delay between batches to avoid rate limits
+        if (i + batchSize < emailList.length) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+
+      toast({
+        title: "Emails sent",
+        description: `Successfully sent ${successCount} email(s). ${failCount > 0 ? `${failCount} failed.` : ''}`,
+      });
+
+      // Clear form
+      setEmailSubject('');
+      setEmailBody('');
+
+      // Log activity
+      const user = getCurrentUser();
+      await addActivity({
+        type: 'member',
+        action: 'Bulk email sent',
+        name: `Sent email to ${successCount} members`,
+        userId: user?.id,
+        status: 'active',
+      });
+    } catch (error: any) {
+      if (import.meta.env.DEV) {
+        console.error('Error sending emails:', error);
+      }
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to send emails. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  // Send email to pending members
+  const handleEmailPendingMembers = async () => {
+    setIsSendingEmail(true);
+    try {
+      // Get all pending members
+      const pendingMembers = members.filter(m => m.status === 'pending');
+      const pendingEmails = new Set<string>();
+      
+      pendingMembers.forEach(member => {
+        if (member.pocEmail) {
+          pendingEmails.add(member.pocEmail.toLowerCase());
+        }
+        member.members.forEach(person => {
+          if (person.email && person.status === 'pending') {
+            pendingEmails.add(person.email.toLowerCase());
+          }
+        });
+      });
+
+      if (pendingEmails.size === 0) {
+        toast({
+          title: "No pending members",
+          description: "There are no pending members to email.",
+        });
+        setIsSendingEmail(false);
+        return;
+      }
+
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+      const signupUrl = `${baseUrl}/membership-portal/my-organization`;
+      
+      const subject = "Complete Your SLxAI Membership Signup";
+      const body = `
+        <p>Hello,</p>
+        <p>Your organization has been approved for SLxAI membership, but your signup process is still pending.</p>
+        <p>Please complete your signup by visiting your organization page and filling in all required information.</p>
+        <p>Thank you for your interest in SLxAI!</p>
+      `;
+
+      const emailList = Array.from(pendingEmails);
+      let successCount = 0;
+      let failCount = 0;
+
+      // Send emails in batches
+      const batchSize = 10;
+      for (let i = 0; i < emailList.length; i += batchSize) {
+        const batch = emailList.slice(i, i + batchSize);
+        const results = await Promise.all(
+          batch.map(async (email) => {
+            const htmlContent = createEmailTemplate(
+              subject,
+              body,
+              undefined,
+              email,
+              { text: 'Complete Signup', url: signupUrl }
+            );
+            const success = await sendEmail({
+              to: email,
+              subject: subject,
+              html: htmlContent,
+            });
+            return { email, success };
+          })
+        );
+
+        results.forEach(result => {
+          if (result.success) {
+            successCount++;
+          } else {
+            failCount++;
+          }
+        });
+
+        // Small delay between batches
+        if (i + batchSize < emailList.length) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+      }
+
+      toast({
+        title: "Emails sent",
+        description: `Successfully sent signup reminder to ${successCount} pending member(s). ${failCount > 0 ? `${failCount} failed.` : ''}`,
+      });
+
+      // Log activity
+      const user = getCurrentUser();
+      await addActivity({
+        type: 'member',
+        action: 'Pending member reminder sent',
+        name: `Sent signup reminder to ${successCount} pending members`,
+        userId: user?.id,
+        status: 'active',
+      });
+    } catch (error: any) {
+      if (import.meta.env.DEV) {
+        console.error('Error sending pending member emails:', error);
+      }
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to send emails. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingEmail(false);
     }
   };
 
@@ -2647,6 +2854,196 @@ export default function Admin() {
     setSelectedMembers(newSelected);
   };
 
+  const handleMergeOrganizations = async () => {
+    if (selectedMembers.size < 2) {
+      toast({
+        title: "Invalid selection",
+        description: "Please select at least 2 organizations to merge.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!mergeTargetName.trim()) {
+      toast({
+        title: "Organization name required",
+        description: "Please select or enter an organization name.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsMerging(true);
+    try {
+      const selectedOrgIds = Array.from(selectedMembers);
+      const selectedOrgs = members.filter(m => selectedOrgIds.includes(m.id));
+      
+      // Determine target organization (first selected, or create new)
+      const targetOrgId = selectedOrgIds[0];
+      const targetOrg = selectedOrgs[0];
+      
+      // Collect all member persons from all organizations
+      const allPersons: MemberPerson[] = [];
+      selectedOrgs.forEach(org => {
+        allPersons.push(...org.members);
+      });
+
+      // Remove duplicates by email
+      const uniquePersons = Array.from(
+        new Map(allPersons.map(p => [p.email.toLowerCase(), p])).values()
+      );
+
+      // Update target organization with merged data
+      // Prefer data from target org, but use best available from others
+      const mergedMember: Partial<Member> = {
+        organizationName: mergeTargetName.trim(),
+        country: targetOrg.country, // Keep target org's country
+        pocName: targetOrg.pocName, // Keep target org's POC
+        pocEmail: targetOrg.pocEmail,
+        pocTitle: targetOrg.pocTitle,
+        bio: targetOrg.bio || selectedOrgs.find(o => o.bio && o.bio.trim())?.bio,
+        website: targetOrg.website || selectedOrgs.find(o => o.website && o.website.trim())?.website,
+        logo: targetOrg.logo || selectedOrgs.find(o => o.logo && o.logo.trim())?.logo,
+        memberCount: uniquePersons.length,
+      };
+
+      // Update target organization (admin can update without currentUser check)
+      await updateMember(targetOrgId, mergedMember);
+
+      // Update all member_persons to point to target organization
+      const sourceOrgIds = selectedOrgIds.slice(1); // All except target
+      
+      for (const sourceOrgId of sourceOrgIds) {
+        // First, update summit_members references to point to target org
+        // If update fails (e.g., RLS policy), try setting to NULL instead
+        const { error: summitUpdateError, data: summitUpdateData } = await supabase
+          .from('summit_members')
+          .update({ 
+            organization_id: targetOrgId,
+            organization_name: mergeTargetName.trim()
+          })
+          .eq('organization_id', sourceOrgId)
+          .select();
+
+        if (summitUpdateError) {
+          if (import.meta.env.DEV) {
+            console.warn('Error updating summit_members references, trying to set to NULL:', summitUpdateError);
+          }
+          
+          // If update to target org fails, try setting to NULL to break the foreign key constraint
+          const { error: nullUpdateError } = await supabase
+            .from('summit_members')
+            .update({ 
+              organization_id: null,
+              organization_name: null
+            })
+            .eq('organization_id', sourceOrgId);
+
+          if (nullUpdateError) {
+            if (import.meta.env.DEV) {
+              console.error('Error setting summit_members to NULL:', nullUpdateError);
+            }
+            // If both updates fail, we can't safely delete - throw error
+            throw new Error(`Cannot delete organization: Failed to update summit_members references. Error: ${nullUpdateError.message}`);
+          }
+        }
+
+        // Get all persons from source org
+        const { data: sourcePersons, error: fetchError } = await supabase
+          .from('member_persons')
+          .select('*')
+          .eq('member_id', sourceOrgId);
+
+        if (!fetchError && sourcePersons && sourcePersons.length > 0) {
+          // Get existing persons in target org to check for duplicates
+          const { data: targetPersons } = await supabase
+            .from('member_persons')
+            .select('email')
+            .eq('member_id', targetOrgId);
+
+          const targetEmails = new Set(
+            (targetPersons || []).map(p => p.email.toLowerCase())
+          );
+
+          // Process each person from source org
+          for (const person of sourcePersons) {
+            const personEmail = person.email.toLowerCase();
+            
+            if (targetEmails.has(personEmail)) {
+              // Person already exists in target org, delete duplicate from source
+              await supabase
+                .from('member_persons')
+                .delete()
+                .eq('id', person.id);
+            } else {
+              // Person doesn't exist in target, move them
+              await supabase
+                .from('member_persons')
+                .update({ member_id: targetOrgId })
+                .eq('id', person.id);
+              targetEmails.add(personEmail); // Track added email
+            }
+          }
+        }
+
+        // Delete source organization (summit_members references already updated)
+        await deleteMemberData(sourceOrgId);
+      }
+
+      // Update member count for target org
+      const { data: finalPersons } = await supabase
+        .from('member_persons')
+        .select('*')
+        .eq('member_id', targetOrgId);
+
+      await supabase
+        .from('members')
+        .update({ member_count: finalPersons?.length || 0 })
+        .eq('id', targetOrgId);
+
+      // Log activity
+      const user = getCurrentUser();
+      await addActivity({
+        type: 'member',
+        action: 'Organizations merged',
+        name: `${selectedOrgs.length} organizations merged into ${mergeTargetName}`,
+        userId: user?.id,
+        status: 'active',
+      });
+
+      // Refresh members list
+      const updatedMembers = await getAllMembers();
+      setMembers(updatedMembers);
+      setSelectedMembers(new Set());
+      setShowMergeDialog(false);
+      setMergeTargetName('');
+      
+      toast({
+        title: "Organizations merged",
+        description: `${selectedOrgs.length} organizations have been merged into "${mergeTargetName}".`,
+      });
+    } catch (error: any) {
+      if (import.meta.env.DEV) {
+        console.error('Error merging organizations:', error);
+      }
+      
+      let errorMessage = "Failed to merge organizations. Please try again.";
+      if (error?.code === '23503') {
+        errorMessage = "Cannot delete organization: It is still referenced in other tables. Please contact support.";
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsMerging(false);
+    }
+  };
+
   const handleBulkDelete = async () => {
     if (selectedMembers.size === 0) {
       toast({
@@ -3062,9 +3459,21 @@ export default function Admin() {
               <Building2 className="h-4 w-4 mr-2" />
               Organization Members
             </Button>
+            <Button
+              variant={memberSection === 'email' ? 'default' : 'ghost'}
+              onClick={() => setMemberSection('email')}
+              className={`rounded-b-none ${
+                memberSection === 'email' 
+                  ? 'bg-electric-blue text-white hover:bg-electric-blue/90' 
+                  : 'text-gray-700 dark:text-white hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
+              }`}
+            >
+              <Mail className="h-4 w-4 mr-2" />
+              Email
+            </Button>
           </div>
 
-          {memberSection === 'individuals' ? (
+          {memberSection === 'individuals' && (
             <Card className="bg-white dark:bg-[hsl(217,40%,18%)] border border-gray-200 dark:border-[hsl(217,35%,25%)] shadow-sm !text-gray-900 dark:text-white">
               <CardHeader className="bg-white dark:bg-[hsl(217,40%,18%)] !text-gray-900 dark:text-white">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -3171,7 +3580,8 @@ export default function Admin() {
                 </div>
               </CardContent>
             </Card>
-          ) : (
+          )}
+          {memberSection === 'companies' && (
           <Card className="glass-card floating-hover">
             <CardHeader>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -3224,11 +3634,27 @@ export default function Admin() {
                     <Download className="h-4 w-4 mr-2" />
                     Export JSON
                   </Button>
+                  {selectedMembers.size > 1 && (
+                    <Button
+                      variant="default"
+                      onClick={() => {
+                        const selectedOrgs = members.filter(m => selectedMembers.has(m.id));
+                        setMergeTargetName(selectedOrgs[0]?.organizationName || '');
+                        setMergeNameOption('select');
+                        setShowMergeDialog(true);
+                      }}
+                      disabled={isLoading || isMerging}
+                      className="bg-electric-blue hover:bg-blue-600"
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Merge ({selectedMembers.size})
+                    </Button>
+                  )}
                   {selectedMembers.size > 0 && canDeleteUsers && (
                     <Button
                       variant="destructive"
                       onClick={handleBulkDelete}
-                      disabled={isLoading}
+                      disabled={isLoading || isMerging}
                     >
                       {isLoading ? (
                         <>
@@ -3250,6 +3676,25 @@ export default function Admin() {
                     <Plus className="h-4 w-4 mr-2" />
                     Add Member
                   </Button>
+                  {members.some(m => m.status === 'pending') && (
+                    <Button
+                      variant="outline"
+                      onClick={handleEmailPendingMembers}
+                      disabled={isSendingEmail}
+                    >
+                      {isSendingEmail ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="h-4 w-4 mr-2" />
+                          Email Pending Members
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardHeader>
@@ -3326,19 +3771,19 @@ export default function Admin() {
                                 size="sm"
                                 onClick={() => handleEditMember(member)}
                                 className="h-7 px-1.5 sm:px-2"
+                                title="Edit organization"
                               >
                                 <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                               </Button>
-                              {canDeleteUsers && (
-                                <Button 
-                                  variant="ghost" 
-                                  size="sm"
-                                  onClick={() => handleDeleteMemberClick(member.id)}
-                                  className="h-7 px-1.5 sm:px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                >
-                                  <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
-                                </Button>
-                              )}
+                              <Button 
+                                variant="ghost" 
+                                size="sm"
+                                onClick={() => handleDeleteMemberClick(member.id)}
+                                className="h-7 px-1.5 sm:px-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
+                                title="Delete organization"
+                              >
+                                <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                              </Button>
                             </div>
                           </td>
                         </tr>
@@ -3346,6 +3791,70 @@ export default function Admin() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+          )}
+          {memberSection === 'email' && (
+          <Card className="glass-card floating-hover">
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <CardTitle className="text-lg sm:text-xl">Email All Members</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">Send an email to all members in the system</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email-subject">Subject</Label>
+                <Input
+                  id="email-subject"
+                  placeholder="Enter email subject"
+                  value={emailSubject}
+                  onChange={(e) => setEmailSubject(e.target.value)}
+                  className="bg-white dark:bg-[hsl(217,40%,18%)] text-gray-900 dark:text-white"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email-body">Email Body</Label>
+                <Textarea
+                  id="email-body"
+                  placeholder="Enter email body (supports HTML)"
+                  value={emailBody}
+                  onChange={(e) => setEmailBody(e.target.value)}
+                  rows={10}
+                  className="bg-white dark:bg-[hsl(217,40%,18%)] text-gray-900 dark:text-white"
+                />
+              </div>
+              <div className="flex justify-end gap-2 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setEmailSubject('');
+                    setEmailBody('');
+                  }}
+                  disabled={isSendingEmail}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleSendEmailToAll}
+                  disabled={!emailSubject.trim() || !emailBody.trim() || isSendingEmail}
+                  className="bg-electric-blue hover:bg-blue-600"
+                >
+                  {isSendingEmail ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Send Email
+                    </>
+                  )}
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -5705,6 +6214,135 @@ export default function Admin() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Merge Organizations Dialog */}
+      <Dialog open={showMergeDialog} onOpenChange={setShowMergeDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Merge Organizations</DialogTitle>
+            <DialogDescription>
+              Select the organization name to use for the merged organization, or enter a new name.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label>Organizations to merge:</Label>
+              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 space-y-1 max-h-32 overflow-y-auto">
+                {members
+                  .filter(m => selectedMembers.has(m.id))
+                  .map((org) => (
+                    <div key={org.id} className="text-sm text-gray-700 dark:text-gray-300">
+                      • {org.organizationName} ({org.members.length} {org.members.length === 1 ? 'member' : 'members'})
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <Label>Choose organization name:</Label>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="select-name"
+                    name="name-option"
+                    checked={mergeNameOption === 'select'}
+                    onChange={() => {
+                      setMergeNameOption('select');
+                      const firstOrg = members.find(m => selectedMembers.has(m.id));
+                      setMergeTargetName(firstOrg?.organizationName || '');
+                    }}
+                    className="h-4 w-4 text-electric-blue"
+                  />
+                  <Label htmlFor="select-name" className="cursor-pointer">
+                    Select from existing names
+                  </Label>
+                </div>
+                {mergeNameOption === 'select' && (
+                  <Select
+                    value={mergeTargetName}
+                    onValueChange={setMergeTargetName}
+                  >
+                    <SelectTrigger className="ml-6">
+                      <SelectValue placeholder="Select organization name" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {members
+                        .filter(m => selectedMembers.has(m.id))
+                        .map((org) => (
+                          <SelectItem key={org.id} value={org.organizationName}>
+                            {org.organizationName}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                )}
+
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="custom-name"
+                    name="name-option"
+                    checked={mergeNameOption === 'custom'}
+                    onChange={() => {
+                      setMergeNameOption('custom');
+                      setMergeTargetName('');
+                    }}
+                    className="h-4 w-4 text-electric-blue"
+                  />
+                  <Label htmlFor="custom-name" className="cursor-pointer">
+                    Enter new name
+                  </Label>
+                </div>
+                {mergeNameOption === 'custom' && (
+                  <Input
+                    placeholder="Enter organization name"
+                    value={mergeTargetName}
+                    onChange={(e) => setMergeTargetName(e.target.value)}
+                    className="ml-6"
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+              <p className="text-sm text-blue-800 dark:text-blue-200">
+                <strong>Note:</strong> All individuals from the selected organizations will be merged into one organization. 
+                Duplicate organizations will be removed.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2 justify-end">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowMergeDialog(false);
+                setMergeTargetName('');
+              }}
+              disabled={isMerging}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleMergeOrganizations}
+              disabled={isMerging || !mergeTargetName.trim()}
+              className="bg-electric-blue hover:bg-blue-600"
+            >
+              {isMerging ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Merging...
+                </>
+              ) : (
+                <>
+                  <Users className="h-4 w-4 mr-2" />
+                  Merge Organizations
+                </>
+              )}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

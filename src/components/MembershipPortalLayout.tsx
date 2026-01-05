@@ -40,6 +40,7 @@ import {
   Sun,
   MessageCircle,
   Globe,
+  Bell,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { logout, getCurrentUser, isAuthenticated, getUserRole } from '@/lib/auth';
@@ -105,6 +106,11 @@ const baseMenuItemsConfig = [
     titleKey: 'common.feedback',
     icon: MessageCircle,
     href: '/membership-portal/feedback',
+  },
+  {
+    titleKey: 'common.notifications',
+    icon: Bell,
+    href: '/membership-portal/notifications',
   },
 ];
 

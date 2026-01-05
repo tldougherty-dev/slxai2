@@ -189,7 +189,9 @@ export async function getAllMembers(): Promise<Member[]> {
       supabaseRowToMember(member, personsByMember.get(member.id) || [])
     );
   } catch (error) {
-    console.error('Error fetching members from Supabase, using fallback:', error);
+    if (import.meta.env.DEV) {
+      console.error('Error fetching members from Supabase, using fallback:', error);
+    }
     return [...membersData];
   }
 }
@@ -344,7 +346,9 @@ export async function getMemberById(id: string): Promise<Member | undefined> {
     
     return result;
   } catch (error) {
-    console.error('Error fetching member from Supabase, using fallback:', error);
+    if (import.meta.env.DEV) {
+      console.error('Error fetching member from Supabase, using fallback:', error);
+    }
     return membersData.find(m => m.id === id);
   }
 }
@@ -530,6 +534,34 @@ export async function updateMember(memberId: string, updates: Partial<Member>, c
 // Delete a member (from Supabase)
 export async function deleteMember(memberId: string): Promise<void> {
   try {
+    // First, handle summit_members references (set to NULL or delete)
+    // Check if there are any summit_members referencing this organization
+    const { data: summitMembers, error: summitCheckError } = await supabase
+      .from('summit_members')
+      .select('id')
+      .eq('organization_id', memberId);
+
+    if (!summitCheckError && summitMembers && summitMembers.length > 0) {
+      // Update summit_members to remove organization reference
+      const { error: summitUpdateError, data: summitUpdateData } = await supabase
+        .from('summit_members')
+        .update({ 
+          organization_id: null,
+          organization_name: null
+        })
+        .eq('organization_id', memberId)
+        .select();
+
+      if (summitUpdateError) {
+        if (import.meta.env.DEV) {
+          console.error('Error updating summit_members before delete:', summitUpdateError);
+        }
+        // If we can't update summit_members, we can't safely delete
+        throw new Error(`Cannot delete organization: Failed to update summit_members references. The organization is still referenced in summit_members table. Error: ${summitUpdateError.message}`);
+      }
+    }
+
+    // Now delete the member organization
     const { error } = await supabase
       .from('members')
       .delete()
@@ -540,7 +572,9 @@ export async function deleteMember(memberId: string): Promise<void> {
     // Also update local cache
     membersData = membersData.filter(m => m.id !== memberId);
   } catch (error) {
-    console.error('Error deleting member from Supabase:', error);
+    if (import.meta.env.DEV) {
+      console.error('Error deleting member from Supabase:', error);
+    }
     // Fallback to local
     membersData = membersData.filter(m => m.id !== memberId);
     throw error;

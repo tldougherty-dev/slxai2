@@ -9,7 +9,7 @@ const TRANSLATION_API_KEY = import.meta.env.VITE_TRANSLATION_API_KEY;
 
 // Debug: Log environment variables on module load (dev only)
 if (import.meta.env.DEV) {
-  console.log('Translation API Config Check:', {
+  const config = {
     enabled: TRANSLATION_API_ENABLED,
     url: TRANSLATION_API_URL,
     hasKey: !!TRANSLATION_API_KEY,
@@ -18,7 +18,8 @@ if (import.meta.env.DEV) {
     envKeyExists: !!import.meta.env.VITE_TRANSLATION_API_KEY,
     envKeyLength: import.meta.env.VITE_TRANSLATION_API_KEY?.length || 0,
     allEnvKeys: Object.keys(import.meta.env).filter(k => k.includes('TRANSLATION')),
-  });
+  };
+  console.log('Translation API Config Check:', config);
 }
 
 // Cache for translations to avoid repeated API calls

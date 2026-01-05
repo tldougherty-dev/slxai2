@@ -36,9 +36,13 @@ export default function Login() {
     organization: string;
     country: string;
   } | null>(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [isSendingReset, setIsSendingReset] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
   
-  // Get return URL from location state, or default to membership portal
-  const from = (location.state as any)?.from?.pathname || '/membership-portal';
+  // Get return URL from location state, or default to global feed page
+  const from = (location.state as any)?.from?.pathname || '/membership-portal/feed';
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -193,10 +197,19 @@ export default function Login() {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        if (import.meta.env.DEV) {
+          console.error('Supabase signup error:', error);
+        }
+        throw error;
+      }
 
-      if (data.user) {
-        // Auto-link user to member profile if email matches, or create new organization
+      if (!data.user) {
+        throw new Error('Account creation failed. Please try again.');
+      }
+
+      // Auto-link user to member profile if email matches, or create new organization
+      try {
         const match = await autoLinkUserToMember(
           pendingSignupData.email,
           data.user.id,
@@ -206,35 +219,89 @@ export default function Login() {
           pendingSignupData.country
         );
 
-        // Send email confirmation
+        if (!match && pendingSignupData.organization) {
+          // If organization creation failed, show warning but don't block signup
+          if (import.meta.env.DEV) {
+            console.warn('Failed to create organization during signup, but account was created');
+          }
+          toast({
+            title: "Account created",
+            description: "Your account was created successfully, but there was an issue linking your organization. Please contact support if this persists.",
+            variant: "default",
+          });
+        }
+      } catch (linkError: any) {
+        // Log error but don't block signup - account is already created
+        if (import.meta.env.DEV) {
+          console.error('Error linking user to member during signup:', linkError);
+        }
+        toast({
+          title: "Account created",
+          description: "Your account was created successfully, but there was an issue setting up your profile. You can complete your profile after verifying your email.",
+          variant: "default",
+        });
+      }
+
+      // Send email confirmation
+      try {
         const { error: emailError } = await supabase.auth.resend({
           type: 'signup',
           email: pendingSignupData.email,
         });
 
         if (emailError) {
-          console.error('Error sending confirmation email:', emailError);
+          if (import.meta.env.DEV) {
+            console.error('Error sending confirmation email:', emailError);
+          }
+          // Don't throw - account is created, email can be resent later
+          toast({
+            title: "Account created",
+            description: "Your account was created, but we couldn't send the verification email. Please use the resend button below.",
+            variant: "default",
+          });
         }
-
-        // Show email verification guidance
-        setVerificationEmail(pendingSignupData.email);
-        setShowEmailVerification(true);
-
-        // Clear signup form and pending data
-        setSignupName('');
-        setSignupEmail('');
-        setSignupPassword('');
-        setSignupConfirmPassword('');
-        setSignupOrganization('');
-        setSignupCountry('');
-        setSignupPasscode('');
-        setPendingSignupData(null);
+      } catch (emailError: any) {
+        if (import.meta.env.DEV) {
+          console.error('Error in email resend:', emailError);
+        }
+        // Continue - user can resend email manually
       }
+
+      // Show email verification guidance
+      setVerificationEmail(pendingSignupData.email);
+      setShowEmailVerification(true);
+
+      // Clear signup form and pending data
+      setSignupName('');
+      setSignupEmail('');
+      setSignupPassword('');
+      setSignupConfirmPassword('');
+      setSignupOrganization('');
+      setSignupCountry('');
+      setSignupPasscode('');
+      setPendingSignupData(null);
     } catch (error: any) {
-      console.error('Signup error:', error);
+      if (import.meta.env.DEV) {
+        console.error('Signup error:', error);
+      }
+      
+      let errorMessage = "Failed to create account. Please try again.";
+      
+      if (error.message?.includes('User already registered')) {
+        errorMessage = "An account with this email already exists. Please sign in instead.";
+      } else if (error.message?.includes('Password')) {
+        errorMessage = "Password doesn't meet requirements. Please check and try again.";
+      } else if (error.message?.includes('Email')) {
+        errorMessage = "Invalid email address. Please check and try again.";
+      } else if (error.message?.includes('rate limit') || error.message?.includes('too many')) {
+        errorMessage = "Too many signup attempts. Please wait a moment before trying again.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Signup failed",
-        description: error.message || "Failed to create account. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
       setPendingSignupData(null);
@@ -270,6 +337,96 @@ export default function Login() {
       });
     } finally {
       setIsResendingEmail(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!forgotPasswordEmail || !forgotPasswordEmail.trim()) {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(forgotPasswordEmail)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSendingReset(true);
+
+    try {
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+      const redirectTo = `${baseUrl}/reset-password`;
+
+      if (import.meta.env.DEV) {
+        console.log('Sending password reset email:', {
+          email: forgotPasswordEmail,
+          redirectTo: redirectTo,
+          supabaseUrl: import.meta.env.VITE_SUPABASE_URL,
+        });
+      }
+
+      const { data, error } = await supabase.auth.resetPasswordForEmail(forgotPasswordEmail, {
+        redirectTo: redirectTo,
+      });
+
+      if (import.meta.env.DEV) {
+        console.log('Password reset response:', { data, error });
+      }
+
+      if (error) {
+        // Log full error details
+        if (import.meta.env.DEV) {
+          console.error('Supabase password reset error:', {
+            message: error.message,
+            status: error.status,
+            name: error.name,
+            fullError: error,
+          });
+        }
+        throw error;
+      }
+
+      // Note: Supabase returns success even if email doesn't exist (security)
+      // The email will only be sent if the user exists in Supabase
+      setResetEmailSent(true);
+      toast({
+        title: "Reset email sent",
+        description: "If an account exists with this email, you will receive password reset instructions. Please check your inbox and spam folder.",
+      });
+    } catch (error: any) {
+      if (import.meta.env.DEV) {
+        console.error('Error sending password reset email:', error);
+      }
+      
+      let errorMessage = "Failed to send reset email. Please try again.";
+      
+      if (error?.message?.includes('rate limit') || error?.message?.includes('too many')) {
+        errorMessage = "Too many requests. Please wait a moment before trying again.";
+      } else if (error?.message?.includes('email')) {
+        errorMessage = error.message;
+      } else if (error?.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingReset(false);
     }
   };
 
@@ -488,19 +645,32 @@ export default function Login() {
                     />
                   </div>
 
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="remember-me"
-                      checked={rememberMe}
-                      onCheckedChange={(checked) => setRememberMe(checked === true)}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="remember-me"
+                        checked={rememberMe}
+                        onCheckedChange={(checked) => setRememberMe(checked === true)}
+                        disabled={isLoading}
+                      />
+                      <Label
+                        htmlFor="remember-me"
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        Remember me
+                      </Label>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setForgotPasswordEmail(loginEmail);
+                        setShowForgotPassword(true);
+                      }}
+                      className="text-sm text-electric-blue hover:underline"
                       disabled={isLoading}
-                    />
-                    <Label
-                      htmlFor="remember-me"
-                      className="text-sm font-normal cursor-pointer"
                     >
-                      Remember me
-                    </Label>
+                      Forgot password?
+                    </button>
                   </div>
 
                   <Button
@@ -841,6 +1011,84 @@ export default function Login() {
         }}
         onAgree={handleTermsAgreement}
       />
+
+      {/* Forgot Password Dialog */}
+      <Dialog open={showForgotPassword} onOpenChange={setShowForgotPassword}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Reset Password</DialogTitle>
+            <DialogDescription>
+              {resetEmailSent
+                ? "If an account exists with this email, you will receive password reset instructions. Please check your inbox and spam folder."
+                : "Enter your email address and we'll send you a link to reset your password."}
+            </DialogDescription>
+          </DialogHeader>
+          {resetEmailSent ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-center p-4">
+                <CheckCircle2 className="h-12 w-12 text-green-500" />
+              </div>
+              <p className="text-sm text-gray-600 text-center">
+                If an account exists with <strong>{forgotPasswordEmail}</strong>, you will receive an email with password reset instructions.
+              </p>
+              <Button
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setResetEmailSent(false);
+                  setForgotPasswordEmail('');
+                }}
+                className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+              >
+                Close
+              </Button>
+            </div>
+          ) : (
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="forgot-email">Email</Label>
+                <Input
+                  id="forgot-email"
+                  type="email"
+                  placeholder="your.email@organization.com"
+                  value={forgotPasswordEmail}
+                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                  required
+                  disabled={isSendingReset}
+                  className="bg-white"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setForgotPasswordEmail('');
+                  }}
+                  className="flex-1"
+                  disabled={isSendingReset}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1 bg-electric-blue hover:bg-electric-blue/90 text-white"
+                  disabled={isSendingReset}
+                >
+                  {isSendingReset ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Reset Link'
+                  )}
+                </Button>
+              </div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

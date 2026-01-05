@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase';
+import { sendDiscussionMessageNotification } from '@/lib/email';
+import { notifyUser } from '@/lib/emailNotifications';
 
 export interface Channel {
   id: string;
@@ -132,7 +134,7 @@ export async function createMessage(
 
     if (error) throw error;
 
-    return {
+    const message = {
       id: data.id,
       channelId: data.channel_id,
       author: data.author,
@@ -142,6 +144,42 @@ export async function createMessage(
       createdAt: new Date(data.created_at),
       updatedAt: new Date(data.updated_at),
     };
+
+    // Get channel name for notification
+    const { data: channelData } = await supabase
+      .from('channels')
+      .select('name')
+      .eq('id', channelId)
+      .single();
+
+    const channelName = channelData?.name || 'Discussion';
+
+    // Send email notifications to all users who want discussion notifications
+    // (excluding the message author)
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
+    const messageUrl = `${baseUrl}/membership-portal/discussions?channel=${channelId}`;
+    
+    import('@/lib/emailNotifications').then(({ notifyAllUsers }) => {
+      notifyAllUsers('discussionNewMessage', async (email, userId) => {
+        // Don't notify the author
+        if (email === authorEmail) return false;
+        
+        return sendDiscussionMessageNotification(
+          email,
+          channelName,
+          authorName,
+          content,
+          messageUrl,
+          userId
+        );
+      }).catch(err => {
+        if (import.meta.env.DEV) {
+          console.error('Error sending discussion notifications:', err);
+        }
+      });
+    });
+
+    return message;
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.error('Error creating message:', error);

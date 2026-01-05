@@ -23,11 +23,13 @@ import Admin from "./pages/membership-portal/Admin";
 import SummitPlanning from "./pages/membership-portal/SummitPlanning";
 import Summit2026 from "./pages/membership-portal/Summit2026";
 import Feedback from "./pages/membership-portal/Feedback";
+import NotificationPreferences from "./pages/membership-portal/NotificationPreferences";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import MigrateData from "./pages/MigrateData";
 import Login from "./pages/Login";
+import ResetPassword from "./pages/ResetPassword";
 import Interest from "./pages/Interest";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -61,6 +63,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/interest" element={<Interest />} />
           <Route
             path="/membership-portal"
@@ -213,6 +216,18 @@ const App = () => (
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <Feedback />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/membership-portal/notifications"
+            element={
+              <ProtectedRoute>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <NotificationPreferences />
                   </ErrorBoundary>
                 </MembershipPortalLayout>
               </ProtectedRoute>
