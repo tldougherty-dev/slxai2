@@ -463,3 +463,182 @@ export async function deleteSponsorSubmission(id: string): Promise<void> {
   }
 }
 
+// Ticket Reservation Interfaces and Functions
+export interface TicketReservation {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  organization?: string;
+  status: 'reserved' | 'confirmed' | 'cancelled';
+  reservedAt: Date;
+  confirmedAt?: Date;
+  cancelledAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const MAX_TICKETS = 175;
+
+export async function submitTicketReservation(
+  data: Omit<TicketReservation, 'id' | 'status' | 'reservedAt' | 'createdAt' | 'updatedAt' | 'confirmedAt' | 'cancelledAt'>
+): Promise<TicketReservation> {
+  try {
+    // Validate required fields
+    if (!data.name || !data.email) {
+      throw new Error('Name and email are required.');
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      throw new Error('Invalid email format.');
+    }
+
+    // Check availability before inserting
+    const availableCount = await getAvailableTicketCount();
+    if (availableCount <= 0) {
+      throw new Error('Sorry, all tickets have been reserved. Please check back later.');
+    }
+
+    // Try to insert - let the unique constraint handle duplicate emails
+    // Note: We don't use .select() like interest_submissions - just insert without reading back
+    const { error } = await supabase
+      .from('summit_ticket_reservations')
+      .insert({
+        name: data.name,
+        email: data.email,
+        phone: data.phone || null,
+        organization: data.organization || null,
+        status: 'reserved',
+      });
+
+    if (error) {
+      if (import.meta.env.DEV) {
+        console.error('Supabase error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+        });
+      }
+
+      // Handle unique constraint violation (duplicate email)
+      if (error.code === '23505' || error.message?.includes('unique') || error.message?.includes('duplicate')) {
+        throw new Error('You already have a ticket reservation with this email address.');
+      } else if (error.code === '42501') {
+        throw new Error('Permission denied: Please run FIX_TICKET_RESERVATIONS_COMPLETE.sql in Supabase SQL Editor to fix permissions.');
+      } else if (error.code === '42P01') {
+        throw new Error('Database error: The ticket reservations table does not exist. Please run SUMMIT_TICKET_RESERVATIONS_SCHEMA.sql in Supabase SQL Editor.');
+      } else {
+        throw new Error(`Failed to submit reservation: ${error.message} (Code: ${error.code})`);
+      }
+    }
+
+    // Return a success response without reading back the inserted data
+    // This matches the pattern used by interest_submissions
+    return {
+      id: 'temp-id',
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      organization: data.organization,
+      status: 'reserved' as const,
+      reservedAt: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error submitting ticket reservation:', error);
+    }
+    throw error;
+  }
+}
+
+export async function getAvailableTicketCount(): Promise<number> {
+  try {
+    const { data, error } = await supabase.rpc('get_available_ticket_count');
+
+    if (error) {
+      // If function doesn't exist or fails, return 0 to be safe
+      // Note: Fallback direct SELECT won't work for anonymous users due to RLS
+      // The function should always exist if FIX_TICKET_RESERVATIONS_COMPLETE.sql was run
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('get_available_ticket_count RPC function failed:', error);
+      }
+      return 0;
+    }
+
+    return data || 0;
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error getting available ticket count:', error);
+    }
+    // Return 0 on error to be safe
+    return 0;
+  }
+}
+
+export async function getReservedTicketCount(): Promise<number> {
+  try {
+    const { data, error } = await supabase.rpc('get_reserved_ticket_count');
+
+    if (error) {
+      // If function doesn't exist or fails, return 0 to be safe
+      // Note: Fallback direct SELECT won't work for anonymous users due to RLS
+      // The function should always exist if FIX_TICKET_RESERVATIONS_COMPLETE.sql was run
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('get_reserved_ticket_count RPC function failed:', error);
+      }
+      return 0;
+    }
+
+    return data || 0;
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error getting reserved ticket count:', error);
+    }
+    return 0;
+  }
+}
+
+export async function getUserReservation(email: string): Promise<TicketReservation | null> {
+  try {
+    const { data, error } = await supabase
+      .from('summit_ticket_reservations')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // No rows returned
+        return null;
+      }
+      throw error;
+    }
+
+    if (!data) return null;
+
+    return {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      organization: data.organization,
+      status: data.status,
+      reservedAt: new Date(data.reserved_at),
+      confirmedAt: data.confirmed_at ? new Date(data.confirmed_at) : undefined,
+      cancelledAt: data.cancelled_at ? new Date(data.cancelled_at) : undefined,
+      createdAt: new Date(data.created_at),
+      updatedAt: new Date(data.updated_at),
+    };
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Error getting user reservation:', error);
+    }
+    throw error;
+  }
+}
+

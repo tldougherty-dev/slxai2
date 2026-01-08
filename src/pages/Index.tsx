@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
-import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, Clock, Hotel, Plane } from 'lucide-react';
+import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, Clock, Hotel, Plane, Ticket } from 'lucide-react';
 import InterestedCompanies from '@/components/InterestedCompanies';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -15,6 +15,7 @@ import { supabase } from '@/lib/supabase';
 import { sanitizeText, isValidLength } from '@/lib/security';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage, SUPPORTED_LANGUAGES } from '@/contexts/LanguageContext';
+import { submitTicketReservation, getAvailableTicketCount, getReservedTicketCount } from '@/data/summit2026';
 
 const Index = () => {
   const { toast } = useToast();
@@ -23,6 +24,10 @@ const Index = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
+  const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
+  const [isTicketSubmitted, setIsTicketSubmitted] = useState(false);
+  const [availableTickets, setAvailableTickets] = useState<number>(175);
+  const [reservedTickets, setReservedTickets] = useState<number>(0);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -30,6 +35,32 @@ const Index = () => {
     organization: '',
     reason: '',
   });
+
+  const [ticketForm, setTicketForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    organization: '',
+  });
+
+  // Load ticket availability on mount
+  useEffect(() => {
+    const loadTicketAvailability = async () => {
+      try {
+        const [available, reserved] = await Promise.all([
+          getAvailableTicketCount(),
+          getReservedTicketCount(),
+        ]);
+        setAvailableTickets(available);
+        setReservedTickets(reserved);
+      } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error loading ticket availability:', error);
+        }
+      }
+    };
+    loadTicketAvailability();
+  }, []);
 
   // Translate all homepage content
   useEffect(() => {
@@ -191,6 +222,113 @@ const Index = () => {
       setTimeout(() => {
         document.documentElement.style.scrollBehavior = 'auto';
       }, 2000);
+    }
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    if (!phone) return true; // Optional field
+    const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+    return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
+  };
+
+  const handleTicketSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!ticketForm.name.trim()) {
+      toast({
+        title: 'Name required',
+        description: 'Please enter your name.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (!ticketForm.email.trim()) {
+      toast({
+        title: 'Email required',
+        description: 'Please enter your email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (!validateEmail(ticketForm.email)) {
+      toast({
+        title: 'Invalid email',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    if (ticketForm.phone && !validatePhone(ticketForm.phone)) {
+      toast({
+        title: 'Invalid phone',
+        description: 'Please enter a valid phone number.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Check availability
+    if (availableTickets <= 0) {
+      toast({
+        title: 'Tickets Sold Out',
+        description: 'Sorry, all tickets have been reserved. Please check back later.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsSubmittingTicket(true);
+    try {
+      await submitTicketReservation({
+        name: sanitizeText(ticketForm.name.trim()),
+        email: ticketForm.email.toLowerCase().trim(),
+        phone: ticketForm.phone ? sanitizeText(ticketForm.phone.trim()) : undefined,
+        organization: ticketForm.organization ? sanitizeText(ticketForm.organization.trim()) : undefined,
+      });
+
+      // Refresh ticket counts
+      const [available, reserved] = await Promise.all([
+        getAvailableTicketCount(),
+        getReservedTicketCount(),
+      ]);
+      setAvailableTickets(available);
+      setReservedTickets(reserved);
+
+      setIsTicketSubmitted(true);
+      setTicketForm({
+        name: '',
+        email: '',
+        phone: '',
+        organization: '',
+      });
+
+      toast({
+        title: 'Reservation Successful!',
+        description: `Your ticket reservation has been confirmed. You've secured your spot! We'll notify you when ticket pricing is finalized (within the next 2 weeks) and provide instructions for completing your purchase.`,
+      });
+    } catch (error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error submitting ticket reservation:', error);
+      }
+      let errorMessage = 'Failed to submit your reservation. Please try again.';
+      if (error?.message?.includes('network') || error?.message?.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+      toast({
+        title: 'Reservation Failed',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmittingTicket(false);
     }
   };
 
@@ -448,6 +586,193 @@ const Index = () => {
       <section className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <InterestedCompanies />
+        </div>
+      </section>
+
+      {/* Ticket Reservation Section */}
+      <section className="py-12 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Reserve Your Conference Ticket
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Secure your spot at SLxAI Summit 2026. Ticket pricing will be finalized within the next 2 weeks.
+            </p>
+          </div>
+
+          {/* Ticket Availability Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+              <CardContent className="p-6 text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Available Tickets</div>
+                <div className="text-3xl font-bold text-electric-blue">{availableTickets}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">out of 175 total</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
+              <CardContent className="p-6 text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Reserved</div>
+                <div className="text-3xl font-bold text-green-600 dark:text-green-400">{reservedTickets}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">tickets reserved</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800">
+              <CardContent className="p-6 text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Ticket Price</div>
+                <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">TBD</div>
+                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Finalized in 2 weeks</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Reservation Form */}
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Ticket className="h-5 w-5 text-electric-blue" />
+                Ticket Pre-Reservation
+              </CardTitle>
+              <CardDescription>
+                This is a pre-reservation system. You're reserving the opportunity to purchase a ticket when pricing is finalized.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {isTicketSubmitted ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Reservation Confirmed!</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                    Your ticket reservation has been confirmed. We'll notify you when ticket pricing is finalized (within the next 2 weeks) and provide instructions for completing your purchase.
+                  </p>
+                  <Button
+                    onClick={() => {
+                      setIsTicketSubmitted(false);
+                      setTicketForm({ name: '', email: '', phone: '', organization: '' });
+                    }}
+                    variant="outline"
+                    className="bg-white dark:bg-gray-800"
+                  >
+                    Reserve Another Ticket
+                  </Button>
+                </div>
+              ) : availableTickets <= 0 ? (
+                <div className="text-center py-8">
+                  <div className="text-4xl mb-4">🎫</div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    All Tickets Reserved
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    We're sorry, but all 175 tickets have been reserved. Please check back later as cancellations may become available.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleTicketSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="ticket-name" className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-electric-blue" />
+                        Full Name *
+                      </Label>
+                      <Input
+                        id="ticket-name"
+                        name="name"
+                        type="text"
+                        placeholder="John Doe"
+                        value={ticketForm.name}
+                        onChange={(e) => setTicketForm({ ...ticketForm, name: e.target.value })}
+                        required
+                        disabled={isSubmittingTicket}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="ticket-email" className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-electric-blue" />
+                        Email Address *
+                      </Label>
+                      <Input
+                        id="ticket-email"
+                        name="email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={ticketForm.email}
+                        onChange={(e) => setTicketForm({ ...ticketForm, email: e.target.value })}
+                        required
+                        disabled={isSubmittingTicket}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="ticket-phone" className="flex items-center gap-2">
+                        <Phone className="h-4 w-4 text-electric-blue" />
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="ticket-phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={ticketForm.phone}
+                        onChange={(e) => setTicketForm({ ...ticketForm, phone: e.target.value })}
+                        disabled={isSubmittingTicket}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={50}
+                      />
+                      <p className="text-xs text-gray-500">Optional - for urgent communications</p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="ticket-organization" className="flex items-center gap-2">
+                        <Building2 className="h-4 w-4 text-electric-blue" />
+                        Organization
+                      </Label>
+                      <Input
+                        id="ticket-organization"
+                        name="organization"
+                        type="text"
+                        placeholder="Your organization or company"
+                        value={ticketForm.organization}
+                        onChange={(e) => setTicketForm({ ...ticketForm, organization: e.target.value })}
+                        disabled={isSubmittingTicket}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={200}
+                      />
+                      <p className="text-xs text-gray-500">Optional</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                      <strong>Important:</strong> Only 175 tickets are available. Reservations are processed on a first-come, first-served basis. You'll receive an email notification when ticket pricing is finalized with instructions on how to complete your purchase.
+                    </p>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+                    disabled={isSubmittingTicket || availableTickets <= 0}
+                  >
+                    {isSubmittingTicket ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Reserving...
+                      </>
+                    ) : (
+                      <>
+                        <Ticket className="h-4 w-4 mr-2" />
+                        Reserve My Ticket
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </section>
 
