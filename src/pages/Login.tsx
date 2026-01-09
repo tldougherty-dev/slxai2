@@ -53,6 +53,28 @@ export default function Login() {
     return !!rememberedEmail;
   });
 
+  // Force light mode on login page
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('dark');
+    
+    // Monitor and prevent dark mode from being added
+    const observer = new MutationObserver(() => {
+      if (root.classList.contains('dark')) {
+        root.classList.remove('dark');
+      }
+    });
+    
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   // Load remembered email on mount
   useEffect(() => {
     const rememberedEmail = localStorage.getItem('remembered_email');

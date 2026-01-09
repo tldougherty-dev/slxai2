@@ -43,6 +43,28 @@ const Index = () => {
     organization: '',
   });
 
+  // Force light mode on homepage
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('dark');
+    
+    // Monitor and prevent dark mode from being added
+    const observer = new MutationObserver(() => {
+      if (root.classList.contains('dark')) {
+        root.classList.remove('dark');
+      }
+    });
+    
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   // Load ticket availability on mount
   useEffect(() => {
     const loadTicketAvailability = async () => {
@@ -832,7 +854,7 @@ const Index = () => {
                     height="100%"
                     style={{ 
                       border: 0,
-                      filter: theme === 'dark' ? 'invert(1) hue-rotate(180deg)' : 'none'
+                      filter: 'none' // Always light mode on homepage
                     }}
                     allowFullScreen
                     loading="lazy"
