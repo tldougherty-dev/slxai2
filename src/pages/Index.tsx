@@ -153,7 +153,7 @@ const Index = () => {
         eveningEventsText: 'Sponsors may host evening activities, receptions, or demonstrations. These optional events give companies additional ways to connect with attendees and showcase their work.',
         capacityTitle: 'Capacity',
         maxCapacity: 'Max Capacity:',
-        maxCapacityValue: '200 attendees',
+        maxCapacityValue: '175 attendees',
         workshopsPanels: 'Workshops/Panels:',
         workshopsPanelsValue: 'Up to 15',
         importantDatesTitle: 'Important Dates',
@@ -163,6 +163,9 @@ const Index = () => {
         registrationFeeValue: 'TBD',
         hotelsTitle: 'Hotels Near Boston University',
         hotelsDescription: 'Several hotels are located within walking distance or a short ride from Boston University. We recommend booking early as April is a busy time in Boston. Popular options include:',
+        hotelBlockTitle: 'Hotel Block Available',
+        hotelBlockInfo: 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.',
+        hotelBlockNote: 'Block of 20 rooms reserved for three nights',
         hotel1: 'Hotel Commonwealth - 500 Commonwealth Avenue (0.3 miles)',
         hotel2: 'Hyatt Regency Boston - 1 Avenue de Lafayette (3.5 miles)',
         hotel3: 'Boston Marriott Copley Place - 110 Huntington Avenue (2.5 miles)',
@@ -970,7 +973,7 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 dark:text-white">
-                  <strong>{getText('maxCapacity', 'Max Capacity:')}</strong> {getText('maxCapacityValue', '200 attendees')}<br />
+                  <strong>{getText('maxCapacity', 'Max Capacity:')}</strong> {getText('maxCapacityValue', '175 attendees')}<br />
                   <strong>{getText('workshopsPanels', 'Workshops/Panels:')}</strong> {getText('workshopsPanelsValue', 'Up to 15')}
                 </p>
               </CardContent>
@@ -1002,10 +1005,18 @@ const Index = () => {
                 <p className="text-gray-700 dark:text-white text-sm">
                   {getText('hotelsDescription', 'Several hotels are located within walking distance or a short ride from Boston University. We recommend booking early as April is a busy time in Boston. Popular options include:')}
                 </p>
+                <div className="mt-3 mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                  <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
+                    {getText('hotelBlockTitle', 'Hotel Block Available')}
+                  </p>
+                  <p className="text-sm text-blue-800 dark:text-blue-300">
+                    {getText('hotelBlockInfo', 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.')}
+                  </p>
+                </div>
                 <ul className="mt-3 space-y-2 text-gray-700 dark:text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel1', 'Hotel Commonwealth - 500 Commonwealth Avenue (0.3 miles)')}</strong></span>
+                    <span><strong>{getText('hotel1', 'Hotel Commonwealth - 500 Commonwealth Avenue (0.3 miles)')}</strong> - {getText('hotelBlockNote', 'Block of 20 rooms reserved for three nights')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-electric-blue mr-2">•</span>

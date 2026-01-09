@@ -87,10 +87,9 @@ export default function InterestedCompanies() {
   const { language, translate } = useLanguage();
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   
-  // Calculate unique countries
-  const uniqueCountries = new Set(companies.map(company => company.country));
-  const countryCount = uniqueCountries.size;
-  const companyCount = companies.length;
+  // Set member and country counts
+  const companyCount = 90;
+  const countryCount = 41;
 
   // Translate content
   useEffect(() => {
@@ -101,7 +100,7 @@ export default function InterestedCompanies() {
       }
 
       const sections = {
-        title: 'Members Already Interested',
+        title: 'Organization Members Already Interested',
         membersLabel: 'Members',
         countriesLabel: 'Countries',
         description: 'Leading industry leaders in the sign language x AI space have already expressed interest in becoming founding members.',
@@ -123,7 +122,7 @@ export default function InterestedCompanies() {
 
   return (
     <section className="py-4">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Members Already Interested')}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Organization Members Already Interested')}</h2>
       
       {/* Infographics */}
       <div className="flex justify-center gap-6 mb-6">

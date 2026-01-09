@@ -611,7 +611,7 @@ export default function Summit2026() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 dark:text-white">
-                <strong>Max Capacity:</strong> 200 attendees<br />
+                <strong>Max Capacity:</strong> 175 attendees<br />
                 <strong>Workshops/Panels:</strong> Up to 15
               </p>
             </CardContent>
@@ -644,10 +644,18 @@ export default function Summit2026() {
                 Several hotels are located within walking distance or a short ride from Boston University. 
                 We recommend booking early as April is a busy time in Boston. Popular options include:
               </p>
+              <div className="mt-3 mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
+                  Hotel Block Available
+                </p>
+                <p className="text-sm text-blue-800 dark:text-blue-300">
+                  We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.
+                </p>
+              </div>
               <ul className="mt-3 space-y-2 text-gray-700 dark:text-white text-sm">
                 <li className="flex items-start">
                   <span className="text-electric-blue mr-2">•</span>
-                  <span><strong>Hotel Commonwealth</strong> - 500 Commonwealth Avenue (0.3 miles)</span>
+                  <span><strong>Hotel Commonwealth</strong> - 500 Commonwealth Avenue (0.3 miles) - Block of 20 rooms reserved for three nights</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-electric-blue mr-2">•</span>
