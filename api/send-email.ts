@@ -26,8 +26,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Check if Resend is configured
   if (!resend || !resendApiKey) {
-    console.error('Resend API key not configured');
-    return res.status(500).json({ error: 'Email service not configured' });
+    console.error('Resend API key not configured. RESEND_API_KEY:', resendApiKey ? 'Set (hidden)' : 'Not set');
+    return res.status(500).json({ 
+      error: 'Email service not configured',
+      message: 'RESEND_API_KEY environment variable is not set in Vercel. Please add it in Project Settings → Environment Variables.'
+    });
   }
 
   const { to, subject, html, from } = req.body;
@@ -55,7 +58,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error('Resend API error:', result.error);
       return res.status(500).json({ 
         error: 'Failed to send email',
-        details: result.error.message || 'Unknown error'
+        details: result.error.message || 'Unknown error',
+        code: result.error.name || 'RESEND_ERROR'
       });
     }
 
@@ -67,7 +71,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('Error sending email:', error);
     return res.status(500).json({ 
       error: 'Failed to send email',
-      details: error.message || 'Unknown error'
+      details: error.message || 'Unknown error',
+      type: error.constructor?.name || 'Error'
     });
   }
 }

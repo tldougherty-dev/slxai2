@@ -1448,17 +1448,31 @@ export default function Admin() {
             roleError.message?.includes('does not exist') ||
             roleError.message?.includes('relation') ||
             (roleError as any).status === 404 ||
-            (roleError as any).statusCode === 404
+            (roleError as any).statusCode === 404 ||
+            roleError.message?.includes('404')
           )) {
+            // Table doesn't exist - this is expected, silently handle it
             sessionStorage.setItem('user_roles_table_exists', 'false');
             roleData = null;
             roleError = null;
           } else if (!roleError && roleData) {
             // Table exists and we got data
             sessionStorage.setItem('user_roles_table_exists', 'true');
+          } else if (roleError) {
+            // Other error - log only in dev mode
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Error querying user_roles table:', roleError);
+            }
+            // Still mark as not existing to avoid repeated queries
+            sessionStorage.setItem('user_roles_table_exists', 'false');
+            roleData = null;
+            roleError = null;
           }
         } catch (e: any) {
           // Silently catch and use fallback - table doesn't exist
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('user_roles table not found, using fallback:', e);
+          }
           sessionStorage.setItem('user_roles_table_exists', 'false');
           roleData = null;
           roleError = null;
