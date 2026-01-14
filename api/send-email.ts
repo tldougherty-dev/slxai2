@@ -6,8 +6,8 @@ const resendApiKey = process.env.RESEND_API_KEY || process.env.VITE_RESEND_API_K
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 // Default sender email - make sure this domain is verified in Resend Dashboard
-// For testing, you can use: 'onboarding@resend.dev' (Resend's test domain)
-const DEFAULT_FROM_EMAIL = 'SLxAI Portal <onboarding@resend.dev>';
+// Update this to your verified domain email once domain is verified in Resend
+const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
 // Enable CORS
 const corsHeaders = {
