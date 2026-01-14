@@ -14,6 +14,7 @@ const companies = [
   { name: "American Corner of Zinder/Maradi", country: "Niger", code: "ne" },
   { name: "ASL Nexus Company", country: "United States", code: "us" },
   { name: "AvocadoWeb Services", country: "USA", code: "us" },
+  { name: "Birnbaum Interpreting Services", country: "USA", code: "us" },
   { name: "Cisco Systems", country: "USA", code: "us" },
   { name: "Clear View Innovations", country: "USA", code: "us" },
   { name: "CoSET", country: "USA", code: "us" },
@@ -49,6 +50,7 @@ const companies = [
   { name: "Lingvano", country: "Austria", code: "at" },
   { name: "Middle East Technical University", country: "Türkey", code: "tr" },
   { name: "Migam.ai", country: "Poland", code: "pl" },
+  { name: "Microsoft", country: "USA", code: "us" },
   { name: "MocapLab", country: "France", code: "fr" },
   { name: "Motionsign", country: "USA", code: "us" },
   { name: "Nagish", country: "USA", code: "us" },
@@ -88,7 +90,7 @@ export default function InterestedCompanies() {
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   
   // Set member and country counts
-  const companyCount = 90;
+  const companyCount = 92;
   const countryCount = 41;
 
   // Translate content

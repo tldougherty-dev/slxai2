@@ -2665,20 +2665,86 @@ export default function Admin() {
   const handleEmailPendingMembers = async () => {
     setIsSendingEmail(true);
     try {
-      // Get all pending members
-      const pendingMembers = members.filter(m => m.status === 'pending');
-      const pendingEmails = new Set<string>();
+      // Query database directly for pending members based on email confirmation status
+      // Get all member_persons
+      const { data: personsData, error: personsError } = await supabase
+        .from('member_persons')
+        .select('email, member_id');
       
-      pendingMembers.forEach(member => {
-        if (member.pocEmail) {
-          pendingEmails.add(member.pocEmail.toLowerCase());
-        }
-        member.members.forEach(person => {
-          if (person.email && person.status === 'pending') {
-            pendingEmails.add(person.email.toLowerCase());
+      if (personsError) {
+        throw new Error(`Failed to fetch member persons: ${personsError.message}`);
+      }
+
+      // Get email confirmation status for all persons
+      const pendingEmails = new Set<string>();
+      if (personsData && personsData.length > 0) {
+        const emails = personsData.map(p => p.email?.toLowerCase()).filter(Boolean) as string[];
+        
+        if (emails.length > 0) {
+          // Check email confirmation status using RPC function
+          const { data: roleData, error: roleError } = await supabase.rpc('get_user_roles', {
+            user_emails: emails
+          });
+
+          if (roleError) {
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('Error checking email confirmation, falling back to member status:', roleError);
+            }
+            // Fallback to checking member status
+            const pendingMembers = members.filter(m => m.status === 'pending');
+            pendingMembers.forEach(member => {
+              if (member.pocEmail) {
+                pendingEmails.add(member.pocEmail.toLowerCase());
+              }
+              member.members.forEach(person => {
+                if (person.email && person.status === 'pending') {
+                  pendingEmails.add(person.email.toLowerCase());
+                }
+              });
+            });
+          } else {
+            // Build map of email -> confirmation status
+            const emailConfirmedMap = new Map<string, boolean>();
+            if (roleData) {
+              roleData.forEach((row: { email: string; email_confirmed_at?: string | null }) => {
+                const email = row.email?.toLowerCase();
+                const isConfirmed = row.email_confirmed_at !== null && row.email_confirmed_at !== undefined;
+                if (email) {
+                  emailConfirmedMap.set(email, isConfirmed);
+                }
+              });
+            }
+
+            // Add emails that are NOT confirmed (pending)
+            personsData.forEach(person => {
+              const email = person.email?.toLowerCase();
+              if (email) {
+                const isConfirmed = emailConfirmedMap.get(email) ?? false;
+                if (!isConfirmed) {
+                  pendingEmails.add(email);
+                }
+              }
+            });
+
+            // Also check POC emails from members table
+            const { data: membersData } = await supabase
+              .from('members')
+              .select('poc_email');
+            
+            if (membersData) {
+              membersData.forEach(member => {
+                const pocEmail = member.poc_email?.toLowerCase();
+                if (pocEmail) {
+                  const isConfirmed = emailConfirmedMap.get(pocEmail) ?? false;
+                  if (!isConfirmed) {
+                    pendingEmails.add(pocEmail);
+                  }
+                }
+              });
+            }
           }
-        });
-      });
+        }
+      }
 
       if (pendingEmails.size === 0) {
         toast({
