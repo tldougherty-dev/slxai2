@@ -1,18 +1,17 @@
-// Email service using Resend
-import { Resend } from 'resend';
+// Email service using Resend via API endpoint
 import { shouldSendEmailNotification, getUnsubscribeUrl } from './notificationPreferences';
 import { getCurrentUser } from './auth';
-
-// Initialize Resend client
-const resendApiKey = import.meta.env.VITE_RESEND_API_KEY;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 // Default sender email (update with your verified domain)
 const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
+// API endpoint for sending emails (serverless function)
+const EMAIL_API_ENDPOINT = '/api/send-email';
+
 // Check if email service is configured
 export function isEmailConfigured(): boolean {
-  return !!resendApiKey && !!resend;
+  // Always return true - the API endpoint will handle configuration
+  return true;
 }
 
 // Base email template
@@ -56,29 +55,34 @@ export async function sendEmail(
   }
 
   try {
-    if (!resend) {
-      throw new Error('Resend client not initialized');
-    }
-
-    const result = await resend.emails.send({
-      from: options.from || DEFAULT_FROM_EMAIL,
-      to: options.to,
-      subject: options.subject,
-      html: options.html,
+    // Call the serverless API endpoint instead of Resend directly
+    const response = await fetch(EMAIL_API_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: options.to,
+        subject: options.subject,
+        html: options.html,
+        from: options.from || DEFAULT_FROM_EMAIL,
+      }),
     });
 
-    if (result.error) {
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
       if (import.meta.env.DEV) {
-        console.error('Resend API error:', result.error);
+        console.error('Email API error:', errorData);
       }
       return false;
     }
 
+    const result = await response.json();
     if (import.meta.env.DEV) {
-      console.log('Email sent successfully:', result.data);
+      console.log('Email sent successfully:', result);
     }
 
-    return true;
+    return result.success === true;
   } catch (error) {
     if (import.meta.env.DEV) {
       console.error('Error sending email:', error);
