@@ -23,7 +23,7 @@ The Resend email service has been integrated into your application. Here's what 
 Create a `.env` file in the root of your project (same directory as `package.json`) with:
 
 ```env
-VITE_RESEND_API_KEY=re_gQBSq3vp_DTYukuAfU2A6aKgqNQZHWroQ
+VITE_RESEND_API_KEY=your_resend_api_key_here
 ```
 
 **Important:** 
@@ -135,7 +135,7 @@ Monitor your emails at:
 Set these in your hosting platform (Vercel, Netlify, etc.):
 
 ```
-VITE_RESEND_API_KEY=re_gQBSq3vp_DTYukuAfU2A6aKgqNQZHWroQ
+VITE_RESEND_API_KEY=your_resend_api_key_here
 ```
 
 ### Domain Verification

@@ -34,10 +34,10 @@ Set these in your deployment platform **before** deploying:
 - **Required:** Yes
 
 #### 3. RESEND_API_KEY (Server-side - for API endpoint)
-- **Value:** `re_gQBSq3vp_DTYukuAfU2A6aKgqNQZHWroQ`
+- **Value:** Your Resend API key (starts with `re_`)
 - **Where to find:** Resend Dashboard → API Keys
 - **Required:** Yes
-- **Note:** This is used by the serverless API endpoint (`/api/send-email`). Do NOT use `VITE_` prefix as this is a server-side variable.
+- **Note:** This is used by the serverless API endpoint (`/api/send-email`). Do NOT use `VITE_` prefix as this is a server-side variable. Set this in your Vercel project environment variables.
 
 ### Optional Variables
 
