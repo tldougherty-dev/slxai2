@@ -5,7 +5,9 @@ import { Resend } from 'resend';
 const resendApiKey = process.env.RESEND_API_KEY || process.env.VITE_RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
+// Default sender email - make sure this domain is verified in Resend Dashboard
+// For testing, you can use: 'onboarding@resend.dev' (Resend's test domain)
+const DEFAULT_FROM_EMAIL = 'SLxAI Portal <onboarding@resend.dev>';
 
 // Enable CORS
 const corsHeaders = {
@@ -47,32 +49,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const fromEmail = from || DEFAULT_FROM_EMAIL;
+    
+    // Log request details (without sensitive data)
+    console.log('Sending email:', {
+      to,
+      from: fromEmail,
+      subject,
+      htmlLength: html.length,
+      apiKeySet: !!resendApiKey
+    });
+
     const result = await resend.emails.send({
-      from: from || DEFAULT_FROM_EMAIL,
+      from: fromEmail,
       to: to,
       subject: subject,
       html: html,
     });
 
     if (result.error) {
-      console.error('Resend API error:', result.error);
+      console.error('Resend API error:', JSON.stringify(result.error, null, 2));
       return res.status(500).json({ 
         error: 'Failed to send email',
         details: result.error.message || 'Unknown error',
-        code: result.error.name || 'RESEND_ERROR'
+        code: result.error.name || 'RESEND_ERROR',
+        statusCode: result.error.statusCode || null,
+        help: result.error.message?.includes('domain') 
+          ? 'Make sure your domain is verified in Resend Dashboard'
+          : 'Check Resend Dashboard for more details'
       });
     }
 
+    console.log('Email sent successfully:', result.data?.id);
     return res.status(200).json({ 
       success: true,
       id: result.data?.id 
     });
   } catch (error: any) {
-    console.error('Error sending email:', error);
+    console.error('Error sending email:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
     return res.status(500).json({ 
       error: 'Failed to send email',
       details: error.message || 'Unknown error',
-      type: error.constructor?.name || 'Error'
+      type: error.constructor?.name || 'Error',
+      help: 'Check Vercel function logs for more details'
     });
   }
 }
