@@ -21,10 +21,10 @@ DECLARE
 BEGIN
   -- Update all users with unconfirmed emails
   FOR user_record IN 
-    SELECT id, email, email_confirmed_at
-    FROM auth.users
-    WHERE email_confirmed_at IS NULL
-    AND email IS NOT NULL
+    SELECT au.id, au.email, au.email_confirmed_at
+    FROM auth.users au
+    WHERE au.email_confirmed_at IS NULL
+    AND au.email IS NOT NULL
   LOOP
     -- Set email_confirmed_at to current timestamp
     UPDATE auth.users
