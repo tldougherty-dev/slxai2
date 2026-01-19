@@ -158,49 +158,13 @@ export async function getAllMembers(): Promise<Member[]> {
       });
     }
 
-    // Sync member organization status: active if ANY member person is active, pending if ALL are pending
-    // BUT: Respect database status if it's already 'active' (don't override manually activated accounts)
+    // Use database status directly - don't override based on email confirmation
+    // The database status is the source of truth
     const membersWithSyncedStatus = supabaseMembers.map(member => {
-      const memberPersons = personsByMember.get(member.id) || [];
-      // Check if ANY person in the organization has confirmed email (is active)
-      const hasAnyActiveMember = memberPersons.some((person: any) => {
-        const email = person.email?.toLowerCase();
-        return emailConfirmedMap.get(email) === true;
-      });
-      
-      // If database status is already 'active', keep it active (don't override manually activated accounts)
-      // Only sync TO active if emails are confirmed, but don't sync FROM active to pending
-      let correctMemberStatus = member.status;
-      if (member.status === 'active') {
-        // Already active - keep it active
-        correctMemberStatus = 'active';
-      } else {
-        // Not active yet - sync based on email confirmation
-        correctMemberStatus = hasAnyActiveMember ? 'active' : 'pending';
-      }
-      
-      // Only update database if status changed AND we're not overriding an active status
-      if (member.status !== correctMemberStatus && member.status !== 'active') {
-        // Update in database (async, don't wait)
-        supabase
-          .from('members')
-          .update({ status: correctMemberStatus })
-          .eq('id', member.id)
-          .then(() => {
-            if (process.env.NODE_ENV === 'development') {
-              console.log(`Synced member ${member.organization_name} status to ${correctMemberStatus} (hasAnyActiveMember: ${hasAnyActiveMember})`);
-            }
-          })
-          .catch((error) => {
-            if (process.env.NODE_ENV === 'development') {
-              console.error(`Error syncing member ${member.organization_name} status:`, error);
-            }
-          });
-      }
-      
+      // Use the status from database directly - don't override
       return {
         ...member,
-        status: correctMemberStatus
+        status: member.status || 'pending' // Use database status, default to pending if null
       };
     });
 
