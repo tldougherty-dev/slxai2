@@ -45,7 +45,7 @@ function supabaseRowToMember(row: any, persons: any[]): Member {
     pocEmail: row.poc_email,
     pocTitle: row.poc_title || undefined,
     memberCount: row.member_count || 0,
-    status: row.status || 'active', // Default to 'active' for backward compatibility
+    status: row.status || 'pending', // Use database status, default to pending if null
     members: persons.map(p => ({
       id: p.id,
       name: p.name,
@@ -129,9 +129,16 @@ export async function getAllMembers(): Promise<Member[]> {
     // The database status is the source of truth
     const membersWithSyncedStatus = supabaseMembers.map(member => {
       // Use the status from database directly - don't override
+      // If status is null/undefined, check if it's actually active in database
+      const dbStatus = member.status;
+      if (process.env.NODE_ENV === 'development') {
+        if (!dbStatus || dbStatus === 'pending') {
+          console.log(`Member ${member.organization_name} has status: ${dbStatus}`);
+        }
+      }
       return {
         ...member,
-        status: member.status || 'pending' // Use database status, default to pending if null
+        status: dbStatus || 'pending' // Use database status, default to pending if null
       };
     });
 

@@ -21,7 +21,7 @@ import {
   Shield, Users, Building2, MessageSquare, Vote as VoteIcon, FileText, Video,
   Settings, TrendingUp, AlertCircle, CheckCircle2, XCircle, Edit, Trash2,
   Plus, Search, Filter, Save, X, Hand, Mail, Globe, Upload, History, Calendar, Clock, Folder,
-  Download, Loader2, CheckSquare, Square, Pencil, GripVertical, Hash, Pin, User, MessageCircle, Ticket, Phone
+  Download, Loader2, CheckSquare, Square, Pencil, GripVertical, Hash, Pin, User, MessageCircle, Ticket, Phone, RefreshCw
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Member, MemberPerson } from '@/data/members';
@@ -4133,6 +4133,23 @@ export default function Admin() {
                       )}
                     </Button>
                   )}
+                  <Button
+                    variant="outline"
+                    onClick={loadMembers}
+                    disabled={isLoadingMembers}
+                  >
+                    {isLoadingMembers ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        <RefreshCw className="h-4 w-4 mr-2" />
+                        Refresh
+                      </>
+                    )}
+                  </Button>
                   <Button 
                     className="bg-electric-blue hover:bg-electric-blue/90"
                     onClick={handleOpenAddMember}
