@@ -1212,20 +1212,27 @@ export default function Admin() {
   const [isLoadingMembers, setIsLoadingMembers] = useState(true);
 
   // Load members from Supabase
-  useEffect(() => {
-    const loadMembers = async () => {
-      setIsLoadingMembers(true);
-      try {
-        const data = await getAllMembers();
-        setMembers(data);
-      } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Error loading members:', error);
-        }
-      } finally {
-        setIsLoadingMembers(false);
+  const loadMembers = async () => {
+    setIsLoadingMembers(true);
+    try {
+      const data = await getAllMembers();
+      // Debug: Log status counts
+      if (process.env.NODE_ENV === 'development') {
+        const activeCount = data.filter(m => m.status === 'active').length;
+        const pendingCount = data.filter(m => m.status === 'pending').length;
+        console.log('Loaded members:', { total: data.length, active: activeCount, pending: pendingCount });
       }
-    };
+      setMembers(data);
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error loading members:', error);
+      }
+    } finally {
+      setIsLoadingMembers(false);
+    }
+  };
+
+  useEffect(() => {
     loadMembers();
   }, []);
 
