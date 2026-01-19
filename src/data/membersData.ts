@@ -113,11 +113,21 @@ export async function getAllMembers(): Promise<Member[]> {
         }
         const email = person.email.toLowerCase();
         const isEmailConfirmed = emailConfirmedMap.get(email) ?? false;
-        const correctStatus = isEmailConfirmed ? 'active' : 'pending';
         
-        // Sync status if it doesn't match email confirmation
+        // If database status is already 'active', keep it active (don't override manually activated accounts)
+        // Only sync TO active if emails are confirmed, but don't sync FROM active to pending
+        let correctStatus = person.status || 'pending';
+        if (person.status === 'active') {
+          // Already active - keep it active
+          correctStatus = 'active';
+        } else {
+          // Not active yet - sync based on email confirmation
+          correctStatus = isEmailConfirmed ? 'active' : 'pending';
+        }
+        
+        // Sync status if it doesn't match AND we're not overriding an active status
         // Only update if status field exists (check if person.status is defined)
-        if (person.status !== undefined && person.status !== correctStatus) {
+        if (person.status !== undefined && person.status !== correctStatus && person.status !== 'active') {
           // Update in database (async, don't wait)
           supabase
             .from('member_persons')
@@ -142,7 +152,7 @@ export async function getAllMembers(): Promise<Member[]> {
         
         personsByMember.get(person.member_id)!.push({
           ...person,
-          status: correctStatus, // Use correct status based on email confirmation
+          status: correctStatus, // Use correct status based on email confirmation or keep active
           role: roleMap.get(email) || 'member'
         });
       });
