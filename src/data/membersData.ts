@@ -112,47 +112,14 @@ export async function getAllMembers(): Promise<Member[]> {
           personsByMember.set(person.member_id, []);
         }
         const email = person.email.toLowerCase();
-        const isEmailConfirmed = emailConfirmedMap.get(email) ?? false;
         
-        // If database status is already 'active', keep it active (don't override manually activated accounts)
-        // Only sync TO active if emails are confirmed, but don't sync FROM active to pending
-        let correctStatus = person.status || 'pending';
-        if (person.status === 'active') {
-          // Already active - keep it active
-          correctStatus = 'active';
-        } else {
-          // Not active yet - sync based on email confirmation
-          correctStatus = isEmailConfirmed ? 'active' : 'pending';
-        }
-        
-        // Sync status if it doesn't match AND we're not overriding an active status
-        // Only update if status field exists (check if person.status is defined)
-        if (person.status !== undefined && person.status !== correctStatus && person.status !== 'active') {
-          // Update in database (async, don't wait)
-          supabase
-            .from('member_persons')
-            .update({ status: correctStatus })
-            .eq('id', person.id)
-            .then(() => {
-              if (process.env.NODE_ENV === 'development') {
-                console.log(`Synced person ${person.email} status to ${correctStatus}`);
-              }
-            })
-            .catch((error: any) => {
-              // Silently ignore if column doesn't exist (user needs to run migration)
-              if (error?.code === '42703' || error?.message?.includes('column') || error?.message?.includes('does not exist')) {
-                if (process.env.NODE_ENV === 'development') {
-                  console.warn(`Status column not found. Please run ADD_MEMBER_PERSON_STATUS_FIELD.sql`);
-                }
-              } else if (process.env.NODE_ENV === 'development') {
-                console.error(`Error syncing person ${person.email} status:`, error);
-              }
-            });
-        }
+        // Use database status directly - don't override based on email confirmation
+        // The database status is the source of truth
+        const personStatus = person.status || 'pending';
         
         personsByMember.get(person.member_id)!.push({
           ...person,
-          status: correctStatus, // Use correct status based on email confirmation or keep active
+          status: personStatus, // Use database status directly
           role: roleMap.get(email) || 'member'
         });
       });
