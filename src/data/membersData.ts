@@ -149,6 +149,7 @@ export async function getAllMembers(): Promise<Member[]> {
     }
 
     // Sync member organization status: active if ANY member person is active, pending if ALL are pending
+    // BUT: Respect database status if it's already 'active' (don't override manually activated accounts)
     const membersWithSyncedStatus = supabaseMembers.map(member => {
       const memberPersons = personsByMember.get(member.id) || [];
       // Check if ANY person in the organization has confirmed email (is active)
@@ -156,11 +157,20 @@ export async function getAllMembers(): Promise<Member[]> {
         const email = person.email?.toLowerCase();
         return emailConfirmedMap.get(email) === true;
       });
-      // Organization is active if at least one member has confirmed email
-      const correctMemberStatus = hasAnyActiveMember ? 'active' : 'pending';
       
-      // Sync member status if it doesn't match
-      if (member.status !== correctMemberStatus) {
+      // If database status is already 'active', keep it active (don't override manually activated accounts)
+      // Only sync TO active if emails are confirmed, but don't sync FROM active to pending
+      let correctMemberStatus = member.status;
+      if (member.status === 'active') {
+        // Already active - keep it active
+        correctMemberStatus = 'active';
+      } else {
+        // Not active yet - sync based on email confirmation
+        correctMemberStatus = hasAnyActiveMember ? 'active' : 'pending';
+      }
+      
+      // Only update database if status changed AND we're not overriding an active status
+      if (member.status !== correctMemberStatus && member.status !== 'active') {
         // Update in database (async, don't wait)
         supabase
           .from('members')
