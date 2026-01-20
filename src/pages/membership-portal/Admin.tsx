@@ -275,6 +275,47 @@ function TicketReservationsTab() {
     });
   };
 
+  const formatDateForCSV = (date: Date) => {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const handleExportTicketHolders = () => {
+    if (reservations.length === 0) {
+      toast({
+        title: "No data",
+        description: "No ticket reservations to export.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const data = reservations.map(r => ({
+      'Name': r.name,
+      'Email': r.email,
+      'Phone': r.phone || '',
+      'Organization': r.organization || '',
+      'Status': r.status,
+      'Reserved At': formatDateForCSV(r.reservedAt),
+      'Confirmed At': r.confirmedAt ? formatDateForCSV(r.confirmedAt) : '',
+      'Cancelled At': r.cancelledAt ? formatDateForCSV(r.cancelledAt) : '',
+      'Created At': formatDateForCSV(r.createdAt),
+      'Updated At': formatDateForCSV(r.updatedAt),
+    }));
+
+    exportToCSV(data, 'ticket_holders_export');
+
+    toast({
+      title: "Export started",
+      description: `Ticket holders exported as CSV.`,
+    });
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'confirmed':
@@ -301,15 +342,27 @@ function TicketReservationsTab() {
               View and manage all ticket reservations ({totalReservations} total)
             </CardDescription>
           </div>
-          <Button
-            onClick={loadReservations}
-            variant="outline"
-            size="sm"
-            className="bg-white"
-          >
-            <History className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleExportTicketHolders}
+              variant="outline"
+              size="sm"
+              className="bg-white"
+              disabled={reservations.length === 0}
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button
+              onClick={loadReservations}
+              variant="outline"
+              size="sm"
+              className="bg-white"
+            >
+              <History className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
