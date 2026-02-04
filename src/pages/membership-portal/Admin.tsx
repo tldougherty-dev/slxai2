@@ -882,6 +882,196 @@ function InterestSubmissionsTab() {
   );
 }
 
+// Waitlist Tab Component
+interface WaitlistEntry {
+  id: string;
+  name: string;
+  email: string;
+  created_at: string;
+}
+
+function WaitlistTab() {
+  const { toast } = useToast();
+  const [entries, setEntries] = useState<WaitlistEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [entryToDelete, setEntryToDelete] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadWaitlist();
+  }, []);
+
+  const loadWaitlist = async () => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('waitlist')
+        .select('*')
+        .order('created_at', { ascending: false }); // Chronological order (newest first)
+
+      if (error) {
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error loading waitlist:', error);
+        }
+        throw error;
+      }
+      setEntries(data || []);
+    } catch (error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error loading waitlist:', error);
+      }
+      const errorMessage = error?.message || error?.details || 'Failed to load waitlist entries.';
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteEntry = async () => {
+    if (!entryToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .delete()
+        .eq('id', entryToDelete);
+
+      if (error) throw error;
+
+      toast({
+        title: "Deleted",
+        description: "Waitlist entry has been deleted.",
+      });
+
+      setEntryToDelete(null);
+      loadWaitlist();
+    } catch (error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error deleting waitlist entry:', error);
+      }
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to delete waitlist entry.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  return (
+    <Card className="glass-card floating-hover">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Waitlist</CardTitle>
+            <CardDescription>
+              View all waitlist submissions in chronological order
+            </CardDescription>
+          </div>
+          <Button
+            onClick={loadWaitlist}
+            variant="outline"
+            size="sm"
+            className="bg-white"
+          >
+            <History className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-electric-blue" />
+          </div>
+        ) : entries.length === 0 ? (
+          <div className="text-center py-12">
+            <FileText className="h-12 w-12 text-gray-400 dark:text-white mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-white">No waitlist entries yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {entries.map((entry, index) => (
+              <Card key={entry.id} className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-electric-blue/10 text-electric-blue font-semibold text-sm">
+                          #{entries.length - index}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-gray-900 dark:text-white">{entry.name}</p>
+                          <p className="text-sm text-gray-600 dark:text-white flex items-center gap-1">
+                            <Mail className="h-3 w-3" />
+                            {entry.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pl-11 flex items-center gap-2 text-xs text-gray-500 dark:text-white">
+                        <Clock className="h-3 w-3" />
+                        Joined waitlist on {formatDate(entry.created_at)}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setEntryToDelete(entry.id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </CardContent>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!entryToDelete} onOpenChange={(open) => !open && setEntryToDelete(null)}>
+        <AlertDialogContent className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900 dark:text-white">Delete Waitlist Entry?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600 dark:text-white">
+              Are you sure you want to delete this waitlist entry? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={() => setEntryToDelete(null)}
+              className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:text-white bg-white"
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteEntry}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </Card>
+  );
+}
+
 // Droppable Category Container Component
 function DroppableCategory({ 
   category, 
@@ -3791,10 +3981,11 @@ export default function Admin() {
       />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 sm:grid-cols-11 h-auto">
+        <TabsList className="grid w-full grid-cols-3 sm:grid-cols-12 h-auto">
           <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
           <TabsTrigger value="interest" className="text-xs sm:text-sm">Interest</TabsTrigger>
           <TabsTrigger value="tickets" className="text-xs sm:text-sm">Tickets</TabsTrigger>
+          <TabsTrigger value="waiting" className="text-xs sm:text-sm">Waiting</TabsTrigger>
           <TabsTrigger value="members" className="text-xs sm:text-sm">Members</TabsTrigger>
           <TabsTrigger value="files" className="text-xs sm:text-sm">Files</TabsTrigger>
           <TabsTrigger value="discussions" className="text-xs sm:text-sm">Discussions</TabsTrigger>
@@ -3946,6 +4137,11 @@ export default function Admin() {
         {/* Tickets Tab */}
         <TabsContent value="tickets" className="space-y-6">
           <TicketReservationsTab />
+        </TabsContent>
+
+        {/* Waiting Tab */}
+        <TabsContent value="waiting" className="space-y-6">
+          <WaitlistTab />
         </TabsContent>
 
         {/* Members Tab */}

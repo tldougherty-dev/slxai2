@@ -71,7 +71,7 @@ const onboardingSteps: OnboardingStep[] = [
     icon: User,
     action: {
       label: 'Go to My Profile',
-      path: '/membership-portal/my-profile',
+      path: '/membership-portal/profile',
     },
   },
 ];
@@ -197,10 +197,10 @@ export function OnboardingWizard() {
             )}
             {currentStep === onboardingSteps.length - 1 ? (
               <Button
-                onClick={() => handleAction('/membership-portal/my-profile')}
+                onClick={() => handleAction('/membership-portal')}
                 className="bg-electric-blue hover:bg-electric-blue/90 text-white w-32"
               >
-                Go To Your Profile
+                Get Started
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             ) : (

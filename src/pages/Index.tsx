@@ -43,6 +43,13 @@ const Index = () => {
     organization: '',
   });
 
+  const [waitlistForm, setWaitlistForm] = useState({
+    name: '',
+    email: '',
+  });
+  const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
+  const [isWaitlistSubmitted, setIsWaitlistSubmitted] = useState(false);
+
   // Force light mode on homepage
   useEffect(() => {
     const root = document.documentElement;
@@ -456,6 +463,83 @@ const Index = () => {
     }
   };
 
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingWaitlist(true);
+
+    // Validate fields
+    if (!waitlistForm.name || waitlistForm.name.trim() === '') {
+      toast({
+        title: "Name required",
+        description: "Please enter your name.",
+        variant: "destructive",
+      });
+      setIsSubmittingWaitlist(false);
+      return;
+    }
+
+    if (!waitlistForm.email || waitlistForm.email.trim() === '') {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      setIsSubmittingWaitlist(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(waitlistForm.email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      setIsSubmittingWaitlist(false);
+      return;
+    }
+
+    if (!isValidLength(waitlistForm.name, 1, 200) || !isValidLength(waitlistForm.email, 1, 200)) {
+      toast({
+        title: "Invalid input",
+        description: "Please check that all fields meet the length requirements.",
+        variant: "destructive",
+      });
+      setIsSubmittingWaitlist(false);
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert({
+          name: sanitizeText(waitlistForm.name.trim()),
+          email: waitlistForm.email.toLowerCase().trim(),
+        });
+
+      if (error) throw error;
+
+      setIsWaitlistSubmitted(true);
+      setWaitlistForm({ name: '', email: '' });
+      
+      toast({
+        title: "Thank you!",
+        description: "You've been added to the waitlist. We'll notify you when spots become available.",
+      });
+    } catch (error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error submitting waitlist:', error);
+      }
+      toast({
+        title: "Submission failed",
+        description: error.message || "Failed to submit your information. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmittingWaitlist(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white" id="main-content" role="main">
       <Navigation />
@@ -792,6 +876,98 @@ const Index = () => {
                         <Ticket className="h-4 w-4 mr-2" />
                         Reserve My Ticket
                       </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Waitlist Section */}
+      <section className="py-8 bg-white dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              Join the Waitlist
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              All tickets reserved? Join our waitlist and we'll notify you when spots become available.
+            </p>
+          </div>
+          <Card className="shadow-lg border-2 border-electric-blue/20">
+            <CardContent className="pt-6">
+              {isWaitlistSubmitted ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">You're on the list!</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">
+                    Thank you for joining our waitlist. We'll notify you via email when spots become available.
+                  </p>
+                  <Button
+                    onClick={() => {
+                      setIsWaitlistSubmitted(false);
+                      setWaitlistForm({ name: '', email: '' });
+                    }}
+                    variant="outline"
+                    className="bg-white dark:bg-gray-800"
+                  >
+                    Add Another Person
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-name" className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-electric-blue" />
+                        Name
+                      </Label>
+                      <Input
+                        id="waitlist-name"
+                        type="text"
+                        placeholder="Your full name"
+                        value={waitlistForm.name}
+                        onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
+                        required
+                        disabled={isSubmittingWaitlist}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-email" className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-electric-blue" />
+                        Email Address
+                      </Label>
+                      <Input
+                        id="waitlist-email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={waitlistForm.email}
+                        onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
+                        required
+                        disabled={isSubmittingWaitlist}
+                        className="bg-white dark:bg-gray-800"
+                        maxLength={200}
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+                    disabled={isSubmittingWaitlist}
+                  >
+                    {isSubmittingWaitlist ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      'Join Waitlist'
                     )}
                   </Button>
                 </form>
