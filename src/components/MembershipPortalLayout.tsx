@@ -68,11 +68,6 @@ const baseMenuItemsConfig = [
     href: '/membership-portal',
   },
   {
-    titleKey: 'common.summit2026',
-    icon: Trophy,
-    href: '/membership-portal/summit-2026',
-  },
-  {
     titleKey: 'common.discussions',
     icon: MessageSquare,
     href: '/membership-portal/discussions',
@@ -119,6 +114,13 @@ const adminMenuItemConfig = {
   titleKey: 'common.admin',
   icon: Shield,
   href: '/membership-portal/admin',
+};
+
+// Summit 2026 menu item (only for admins)
+const summit2026MenuItemConfig = {
+  titleKey: 'common.summit2026',
+  icon: Trophy,
+  href: '/membership-portal/summit-2026',
 };
 
 function CollapseButton() {
@@ -385,6 +387,11 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
     title: t(adminMenuItemConfig.titleKey),
   };
 
+  const summit2026MenuItem = {
+    ...summit2026MenuItemConfig,
+    title: t(summit2026MenuItemConfig.titleKey),
+  };
+
   // Summit Planning menu item
   const summitMenuItem = {
     titleKey: 'common.summitPlanning',
@@ -424,11 +431,11 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
 
   // Build menu items based on admin and summit member status
   let menuItems = [...baseMenuItems];
-  // Summit 2026 is now in baseMenuItems, so no need to add it separately
   if (userIsSummitMember || userIsAdmin) {
     menuItems.push(summitMenuItem);
   }
   if (userIsAdmin) {
+    menuItems.push(summit2026MenuItem);
     menuItems.push(adminMenuItem);
   }
 

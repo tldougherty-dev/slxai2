@@ -188,7 +188,7 @@ const Index = () => {
         parking: 'Parking:',
         parkingText: 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.',
         membershipTitle: 'Become a Founding Member',
-        membershipDescription: 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit. Each founding member receives one board seat, ensuring equal representation in shaping the future of sign language x AI technologies.',
+        membershipDescription: 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit, ensuring equal representation in shaping the future of sign language x AI technologies.',
         foundingBenefitsTitle: 'Founding Member Benefits',
         foundingBenefitsDescription: 'As a founding member, your organization will have a unique opportunity to shape the cooperative\'s structure and future direction.',
         foundingStatusTitle: 'Founding Status',
@@ -612,9 +612,6 @@ const Index = () => {
               <span className="block text-electric-blue mb-1">{getText('heroTitle2', 'establish the future of')}</span>
               <span className="block text-gray-900 text-4xl md:text-5xl font-extrabold">{getText('heroTitle3', 'sign language x AI.')}</span>
             </h1>
-            <p className="text-lg text-gray-600 mb-6 max-w-3xl mx-auto leading-relaxed animate-fade-in">
-              {getText('heroDescription', 'Join us at the inaugural SLxAI Summit where we\'ll bring industry leaders together to form a cooperative nonprofit that will shape the future of sign language x AI technologies.')}
-            </p>
           </div>
         </div>
       </section>
@@ -633,7 +630,7 @@ const Index = () => {
               />
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
-              {getText('aboutDescription', 'We are bringing together industry leaders in the sign language x AI space to establish a cooperative nonprofit where each member will have a board seat, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
+              {getText('aboutDescription', 'We are bringing together industry leaders in the sign language x AI space to establish a cooperative nonprofit, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
             </p>
           </div>
 
@@ -1213,14 +1210,14 @@ const Index = () => {
         </div>
 
         {/* Hotel Block and Travel Advice - Full Width */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-7xl mx-auto">
-            <Card className="border-2 border-white shadow-xl flex flex-col overflow-hidden bg-white rounded-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            <Card className="shadow-xl flex flex-col overflow-hidden bg-white rounded-lg h-full">
               <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
                 <CardTitle className="text-white text-4xl font-bold">{getText('hotelsTitle', 'Hotel Block')}</CardTitle>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col p-4">
-                <div className="flex-1">
+                <div className="flex-1 flex flex-col">
                   <div className="space-y-2 text-sm text-gray-900 dark:text-white">
                     <p><strong>Hotel:</strong> Sheraton Boston Hotel</p>
                     <p><strong>Rate:</strong> $339 per night</p>
@@ -1266,12 +1263,12 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-white shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg">
+            <Card className="shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg h-full">
               <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
                 <CardTitle className="text-white text-4xl font-bold">{getText('travelAdviceTitle', 'Travel Advice')}</CardTitle>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col p-4">
-                <div className="flex-1">
+                <div className="flex-1 flex flex-col">
                   <div className="space-y-3 text-gray-700 dark:text-white text-sm">
                   <div>
                     <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
@@ -1331,8 +1328,8 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">{getText('membershipTitle', 'Become a Founding Member')}</h2>
-            <p className="text-lg text-gray-600 whitespace-nowrap">
-              {getText('membershipDescription', 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit.')}
+            <p className="text-lg text-gray-600 max-w-6xl mx-auto">
+              {getText('membershipDescription', 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit, ensuring equal representation in shaping the future of sign language x AI technologies.')}
             </p>
           </div>
 
@@ -1365,7 +1362,7 @@ const Index = () => {
                 <Award className="h-8 w-8 text-electric-blue mx-auto mb-2" />
                 <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('boardRepresentationTitle', 'Board Representation')}</h4>
                 <p className="text-sm text-gray-600">
-                  {getText('boardRepresentationText', 'Guaranteed board seat with equal voting rights on all cooperative decisions.')}
+                  {getText('boardRepresentationText', 'Equal voting rights on all cooperative decisions.')}
                 </p>
               </Card>
 
@@ -1557,7 +1554,7 @@ const Index = () => {
             {getText('ctaTitle', 'Be Part of History: Join the Inaugural Summit')}
           </h2>
           <p className="text-lg text-blue-100">
-            {getText('ctaDescription', 'This is your opportunity to help establish the cooperative nonprofit that will shape the future of sign language x AI technologies. Secure your organization\'s board seat.')}
+            {getText('ctaDescription', 'This is your opportunity to help establish the cooperative nonprofit that will shape the future of sign language x AI technologies.')}
           </p>
         </div>
       </section>

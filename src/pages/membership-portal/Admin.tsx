@@ -539,7 +539,8 @@ function TicketReservationsTab() {
 // Interest Submissions Tab Component
 function InterestSubmissionsTab() {
   const { toast } = useToast();
-  const [submissions, setSubmissions] = useState<InterestSubmission[]>([]);
+  const [allSubmissions, setAllSubmissions] = useState<InterestSubmission[]>([]);
+  const [filter, setFilter] = useState<'all' | 'pending' | 'approved'>('pending');
   const [isLoading, setIsLoading] = useState(true);
   const [submissionToDelete, setSubmissionToDelete] = useState<string | null>(null);
   const [approvingSubmission, setApprovingSubmission] = useState<string | null>(null);
@@ -548,13 +549,19 @@ function InterestSubmissionsTab() {
     loadSubmissions();
   }, []);
 
+  // Filter submissions based on current filter
+  const submissions = allSubmissions.filter(submission => {
+    if (filter === 'pending') return !submission.approved;
+    if (filter === 'approved') return submission.approved;
+    return true; // 'all'
+  });
+
   const loadSubmissions = async () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase
         .from('interest_submissions')
         .select('*')
-        .eq('approved', false)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -563,7 +570,7 @@ function InterestSubmissionsTab() {
         }
         throw error;
       }
-      setSubmissions(data || []);
+      setAllSubmissions(data || []);
     } catch (error: any) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error loading interest submissions:', error);
@@ -759,6 +766,40 @@ function InterestSubmissionsTab() {
         </div>
       </CardHeader>
       <CardContent>
+        {/* Filter Tabs */}
+        <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+          <button
+            onClick={() => setFilter('pending')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              filter === 'pending'
+                ? 'border-electric-blue text-electric-blue'
+                : 'border-transparent text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            Pending ({allSubmissions.filter(s => !s.approved).length})
+          </button>
+          <button
+            onClick={() => setFilter('approved')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              filter === 'approved'
+                ? 'border-electric-blue text-electric-blue'
+                : 'border-transparent text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            Approved ({allSubmissions.filter(s => s.approved).length})
+          </button>
+          <button
+            onClick={() => setFilter('all')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              filter === 'all'
+                ? 'border-electric-blue text-electric-blue'
+                : 'border-transparent text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            All ({allSubmissions.length})
+          </button>
+        </div>
+
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="h-8 w-8 animate-spin text-electric-blue" />
@@ -766,7 +807,13 @@ function InterestSubmissionsTab() {
         ) : submissions.length === 0 ? (
           <div className="text-center py-12">
             <FileText className="h-12 w-12 text-gray-400 dark:text-white mx-auto mb-4" />
-            <p className="text-gray-600 dark:text-white">No interest submissions yet.</p>
+            <p className="text-gray-600 dark:text-white">
+              {filter === 'pending' 
+                ? 'No pending submissions.' 
+                : filter === 'approved' 
+                ? 'No approved submissions yet.' 
+                : 'No interest submissions yet.'}
+            </p>
           </div>
         ) : (
           <div className="space-y-4">

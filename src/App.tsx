@@ -260,7 +260,7 @@ const App = () => (
           <Route
             path="/membership-portal/summit-2026"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requireAdmin>
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <Summit2026 />

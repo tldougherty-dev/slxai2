@@ -444,61 +444,60 @@ export default function Summit2026() {
 
       {/* Conference Information Tab */}
       {activeTab === 'info' && (
+        <div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="glass-card floating-hover">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center justify-center gap-2">
+          <div className="space-y-4">
+            <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
+              <div className="flex items-center justify-center gap-2 mb-3">
                 <Calendar className="h-5 w-5 text-electric-blue" />
-                Date & Time
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center p-3 pt-0">
-              <div className="text-gray-700 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Date & Time</h3>
+              </div>
+              <div className="text-center text-gray-700 dark:text-white">
                 <p>
                   <strong>Date:</strong> April 16-17, 2026<br />
-                  <strong>Conference Hours:</strong> 8:30 AM - 5:00 PM<br />
-                  <strong>Evening Events:</strong> Evening events on both nights<br />
-                  <strong>Pre-Conference:</strong> Possible social light event on April 15
+                  <strong>Conference Hours:</strong> 8:30 AM - 5:00 PM
                 </p>
-                <div className="flex items-center justify-center gap-2 mb-2 mt-4">
-                  <MapPin className="h-5 w-5 text-electric-blue" />
-                  <h3 className="text-2xl font-semibold leading-none tracking-tight text-gray-900 dark:text-white">Location</h3>
-                </div>
-                <div className="dark:text-white">
-                  <strong>Venue:</strong> Boston University<br />
-                  <strong>City:</strong> Boston, Massachusetts<br />
-                  <strong>Address:</strong> 808 Commonwealth Avenue<br />
-                  Boston, MA 02215
-                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card className="glass-card floating-hover">
-            <CardContent className="p-3">
-              <div className="w-full rounded-lg overflow-hidden" style={{ height: '400px' }}>
-                <iframe
-                  src="https://www.google.com/maps?q=Boston+University+Deaf+Center+808+Commonwealth+Avenue+Boston+MA+02215&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ 
-                    border: 0,
-                    filter: theme === 'dark' ? 'invert(1) hue-rotate(180deg)' : 'none'
-                  }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Boston University Deaf Center Location"
-                />
+            <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <MapPin className="h-5 w-5 text-electric-blue" />
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Location</h3>
               </div>
-            </CardContent>
-          </Card>
+              <div className="text-center dark:text-white text-gray-700">
+                <strong>Venue:</strong> Boston University<br />
+                <strong>Building:</strong> Photonics Center<br />
+                <strong>City:</strong> Boston, Massachusetts<br />
+                <strong>Address:</strong> 8 St Mary's St<br />
+                Boston, MA 02215
+              </div>
+            </div>
+          </div>
 
-          <Card className="glass-card floating-hover md:col-span-2">
-            <CardHeader>
-              <CardTitle>About Summit 2026</CardTitle>
+          <div className="border-2 border-electric-blue rounded-lg p-4 h-full flex flex-col shadow-xl bg-white">
+            <div className="w-full rounded-lg overflow-hidden flex-1" style={{ minHeight: '300px' }}>
+              <iframe
+                src="https://www.google.com/maps?q=8+St+Mary's+St+Boston+MA+02215&output=embed"
+                width="100%"
+                height="100%"
+                style={{ 
+                  border: 0,
+                  filter: theme === 'dark' ? 'invert(1) hue-rotate(180deg)' : 'none'
+                }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Boston University Deaf Center Location"
+              />
+            </div>
+          </div>
+
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
+            <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+              <CardTitle className="text-white text-4xl font-bold">About Summit 2026</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               <div className="space-y-4 text-gray-700 dark:text-white leading-relaxed">
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">SLxAI Summit 2026 Overview</h3>
@@ -523,79 +522,7 @@ export default function Summit2026() {
                   <p>
                     The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. 
                     This format ensures everyone hears the same discussions and engages in the same conversations without splitting 
-                    the audience. Presenter teams come from universities, companies, and Deaf led organizations.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Focus Areas:</h3>
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-gray-700 dark:text-white">
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Sign Language Recognition (SLR)</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Ethics and Governance</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Sign Language Avatar (SLA)</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Research and Innovation</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>SLR and SLA Applications</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Global Benchmarks</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Networking</span>
-                    </div>
-                    <div className="flex items-start">
-                      <span className="text-electric-blue mr-2">•</span>
-                      <span>Emerging Technologies</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Booths and Exhibits</h3>
-                  <p>
-                    Sponsor booths are located inside the same main room as the plenary sessions. Attendees can move between the 
-                    sessions area and the exhibit area without leaving the space. This setup keeps the energy in one place and gives 
-                    sponsors constant visibility.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Pre Conference Social</h3>
-                  <p>
-                    A welcome social is held the evening before the summit. This informal gathering helps people meet one another 
-                    early and builds momentum leading into the conference day.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Conference Day</h3>
-                  <p>
-                    The summit opens with keynote remarks followed by a full day of plenary sessions. Lunch is provided for all 
-                    attendees. The main room includes sponsor booths, demo tables, and product displays. Attendees can explore 
-                    booths during breaks and transitions between sessions.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Evening Events</h3>
-                  <p>
-                    Sponsors may host evening activities, receptions, or demonstrations. These optional events give companies 
-                    additional ways to connect with attendees and showcase their work.
+                    the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.
                   </p>
                 </div>
               </div>
@@ -632,14 +559,11 @@ export default function Summit2026() {
             </CardContent>
           </Card>
 
-          <Card className="glass-card floating-hover">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Hotel className="h-5 w-5 text-electric-blue" />
-                Hotels Near Boston University
-              </CardTitle>
+          <Card className="border-2 border-white shadow-xl flex flex-col overflow-hidden bg-white rounded-lg">
+            <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+              <CardTitle className="text-white text-4xl font-bold">Hotels Near Boston University</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 flex flex-col p-4">
               <p className="text-gray-700 dark:text-white text-sm">
                 Several hotels are located within walking distance or a short ride from Boston University. 
                 We recommend booking early as April is a busy time in Boston. Popular options include:
@@ -680,25 +604,22 @@ export default function Summit2026() {
             </CardContent>
           </Card>
 
-          <Card className="glass-card floating-hover">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Plane className="h-5 w-5 text-electric-blue" />
-                Travel Advice
-              </CardTitle>
+          <Card className="border-2 border-white shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg">
+            <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+              <CardTitle className="text-white text-4xl font-bold">Travel Advice</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1 flex flex-col p-4">
               <div className="space-y-3 text-gray-700 dark:text-white text-sm">
                 <div>
                   <strong className="text-gray-900 dark:text-white">By Air:</strong>
                   <ul className="mt-1 ml-4 space-y-1">
                     <li className="flex items-start">
                       <span className="text-electric-blue mr-2">•</span>
-                      <span><strong>Boston Logan International Airport (BOS)</strong> - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)</span>
+                      <span>Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-electric-blue mr-2">•</span>
-                      <span><strong>Providence T.F. Green Airport (PVD)</strong> - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)</span>
+                      <span>Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)</span>
                     </li>
                   </ul>
                 </div>
@@ -707,11 +628,11 @@ export default function Summit2026() {
                   <ul className="mt-1 ml-4 space-y-1">
                     <li className="flex items-start">
                       <span className="text-electric-blue mr-2">•</span>
-                      <span><strong>Amtrak</strong> - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops</span>
+                      <span>Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-electric-blue mr-2">•</span>
-                      <span><strong>MBTA Commuter Rail</strong> - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations</span>
+                      <span>MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations</span>
                     </li>
                   </ul>
                 </div>
@@ -790,6 +711,7 @@ export default function Summit2026() {
             </CardContent>
           </Card>
         </div>
+      </div>
       )}
 
       {/* Workshop/Panel Submission Tab */}
