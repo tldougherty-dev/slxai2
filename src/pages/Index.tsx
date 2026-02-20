@@ -630,7 +630,7 @@ const Index = () => {
           {/* Mission, Vision, Goals */}
           <div className="grid md:grid-cols-3 gap-6 mb-2">
             <Card 
-              className="shadow-none overflow-hidden"
+              className="shadow-none overflow-hidden rounded-lg"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
@@ -639,7 +639,7 @@ const Index = () => {
               <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                 <CardTitle className="text-3xl font-bold text-white">{getText('missionTitle', 'Mission')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-4">
+              <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black text-center">
                   {getText('missionText', 'To unite industry leaders through a cooperative nonprofit structure, establishing ethical standards and driving innovation in sign language x AI technologies through equal representation and collaborative decision-making.')}
                 </p>
@@ -647,7 +647,7 @@ const Index = () => {
             </Card>
 
             <Card 
-              className="shadow-none overflow-hidden"
+              className="shadow-none overflow-hidden rounded-lg"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
@@ -656,7 +656,7 @@ const Index = () => {
               <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                 <CardTitle className="text-3xl font-bold text-white">{getText('visionTitle', 'Vision')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-4">
+              <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black text-center">
                   {getText('visionText', 'A world where sign language x AI technologies are developed through industry-wide collaboration, with each company having an equal voice in shaping the future of accessible technology.')}
                 </p>
@@ -664,7 +664,7 @@ const Index = () => {
             </Card>
 
             <Card 
-              className="shadow-none overflow-hidden"
+              className="shadow-none overflow-hidden rounded-lg"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
@@ -673,7 +673,7 @@ const Index = () => {
               <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                 <CardTitle className="text-3xl font-bold text-white">{getText('goalsTitle', 'Goals')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-4">
+              <CardContent className="pt-4 rounded-b-lg">
                 <ul className="text-sm text-black space-y-1">
                   <li>• {getText('goal1', 'Establish cooperative nonprofit structure')}</li>
                   <li>• {getText('goal2', 'Create industry-wide ethical standards')}</li>
@@ -698,8 +698,8 @@ const Index = () => {
               We'll notify you when spots become available.
             </p>
           </div>
-          <Card className="shadow-lg border-2 border-electric-blue/20 bg-white">
-            <CardContent className="pt-6">
+          <Card className="shadow-lg border-2 border-electric-blue/20 bg-white rounded-lg">
+            <CardContent className="pt-6 rounded-lg">
               {isWaitlistSubmitted ? (
                 <div className="text-center py-8">
                   <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
@@ -800,14 +800,14 @@ const Index = () => {
       <section id="summit" className="py-4 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-6xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-2">
+            <h2 className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-2 flex-wrap">
               <img 
                 src="/slxai-footer-logo.png" 
                 alt="SLxAI Logo" 
                 className="w-auto inline-block align-middle"
                 style={{ height: '54px' }}
               />
-              {getText('summitTitle', 'Summit 2026')}
+              <span className="whitespace-nowrap">{getText('summitTitle', 'Summit 2026')}</span>
             </h2>
           </div>
 
@@ -871,9 +871,9 @@ const Index = () => {
               </div>
             </div>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
               <CardHeader 
-                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isAboutSummitExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
                 onClick={() => setIsAboutSummitExpanded(!isAboutSummitExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -1180,9 +1180,9 @@ const Index = () => {
             </Card>
 
             {/* Workshop Panel Section - Mobile Only */}
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:hidden overflow-hidden">
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:hidden overflow-hidden rounded-lg">
               <CardHeader 
-                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer"
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isWorkshopPanelExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
                 onClick={() => setIsWorkshopPanelExpanded(!isWorkshopPanelExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -1460,9 +1460,9 @@ const Index = () => {
             </Card>
 
             {/* Evening Event Section */}
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
               <CardHeader 
-                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isEveningEventExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
                 onClick={() => setIsEveningEventExpanded(!isEveningEventExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -1497,7 +1497,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             <Card className="shadow-xl flex flex-col overflow-hidden bg-white rounded-lg h-full">
               <CardHeader 
-                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isHotelBlockExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
                 onClick={() => setIsHotelBlockExpanded(!isHotelBlockExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -1554,7 +1554,7 @@ const Index = () => {
 
             <Card className="shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg h-full">
               <CardHeader 
-                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isTravelAdviceExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
                 onClick={() => setIsTravelAdviceExpanded(!isTravelAdviceExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -1615,7 +1615,7 @@ const Index = () => {
       <section className="py-4 bg-blue-50 dark:bg-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
-            className="cursor-pointer md:hidden text-center mb-4 pb-2 border-b border-gray-300"
+            className="cursor-pointer md:hidden text-center mb-4 pb-2 border-2 border-electric-blue rounded-lg bg-white shadow-lg px-4 py-3"
             onClick={() => setIsInterestedMembersExpanded(!isInterestedMembersExpanded)}
           >
             <div className="flex items-center justify-center gap-2">
@@ -1647,7 +1647,7 @@ const Index = () => {
             <div className="text-center mb-8 px-4">
               <div className="grid md:grid-cols-3 gap-6 mb-8">
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1656,7 +1656,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('foundingStatusTitle', 'Founding Status')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                    {getText('foundingStatusText', 'Be recognized as one of the original industry leaders that established the cooperative.')}
                  </p>
@@ -1664,7 +1664,7 @@ const Index = () => {
               </Card>
 
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1673,7 +1673,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('boardRepresentationTitle', 'Board Representation')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                   {getText('boardRepresentationText', 'Equal voting rights on all cooperative decisions.')}
                 </p>
@@ -1681,7 +1681,7 @@ const Index = () => {
               </Card>
 
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1690,7 +1690,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('industryLeadershipTitle', 'Industry Leadership')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                   {getText('industryLeadershipText', 'Help establish industry standards and ethical guidelines for sign language x AI.')}
                 </p>
@@ -1698,7 +1698,7 @@ const Index = () => {
               </Card>
 
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1707,7 +1707,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('benchmarkingTitle', 'Benchmarking & Standardization')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                   {getText('benchmarkingText', 'Play a key role in establishing benchmarks and standards for avatar and sign language recognition (SLR) technologies, helping to guide the industry toward greater interoperability and quality.')}
                 </p>
@@ -1715,7 +1715,7 @@ const Index = () => {
               </Card>
 
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1724,7 +1724,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('earlyAccessTitle', 'Early Access & Influence')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                   {getText('earlyAccessText', 'Gain early access to new research, datasets, and tools developed by the cooperative. Founding members can pilot and shape upcoming initiatives, ensuring your needs and feedback are prioritized in the development of industry resources.')}
                 </p>
@@ -1732,7 +1732,7 @@ const Index = () => {
               </Card>
 
               <Card 
-                className="shadow-none overflow-hidden"
+                className="shadow-none overflow-hidden rounded-lg"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
@@ -1741,7 +1741,7 @@ const Index = () => {
                 <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
                   <CardTitle className="text-base font-bold text-white">{getText('networkTitle', 'Network & Collaboration')}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-4">
+                <CardContent className="pt-4 rounded-b-lg">
                 <p className="text-sm text-black">
                   {getText('networkText', 'Connect with other industry leaders, researchers, and innovators in the sign language x AI space. Build lasting partnerships and collaborate on groundbreaking projects.')}
                 </p>
@@ -1752,14 +1752,14 @@ const Index = () => {
 
             {/* Interest Form */}
             <div className="max-w-2xl mx-auto pb-8">
-            <Card className="shadow-lg">
-              <CardHeader className="text-center">
+            <Card className="shadow-lg rounded-lg">
+              <CardHeader className="text-center rounded-t-lg">
                 <CardTitle className="text-xl">{getText('interestFormTitle', 'Express Your Interest to Join')}</CardTitle>
                 <p className="text-sm text-gray-600">
                   {getText('interestFormDescription', 'Fill out the form below to express your organization\'s interest in becoming a founding member of the SLxAI cooperative nonprofit.')}
                 </p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="rounded-b-lg">
                 {isSubmitted ? (
                   <div className="text-center py-8">
                     <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />

@@ -127,9 +127,9 @@ export default function InterestedCompanies() {
       <h2 className="hidden md:block text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Organization Members Already Interested')}</h2>
       
       {/* Infographics */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-6">
+      <div className="flex flex-row justify-center gap-4 sm:gap-6 mb-6">
         <Card 
-          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none w-full sm:w-56"
+          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none flex-1 sm:w-56 rounded-lg"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
@@ -139,7 +139,7 @@ export default function InterestedCompanies() {
           <div className="text-xs sm:text-sm text-muted-foreground">{getText('membersLabel', 'Members')}</div>
         </Card>
         <Card 
-          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none w-full sm:w-56"
+          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none flex-1 sm:w-56 rounded-lg"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
