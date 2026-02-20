@@ -50,6 +50,14 @@ const Index = () => {
   });
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isWaitlistSubmitted, setIsWaitlistSubmitted] = useState(false);
+  
+  // Mobile collapsible sections state
+  const [isAboutSummitExpanded, setIsAboutSummitExpanded] = useState(false);
+  const [isWorkshopPanelExpanded, setIsWorkshopPanelExpanded] = useState(false);
+  const [isEveningEventExpanded, setIsEveningEventExpanded] = useState(false);
+  const [isHotelBlockExpanded, setIsHotelBlockExpanded] = useState(false);
+  const [isTravelAdviceExpanded, setIsTravelAdviceExpanded] = useState(false);
+  const [isInterestedMembersExpanded, setIsInterestedMembersExpanded] = useState(false);
 
   // Force light mode on homepage
   useEffect(() => {
@@ -553,54 +561,59 @@ const Index = () => {
     <div className="min-h-screen bg-white" id="main-content" role="main">
       <Navigation />
       
-      {/* Member Button and Language Selector - Top Right */}
-      <div className="absolute top-4 right-4 z-50 flex items-center gap-3">
-        {/* Language Selector */}
-        <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg px-2 py-1">
-          <Globe className="h-4 w-4 text-gray-700 dark:text-gray-300" />
-          <Select value={language} onValueChange={(value) => setLanguage(value as any)}>
-            <SelectTrigger 
-              className="h-8 w-[140px] text-sm border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            >
-              <SelectValue>
-                <div className="flex items-center gap-1.5">
-                  <span>{SUPPORTED_LANGUAGES.find(l => l.code === language)?.flag}</span>
-                  <span className="truncate">{SUPPORTED_LANGUAGES.find(l => l.code === language)?.nativeName}</span>
-                </div>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent className="max-h-[300px] overflow-y-auto dark:bg-gray-800 dark:border-gray-600 z-[60]">
-              {SUPPORTED_LANGUAGES.map((lang) => (
-                <SelectItem 
-                  key={lang.code} 
-                  value={lang.code}
-                  className="dark:text-white dark:hover:bg-gray-700"
-                >
-                  <div className="flex items-center gap-2">
-                    <span>{lang.flag}</span>
-                    <span>{lang.nativeName}</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400 ml-auto">({lang.name})</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        
-        {/* Member Button */}
-        <Button
-          asChild
-          className="bg-electric-blue hover:bg-electric-blue/90 text-white shadow-lg"
-        >
-          <Link to="/login">Member</Link>
-        </Button>
-      </div>
-      
       {/* Hero Section */}
       <section id="home" className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Member Button and Language Selector - Above Logo on Mobile, Top Right on Desktop */}
+        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-between sm:justify-start items-center sm:items-stretch gap-3 px-4 pt-4 sm:pt-0 z-50 relative">
+          {/* Member Button - Left on Mobile */}
+          <Button
+            asChild
+            className="bg-electric-blue hover:bg-electric-blue/90 text-white shadow-lg sm:w-auto"
+          >
+            <Link to="/login">Member</Link>
+          </Button>
+          
+          {/* Language Selector - Right on Mobile */}
+          <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg px-2 py-1 sm:w-auto">
+            <Globe className="h-4 w-4 text-gray-700 dark:text-gray-300" />
+            <Select value={language} onValueChange={(value) => setLanguage(value as any)}>
+              <SelectTrigger 
+                className="h-8 sm:w-[140px] text-sm border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              >
+                <SelectValue>
+                  <div className="flex items-center gap-1.5">
+                    <span>{SUPPORTED_LANGUAGES.find(l => l.code === language)?.flag}</span>
+                    <span className="truncate">{SUPPORTED_LANGUAGES.find(l => l.code === language)?.nativeName}</span>
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent className="max-h-[300px] overflow-y-auto dark:bg-gray-800 dark:border-gray-600 z-[60]">
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <SelectItem 
+                    key={lang.code} 
+                    value={lang.code}
+                    className="dark:text-white dark:hover:bg-gray-700"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span>{lang.flag}</span>
+                      <span>{lang.nativeName}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-auto">({lang.name})</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            <div className="animate-fade-in bg-white rounded-lg inline-block">
+            <div 
+              className="animate-fade-in bg-white rounded-lg inline-block relative"
+              style={{
+                boxShadow: '0 0 40px 20px rgba(255, 255, 255, 0.8), 0 0 80px 40px rgba(255, 255, 255, 0.4)'
+              }}
+            >
               <img 
                 src="/lovable-uploads/0941509f-be4a-49e7-b472-735a4942f89a.png" 
                 alt="SLxAI Logo" 
@@ -859,10 +872,16 @@ const Index = () => {
             </div>
 
             <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
-              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
-                <CardTitle className="text-white text-4xl font-bold">{getText('aboutSummitTitle', 'About Summit 2026')}</CardTitle>
+              <CardHeader 
+                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                onClick={() => setIsAboutSummitExpanded(!isAboutSummitExpanded)}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CardTitle className="text-white text-4xl font-bold">{getText('aboutSummitTitle', 'About Summit 2026')}</CardTitle>
+                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isAboutSummitExpanded ? 'rotate-180' : ''}`} />
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4 pt-4 pb-0">
+              <CardContent className={`space-y-4 pt-4 pb-0 md:block ${isAboutSummitExpanded ? 'block' : 'hidden'}`}>
                 <div className="space-y-4 text-gray-700 dark:text-white leading-relaxed">
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('overviewTitle', 'SLxAI Summit 2026 Overview')}</h3>
@@ -886,7 +905,8 @@ const Index = () => {
                   </div>
                 </div>
 
-                <div className="-mx-6 -mt-4 -mb-6">
+                {/* Workshop Panel - Desktop only (inside About Summit) */}
+                <div className="-mx-6 -mt-4 -mb-6 hidden md:block">
                   <div className="bg-electric-blue text-white text-center py-2">
                     <h3 className="text-4xl font-bold text-white">
                       {getText('workshopListTitle', 'Workshops & Panels')}
@@ -1159,12 +1179,298 @@ const Index = () => {
               </CardContent>
             </Card>
 
+            {/* Workshop Panel Section - Mobile Only */}
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:hidden overflow-hidden">
+              <CardHeader 
+                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer"
+                onClick={() => setIsWorkshopPanelExpanded(!isWorkshopPanelExpanded)}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CardTitle className="text-white text-4xl font-bold">
+                    {getText('workshopListTitle', 'Workshops & Panels')}
+                  </CardTitle>
+                  <ChevronDown className={`h-6 w-6 text-white transition-transform ${isWorkshopPanelExpanded ? 'rotate-180' : ''}`} />
+                </div>
+              </CardHeader>
+              <CardContent className={`pt-4 pb-0 ${isWorkshopPanelExpanded ? 'block' : 'hidden'}`}>
+                <div className="bg-blue-50 dark:bg-blue-900/20 px-4 pt-4 pb-6 -mx-6 -mb-6">
+                  <div className="space-y-6">
+                          {/* Keynote Speaker */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Keynote Speaker Title: Breaking Communication Barriers
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Ryan Hait-Campbell, <em>Convo Communications</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Ryan will open the summit with a look back at the early commercial foundations of sign language and AI and how the ecosystem has evolved since then. He will also outline what the next phase demands from the field, including quality, trust, and real world usability.
+                            </p>
+                          </div>
+
+                          {/* Ethics Panel */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Ethics: Where Does It Stop?
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Abraham Glasser, PhD, Adam Munder, Thomas Horejes, Ph.D., CDI, Dr. Maartje De Meulder, Dr. Naomi Caselli
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A panel on ethical boundaries and who carries responsibility when sign language AI systems are deployed at scale. Discussion will focus on power, consent, accountability, and what guardrails should be expected across research, product development, and procurement.
+                            </p>
+                          </div>
+
+                          {/* Trust and Accountability */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Trust and Accountability in Sign Language AI Innovation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Melissa Smith, Ed.D., <em>ASL Flurry</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session focuses on how trust is earned and lost in sign language AI, and what accountability looks like beyond claims of accuracy. It will cover transparency, community informed validation, and practical ways to measure impact on real users.
+                            </p>
+                          </div>
+
+                          {/* Research and Data Collection */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Research and Data Collection: Strengthening Validity Through Partnerships
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Pamela Macias, <em>University of Colorado Boulder</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A practical workshop on building research and data partnerships that improve validity and reduce bias. Participants will learn how to align goals across communities, institutions, and companies, and how to structure data work so results hold up under scrutiny.
+                            </p>
+                          </div>
+
+                          {/* Intentional Design */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Intentional Design for SL Translation: AI and Hybrid Approaches
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Noreen Wilson, Molly Glass, Yeh Jun Kim, <em>Kara Technologies</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This workshop explores design choices for sign language translation systems, including hybrid approaches that blend AI with human workflows. It will emphasize user needs, context specific constraints, and what quality should mean in different settings.
+                            </p>
+                          </div>
+
+                          {/* Lessons from Dataset Creation */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Lessons from Dataset Creation for Sustainable Sign Language AI
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Brian Birnbaum, Daniel Sommer, <em>Birnbaum Interpreting Services</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A deep dive into the realities of building sign language datasets that support long term innovation. The session will cover tradeoffs in scope, labeling, quality control, and sustainability, plus common pitfalls that create downstream model failures.
+                            </p>
+                          </div>
+
+                          {/* Practical Applications */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Practical Applications of AI Sign Language Translation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Ben Saunders, Marcus Oaten, <em>Signapse</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session showing applied sign language AI in real workflows and communication settings. The presenters will share lessons learned from deployment, performance constraints, and what users consistently need in practice.
+                            </p>
+                          </div>
+
+                          {/* Beyond Gloss */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Beyond Gloss: A New Framework for Sign Language Data
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Emanuele Chiusaroli, Marta Sanzari, <em>Handy Signs</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session introduces a framework that goes beyond gloss as a primary representation, aiming for structured and machine readable sign language data. It will highlight why gloss can be limiting and what richer representations enable for training, evaluation, and downstream reasoning.
+                            </p>
+                          </div>
+
+                          {/* Bridging the Gap */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Bridging the Gap: Real Time AI Avatars and Sign Language Animation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Burak Uyanık, <em>Vosia.ai</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session focused on real time avatars and sign language animation pipelines. It will cover how linguistic intent is mapped into motion and rendering, plus where current avatar systems still struggle in real communication contexts.
+                            </p>
+                          </div>
+
+                          {/* A Better World */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              A Better World, Driven by Technology, Shaped by the Deaf
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Sławek Łuczywek and Ashod Derandonyan, <em>Migam.ai</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session centered on building technology with Deaf expertise integrated throughout the lifecycle, from requirements through validation. It will describe how Deaf led feedback loops shape product direction and strengthen user outcomes.
+                            </p>
+                          </div>
+
+                          {/* The Future of Sign Language Translation */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              The Future of Sign Language Translation is Transcription
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Amit Moryossef, <em>Nagish</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A focused talk proposing that transcription may be the right framing for many sign language AI use cases. It will explain why that framing matters for evaluation, product design, and setting accurate expectations for users.
+                            </p>
+                          </div>
+
+                          {/* Human AI Collaboration */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Human AI Collaboration in Sign Language Technology
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Craig Radford, Brandon Dopf, <em>360 Direct Access</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This workshop examines how people and AI can collaborate in real deployments without degrading service quality. It will cover practical patterns for hybrid delivery, reliability expectations, and what breaks when organizations treat AI as a full replacement.
+                            </p>
+                          </div>
+
+                          {/* Learning with Signers */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Learning with Signers: Educational Applications of SLxAI
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Lee Kezar, Dr. Lorna Quandt, Ph.D., Dr. Athena Willis, Laurel Aichler, <em>Gallaudet University</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A panel on educational and learning applications that use sign language AI, from classroom tools to learning supports and assessment. The session will emphasize what works, what fails, and how to design with signers as core partners.
+                            </p>
+                          </div>
+
+                          {/* Good Enough for Whom */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Good Enough for Whom? Ethics, Power, and Accountability in Sign Language AI Deployment
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Maartje De Meulder, <em>HU University of Applied Sciences Utrecht (Hogeschool Utrecht)</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A workshop on how power and procurement shape what becomes "good enough," even when quality is uneven. Participants will explore accountability gaps, the risks of weak benchmarks, and what responsible deployment should require.
+                            </p>
+                          </div>
+
+                          {/* A Linguistic Approach */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              A Linguistic Approach to Sign Language Data in AI Model Development
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Naomi Caselli, <em>Boston University</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session brings a linguistic lens to data design for sign language AI, including what must be captured to represent the language faithfully. It will connect linguistic structure to practical annotation and modeling choices that affect performance and usability.
+                            </p>
+                          </div>
+
+                          {/* ASL, AI, and Authority */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              ASL, AI, and Authority: Centering Deaf ASL Experts in Language Technologies
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, PhD, Shelley Oishi, <em>TWA Innovations LLC</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A workshop on why ASL fluency is not the same as ASL authority, and how teams can center Deaf expertise in decision making. It will cover staffing, review processes, and governance practices that reduce harm and improve product quality.
+                            </p>
+                          </div>
+
+                          {/* EUD */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              EUD: Sign Language in the Era of Artificial Intelligence
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Andy Van Hoorebeke, <em>European Union of the Deaf</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              As a key stakeholder in the EU policy landscape, EUD is building on its AI report to develop crucial tailored policy recommendations for EU institutions, ensuring that the rights of deaf sign language users are fully reflected in the implementation of the AI Act and related digital legislation.
+                            </p>
+                          </div>
+
+                          {/* Sign Language AI and International Policy */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Sign Language AI and International Policy Spaces
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Joseph J. Murray, <em>World Federation of the Deaf</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A global policy session on how sign language AI is showing up in international forums, standards discussions, and advocacy work. Attendees will learn what issues are emerging and how to participate responsibly across countries and sign languages.
+                            </p>
+                          </div>
+
+                          {/* Fireside Chat */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Fireside Chat with Federal Communications Commission
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Featuring:</strong> Suzy Rosen Singleton and Travis Dougherty
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A conversation on accessibility policy in the United States and how emerging sign language technologies may intersect with regulatory priorities. The discussion will focus on practical implications for industry, community, and public sector stakeholders.
+                            </p>
+                          </div>
+
+                          {/* CoSET SAFE AI */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              CoSET SAFE AI: Designing for Communication Success
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Abraham Glasser, PhD, Tim Riker, Stephanie Jo Kent, Celena Ponce, Jeffrey Shaul
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.
+                            </p>
+                          </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Evening Event Section */}
             <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
-              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
-                <CardTitle className="text-white text-4xl font-bold">Evening Event</CardTitle>
+              <CardHeader 
+                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                onClick={() => setIsEveningEventExpanded(!isEveningEventExpanded)}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CardTitle className="text-white text-4xl font-bold">Evening Event</CardTitle>
+                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isEveningEventExpanded ? 'rotate-180' : ''}`} />
+                </div>
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className={`pt-6 md:block ${isEveningEventExpanded ? 'block' : 'hidden'}`}>
                 <div className="text-center mb-6">
                   <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Stadium</h3>
                   <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">7-10 PM April 16th, closed for only the summit attendees</p>
@@ -1190,10 +1496,16 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             <Card className="shadow-xl flex flex-col overflow-hidden bg-white rounded-lg h-full">
-              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
-                <CardTitle className="text-white text-4xl font-bold">{getText('hotelsTitle', 'Hotel Block')}</CardTitle>
+              <CardHeader 
+                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                onClick={() => setIsHotelBlockExpanded(!isHotelBlockExpanded)}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CardTitle className="text-white text-4xl font-bold">{getText('hotelsTitle', 'Hotel Block')}</CardTitle>
+                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isHotelBlockExpanded ? 'rotate-180' : ''}`} />
+                </div>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col p-4">
+              <CardContent className={`flex-1 flex flex-col p-4 md:flex ${isHotelBlockExpanded ? 'flex' : 'hidden'}`}>
                 <div className="flex-1 flex flex-col">
                   <div className="space-y-2 text-sm text-gray-900 dark:text-white">
                     <p><strong>Hotel:</strong> Sheraton Boston Hotel</p>
@@ -1241,10 +1553,16 @@ const Index = () => {
             </Card>
 
             <Card className="shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg h-full">
-              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
-                <CardTitle className="text-white text-4xl font-bold">{getText('travelAdviceTitle', 'Travel Advice')}</CardTitle>
+              <CardHeader 
+                className="bg-electric-blue text-white text-center py-2 rounded-t-lg cursor-pointer md:cursor-default"
+                onClick={() => setIsTravelAdviceExpanded(!isTravelAdviceExpanded)}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CardTitle className="text-white text-4xl font-bold">{getText('travelAdviceTitle', 'Travel Advice')}</CardTitle>
+                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isTravelAdviceExpanded ? 'rotate-180' : ''}`} />
+                </div>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col p-4">
+              <CardContent className={`flex-1 flex flex-col p-4 md:flex ${isTravelAdviceExpanded ? 'flex' : 'hidden'}`}>
                 <div className="flex-1 flex flex-col">
                   <div className="space-y-3 text-gray-700 dark:text-white text-sm">
                   <div>
@@ -1296,7 +1614,18 @@ const Index = () => {
       {/* Interested Companies Section */}
       <section className="py-4 bg-blue-50 dark:bg-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <InterestedCompanies />
+          <div 
+            className="cursor-pointer md:hidden text-center mb-4 pb-2 border-b border-gray-300"
+            onClick={() => setIsInterestedMembersExpanded(!isInterestedMembersExpanded)}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <h2 className="text-2xl font-bold text-gray-900">Organization Members Already Interested</h2>
+              <ChevronDown className={`h-6 w-6 text-gray-900 transition-transform ${isInterestedMembersExpanded ? 'rotate-180' : ''}`} />
+            </div>
+          </div>
+          <div className={`md:block ${isInterestedMembersExpanded ? 'block' : 'hidden'}`}>
+            <InterestedCompanies />
+          </div>
         </div>
       </section>
 

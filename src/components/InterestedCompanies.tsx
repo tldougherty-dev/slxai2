@@ -124,29 +124,29 @@ export default function InterestedCompanies() {
 
   return (
     <section className="py-4">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Organization Members Already Interested')}</h2>
+      <h2 className="hidden md:block text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Organization Members Already Interested')}</h2>
       
       {/* Infographics */}
-      <div className="flex justify-center gap-6 mb-6">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-6">
         <Card 
-          className="text-center p-8 border-2 border-blue-500 shadow-none w-56"
+          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none w-full sm:w-56"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
           }}
         >
-          <div className="text-6xl font-bold text-blue-600">{companyCount}</div>
-          <div className="text-sm text-muted-foreground">{getText('membersLabel', 'Members')}</div>
+          <div className="text-4xl sm:text-6xl font-bold text-blue-600">{companyCount}</div>
+          <div className="text-xs sm:text-sm text-muted-foreground">{getText('membersLabel', 'Members')}</div>
         </Card>
         <Card 
-          className="text-center p-8 border-2 border-blue-500 shadow-none w-56"
+          className="text-center p-4 sm:p-8 border-2 border-blue-500 shadow-none w-full sm:w-56"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
           }}
         >
-          <div className="text-6xl font-bold text-blue-600">{countryCount}</div>
-          <div className="text-sm text-muted-foreground">{getText('countriesLabel', 'Countries')}</div>
+          <div className="text-4xl sm:text-6xl font-bold text-blue-600">{countryCount}</div>
+          <div className="text-xs sm:text-sm text-muted-foreground">{getText('countriesLabel', 'Countries')}</div>
         </Card>
       </div>
 
