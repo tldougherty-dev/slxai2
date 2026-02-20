@@ -614,12 +614,6 @@ const Index = () => {
       {/* About Section */}
       <section id="about" className="py-4 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <p className="text-base text-black leading-relaxed max-w-4xl mx-auto">
-              {getText('aboutDescription', 'We are uniting together industry leaders in the sign language x AI space to establish a cooperative nonprofit, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
-            </p>
-          </div>
-
           {/* Mission, Vision, Goals */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <Card 
@@ -814,32 +808,34 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <div className="space-y-4">
-              <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <Calendar className="h-5 w-5 text-electric-blue" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <div className="border-2 border-electric-blue rounded-lg shadow-xl bg-white overflow-hidden">
+                <div className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <h3 className="text-xl font-bold text-white">
                     {getText('dateTimeTitle', 'Date & Time')}
                   </h3>
                 </div>
-                <div className="text-center text-gray-700 dark:text-white">
-                  <p>
-                    <strong>{getText('date', 'Date:')}</strong> {getText('dateValue', 'April 16-17, 2026')}<br />
-                    <strong>{getText('conferenceHours', 'Conference Hours:')}</strong> {getText('conferenceHoursValue', '8:30 AM - 5:00 PM')}
-                  </p>
+                <div className="p-4">
+                  <div className="text-center text-gray-700 dark:text-white">
+                    <p>
+                      <strong>{getText('date', 'Date:')}</strong> {getText('dateValue', 'April 16-17, 2026')}<br />
+                      <strong>{getText('conferenceHours', 'Conference Hours:')}</strong> {getText('conferenceHoursValue', '8:30 AM - 5:00 PM')}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                  <MapPin className="h-5 w-5 text-electric-blue" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{getText('locationTitle', 'Location')}</h3>
+              <div className="border-2 border-electric-blue rounded-lg shadow-xl bg-white overflow-hidden">
+                <div className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <h3 className="text-xl font-bold text-white">{getText('locationTitle', 'Location')}</h3>
                 </div>
-                <div className="text-center dark:text-white text-gray-700">
-                  <strong>{getText('venue', 'Venue:')}</strong> {getText('venueValue', 'Boston University')}<br />
-                  <strong>Building:</strong> Photonics Center<br />
-                  <strong>{getText('city', 'City:')}</strong> {getText('cityValue', 'Boston, Massachusetts')}<br />
-                  <strong>{getText('address', 'Address:')}</strong> {getText('addressValue', '8 St Mary\'s St')}<br />
-                  {getText('addressValue2', 'Boston, MA 02215')}
+                <div className="p-4">
+                  <div className="text-center dark:text-white text-gray-700">
+                    <strong>{getText('venue', 'Venue:')}</strong> {getText('venueValue', 'Boston University')}<br />
+                    <strong>Building:</strong> Photonics Center<br />
+                    <strong>{getText('city', 'City:')}</strong> {getText('cityValue', 'Boston, Massachusetts')}<br />
+                    <strong>{getText('address', 'Address:')}</strong> {getText('addressValue', '8 St Mary\'s St')}<br />
+                    {getText('addressValue2', 'Boston, MA 02215')}
+                  </div>
                 </div>
               </div>
             </div>
