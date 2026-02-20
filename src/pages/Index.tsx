@@ -612,10 +612,10 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-4 bg-gray-50">
+      <section id="about" className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Mission, Vision, Goals */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-2">
             <Card 
               className="shadow-none overflow-hidden"
               style={{
