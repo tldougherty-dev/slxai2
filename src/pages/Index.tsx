@@ -620,16 +620,7 @@ const Index = () => {
       <section id="about" className="py-4 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-2">
-              {getText('aboutTitle', 'About')}
-              <img 
-                src="/slxai-footer-logo.png" 
-                alt="SLxAI Logo" 
-                className="h-6 w-auto inline-block align-middle"
-                style={{ transform: 'scale(1.05)' }}
-              />
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-base text-gray-600 leading-relaxed max-w-4xl mx-auto">
               {getText('aboutDescription', 'We are bringing together industry leaders in the sign language x AI space to establish a cooperative nonprofit, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
             </p>
           </div>
@@ -637,54 +628,51 @@ const Index = () => {
           {/* Mission, Vision, Goals */}
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <Card 
-              className="border-l-4 border-l-electric-blue shadow-none"
+              className="shadow-none overflow-hidden"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="text-center pb-3">
-                <Target className="h-8 w-8 text-electric-blue mx-auto mb-2" aria-hidden="true" />
-                <CardTitle className="text-xl font-bold text-gray-900">{getText('missionTitle', 'Mission')}</CardTitle>
+              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                <CardTitle className="text-3xl font-bold text-white">{getText('missionTitle', 'Mission')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-gray-600 text-center">
+              <CardContent className="pt-4">
+                <p className="text-sm text-black text-center">
                   {getText('missionText', 'To unite industry leaders through a cooperative nonprofit structure, establishing ethical standards and driving innovation in sign language x AI technologies through equal representation and collaborative decision-making.')}
                 </p>
               </CardContent>
             </Card>
 
             <Card 
-              className="border-l-4 border-l-electric-blue shadow-none"
+              className="shadow-none overflow-hidden"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="text-center pb-3">
-                <Eye className="h-8 w-8 text-electric-blue mx-auto mb-2" aria-hidden="true" />
-                <CardTitle className="text-xl font-bold text-gray-900">{getText('visionTitle', 'Vision')}</CardTitle>
+              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                <CardTitle className="text-3xl font-bold text-white">{getText('visionTitle', 'Vision')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-gray-600 text-center">
+              <CardContent className="pt-4">
+                <p className="text-sm text-black text-center">
                   {getText('visionText', 'A world where sign language x AI technologies are developed through industry-wide collaboration, with each company having an equal voice in shaping the future of accessible technology.')}
                 </p>
               </CardContent>
             </Card>
 
             <Card 
-              className="border-l-4 border-l-electric-blue shadow-none"
+              className="shadow-none overflow-hidden"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                 transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="text-center pb-3">
-                <ArrowUp className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <CardTitle className="text-xl font-bold text-gray-900">{getText('goalsTitle', 'Goals')}</CardTitle>
+              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                <CardTitle className="text-3xl font-bold text-white">{getText('goalsTitle', 'Goals')}</CardTitle>
               </CardHeader>
-              <CardContent className="pt-0">
-                <ul className="text-sm text-gray-600 space-y-1">
+              <CardContent className="pt-4">
+                <ul className="text-sm text-black space-y-1">
                   <li>• {getText('goal1', 'Establish cooperative nonprofit structure')}</li>
                   <li>• {getText('goal2', 'Create industry-wide ethical standards')}</li>
                   <li>• {getText('goal3', 'Foster collaborative innovation')}</li>
@@ -810,17 +798,15 @@ const Index = () => {
       <section id="summit" className="py-4 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-2">
+            <h2 className="text-6xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-2">
               <img 
                 src="/slxai-footer-logo.png" 
                 alt="SLxAI Logo" 
-                className="h-10 w-auto inline-block align-middle"
+                className="w-auto inline-block align-middle"
+                style={{ height: '54px' }}
               />
               {getText('summitTitle', 'Summit 2026')}
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              {getText('summitDescription', 'The historic gathering where industry leaders will establish the cooperative nonprofit that will shape the future of sign language x AI technologies.')}
-            </p>
           </div>
 
           <div className="mb-8">
@@ -885,7 +871,7 @@ const Index = () => {
               <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
                 <CardTitle className="text-white text-4xl font-bold">{getText('aboutSummitTitle', 'About Summit 2026')}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4 pt-4">
+              <CardContent className="space-y-4 pt-4 pb-0">
                 <div className="space-y-4 text-gray-700 dark:text-white leading-relaxed">
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('overviewTitle', 'SLxAI Summit 2026 Overview')}</h3>
@@ -909,7 +895,7 @@ const Index = () => {
                   </div>
                 </div>
 
-                <div className="-mx-6 -mt-4 mb-0">
+                <div className="-mx-6 -mt-4 -mb-6">
                   <div className="bg-electric-blue text-white text-center py-2">
                     <h3 className="text-4xl font-bold text-white">
                       {getText('workshopListTitle', 'Workshops & Panels')}
@@ -1326,109 +1312,129 @@ const Index = () => {
       {/* Membership Section */}
       <section id="membership" className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{getText('membershipTitle', 'Become a Founding Member')}</h2>
-            <p className="text-lg text-gray-600 max-w-6xl mx-auto">
-              {getText('membershipDescription', 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit, ensuring equal representation in shaping the future of sign language x AI technologies.')}
-            </p>
-          </div>
+          <div className="max-w-6xl mx-auto shadow-xl rounded-lg overflow-hidden bg-blue-50 dark:bg-blue-900/20">
+            <div className="text-center mb-8">
+              <div className="bg-electric-blue text-white text-center py-2 rounded-t-lg mb-4">
+                <h2 className="text-3xl font-bold text-white">{getText('membershipTitle', 'Become a Founding Member')}</h2>
+              </div>
+              <p className="text-sm text-black">
+                Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit,<br />
+                ensuring equal representation in shaping the future of sign language x AI technologies.
+              </p>
+            </div>
 
-          {/* Founding Member Benefits */}
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">{getText('foundingBenefitsTitle', 'Founding Member Benefits')}</h3>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
+            {/* Founding Member Benefits */}
+            <div className="text-center mb-8 px-4">
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <Star className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('foundingStatusTitle', 'Founding Status')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('foundingStatusTitle', 'Founding Status')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                    {getText('foundingStatusText', 'Be recognized as one of the original industry leaders that established the cooperative.')}
                  </p>
+                </CardContent>
               </Card>
 
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <Award className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('boardRepresentationTitle', 'Board Representation')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('boardRepresentationTitle', 'Board Representation')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                   {getText('boardRepresentationText', 'Equal voting rights on all cooperative decisions.')}
                 </p>
+                </CardContent>
               </Card>
 
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <Globe className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('industryLeadershipTitle', 'Industry Leadership')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('industryLeadershipTitle', 'Industry Leadership')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                   {getText('industryLeadershipText', 'Help establish industry standards and ethical guidelines for sign language x AI.')}
                 </p>
+                </CardContent>
               </Card>
 
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <BookOpen className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('benchmarkingTitle', 'Benchmarking & Standardization')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('benchmarkingTitle', 'Benchmarking & Standardization')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                   {getText('benchmarkingText', 'Play a key role in establishing benchmarks and standards for avatar and sign language recognition (SLR) technologies, helping to guide the industry toward greater interoperability and quality.')}
                 </p>
+                </CardContent>
               </Card>
 
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <ArrowUp className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('earlyAccessTitle', 'Early Access & Influence')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('earlyAccessTitle', 'Early Access & Influence')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                   {getText('earlyAccessText', 'Gain early access to new research, datasets, and tools developed by the cooperative. Founding members can pilot and shape upcoming initiatives, ensuring your needs and feedback are prioritized in the development of industry resources.')}
                 </p>
+                </CardContent>
               </Card>
 
               <Card 
-                className="text-center p-4 border-l-4 border-l-electric-blue shadow-none"
+                className="shadow-none overflow-hidden"
                 style={{
                   filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
                   transform: 'translateY(-2px)'
                 }}
               >
-                <Users className="h-8 w-8 text-electric-blue mx-auto mb-2" />
-                <h4 className="text-base font-semibold text-gray-900 mb-1">{getText('networkTitle', 'Network & Collaboration')}</h4>
-                <p className="text-sm text-gray-600">
+                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+                  <CardTitle className="text-base font-bold text-white">{getText('networkTitle', 'Network & Collaboration')}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4">
+                <p className="text-sm text-black">
                   {getText('networkText', 'Connect with other industry leaders, researchers, and innovators in the sign language x AI space. Build lasting partnerships and collaborate on groundbreaking projects.')}
                 </p>
+                </CardContent>
               </Card>
+              </div>
             </div>
-          </div>
 
-          {/* Interest Form */}
-          <div className="max-w-2xl mx-auto">
+            {/* Interest Form */}
+            <div className="max-w-2xl mx-auto pb-8">
             <Card className="shadow-lg">
               <CardHeader className="text-center">
-                <CardTitle className="text-xl">{getText('interestFormTitle', 'Express Your Interest')}</CardTitle>
+                <CardTitle className="text-xl">{getText('interestFormTitle', 'Express Your Interest to Join')}</CardTitle>
                 <p className="text-sm text-gray-600">
                   {getText('interestFormDescription', 'Fill out the form below to express your organization\'s interest in becoming a founding member of the SLxAI cooperative nonprofit.')}
                 </p>
@@ -1543,19 +1549,17 @@ const Index = () => {
                 )}
               </CardContent>
             </Card>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Summit CTA Section */}
-      <section className="py-6 bg-gradient-to-r from-electric-blue to-blue-600">
+      <section className="pt-3 bg-electric-blue">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             {getText('ctaTitle', 'Be Part of History: Join the Inaugural Summit')}
           </h2>
-          <p className="text-lg text-blue-100">
-            {getText('ctaDescription', 'This is your opportunity to help establish the cooperative nonprofit that will shape the future of sign language x AI technologies.')}
-          </p>
         </div>
       </section>
     </div>

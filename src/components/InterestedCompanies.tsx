@@ -129,24 +129,24 @@ export default function InterestedCompanies() {
       {/* Infographics */}
       <div className="flex justify-center gap-6 mb-6">
         <Card 
-          className="text-center p-4 border-2 border-blue-500 shadow-none w-28"
+          className="text-center p-8 border-2 border-blue-500 shadow-none w-56"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
           }}
         >
-          <div className="text-3xl font-bold text-blue-600">{companyCount}</div>
-          <div className="text-xs text-muted-foreground">{getText('membersLabel', 'Members')}</div>
+          <div className="text-6xl font-bold text-blue-600">{companyCount}</div>
+          <div className="text-sm text-muted-foreground">{getText('membersLabel', 'Members')}</div>
         </Card>
         <Card 
-          className="text-center p-4 border-2 border-blue-500 shadow-none w-28"
+          className="text-center p-8 border-2 border-blue-500 shadow-none w-56"
           style={{
             filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
             transform: 'translateY(-2px)'
           }}
         >
-          <div className="text-3xl font-bold text-blue-600">{countryCount}</div>
-          <div className="text-xs text-muted-foreground">{getText('countriesLabel', 'Countries')}</div>
+          <div className="text-6xl font-bold text-blue-600">{countryCount}</div>
+          <div className="text-sm text-muted-foreground">{getText('countriesLabel', 'Countries')}</div>
         </Card>
       </div>
 
