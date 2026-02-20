@@ -90,8 +90,8 @@ export default function InterestedCompanies() {
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   
   // Set member and country counts
-  const companyCount = 92;
-  const countryCount = 41;
+  const companyCount = "250+";
+  const countryCount = "50+";
 
   // Translate content
   useEffect(() => {
@@ -181,6 +181,9 @@ export default function InterestedCompanies() {
             <span className="text-gray-900">{company.name}</span>
           </div>
         ))}
+        <div className="col-span-full text-center py-2 text-2xl font-bold text-gray-600 italic">
+          and many more members!
+        </div>
       </div>
     </section>
   );

@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
-import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, Clock, Hotel, Plane, Ticket } from 'lucide-react';
+import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, Clock, Hotel, Plane, Ticket, ChevronDown, ChevronUp } from 'lucide-react';
 import InterestedCompanies from '@/components/InterestedCompanies';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -46,6 +46,7 @@ const Index = () => {
   const [waitlistForm, setWaitlistForm] = useState({
     name: '',
     email: '',
+    organization: '',
   });
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isWaitlistSubmitted, setIsWaitlistSubmitted] = useState(false);
@@ -132,7 +133,7 @@ const Index = () => {
         city: 'City:',
         cityValue: 'Boston, Massachusetts',
         address: 'Address:',
-        addressValue: '808 Commonwealth Avenue',
+        addressValue: '8 St Mary\'s St',
         addressValue2: 'Boston, MA 02215',
         aboutSummitTitle: 'About Summit 2026',
         overviewTitle: 'SLxAI Summit 2026 Overview',
@@ -140,7 +141,7 @@ const Index = () => {
         hostTitle: 'Host',
         hostText: 'The summit is held at Boston University. The Deaf Center at BU, directed by Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
         programFormatTitle: 'Program Format',
-        programFormatText: 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations.',
+        programFormatText: 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.',
         focusAreasTitle: 'Focus Areas:',
         focusArea1: 'Sign Language Recognition (SLR)',
         focusArea2: 'Ethics and Governance',
@@ -152,8 +153,6 @@ const Index = () => {
         focusArea8: 'Emerging Technologies',
         boothsTitle: 'Booths and Exhibits',
         boothsText: 'Sponsor booths are located inside the same main room as the plenary sessions. Attendees can move between the sessions area and the exhibit area without leaving the space. This setup keeps the energy in one place and gives sponsors constant visibility.',
-        preConferenceSocialTitle: 'Pre Conference Social',
-        preConferenceSocialText: 'A welcome social is held the evening before the summit. This informal gathering helps people meet one another early and builds momentum leading into the conference day.',
         conferenceDayTitle: 'Conference Day',
         conferenceDayText: 'The summit opens with keynote remarks followed by a full day of plenary sessions. Lunch is provided for all attendees. The main room includes sponsor booths, demo tables, and product displays. Attendees can explore booths during breaks and transitions between sessions.',
         eveningEventsTitle: 'Evening Events',
@@ -162,14 +161,12 @@ const Index = () => {
         maxCapacity: 'Max Capacity:',
         maxCapacityValue: '175 attendees',
         workshopsPanels: 'Workshops/Panels:',
-        workshopsPanelsValue: 'Up to 15',
+        workshopsPanelsValue: '20',
         importantDatesTitle: 'Important Dates',
-        submissionDeadline: 'Presentation Submission Deadline:',
-        submissionDeadlineValue: 'January 31, 2026',
         registrationFee: 'Registration Fee:',
-        registrationFeeValue: 'TBD',
-        hotelsTitle: 'Hotels Near Boston University',
-        hotelsDescription: 'Several hotels are located within walking distance or a short ride from Boston University. We recommend booking early as April is a busy time in Boston. Popular options include:',
+        registrationFeeValue: '$350 plus processing fee',
+        hotelsTitle: 'Hotel Block',
+        hotelsDescription: 'We have secured an official hotel block for the SLxAI Summit. We recommend booking early as April is a busy time in Boston.',
         hotelBlockTitle: 'Hotel Block Available',
         hotelBlockInfo: 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.',
         hotelBlockNote: 'Block of 20 rooms reserved for three nights',
@@ -509,18 +506,30 @@ const Index = () => {
       return;
     }
 
+    // Validate organization length if provided (optional field)
+    if (waitlistForm.organization && !isValidLength(waitlistForm.organization, 1, 200)) {
+      toast({
+        title: "Invalid input",
+        description: "Organization name must be between 1 and 200 characters.",
+        variant: "destructive",
+      });
+      setIsSubmittingWaitlist(false);
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('waitlist')
         .insert({
           name: sanitizeText(waitlistForm.name.trim()),
           email: waitlistForm.email.toLowerCase().trim(),
+          organization: waitlistForm.organization ? sanitizeText(waitlistForm.organization.trim()) : null,
         });
 
       if (error) throw error;
 
       setIsWaitlistSubmitted(true);
-      setWaitlistForm({ name: '', email: '' });
+      setWaitlistForm({ name: '', email: '', organization: '' });
       
       toast({
         title: "Thank you!",
@@ -691,212 +700,18 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Interested Companies Section */}
-      <section className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <InterestedCompanies />
-        </div>
-      </section>
-
-      {/* Ticket Reservation Section */}
-      <section className="py-12 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Reserve Your Conference Ticket
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              Secure your spot at SLxAI Summit 2026. Ticket pricing will be finalized within the next 2 weeks.
-            </p>
-          </div>
-
-          {/* Ticket Availability Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-              <CardContent className="p-6 text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Available Tickets</div>
-                <div className="text-3xl font-bold text-electric-blue">{availableTickets}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">out of 175 total</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
-              <CardContent className="p-6 text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Reserved</div>
-                <div className="text-3xl font-bold text-green-600 dark:text-green-400">{reservedTickets}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">tickets reserved</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800">
-              <CardContent className="p-6 text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Ticket Price</div>
-                <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">TBD</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Finalized in 2 weeks</div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Reservation Form */}
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Ticket className="h-5 w-5 text-electric-blue" />
-                Ticket Pre-Reservation
-              </CardTitle>
-              <CardDescription>
-                This is a pre-reservation system. You're reserving the opportunity to purchase a ticket when pricing is finalized.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isTicketSubmitted ? (
-                <div className="text-center py-8">
-                  <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Reservation Confirmed!</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    Your ticket reservation has been confirmed. We'll notify you when ticket pricing is finalized (within the next 2 weeks) and provide instructions for completing your purchase.
-                  </p>
-                  <Button
-                    onClick={() => {
-                      setIsTicketSubmitted(false);
-                      setTicketForm({ name: '', email: '', phone: '', organization: '' });
-                    }}
-                    variant="outline"
-                    className="bg-white dark:bg-gray-800"
-                  >
-                    Reserve Another Ticket
-                  </Button>
-                </div>
-              ) : availableTickets <= 0 ? (
-                <div className="text-center py-8">
-                  <div className="text-4xl mb-4">🎫</div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    All Tickets Reserved
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    We're sorry, but all 175 tickets have been reserved. Please check back later as cancellations may become available.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleTicketSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="ticket-name" className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-electric-blue" />
-                        Full Name *
-                      </Label>
-                      <Input
-                        id="ticket-name"
-                        name="name"
-                        type="text"
-                        placeholder="John Doe"
-                        value={ticketForm.name}
-                        onChange={(e) => setTicketForm({ ...ticketForm, name: e.target.value })}
-                        required
-                        disabled={isSubmittingTicket}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="ticket-email" className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-electric-blue" />
-                        Email Address *
-                      </Label>
-                      <Input
-                        id="ticket-email"
-                        name="email"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={ticketForm.email}
-                        onChange={(e) => setTicketForm({ ...ticketForm, email: e.target.value })}
-                        required
-                        disabled={isSubmittingTicket}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="ticket-phone" className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-electric-blue" />
-                        Phone Number
-                      </Label>
-                      <Input
-                        id="ticket-phone"
-                        name="phone"
-                        type="tel"
-                        placeholder="+1 (555) 123-4567"
-                        value={ticketForm.phone}
-                        onChange={(e) => setTicketForm({ ...ticketForm, phone: e.target.value })}
-                        disabled={isSubmittingTicket}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={50}
-                      />
-                      <p className="text-xs text-gray-500">Optional - for urgent communications</p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="ticket-organization" className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-electric-blue" />
-                        Organization
-                      </Label>
-                      <Input
-                        id="ticket-organization"
-                        name="organization"
-                        type="text"
-                        placeholder="Your organization or company"
-                        value={ticketForm.organization}
-                        onChange={(e) => setTicketForm({ ...ticketForm, organization: e.target.value })}
-                        disabled={isSubmittingTicket}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={200}
-                      />
-                      <p className="text-xs text-gray-500">Optional</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <p className="text-sm text-gray-700 dark:text-gray-300">
-                      <strong>Important:</strong> Only 175 tickets are available. Reservations are processed on a first-come, first-served basis. You'll receive an email notification when ticket pricing is finalized with instructions on how to complete your purchase.
-                    </p>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
-                    disabled={isSubmittingTicket || availableTickets <= 0}
-                  >
-                    {isSubmittingTicket ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Reserving...
-                      </>
-                    ) : (
-                      <>
-                        <Ticket className="h-4 w-4 mr-2" />
-                        Reserve My Ticket
-                      </>
-                    )}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* Waitlist Section */}
-      <section className="py-8 bg-white dark:bg-gray-900">
+      <section className="py-8 bg-blue-50 dark:bg-blue-900/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Join the Waitlist
+              All tickets for the Summit 2026 are reserved! Join our waitlist!
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              All tickets reserved? Join our waitlist and we'll notify you when spots become available.
+              We'll notify you when spots become available.
             </p>
           </div>
-          <Card className="shadow-lg border-2 border-electric-blue/20">
+          <Card className="shadow-lg border-2 border-electric-blue/20 bg-white">
             <CardContent className="pt-6">
               {isWaitlistSubmitted ? (
                 <div className="text-center py-8">
@@ -908,7 +723,7 @@ const Index = () => {
                   <Button
                     onClick={() => {
                       setIsWaitlistSubmitted(false);
-                      setWaitlistForm({ name: '', email: '' });
+                      setWaitlistForm({ name: '', email: '', organization: '' });
                     }}
                     variant="outline"
                     className="bg-white dark:bg-gray-800"
@@ -922,7 +737,7 @@ const Index = () => {
                     <div className="space-y-2">
                       <Label htmlFor="waitlist-name" className="flex items-center gap-2">
                         <User className="h-4 w-4 text-electric-blue" />
-                        Name
+                        Name <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="waitlist-name"
@@ -940,7 +755,7 @@ const Index = () => {
                     <div className="space-y-2">
                       <Label htmlFor="waitlist-email" className="flex items-center gap-2">
                         <Mail className="h-4 w-4 text-electric-blue" />
-                        Email Address
+                        Email Address <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="waitlist-email"
@@ -954,6 +769,23 @@ const Index = () => {
                         maxLength={200}
                       />
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
+                      <Building2 className="h-4 w-4 text-electric-blue" />
+                      Your Organization <span className="text-gray-500 text-sm">(Optional)</span>
+                    </Label>
+                    <Input
+                      id="waitlist-organization"
+                      type="text"
+                      placeholder="Your organization name"
+                      value={waitlistForm.organization}
+                      onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
+                      disabled={isSubmittingWaitlist}
+                      className="bg-white dark:bg-gray-800"
+                      maxLength={200}
+                    />
                   </div>
 
                   <Button
@@ -994,41 +826,50 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
-              <CardHeader className="pb-2">
-                <CardTitle className="flex items-center justify-center gap-2 text-gray-900 dark:text-white">
+          <div className="mb-8">
+            <img 
+              src="/slxai-bu-hero.png" 
+              alt="SLxAI Summit at Boston University" 
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <div className="space-y-4">
+              <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
+                <div className="flex items-center justify-center gap-2 mb-3">
                   <Calendar className="h-5 w-5 text-electric-blue" />
-                  {getText('dateTimeTitle', 'Date & Time')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center p-3 pt-0">
-                <div className="text-gray-700 dark:text-white">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {getText('dateTimeTitle', 'Date & Time')}
+                  </h3>
+                </div>
+                <div className="text-center text-gray-700 dark:text-white">
                   <p>
                     <strong>{getText('date', 'Date:')}</strong> {getText('dateValue', 'April 16-17, 2026')}<br />
-                    <strong>{getText('conferenceHours', 'Conference Hours:')}</strong> {getText('conferenceHoursValue', '8:30 AM - 5:00 PM')}<br />
-                    <strong>{getText('eveningEvents', 'Evening Events:')}</strong> {getText('eveningEventsValue', 'Evening events on both nights')}<br />
-                    <strong>{getText('preConference', 'Pre-Conference:')}</strong> {getText('preConferenceValue', 'Possible social light event on April 15')}
+                    <strong>{getText('conferenceHours', 'Conference Hours:')}</strong> {getText('conferenceHoursValue', '8:30 AM - 5:00 PM')}
                   </p>
-                  <div className="flex items-center justify-center gap-2 mb-2 mt-4">
-                    <MapPin className="h-5 w-5 text-electric-blue" />
-                    <h3 className="text-2xl font-semibold leading-none tracking-tight text-gray-900 dark:text-white">{getText('locationTitle', 'Location')}</h3>
-                  </div>
-                  <div className="dark:text-white">
-                    <strong>{getText('venue', 'Venue:')}</strong> {getText('venueValue', 'Boston University')}<br />
-                    <strong>{getText('city', 'City:')}</strong> {getText('cityValue', 'Boston, Massachusetts')}<br />
-                    <strong>{getText('address', 'Address:')}</strong> {getText('addressValue', '808 Commonwealth Avenue')}<br />
-                    {getText('addressValue2', 'Boston, MA 02215')}
-                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
-              <CardContent className="p-3">
-                <div className="w-full rounded-lg overflow-hidden" style={{ height: '400px' }}>
+              <div className="border-2 border-electric-blue rounded-lg p-4 shadow-xl bg-white">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <MapPin className="h-5 w-5 text-electric-blue" />
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{getText('locationTitle', 'Location')}</h3>
+                </div>
+                <div className="text-center dark:text-white text-gray-700">
+                  <strong>{getText('venue', 'Venue:')}</strong> {getText('venueValue', 'Boston University')}<br />
+                  <strong>Building:</strong> Photonics Center<br />
+                  <strong>{getText('city', 'City:')}</strong> {getText('cityValue', 'Boston, Massachusetts')}<br />
+                  <strong>{getText('address', 'Address:')}</strong> {getText('addressValue', '8 St Mary\'s St')}<br />
+                  {getText('addressValue2', 'Boston, MA 02215')}
+                </div>
+              </div>
+            </div>
+
+            <div className="border-2 border-electric-blue rounded-lg p-4 h-full flex flex-col shadow-xl bg-white">
+              <div className="w-full rounded-lg overflow-hidden flex-1" style={{ minHeight: '300px' }}>
                   <iframe
-                    src="https://www.google.com/maps?q=Boston+University+Deaf+Center+808+Commonwealth+Avenue+Boston+MA+02215&output=embed"
+                    src="https://www.google.com/maps?q=8+St+Mary's+St+Boston+MA+02215&output=embed"
                     width="100%"
                     height="100%"
                     style={{ 
@@ -1040,15 +881,14 @@ const Index = () => {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Boston University Deaf Center Location"
                   />
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md md:col-span-2">
-              <CardHeader>
-                <CardTitle className="text-gray-900 dark:text-white">{getText('aboutSummitTitle', 'About Summit 2026')}</CardTitle>
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
+              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+                <CardTitle className="text-white text-4xl font-bold">{getText('aboutSummitTitle', 'About Summit 2026')}</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-4">
                 <div className="space-y-4 text-gray-700 dark:text-white leading-relaxed">
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('overviewTitle', 'SLxAI Summit 2026 Overview')}</h3>
@@ -1067,175 +907,388 @@ const Index = () => {
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('programFormatTitle', 'Program Format')}</h3>
                     <p>
-                      {getText('programFormatText', 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations.')}
+                      {getText('programFormatText', 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.')}
                     </p>
                   </div>
+                </div>
 
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-3">{getText('focusAreasTitle', 'Focus Areas:')}</h3>
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-gray-700 dark:text-white">
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea1', 'Sign Language Recognition (SLR)')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea2', 'Ethics and Governance')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea3', 'Sign Language Avatar (SLA)')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea4', 'Research and Innovation')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea5', 'SLR and SLA Applications')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea6', 'Global Benchmarks')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea7', 'Networking')}</span>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('focusArea8', 'Emerging Technologies')}</span>
-                      </div>
+                <div className="-mx-6 -mt-4 mb-0">
+                  <div className="bg-electric-blue text-white text-center py-2">
+                    <h3 className="text-4xl font-bold text-white">
+                      {getText('workshopListTitle', 'Workshops & Panels')}
+                    </h3>
+                  </div>
+                  <div className="bg-blue-50 dark:bg-blue-900/20 px-6">
+                    <div className="space-y-6 pt-6 pb-6">
+                          {/* Keynote Speaker */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Keynote Speaker Title: Breaking Communication Barriers
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Ryan Hait-Campbell, <em>Convo Communications</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Ryan will open the summit with a look back at the early commercial foundations of sign language and AI and how the ecosystem has evolved since then. He will also outline what the next phase demands from the field, including quality, trust, and real world usability.
+                            </p>
+                          </div>
+
+                          {/* Ethics Panel */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Ethics: Where Does It Stop?
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Abraham Glasser, PhD, Adam Munder, Thomas Horejes, Ph.D., CDI, Dr. Maartje De Meulder, Dr. Naomi Caselli
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A panel on ethical boundaries and who carries responsibility when sign language AI systems are deployed at scale. Discussion will focus on power, consent, accountability, and what guardrails should be expected across research, product development, and procurement.
+                            </p>
+                          </div>
+
+                          {/* Trust and Accountability */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Trust and Accountability in Sign Language AI Innovation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Melissa Smith, Ed.D., <em>ASL Flurry</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session focuses on how trust is earned and lost in sign language AI, and what accountability looks like beyond claims of accuracy. It will cover transparency, community informed validation, and practical ways to measure impact on real users.
+                            </p>
+                          </div>
+
+                          {/* Research and Data Collection */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Research and Data Collection: Strengthening Validity Through Partnerships
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Pamela Macias, <em>University of Colorado Boulder</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A practical workshop on building research and data partnerships that improve validity and reduce bias. Participants will learn how to align goals across communities, institutions, and companies, and how to structure data work so results hold up under scrutiny.
+                            </p>
+                          </div>
+
+                          {/* Intentional Design */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Intentional Design for SL Translation: AI and Hybrid Approaches
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Noreen Wilson, Molly Glass, Yeh Jun Kim, <em>Kara Technologies</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This workshop explores design choices for sign language translation systems, including hybrid approaches that blend AI with human workflows. It will emphasize user needs, context specific constraints, and what quality should mean in different settings.
+                            </p>
+                          </div>
+
+                          {/* Lessons from Dataset Creation */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Lessons from Dataset Creation for Sustainable Sign Language AI
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Brian Birnbaum, Daniel Sommer, <em>Birnbaum Interpreting Services</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A deep dive into the realities of building sign language datasets that support long term innovation. The session will cover tradeoffs in scope, labeling, quality control, and sustainability, plus common pitfalls that create downstream model failures.
+                            </p>
+                          </div>
+
+                          {/* Practical Applications */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Practical Applications of AI Sign Language Translation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Ben Saunders, Marcus Oaten, <em>Signapse</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session showing applied sign language AI in real workflows and communication settings. The presenters will share lessons learned from deployment, performance constraints, and what users consistently need in practice.
+                            </p>
+                          </div>
+
+                          {/* Beyond Gloss */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Beyond Gloss: A New Framework for Sign Language Data
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Emanuele Chiusaroli, Marta Sanzari, <em>Handy Signs</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session introduces a framework that goes beyond gloss as a primary representation, aiming for structured and machine readable sign language data. It will highlight why gloss can be limiting and what richer representations enable for training, evaluation, and downstream reasoning.
+                            </p>
+                          </div>
+
+                          {/* Bridging the Gap */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Bridging the Gap: Real Time AI Avatars and Sign Language Animation
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Burak Uyanık, <em>Vosia.ai</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session focused on real time avatars and sign language animation pipelines. It will cover how linguistic intent is mapped into motion and rendering, plus where current avatar systems still struggle in real communication contexts.
+                            </p>
+                          </div>
+
+                          {/* A Better World */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              A Better World, Driven by Technology, Shaped by the Deaf
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Sławek Łuczywek and Ashod Derandonyan, <em>Migam.ai</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A session centered on building technology with Deaf expertise integrated throughout the lifecycle, from requirements through validation. It will describe how Deaf led feedback loops shape product direction and strengthen user outcomes.
+                            </p>
+                          </div>
+
+                          {/* The Future of Sign Language Translation */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              The Future of Sign Language Translation is Transcription
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Amit Moryossef, <em>Nagish</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A focused talk proposing that transcription may be the right framing for many sign language AI use cases. It will explain why that framing matters for evaluation, product design, and setting accurate expectations for users.
+                            </p>
+                          </div>
+
+                          {/* Human AI Collaboration */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Human AI Collaboration in Sign Language Technology
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Craig Radford, Brandon Dopf, <em>360 Direct Access</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This workshop examines how people and AI can collaborate in real deployments without degrading service quality. It will cover practical patterns for hybrid delivery, reliability expectations, and what breaks when organizations treat AI as a full replacement.
+                            </p>
+                          </div>
+
+                          {/* Learning with Signers */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Learning with Signers: Educational Applications of SLxAI
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Lee Kezar, Dr. Lorna Quandt, Ph.D., Dr. Athena Willis, Laurel Aichler, <em>Gallaudet University</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A panel on educational and learning applications that use sign language AI, from classroom tools to learning supports and assessment. The session will emphasize what works, what fails, and how to design with signers as core partners.
+                            </p>
+                          </div>
+
+                          {/* Good Enough for Whom */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Good Enough for Whom? Ethics, Power, and Accountability in Sign Language AI Deployment
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Maartje De Meulder, <em>HU University of Applied Sciences Utrecht (Hogeschool Utrecht)</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A workshop on how power and procurement shape what becomes "good enough," even when quality is uneven. Participants will explore accountability gaps, the risks of weak benchmarks, and what responsible deployment should require.
+                            </p>
+                          </div>
+
+                          {/* A Linguistic Approach */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              A Linguistic Approach to Sign Language Data in AI Model Development
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Naomi Caselli, <em>Boston University</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              This session brings a linguistic lens to data design for sign language AI, including what must be captured to represent the language faithfully. It will connect linguistic structure to practical annotation and modeling choices that affect performance and usability.
+                            </p>
+                          </div>
+
+                          {/* ASL, AI, and Authority */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              ASL, AI, and Authority: Centering Deaf ASL Experts in Language Technologies
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, PhD, Shelley Oishi, <em>TWA Innovations LLC</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A workshop on why ASL fluency is not the same as ASL authority, and how teams can center Deaf expertise in decision making. It will cover staffing, review processes, and governance practices that reduce harm and improve product quality.
+                            </p>
+                          </div>
+
+                          {/* EUD */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              EUD: Sign Language in the Era of Artificial Intelligence
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Andy Van Hoorebeke, <em>European Union of the Deaf</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              As a key stakeholder in the EU policy landscape, EUD is building on its AI report to develop crucial tailored policy recommendations for EU institutions, ensuring that the rights of deaf sign language users are fully reflected in the implementation of the AI Act and related digital legislation.
+                            </p>
+                          </div>
+
+                          {/* Sign Language AI and International Policy */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Sign Language AI and International Policy Spaces
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenter:</strong> Dr. Joseph J. Murray, <em>World Federation of the Deaf</em>
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A global policy session on how sign language AI is showing up in international forums, standards discussions, and advocacy work. Attendees will learn what issues are emerging and how to participate responsibly across countries and sign languages.
+                            </p>
+                          </div>
+
+                          {/* Fireside Chat */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              Fireside Chat with Federal Communications Commission
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Featuring:</strong> Suzy Rosen Singleton and Travis Dougherty
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A conversation on accessibility policy in the United States and how emerging sign language technologies may intersect with regulatory priorities. The discussion will focus on practical implications for industry, community, and public sector stakeholders.
+                            </p>
+                          </div>
+
+                          {/* CoSET SAFE AI */}
+                          <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
+                            <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                              CoSET SAFE AI: Designing for Communication Success
+                            </h4>
+                            <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
+                              <strong>Presenters:</strong> Dr. Abraham Glasser, PhD, Tim Riker, Stephanie Jo Kent, Celena Ponce, Jeffrey Shaul
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.
+                            </p>
+                          </div>
                     </div>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('boothsTitle', 'Booths and Exhibits')}</h3>
-                    <p>
-                      {getText('boothsText', 'Sponsor booths are located inside the same main room as the plenary sessions. Attendees can move between the sessions area and the exhibit area without leaving the space. This setup keeps the energy in one place and gives sponsors constant visibility.')}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('preConferenceSocialTitle', 'Pre Conference Social')}</h3>
-                    <p>
-                      {getText('preConferenceSocialText', 'A welcome social is held the evening before the summit. This informal gathering helps people meet one another early and builds momentum leading into the conference day.')}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('conferenceDayTitle', 'Conference Day')}</h3>
-                    <p>
-                      {getText('conferenceDayText', 'The summit opens with keynote remarks followed by a full day of plenary sessions. Lunch is provided for all attendees. The main room includes sponsor booths, demo tables, and product displays. Attendees can explore booths during breaks and transitions between sessions.')}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('eveningEventsTitle', 'Evening Events')}</h3>
-                    <p>
-                      {getText('eveningEventsText', 'Sponsors may host evening activities, receptions, or demonstrations. These optional events give companies additional ways to connect with attendees and showcase their work.')}
-                    </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                  <Users className="h-5 w-5 text-electric-blue" />
-                  {getText('capacityTitle', 'Capacity')}
-                </CardTitle>
+            {/* Evening Event Section */}
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden">
+              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+                <CardTitle className="text-white text-4xl font-bold">Evening Event</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-700 dark:text-white">
-                  <strong>{getText('maxCapacity', 'Max Capacity:')}</strong> {getText('maxCapacityValue', '175 attendees')}<br />
-                  <strong>{getText('workshopsPanels', 'Workshops/Panels:')}</strong> {getText('workshopsPanelsValue', 'Up to 15')}
-                </p>
+              <CardContent className="pt-6">
+                <div className="text-center mb-6">
+                  <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Stadium</h3>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">7-10 PM April 16th, closed for only the summit attendees</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <img 
+                      src="/bleacher-bar-view.png" 
+                      alt="Bleacher Bar view of Fenway Park field" 
+                      className="w-full h-80 object-cover rounded-lg shadow-lg"
+                    />
+                    <img 
+                      src="/bleacher-bar-entry.png" 
+                      alt="Bleacher Bar interior view" 
+                      className="w-full h-80 object-cover rounded-lg shadow-lg"
+                    />
+                  </div>
+                </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                  <Clock className="h-5 w-5 text-electric-blue" />
-                  {getText('importantDatesTitle', 'Important Dates')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700 dark:text-white">
-                  <strong>{getText('submissionDeadline', 'Presentation Submission Deadline:')}</strong> {getText('submissionDeadlineValue', 'January 31, 2026')}<br />
-                  <strong>{getText('registrationFee', 'Registration Fee:')}</strong> {getText('registrationFeeValue', 'TBD')}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
+        {/* Hotel Block and Travel Advice - Full Width */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-7xl mx-auto">
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-md flex flex-col">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                   <Hotel className="h-5 w-5 text-electric-blue" />
-                  {getText('hotelsTitle', 'Hotels Near Boston University')}
+                  {getText('hotelsTitle', 'Hotel Block')}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-700 dark:text-white text-sm">
-                  {getText('hotelsDescription', 'Several hotels are located within walking distance or a short ride from Boston University. We recommend booking early as April is a busy time in Boston. Popular options include:')}
-                </p>
-                <div className="mt-3 mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                  <p className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
-                    {getText('hotelBlockTitle', 'Hotel Block Available')}
-                  </p>
-                  <p className="text-sm text-blue-800 dark:text-blue-300">
-                    {getText('hotelBlockInfo', 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.')}
-                  </p>
+              <CardContent className="flex-1 flex flex-col">
+                <div className="mt-3 mb-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex-1">
+                  <div className="space-y-2 text-sm text-gray-900 dark:text-white">
+                    <p><strong>Hotel:</strong> Sheraton Boston Hotel</p>
+                    <p><strong>Rate:</strong> $339 per night</p>
+                    <p><strong>Available dates:</strong> Evening of April 15, April 16, and April 17 only</p>
+                    <p><strong>Guests may reserve:</strong> 1 to 3 nights within these dates</p>
+                    <p className="mt-3">
+                      <strong>Reservation link:</strong>{' '}
+                      <a 
+                        href="https://book.passkey.com/go/SLxAI2026Summit" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-electric-blue underline hover:text-electric-blue/80"
+                      >
+                        https://book.passkey.com/go/SLxAI2026Summit
+                      </a>
+                    </p>
+                    <p className="text-sm mt-2">
+                      Guests may reserve online using the link above or by calling Marriott Reservations and referencing the SLxAI Summit room block. Reservations may be made or canceled at any time before the cutoff date of Monday, March 16, 2026.
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-blue-300 dark:border-blue-700">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Important notes:</p>
+                    <ul className="text-sm text-gray-900 dark:text-white space-y-1">
+                      <li className="flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>Guests are responsible for room rate, taxes, and any incidental charges.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>A credit card will be required at the time of reservation and upon check in.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>Guests are encouraged to use their Marriott Bonvoy account when booking.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>We recommend booking early, as the block is limited and April is a busy month in Boston.</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <ul className="mt-3 space-y-2 text-gray-700 dark:text-white text-sm">
-                  <li className="flex items-start">
-                    <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel1', 'Hotel Commonwealth - 500 Commonwealth Avenue (0.3 miles)')}</strong> - {getText('hotelBlockNote', 'Block of 20 rooms reserved for three nights')}</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel2', 'Hyatt Regency Boston - 1 Avenue de Lafayette (3.5 miles)')}</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel3', 'Boston Marriott Copley Place - 110 Huntington Avenue (2.5 miles)')}</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel4', 'Holiday Inn Express - 1200 Beacon Street (0.5 miles)')}</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-electric-blue mr-2">•</span>
-                    <span><strong>{getText('hotel5', 'Residence Inn by Marriott - 1200 Beacon Street (0.5 miles)')}</strong></span>
-                  </li>
-                </ul>
-                <p className="mt-3 text-gray-600 dark:text-gray-300 text-xs">
-                  {getText('hotelsNote', 'Additional hotel options are available throughout Boston. Consider using booking sites to compare rates and locations.')}
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md">
+            <Card className="border border-gray-200 dark:border-gray-700 shadow-md flex flex-col w-full">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
                   <Plane className="h-5 w-5 text-electric-blue" />
                   {getText('travelAdviceTitle', 'Travel Advice')}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-3 text-gray-700 dark:text-white text-sm">
+              <CardContent className="flex-1 flex flex-col">
+                <div className="mt-3 mb-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex-1">
+                  <div className="space-y-3 text-gray-700 dark:text-white text-sm">
                   <div>
                     <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
                     <ul className="mt-1 ml-4 space-y-1">
                       <li className="flex items-start">
                         <span className="text-electric-blue mr-2">•</span>
-                        <span><strong>{getText('airport1', 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)')}</strong></span>
+                        <span>{getText('airport1', 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)')}</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-electric-blue mr-2">•</span>
-                        <span><strong>{getText('airport2', 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)')}</strong></span>
+                        <span>{getText('airport2', 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)')}</span>
                       </li>
                     </ul>
                   </div>
@@ -1244,11 +1297,11 @@ const Index = () => {
                     <ul className="mt-1 ml-4 space-y-1">
                       <li className="flex items-start">
                         <span className="text-electric-blue mr-2">•</span>
-                        <span><strong>{getText('train1', 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops')}</strong></span>
+                        <span>{getText('train1', 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops')}</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-electric-blue mr-2">•</span>
-                        <span><strong>{getText('train2', 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations')}</strong></span>
+                        <span>{getText('train2', 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations')}</span>
                       </li>
                     </ul>
                   </div>
@@ -1264,11 +1317,18 @@ const Index = () => {
                       {getText('parkingText', 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.')}
                     </p>
                   </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-
           </div>
+        </div>
+      </section>
+
+      {/* Interested Companies Section */}
+      <section className="py-4 bg-blue-50 dark:bg-blue-900/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <InterestedCompanies />
         </div>
       </section>
 
@@ -1277,17 +1337,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">{getText('membershipTitle', 'Become a Founding Member')}</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              {getText('membershipDescription', 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit. Each founding member receives one board seat, ensuring equal representation in shaping the future of sign language x AI technologies.')}
+            <p className="text-lg text-gray-600 whitespace-nowrap">
+              {getText('membershipDescription', 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit.')}
             </p>
           </div>
 
           {/* Founding Member Benefits */}
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-3">{getText('foundingBenefitsTitle', 'Founding Member Benefits')}</h3>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-6">
-              {getText('foundingBenefitsDescription', 'As a founding member, your organization will have a unique opportunity to shape the cooperative\'s structure and future direction.')}
-            </p>
 
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <Card 

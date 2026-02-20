@@ -250,18 +250,21 @@ export interface Database {
           id: string;
           name: string;
           email: string;
+          organization?: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
           name: string;
           email: string;
+          organization?: string | null;
           created_at?: string;
         };
         Update: {
           id?: string;
           name?: string;
           email?: string;
+          organization?: string | null;
         };
       };
     };
