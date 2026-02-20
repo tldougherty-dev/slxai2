@@ -106,7 +106,7 @@ const Index = () => {
         heroTitle3: 'sign language x AI.',
         heroDescription: 'Join us at the inaugural SLxAI Summit where we\'ll bring industry leaders together to form a cooperative nonprofit that will shape the future of sign language x AI technologies.',
         aboutTitle: 'About',
-        aboutDescription: 'We are bringing together industry leaders in the sign language x AI space to establish a cooperative nonprofit where each member will have a board seat, ensuring collaborative decision-making and ethical development of sign language x AI technologies.',
+        aboutDescription: 'We are uniting together industry leaders in the sign language x AI space to establish a cooperative nonprofit where each member will have a board seat, ensuring collaborative decision-making and ethical development of sign language x AI technologies.',
         missionTitle: 'Mission',
         missionText: 'To unite industry leaders through a cooperative nonprofit structure, establishing ethical standards and driving innovation in sign language x AI technologies through equal representation and collaborative decision-making.',
         visionTitle: 'Vision',
@@ -597,21 +597,16 @@ const Index = () => {
       </div>
       
       {/* Hero Section */}
-      <section id="home" className="relative bg-gradient-to-br from-gray-50 to-white py-4 overflow-hidden">
+      <section id="home" className="relative bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="mb-4 animate-fade-in">
+            <div className="animate-fade-in bg-white rounded-lg inline-block">
               <img 
                 src="/lovable-uploads/0941509f-be4a-49e7-b472-735a4942f89a.png" 
                 alt="SLxAI Logo" 
-                className="h-24 w-auto mx-auto mb-3"
+                className="h-24 w-auto mx-auto"
               />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 animate-fade-in">
-              <span className="block mb-1">{getText('heroTitle1', 'Uniting industry leaders to')}</span>
-              <span className="block text-electric-blue mb-1">{getText('heroTitle2', 'establish the future of')}</span>
-              <span className="block text-gray-900 text-4xl md:text-5xl font-extrabold">{getText('heroTitle3', 'sign language x AI.')}</span>
-            </h1>
           </div>
         </div>
       </section>
@@ -620,8 +615,8 @@ const Index = () => {
       <section id="about" className="py-4 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <p className="text-base text-gray-600 leading-relaxed max-w-4xl mx-auto">
-              {getText('aboutDescription', 'We are bringing together industry leaders in the sign language x AI space to establish a cooperative nonprofit, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
+            <p className="text-base text-black leading-relaxed max-w-4xl mx-auto">
+              {getText('aboutDescription', 'We are uniting together industry leaders in the sign language x AI space to establish a cooperative nonprofit, ensuring collaborative decision-making and ethical development of sign language x AI technologies.')}
             </p>
           </div>
 
