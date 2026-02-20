@@ -918,8 +918,8 @@ const Index = () => {
                       {getText('workshopListTitle', 'Workshops & Panels')}
                     </h3>
                   </div>
-                  <div className="bg-blue-50 dark:bg-blue-900/20 px-6">
-                    <div className="space-y-6 pt-6 pb-6">
+                  <div className="bg-blue-50 dark:bg-blue-900/20 px-6 pt-4 pb-6">
+                    <div className="space-y-6">
                           {/* Keynote Speaker */}
                           <div className="border-2 border-electric-blue rounded-lg p-4 shadow-lg bg-white dark:bg-white">
                             <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
@@ -1215,15 +1215,12 @@ const Index = () => {
         {/* Hotel Block and Travel Advice - Full Width */}
         <div className="w-full px-4 sm:px-6 lg:px-8 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-7xl mx-auto">
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md flex flex-col">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                  <Hotel className="h-5 w-5 text-electric-blue" />
-                  {getText('hotelsTitle', 'Hotel Block')}
-                </CardTitle>
+            <Card className="border-2 border-white shadow-xl flex flex-col overflow-hidden bg-white rounded-lg">
+              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+                <CardTitle className="text-white text-4xl font-bold">{getText('hotelsTitle', 'Hotel Block')}</CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="mt-3 mb-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex-1">
+              <CardContent className="flex-1 flex flex-col p-4">
+                <div className="flex-1">
                   <div className="space-y-2 text-sm text-gray-900 dark:text-white">
                     <p><strong>Hotel:</strong> Sheraton Boston Hotel</p>
                     <p><strong>Rate:</strong> $339 per night</p>
@@ -1244,7 +1241,7 @@ const Index = () => {
                       Guests may reserve online using the link above or by calling Marriott Reservations and referencing the SLxAI Summit room block. Reservations may be made or canceled at any time before the cutoff date of Monday, March 16, 2026.
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-blue-300 dark:border-blue-700">
+                  <div className="mt-4 pt-3 border-t border-white/30 dark:border-white/20">
                     <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Important notes:</p>
                     <ul className="text-sm text-gray-900 dark:text-white space-y-1">
                       <li className="flex items-start">
@@ -1269,15 +1266,12 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-md flex flex-col w-full">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
-                  <Plane className="h-5 w-5 text-electric-blue" />
-                  {getText('travelAdviceTitle', 'Travel Advice')}
-                </CardTitle>
+            <Card className="border-2 border-white shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg">
+              <CardHeader className="bg-electric-blue text-white text-center py-2 rounded-t-lg">
+                <CardTitle className="text-white text-4xl font-bold">{getText('travelAdviceTitle', 'Travel Advice')}</CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <div className="mt-3 mb-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex-1">
+              <CardContent className="flex-1 flex flex-col p-4">
+                <div className="flex-1">
                   <div className="space-y-3 text-gray-700 dark:text-white text-sm">
                   <div>
                     <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
