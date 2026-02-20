@@ -58,6 +58,8 @@ const Index = () => {
   const [isHotelBlockExpanded, setIsHotelBlockExpanded] = useState(false);
   const [isTravelAdviceExpanded, setIsTravelAdviceExpanded] = useState(false);
   const [isInterestedMembersExpanded, setIsInterestedMembersExpanded] = useState(false);
+  const [isSponsorshipExpanded, setIsSponsorshipExpanded] = useState(false);
+  const [isMembershipExpanded, setIsMembershipExpanded] = useState(false);
 
   // Force light mode on homepage
   useEffect(() => {
@@ -1609,39 +1611,88 @@ const Index = () => {
             </Card>
           </div>
         </div>
+
+        {/* Sponsorship Section - Collapsible on Desktop and Mobile */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
+            <CardHeader 
+              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isSponsorshipExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
+              onClick={() => setIsSponsorshipExpanded(!isSponsorshipExpanded)}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <CardTitle className="text-white text-4xl font-bold">Sponsorship</CardTitle>
+                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isSponsorshipExpanded ? 'rotate-180' : ''}`} />
+              </div>
+            </CardHeader>
+            <CardContent className={`pt-6 ${isSponsorshipExpanded ? 'block' : 'hidden'}`}>
+              <div className="flex flex-col items-center gap-6">
+                <img 
+                  src="/sponsorship-levels.png"
+                  alt="SLxAI Summit 2026 Premium Sponsorship Levels"
+                  className="w-full max-w-5xl h-auto rounded-lg"
+                />
+                <div className="text-center px-4">
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">
+                    Interested in becoming a sponsor?
+                  </p>
+                  <p className="text-base text-gray-600 dark:text-gray-400">
+                    Please contact us at{' '}
+                    <a 
+                      href="mailto:Travis@gosign.ai" 
+                      className="text-electric-blue hover:text-electric-blue/80 font-semibold underline"
+                    >
+                      Travis@gosign.ai
+                    </a>
+                    {' '}for more information about sponsorship opportunities.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </section>
 
       {/* Interested Companies Section */}
       <section className="py-4 bg-blue-50 dark:bg-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div 
-            className="cursor-pointer md:hidden text-center mb-4 pb-2 border-2 border-electric-blue rounded-lg bg-white shadow-lg px-4 py-3"
-            onClick={() => setIsInterestedMembersExpanded(!isInterestedMembersExpanded)}
-          >
-            <div className="flex items-center justify-center gap-2">
-              <h2 className="text-2xl font-bold text-gray-900">Organization Members Already Interested</h2>
-              <ChevronDown className={`h-6 w-6 text-gray-900 transition-transform ${isInterestedMembersExpanded ? 'rotate-180' : ''}`} />
-            </div>
-          </div>
-          <div className={`md:block ${isInterestedMembersExpanded ? 'block' : 'hidden'}`}>
-            <InterestedCompanies />
-          </div>
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
+            <CardHeader 
+              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isInterestedMembersExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
+              onClick={() => setIsInterestedMembersExpanded(!isInterestedMembersExpanded)}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <CardTitle className="text-white text-4xl font-bold">Organization Members Interested</CardTitle>
+                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isInterestedMembersExpanded ? 'rotate-180' : ''}`} />
+              </div>
+            </CardHeader>
+            <CardContent className={`pt-6 ${isInterestedMembersExpanded ? 'block' : 'hidden'}`}>
+              <InterestedCompanies />
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* Membership Section */}
       <section id="membership" className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto shadow-xl rounded-lg overflow-hidden bg-blue-50 dark:bg-blue-900/20">
-            <div className="text-center mb-8">
-              <div className="bg-electric-blue text-white text-center py-2 rounded-t-lg mb-4">
-                <h2 className="text-3xl font-bold text-white">{getText('membershipTitle', 'Become a Founding Member')}</h2>
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
+            <CardHeader 
+              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isMembershipExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
+              onClick={() => setIsMembershipExpanded(!isMembershipExpanded)}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <CardTitle className="text-white text-4xl font-bold">{getText('membershipTitle', 'Become a Founding Member')}</CardTitle>
+                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isMembershipExpanded ? 'rotate-180' : ''}`} />
               </div>
-              <p className="text-sm text-black">
-                Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit,<br />
-                ensuring equal representation in shaping the future of sign language x AI technologies.
-              </p>
-            </div>
+            </CardHeader>
+            <CardContent className={`pt-6 ${isMembershipExpanded ? 'block' : 'hidden'}`}>
+              <div className="max-w-6xl mx-auto bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+                <div className="text-center mb-8">
+                  <p className="text-sm text-black">
+                    Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit,<br />
+                    ensuring equal representation in shaping the future of sign language x AI technologies.
+                  </p>
+                </div>
 
             {/* Founding Member Benefits */}
             <div className="text-center mb-8 px-4">
@@ -1870,7 +1921,9 @@ const Index = () => {
               </CardContent>
             </Card>
             </div>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

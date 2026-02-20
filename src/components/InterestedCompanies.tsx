@@ -102,7 +102,7 @@ export default function InterestedCompanies() {
       }
 
       const sections = {
-        title: 'Organization Members Already Interested',
+        title: 'Organization Members Interested',
         membersLabel: 'Members',
         countriesLabel: 'Countries',
         description: 'Leading industry leaders in the sign language x AI space have already expressed interest in becoming founding members.',
@@ -124,8 +124,6 @@ export default function InterestedCompanies() {
 
   return (
     <section className="py-4">
-      <h2 className="hidden md:block text-2xl font-bold mb-4 text-center text-gray-900">{getText('title', 'Organization Members Already Interested')}</h2>
-      
       {/* Infographics */}
       <div className="flex flex-row justify-center gap-4 sm:gap-6 mb-6">
         <Card 
