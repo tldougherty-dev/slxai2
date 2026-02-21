@@ -964,7 +964,7 @@ const Index = () => {
                               <strong>Presenter:</strong> Pamela Macias, <em>University of Colorado Boulder</em>
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              A practical workshop on building research and data partnerships that improve validity and reduce bias. Participants will learn how to align goals across communities, institutions, and companies, and how to structure data work so results hold up under scrutiny.
+                              A practical workshop on examining how academic partnerships can strengthen sign language AI by grounding innovation in Deaf individuals' experiences and validated data practices. Using a current study as a case example, participants will explore research design and collaboration models that enhance credibility.
                             </p>
                           </div>
 
@@ -1245,7 +1245,7 @@ const Index = () => {
                               <strong>Presenter:</strong> Pamela Macias, <em>University of Colorado Boulder</em>
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              A practical workshop on building research and data partnerships that improve validity and reduce bias. Participants will learn how to align goals across communities, institutions, and companies, and how to structure data work so results hold up under scrutiny.
+                              A practical workshop on examining how academic partnerships can strengthen sign language AI by grounding innovation in Deaf individuals' experiences and validated data practices. Using a current study as a case example, participants will explore research design and collaboration models that enhance credibility.
                             </p>
                           </div>
 
