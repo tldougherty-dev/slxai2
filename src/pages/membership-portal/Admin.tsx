@@ -934,6 +934,7 @@ interface WaitlistEntry {
   id: string;
   name: string;
   email: string;
+  organization?: string | null;
   created_at: string;
 }
 
@@ -1017,6 +1018,59 @@ function WaitlistTab() {
     });
   };
 
+  const exportToCSV = () => {
+    if (entries.length === 0) {
+      toast({
+        title: "No Data",
+        description: "There are no waitlist entries to export.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Create CSV headers
+    const headers = ['Name', 'Email', 'Organization', 'Joined Date'];
+    
+    // Create CSV rows
+    const rows = entries.map(entry => {
+      const date = new Date(entry.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      return [
+        entry.name || '',
+        entry.email || '',
+        entry.organization || '',
+        date,
+      ];
+    });
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(','))
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `waitlist-export-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Export Successful",
+      description: `Exported ${entries.length} waitlist entries to CSV.`,
+    });
+  };
+
   return (
     <Card className="glass-card floating-hover">
       <CardHeader>
@@ -1027,15 +1081,26 @@ function WaitlistTab() {
               View all waitlist submissions in chronological order
             </CardDescription>
           </div>
-          <Button
-            onClick={loadWaitlist}
-            variant="outline"
-            size="sm"
-            className="bg-white"
-          >
-            <History className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={exportToCSV}
+              variant="outline"
+              size="sm"
+              className="bg-white"
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button
+              onClick={loadWaitlist}
+              variant="outline"
+              size="sm"
+              className="bg-white"
+            >
+              <History className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -1065,6 +1130,12 @@ function WaitlistTab() {
                             <Mail className="h-3 w-3" />
                             {entry.email}
                           </p>
+                          {entry.organization && (
+                            <p className="text-sm text-gray-600 dark:text-white flex items-center gap-1 mt-1">
+                              <Building2 className="h-3 w-3" />
+                              {entry.organization}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="pl-11 flex items-center gap-2 text-xs text-gray-500 dark:text-white">
