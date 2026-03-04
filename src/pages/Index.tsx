@@ -725,7 +725,7 @@ const Index = () => {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-electric-blue hover:bg-electric-blue/90 text-white text-5xl px-16 py-12 shadow-xl"
+                  className="bg-electric-blue hover:bg-electric-blue/90 text-white text-3xl sm:text-5xl px-8 py-6 sm:px-16 sm:py-12 shadow-xl w-full sm:w-auto"
                 >
                   <a 
                     href="https://avopay.one/?woo-share=VRYN5q1qfwmZrnjsugWe9nFJy4JxUYHd"
@@ -735,7 +735,7 @@ const Index = () => {
                     BUY TICKET HERE
                   </a>
                 </Button>
-                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                <p className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300">
                   $350 plus processing fee
                 </p>
               </div>
@@ -813,16 +813,65 @@ const Index = () => {
                       transform: translateX(calc(-50%));
                     }
                   }
+                  @keyframes scrollSponsorsMobile {
+                    0% {
+                      transform: translateX(0);
+                    }
+                    100% {
+                      transform: translateX(calc(-50%));
+                    }
+                  }
                 `}</style>
-                <div className="relative overflow-hidden h-72 w-full">
+                <div className="relative overflow-hidden h-80 sm:h-72 w-full">
                   <div 
-                    className="flex h-full items-center"
+                    className="md:hidden flex h-full items-center"
+                    style={{ 
+                      width: 'calc(100% * 14)',
+                      animation: 'scrollSponsorsMobile 35s linear infinite'
+                    }}
+                  >
+                    {/* Mobile: Show 1 logo at a time */}
+                    {[...sponsors, ...sponsors].map((sponsor, index) => {
+                      let logoSize = "max-h-48"; // Larger default for mobile (1 logo at a time)
+                      
+                      if (sponsor.name === 'Kara Technologies') {
+                        logoSize = "max-h-80"; // Double size
+                      } else if (sponsor.name === 'ASL Flurry') {
+                        logoSize = "max-h-64"; // 50% bigger
+                      } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
+                        logoSize = "max-h-80"; // Double size
+                      }
+                      
+                      return (
+                        <div
+                          key={`${sponsor.name}-mobile-${index}`}
+                          className="flex items-center justify-center px-4 shrink-0"
+                          style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
+                        >
+                          <a
+                            href={sponsor.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center hover:opacity-80 transition-opacity"
+                          >
+                            <img
+                              src={sponsor.logo}
+                              alt={sponsor.name}
+                              className={`${logoSize} w-auto object-contain`}
+                            />
+                          </a>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div 
+                    className="hidden md:flex h-full items-center"
                     style={{ 
                       width: 'calc(100% * 14 / 3)',
                       animation: 'scrollSponsors 35s linear infinite'
                     }}
                   >
-                    {/* Show 3 logos at a time - duplicate array twice for seamless infinite loop */}
+                    {/* Desktop: Show 3 logos at a time */}
                     {[...sponsors, ...sponsors].map((sponsor, index) => {
                       let logoSize = "max-h-32"; // Default size
                       
@@ -836,7 +885,7 @@ const Index = () => {
                       
                       return (
                         <div
-                          key={`${sponsor.name}-${index}`}
+                          key={`${sponsor.name}-desktop-${index}`}
                           className="flex items-center justify-center px-4 shrink-0"
                           style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
                         >
