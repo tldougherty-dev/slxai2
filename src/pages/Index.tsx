@@ -60,6 +60,16 @@ const Index = () => {
   const [isInterestedMembersExpanded, setIsInterestedMembersExpanded] = useState(false);
   const [isSponsorshipExpanded, setIsSponsorshipExpanded] = useState(false);
   const [isMembershipExpanded, setIsMembershipExpanded] = useState(false);
+  // Sponsors data
+  const sponsors = [
+    { name: 'ASL Flurry', logo: '/sponsors/asl-flurry.png' },
+    { name: 'alangu', logo: '/sponsors/alangu.png' },
+    { name: 'GLWMax', logo: '/sponsors/glwmax.png' },
+    { name: 'Microsoft', logo: '/sponsors/microsoft.png' },
+    { name: 'Sorenson', logo: '/sponsors/sorenson.png' },
+    { name: 'Kara Technologies', logo: '/sponsors/kara-technologies.png' },
+    { name: 'SignLab', logo: '/sponsors/signlab.png' },
+  ];
 
   // Force light mode on homepage
   useEffect(() => {
@@ -785,6 +795,61 @@ const Index = () => {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Boston University Questrom School of Business - Metcalf Trustee Center"
                   />
+              </div>
+            </div>
+
+            {/* Sponsors Carousel Section */}
+            <div className="md:col-span-2 mt-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl px-8 py-4 border-2 border-electric-blue/20">
+                <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4">
+                  Our Sponsors
+                </h3>
+                <style>{`
+                  @keyframes scrollSponsors {
+                    0% {
+                      transform: translateX(0);
+                    }
+                    100% {
+                      transform: translateX(calc(-50%));
+                    }
+                  }
+                `}</style>
+                <div className="relative overflow-hidden h-72 w-full">
+                  <div 
+                    className="flex h-full items-center"
+                    style={{ 
+                      width: 'calc(100% * 14 / 3)',
+                      animation: 'scrollSponsors 35s linear infinite'
+                    }}
+                  >
+                    {/* Show 3 logos at a time - duplicate array twice for seamless infinite loop */}
+                    {[...sponsors, ...sponsors].map((sponsor, index) => {
+                      let logoSize = "max-h-32"; // Default size
+                      
+                      if (sponsor.name === 'Kara Technologies') {
+                        logoSize = "max-h-64"; // Double size
+                      } else if (sponsor.name === 'ASL Flurry') {
+                        logoSize = "max-h-48"; // 50% bigger
+                      } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
+                        logoSize = "max-h-64"; // Double size
+                      }
+                      
+                      return (
+                        <div
+                          key={`${sponsor.name}-${index}`}
+                          className="flex items-center justify-center px-4 shrink-0"
+                          style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
+                        >
+                          <img
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                            className={`${logoSize} w-auto object-contain`}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
 
