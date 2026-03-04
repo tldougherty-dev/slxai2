@@ -143,7 +143,7 @@ const Index = () => {
         city: 'City:',
         cityValue: 'Boston, Massachusetts',
         address: 'Address:',
-        addressValue: '8 St Mary\'s St',
+        addressValue: '1 Silber Way',
         addressValue2: 'Boston, MA 02215',
         aboutSummitTitle: 'About Summit 2026',
         overviewTitle: 'SLxAI Summit 2026 Overview',
@@ -689,115 +689,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Waitlist Section */}
-      <section className="py-8 bg-blue-50 dark:bg-blue-900/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              All tickets for the Summit 2026 are reserved! Join our waitlist!
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              We'll notify you when spots become available.
-            </p>
-          </div>
-          <Card className="shadow-lg border-2 border-electric-blue/20 bg-white rounded-lg">
-            <CardContent className="pt-6 rounded-lg">
-              {isWaitlistSubmitted ? (
-                <div className="text-center py-8">
-                  <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">You're on the list!</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    Thank you for joining our waitlist. We'll notify you via email when spots become available.
-                  </p>
-                  <Button
-                    onClick={() => {
-                      setIsWaitlistSubmitted(false);
-                      setWaitlistForm({ name: '', email: '', organization: '' });
-                    }}
-                    variant="outline"
-                    className="bg-white dark:bg-gray-800"
-                  >
-                    Add Another Person
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="waitlist-name" className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-electric-blue" />
-                        Name <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="waitlist-name"
-                        type="text"
-                        placeholder="Your full name"
-                        value={waitlistForm.name}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
-                        required
-                        disabled={isSubmittingWaitlist}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="waitlist-email" className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-electric-blue" />
-                        Email Address <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="waitlist-email"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={waitlistForm.email}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
-                        required
-                        disabled={isSubmittingWaitlist}
-                        className="bg-white dark:bg-gray-800"
-                        maxLength={200}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
-                      <Building2 className="h-4 w-4 text-electric-blue" />
-                      Your Organization <span className="text-gray-500 text-sm">(Optional)</span>
-                    </Label>
-                    <Input
-                      id="waitlist-organization"
-                      type="text"
-                      placeholder="Your organization name"
-                      value={waitlistForm.organization}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
-                      disabled={isSubmittingWaitlist}
-                      className="bg-white dark:bg-gray-800"
-                      maxLength={200}
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
-                    disabled={isSubmittingWaitlist}
-                  >
-                    {isSubmittingWaitlist ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Submitting...
-                      </>
-                    ) : (
-                      'Join Waitlist'
-                    )}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* Summit Section */}
       <section id="summit" className="py-4 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -819,6 +710,21 @@ const Index = () => {
               alt="SLxAI Summit at Boston University" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
+            <div className="text-center mt-6">
+              <Button
+                asChild
+                size="lg"
+                className="bg-electric-blue hover:bg-electric-blue/90 text-white text-lg px-8 py-6 shadow-xl"
+              >
+                <a 
+                  href="https://avopay.one/?woo-share=VRYN5q1qfwmZrnjsugWe9nFJy4JxUYHd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  BUY TICKET HERE
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
@@ -846,10 +752,14 @@ const Index = () => {
                 <div className="p-4">
                   <div className="text-center dark:text-white text-gray-700">
                     <strong>{getText('venue', 'Venue:')}</strong> {getText('venueValue', 'Boston University')}<br />
-                    <strong>Building:</strong> Photonics Center<br />
+                    <strong>Location:</strong> Metcalf Trustee Center Ballroom (9th Floor)<br />
+                    <strong>Building:</strong> Boston University Questrom School of Business<br />
                     <strong>{getText('city', 'City:')}</strong> {getText('cityValue', 'Boston, Massachusetts')}<br />
-                    <strong>{getText('address', 'Address:')}</strong> {getText('addressValue', '8 St Mary\'s St')}<br />
-                    {getText('addressValue2', 'Boston, MA 02215')}
+                    <strong>{getText('address', 'Address:')}</strong> 1 Silber Way<br />
+                    Boston, MA 02215<br />
+                    <p className="text-xs mt-3 text-gray-600 dark:text-gray-400 italic">
+                      <strong>Important:</strong> Please enter through the side entrance at One Silber Way. Do not use the 595 Commonwealth Ave entrance.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -858,7 +768,7 @@ const Index = () => {
             <div className="border-2 border-electric-blue rounded-lg p-4 h-full flex flex-col shadow-xl bg-white">
               <div className="w-full rounded-lg overflow-hidden flex-1" style={{ minHeight: '300px' }}>
                   <iframe
-                    src="https://www.google.com/maps?q=8+St+Mary's+St+Boston+MA+02215&output=embed"
+                    src="https://www.google.com/maps?q=1+Silber+Way+Boston+MA+02215&output=embed"
                     width="100%"
                     height="100%"
                     style={{ 
@@ -868,7 +778,7 @@ const Index = () => {
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Boston University Deaf Center Location"
+                    title="Boston University Questrom School of Business - Metcalf Trustee Center"
                   />
               </div>
             </div>
@@ -1474,7 +1384,7 @@ const Index = () => {
               </CardHeader>
               <CardContent className={`pt-6 md:block ${isEveningEventExpanded ? 'block' : 'hidden'}`}>
                 <div className="text-center mb-6">
-                  <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Stadium</h3>
+                  <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Park</h3>
                   <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">7-10 PM April 16th, closed for only the summit attendees</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     <img 
@@ -1510,19 +1420,19 @@ const Index = () => {
               <CardContent className={`flex-1 flex flex-col p-4 md:flex ${isHotelBlockExpanded ? 'flex' : 'hidden'}`}>
                 <div className="flex-1 flex flex-col">
                   <div className="space-y-2 text-sm text-gray-900 dark:text-white">
-                    <p><strong>Hotel:</strong> Sheraton Boston Hotel</p>
-                    <p><strong>Rate:</strong> $339 per night</p>
+                    <p><strong>Hotel:</strong> Residence Inn by Marriott Boston Back Bay/Fenway</p>
+                    <p><strong>Rate:</strong> $364 per night</p>
                     <p><strong>Available dates:</strong> Evening of April 15, April 16, and April 17 only</p>
                     <p><strong>Guests may reserve:</strong> 1 to 3 nights within these dates</p>
                     <p className="mt-3">
                       <strong>Reservation link:</strong>{' '}
                       <a 
-                        href="https://book.passkey.com/go/SLxAI2026Summit" 
+                        href="https://app.marriott.com/reslink?id=1771012154701&key=GRP&app=resvlink" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-electric-blue underline hover:text-electric-blue/80"
                       >
-                        https://book.passkey.com/go/SLxAI2026Summit
+                        Book your group rate for Boston University SLxAI Summit 2026 Room Block
                       </a>
                     </p>
                     <p className="text-sm mt-2">

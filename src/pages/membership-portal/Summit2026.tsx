@@ -467,10 +467,14 @@ export default function Summit2026() {
               </div>
               <div className="text-center dark:text-white text-gray-700">
                 <strong>Venue:</strong> Boston University<br />
-                <strong>Building:</strong> Photonics Center<br />
+                <strong>Location:</strong> Metcalf Trustee Center Ballroom (9th Floor)<br />
+                <strong>Building:</strong> Boston University Questrom School of Business<br />
                 <strong>City:</strong> Boston, Massachusetts<br />
-                <strong>Address:</strong> 8 St Mary's St<br />
-                Boston, MA 02215
+                <strong>Address:</strong> 1 Silber Way<br />
+                Boston, MA 02215<br />
+                <p className="text-xs mt-3 text-gray-600 dark:text-gray-400 italic">
+                  <strong>Important:</strong> Please enter through the side entrance at One Silber Way. Do not use the 595 Commonwealth Ave entrance.
+                </p>
               </div>
             </div>
           </div>
@@ -478,7 +482,7 @@ export default function Summit2026() {
           <div className="border-2 border-electric-blue rounded-lg p-4 h-full flex flex-col shadow-xl bg-white">
             <div className="w-full rounded-lg overflow-hidden flex-1" style={{ minHeight: '300px' }}>
               <iframe
-                src="https://www.google.com/maps?q=8+St+Mary's+St+Boston+MA+02215&output=embed"
+                src="https://www.google.com/maps?q=1+Silber+Way+Boston+MA+02215&output=embed"
                 width="100%"
                 height="100%"
                 style={{ 
@@ -488,7 +492,7 @@ export default function Summit2026() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Boston University Deaf Center Location"
+                title="Boston University Questrom School of Business - Metcalf Trustee Center"
               />
             </div>
           </div>
