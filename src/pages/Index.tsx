@@ -62,13 +62,13 @@ const Index = () => {
   const [isMembershipExpanded, setIsMembershipExpanded] = useState(false);
   // Sponsors data
   const sponsors = [
-    { name: 'ASL Flurry', logo: '/sponsors/asl-flurry.png' },
-    { name: 'alangu', logo: '/sponsors/alangu.png' },
-    { name: 'GLWMax', logo: '/sponsors/glwmax.png' },
-    { name: 'Microsoft', logo: '/sponsors/microsoft.png' },
-    { name: 'Sorenson', logo: '/sponsors/sorenson.png' },
-    { name: 'Kara Technologies', logo: '/sponsors/kara-technologies.png' },
-    { name: 'SignLab', logo: '/sponsors/signlab.png' },
+    { name: 'ASL Flurry', logo: '/sponsors/asl-flurry.png', url: 'https://www.aslflurry.com' },
+    { name: 'alangu', logo: '/sponsors/alangu.png', url: 'https://www.alangu.de' },
+    { name: 'GLWMax', logo: '/sponsors/glwmax.png', url: 'https://www.glwmax.info' },
+    { name: 'Microsoft', logo: '/sponsors/microsoft.png', url: 'https://www.microsoft.com' },
+    { name: 'Sorenson', logo: '/sponsors/sorenson.png', url: 'https://www.sorenson.com' },
+    { name: 'Kara Technologies', logo: '/sponsors/kara-technologies.png', url: 'https://www.kara.tech' },
+    { name: 'SignLab', logo: '/sponsors/signlab.png', url: 'https://www.signlab.co' },
   ];
 
   // Force light mode on homepage
@@ -840,11 +840,18 @@ const Index = () => {
                           className="flex items-center justify-center px-4 shrink-0"
                           style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
                         >
-                          <img
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                            className={`${logoSize} w-auto object-contain`}
-                          />
+                          <a
+                            href={sponsor.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center hover:opacity-80 transition-opacity"
+                          >
+                            <img
+                              src={sponsor.logo}
+                              alt={sponsor.name}
+                              className={`${logoSize} w-auto object-contain`}
+                            />
+                          </a>
                         </div>
                       );
                     })}
