@@ -711,19 +711,24 @@ const Index = () => {
               className="w-full h-auto rounded-lg shadow-lg"
             />
             <div className="text-center mt-6">
-              <Button
-                asChild
-                size="lg"
-                className="bg-electric-blue hover:bg-electric-blue/90 text-white text-lg px-8 py-6 shadow-xl"
-              >
-                <a 
-                  href="https://avopay.one/?woo-share=VRYN5q1qfwmZrnjsugWe9nFJy4JxUYHd"
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="flex flex-col items-center justify-center gap-4">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-electric-blue hover:bg-electric-blue/90 text-white text-5xl px-16 py-12 shadow-xl"
                 >
-                  BUY TICKET HERE
-                </a>
-              </Button>
+                  <a 
+                    href="https://avopay.one/?woo-share=VRYN5q1qfwmZrnjsugWe9nFJy4JxUYHd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    BUY TICKET HERE
+                  </a>
+                </Button>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                  $350 plus processing fee
+                </p>
+              </div>
             </div>
           </div>
 
