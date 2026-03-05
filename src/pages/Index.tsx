@@ -812,7 +812,7 @@ const Index = () => {
                       transform: translateX(0);
                     }
                     100% {
-                      transform: translateX(calc(-50%));
+                      transform: translateX(calc(-33.333%));
                     }
                   }
                   @keyframes scrollSponsorsMobile {
@@ -820,7 +820,7 @@ const Index = () => {
                       transform: translateX(0);
                     }
                     100% {
-                      transform: translateX(calc(-50%));
+                      transform: translateX(calc(-33.333%));
                     }
                   }
                 `}</style>
@@ -828,12 +828,12 @@ const Index = () => {
                   <div 
                     className="md:hidden flex h-full items-center"
                     style={{ 
-                      width: 'calc(100% * 14)',
-                      animation: 'scrollSponsorsMobile 35s linear infinite'
+                      width: 'calc(100% * 27)',
+                      animation: 'scrollSponsorsMobile 50s linear infinite'
                     }}
                   >
-                    {/* Mobile: Show 1 logo at a time */}
-                    {[...sponsors, ...sponsors].map((sponsor, index) => {
+                    {/* Mobile: Show 1 logo at a time - 3 rounds of all sponsors */}
+                    {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
                       let logoSize = "max-h-48"; // Larger default for mobile (1 logo at a time)
                       const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
                       
@@ -849,7 +849,7 @@ const Index = () => {
                         <div
                           key={`${sponsor.name}-mobile-${index}`}
                           className="flex items-center justify-center px-4 shrink-0"
-                          style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
+                          style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
                         >
                           <a
                             href={sponsor.url}
@@ -870,12 +870,12 @@ const Index = () => {
                   <div 
                     className="hidden md:flex h-full items-center"
                     style={{ 
-                      width: 'calc(100% * 14 / 3)',
-                      animation: 'scrollSponsors 35s linear infinite'
+                      width: 'calc(100% * 27 / 3)',
+                      animation: 'scrollSponsors 50s linear infinite'
                     }}
                   >
-                    {/* Desktop: Show 3 logos at a time */}
-                    {[...sponsors, ...sponsors].map((sponsor, index) => {
+                    {/* Desktop: Show 3 logos at a time - 3 rounds of all sponsors */}
+                    {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
                       let logoSize = "max-h-32"; // Default size
                       const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
                       
@@ -891,7 +891,7 @@ const Index = () => {
                         <div
                           key={`${sponsor.name}-desktop-${index}`}
                           className="flex items-center justify-center px-4 shrink-0"
-                          style={{ width: 'calc(100% / 14)', minWidth: 'calc(100% / 14)', maxWidth: 'calc(100% / 14)' }}
+                          style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
                         >
                           <a
                             href={sponsor.url}
