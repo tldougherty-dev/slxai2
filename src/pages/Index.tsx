@@ -69,6 +69,7 @@ const Index = () => {
     { name: 'Sorenson', logo: '/sponsors/sorenson.png', url: 'https://www.sorenson.com' },
     { name: 'Kara Technologies', logo: '/sponsors/kara-technologies.png', url: 'https://www.kara.tech' },
     { name: 'SignLab', logo: '/sponsors/signlab.png', url: 'https://www.signlab.co' },
+    { name: 'PARTNERS Interpreting', logo: '/sponsors/partners-interpreting.png', url: '#' },
   ];
 
   // Force light mode on homepage
