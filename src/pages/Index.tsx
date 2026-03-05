@@ -70,6 +70,7 @@ const Index = () => {
     { name: 'Kara Technologies', logo: '/sponsors/kara-technologies.png', url: 'https://www.kara.tech' },
     { name: 'SignLab', logo: '/sponsors/signlab.png', url: 'https://www.signlab.co' },
     { name: 'PARTNERS Interpreting', logo: '/sponsors/partners-interpreting.png', url: '#' },
+    { name: 'Boston University', logo: '/sponsors/boston-university.png', url: 'https://www.bu.edu' },
   ];
 
   // Force light mode on homepage
@@ -834,6 +835,7 @@ const Index = () => {
                     {/* Mobile: Show 1 logo at a time */}
                     {[...sponsors, ...sponsors].map((sponsor, index) => {
                       let logoSize = "max-h-48"; // Larger default for mobile (1 logo at a time)
+                      const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
                       
                       if (sponsor.name === 'Kara Technologies') {
                         logoSize = "max-h-80"; // Double size
@@ -875,6 +877,7 @@ const Index = () => {
                     {/* Desktop: Show 3 logos at a time */}
                     {[...sponsors, ...sponsors].map((sponsor, index) => {
                       let logoSize = "max-h-32"; // Default size
+                      const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
                       
                       if (sponsor.name === 'Kara Technologies') {
                         logoSize = "max-h-64"; // Double size
