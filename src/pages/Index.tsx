@@ -829,7 +829,7 @@ const Index = () => {
                     className="md:hidden flex h-full items-center"
                     style={{ 
                       width: 'calc(100% * 27)',
-                      animation: 'scrollSponsorsMobile 50s linear infinite'
+                      animation: 'scrollSponsorsMobile 33s linear infinite'
                     }}
                   >
                     {/* Mobile: Show 1 logo at a time - 3 rounds of all sponsors */}
@@ -871,7 +871,7 @@ const Index = () => {
                     className="hidden md:flex h-full items-center"
                     style={{ 
                       width: 'calc(100% * 27 / 3)',
-                      animation: 'scrollSponsors 50s linear infinite'
+                      animation: 'scrollSponsors 33s linear infinite'
                     }}
                   >
                     {/* Desktop: Show 3 logos at a time - 3 rounds of all sponsors */}
