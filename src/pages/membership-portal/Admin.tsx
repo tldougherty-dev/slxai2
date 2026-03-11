@@ -943,6 +943,8 @@ function WaitlistTab() {
   const [entries, setEntries] = useState<WaitlistEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [entryToDelete, setEntryToDelete] = useState<string | null>(null);
+  const [showEmptyConfirm, setShowEmptyConfirm] = useState(false);
+  const [isEmptying, setIsEmptying] = useState(false);
 
   useEffect(() => {
     loadWaitlist();
@@ -1005,6 +1007,47 @@ function WaitlistTab() {
         description: error?.message || "Failed to delete waitlist entry.",
         variant: "destructive",
       });
+    }
+  };
+
+  const handleEmptyWaitlist = async () => {
+    setIsEmptying(true);
+    try {
+      // Delete all entries by selecting all IDs first, then deleting them
+      const { data: allEntries, error: selectError } = await supabase
+        .from('waitlist')
+        .select('id');
+
+      if (selectError) throw selectError;
+
+      if (allEntries && allEntries.length > 0) {
+        const ids = allEntries.map(entry => entry.id);
+        const { error } = await supabase
+          .from('waitlist')
+          .delete()
+          .in('id', ids);
+
+        if (error) throw error;
+      }
+
+      toast({
+        title: "Waitlist Cleared",
+        description: `All ${entries.length} waitlist entries have been deleted.`,
+      });
+
+      setShowEmptyConfirm(false);
+      loadWaitlist();
+    } catch (error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error emptying waitlist:', error);
+      }
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to empty waitlist.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsEmptying(false);
     }
   };
 
@@ -1100,6 +1143,17 @@ function WaitlistTab() {
               <History className="h-4 w-4 mr-2" />
               Refresh
             </Button>
+            {entries.length > 0 && (
+              <Button
+                onClick={() => setShowEmptyConfirm(true)}
+                variant="outline"
+                size="sm"
+                className="bg-white text-red-600 hover:text-red-700 hover:bg-red-50 border-red-300"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Empty Waitlist
+              </Button>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -1182,6 +1236,41 @@ function WaitlistTab() {
               className="bg-red-600 hover:bg-red-700 text-white"
             >
               Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Empty Waitlist Confirmation Dialog */}
+      <AlertDialog open={showEmptyConfirm} onOpenChange={(open) => !open && setShowEmptyConfirm(false)}>
+        <AlertDialogContent className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900 dark:text-white">Empty Entire Waitlist?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600 dark:text-white">
+              Are you sure you want to delete all {entries.length} waitlist entries? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={() => setShowEmptyConfirm(false)}
+              className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:text-white bg-white"
+              disabled={isEmptying}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleEmptyWaitlist}
+              className="bg-red-600 hover:bg-red-700 text-white"
+              disabled={isEmptying}
+            >
+              {isEmptying ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Emptying...
+                </>
+              ) : (
+                'Empty Waitlist'
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
