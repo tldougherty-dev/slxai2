@@ -722,24 +722,111 @@ const Index = () => {
               alt="SLxAI Summit at Boston University" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
+            {/* SOLD OUT Banner - Matching Image Width */}
+            <div className="bg-red-600 text-white text-3xl sm:text-5xl font-bold py-6 sm:py-12 shadow-xl w-full rounded-lg text-center mt-6">
+              SOLD OUT
+            </div>
             <div className="text-center mt-6">
-              <div className="flex flex-col items-center justify-center gap-4">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-electric-blue hover:bg-electric-blue/90 text-white text-3xl sm:text-5xl px-8 py-6 sm:px-16 sm:py-12 shadow-xl w-full sm:w-auto"
-                >
-                  <a 
-                    href="https://avopay.one/?woo-share=VRYN5q1qfwmZrnjsugWe9nFJy4JxUYHd"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    BUY TICKET HERE
-                  </a>
-                </Button>
-                <p className="text-base sm:text-lg font-semibold text-gray-700 dark:text-gray-300">
-                  $350 plus processing fee
-                </p>
+              <div className="flex flex-col items-center justify-center gap-6">
+                {/* Waitlist Form */}
+                <Card className="border-2 border-electric-blue shadow-xl w-full max-w-2xl">
+                  <CardHeader className="bg-electric-blue text-white text-center py-3 rounded-t-lg">
+                    <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
+                      Join the Waitlist
+                    </CardTitle>
+                    <CardDescription className="text-white/90 text-sm sm:text-base mt-2">
+                      Get notified when tickets become available
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    {isWaitlistSubmitted ? (
+                      <div className="text-center py-8">
+                        <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank You!</h3>
+                        <p className="text-gray-600 mb-4">
+                          You've been added to the waitlist. We'll notify you when spots become available.
+                        </p>
+                        <Button
+                          onClick={() => setIsWaitlistSubmitted(false)}
+                          variant="outline"
+                          className="bg-white"
+                        >
+                          Join Again
+                        </Button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="waitlist-name" className="flex items-center gap-2">
+                            <User className="h-4 w-4 text-electric-blue" />
+                            Name
+                          </Label>
+                          <Input
+                            id="waitlist-name"
+                            type="text"
+                            placeholder="Your full name"
+                            value={waitlistForm.name}
+                            onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
+                            required
+                            disabled={isSubmittingWaitlist}
+                            className="bg-white"
+                            maxLength={200}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="waitlist-email" className="flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-electric-blue" />
+                            Email
+                          </Label>
+                          <Input
+                            id="waitlist-email"
+                            type="email"
+                            placeholder="your.email@example.com"
+                            value={waitlistForm.email}
+                            onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
+                            required
+                            disabled={isSubmittingWaitlist}
+                            className="bg-white"
+                            maxLength={200}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
+                            <Building2 className="h-4 w-4 text-electric-blue" />
+                            Organization (Optional)
+                          </Label>
+                          <Input
+                            id="waitlist-organization"
+                            type="text"
+                            placeholder="Your organization name"
+                            value={waitlistForm.organization}
+                            onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
+                            disabled={isSubmittingWaitlist}
+                            className="bg-white"
+                            maxLength={200}
+                          />
+                        </div>
+
+                        <Button
+                          type="submit"
+                          className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+                          disabled={isSubmittingWaitlist}
+                        >
+                          {isSubmittingWaitlist ? (
+                            <>
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                              Submitting...
+                            </>
+                          ) : (
+                            'Join Waitlist'
+                          )}
+                        </Button>
+                      </form>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
