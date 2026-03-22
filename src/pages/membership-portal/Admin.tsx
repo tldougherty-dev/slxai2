@@ -87,6 +87,7 @@ import { getMetrics, trackPageView, trackEvent } from '@/lib/analytics';
 import { addNotification } from '@/lib/notifications';
 import { realtimeManager } from '@/lib/realtime';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
+import { InterestedOrganizationsDirectory } from '@/components/admin/InterestedOrganizationsDirectory';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -4734,6 +4735,7 @@ export default function Admin() {
 
         {/* Interest Tab */}
         <TabsContent value="interest" className="space-y-6">
+          <InterestedOrganizationsDirectory />
           <InterestSubmissionsTab />
         </TabsContent>
 

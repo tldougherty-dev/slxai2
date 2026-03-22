@@ -55,8 +55,7 @@ const Index = () => {
   const [isAboutSummitExpanded, setIsAboutSummitExpanded] = useState(false);
   const [isWorkshopPanelExpanded, setIsWorkshopPanelExpanded] = useState(false);
   const [isEveningEventExpanded, setIsEveningEventExpanded] = useState(false);
-  const [isHotelBlockExpanded, setIsHotelBlockExpanded] = useState(false);
-  const [isTravelAdviceExpanded, setIsTravelAdviceExpanded] = useState(false);
+  const [isHotelTravelExpanded, setIsHotelTravelExpanded] = useState(false);
   const [isInterestedMembersExpanded, setIsInterestedMembersExpanded] = useState(false);
   const [isSponsorshipExpanded, setIsSponsorshipExpanded] = useState(false);
   const [isMembershipExpanded, setIsMembershipExpanded] = useState(false);
@@ -192,6 +191,7 @@ const Index = () => {
         registrationFee: 'Registration Fee:',
         registrationFeeValue: '$350 plus processing fee',
         hotelsTitle: 'Hotel Block',
+        hotelsTravelTitle: 'Hotel & Travel',
         hotelsDescription: 'We have secured an official hotel block for the SLxAI Summit. We recommend booking early as April is a busy time in Boston.',
         hotelBlockTitle: 'Hotel Block Available',
         hotelBlockInfo: 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.',
@@ -243,8 +243,6 @@ const Index = () => {
         submittingButton: 'Submitting...',
         thankYouTitle: 'Thank You!',
         thankYouMessage: 'We\'ve received your interest form. Our team will review your submission and get back to you soon.',
-        ctaTitle: 'Be Part of History: Join the Inaugural Summit',
-        ctaDescription: 'This is your opportunity to help establish the cooperative nonprofit that will shape the future of sign language x AI technologies. Secure your organization\'s board seat.',
       };
 
       const translated: Record<string, string> = {};
@@ -1538,18 +1536,20 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            {/* Evening Event Section */}
+            {/* Evening Event Section — collapsible (collapsed by default on all screens) */}
             <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
-              <CardHeader 
-                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isEveningEventExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
+              <CardHeader
+                className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isEveningEventExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
                 onClick={() => setIsEveningEventExpanded(!isEveningEventExpanded)}
               >
                 <div className="flex items-center justify-center gap-2">
                   <CardTitle className="text-white text-4xl font-bold">Evening Event</CardTitle>
-                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isEveningEventExpanded ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`h-6 w-6 text-white transition-transform ${isEveningEventExpanded ? 'rotate-180' : ''}`}
+                  />
                 </div>
               </CardHeader>
-              <CardContent className={`pt-6 md:block ${isEveningEventExpanded ? 'block' : 'hidden'}`}>
+              <CardContent className={`pt-6 ${isEveningEventExpanded ? 'block' : 'hidden'}`}>
                 <div className="text-center mb-6">
                   <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Park</h3>
                   <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">7-10 PM April 16th, closed for only the summit attendees</p>
@@ -1571,21 +1571,28 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Hotel Block and Travel Advice - Full Width */}
+        {/* Hotel & Travel — single collapsible (collapsed by default) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <Card className="shadow-xl flex flex-col overflow-hidden bg-white rounded-lg h-full">
-              <CardHeader 
-                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isHotelBlockExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
-                onClick={() => setIsHotelBlockExpanded(!isHotelBlockExpanded)}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <CardTitle className="text-white text-4xl font-bold">{getText('hotelsTitle', 'Hotel Block')}</CardTitle>
-                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isHotelBlockExpanded ? 'rotate-180' : ''}`} />
-                </div>
-              </CardHeader>
-              <CardContent className={`flex-1 flex flex-col p-4 md:flex ${isHotelBlockExpanded ? 'flex' : 'hidden'}`}>
-                <div className="flex-1 flex flex-col">
+          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
+            <CardHeader
+              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isHotelTravelExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
+              onClick={() => setIsHotelTravelExpanded(!isHotelTravelExpanded)}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <CardTitle className="text-white text-4xl font-bold">
+                  {getText('hotelsTravelTitle', 'Hotel & Travel')}
+                </CardTitle>
+                <ChevronDown
+                  className={`h-6 w-6 text-white transition-transform ${isHotelTravelExpanded ? 'rotate-180' : ''}`}
+                />
+              </div>
+            </CardHeader>
+            <CardContent className={`pt-6 ${isHotelTravelExpanded ? 'block' : 'hidden'}`}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center md:text-left">
+                    {getText('hotelsTitle', 'Hotel Block')}
+                  </h3>
                   <div className="space-y-2 text-sm text-gray-900 dark:text-white">
                     <p><strong>Hotel:</strong> Residence Inn by Marriott Boston Back Bay/Fenway</p>
                     <p><strong>Rate:</strong> $364 per night</p>
@@ -1593,9 +1600,9 @@ const Index = () => {
                     <p><strong>Guests may reserve:</strong> 1 to 3 nights within these dates</p>
                     <p className="mt-3">
                       <strong>Reservation link:</strong>{' '}
-                      <a 
-                        href="https://app.marriott.com/reslink?id=1771012154701&key=GRP&app=resvlink" 
-                        target="_blank" 
+                      <a
+                        href="https://app.marriott.com/reslink?id=1771012154701&key=GRP&app=resvlink"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-electric-blue underline hover:text-electric-blue/80"
                       >
@@ -1606,7 +1613,7 @@ const Index = () => {
                       Guests may reserve online using the link above or by calling Marriott Reservations and referencing the SLxAI Summit room block. Reservations may be made or canceled at any time before the cutoff date of Monday, March 16, 2026.
                     </p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-white/30 dark:border-white/20">
+                  <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-600">
                     <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Important notes:</p>
                     <ul className="text-sm text-gray-900 dark:text-white space-y-1">
                       <li className="flex items-start">
@@ -1628,65 +1635,54 @@ const Index = () => {
                     </ul>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="shadow-xl flex flex-col w-full overflow-hidden bg-white rounded-lg h-full">
-              <CardHeader 
-                className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isTravelAdviceExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
-                onClick={() => setIsTravelAdviceExpanded(!isTravelAdviceExpanded)}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <CardTitle className="text-white text-4xl font-bold">{getText('travelAdviceTitle', 'Travel Advice')}</CardTitle>
-                  <ChevronDown className={`h-6 w-6 text-white transition-transform md:hidden ${isTravelAdviceExpanded ? 'rotate-180' : ''}`} />
-                </div>
-              </CardHeader>
-              <CardContent className={`flex-1 flex flex-col p-4 md:flex ${isTravelAdviceExpanded ? 'flex' : 'hidden'}`}>
-                <div className="flex-1 flex flex-col">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center md:text-left">
+                    {getText('travelAdviceTitle', 'Travel Advice')}
+                  </h3>
                   <div className="space-y-3 text-gray-700 dark:text-white text-sm">
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
-                    <ul className="mt-1 ml-4 space-y-1">
-                      <li className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('airport1', 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)')}</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('airport2', 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)')}</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">{getText('byTrain', 'By Train:')}</strong>
-                    <ul className="mt-1 ml-4 space-y-1">
-                      <li className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('train1', 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops')}</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-electric-blue mr-2">•</span>
-                        <span>{getText('train2', 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations')}</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">{getText('publicTransportation', 'Public Transportation:')}</strong>
-                    <p className="mt-1 ml-4">
-                      {getText('publicTransportationText', 'Boston University is accessible via the MBTA Green Line B train. Key stops include: BU Central, BU East, and Blandford Street. The MBTA also offers bus routes throughout the city.')}
-                    </p>
-                  </div>
-                  <div>
-                    <strong className="text-gray-900 dark:text-white">{getText('parking', 'Parking:')}</strong>
-                    <p className="mt-1 ml-4">
-                      {getText('parkingText', 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.')}
-                    </p>
-                  </div>
+                    <div>
+                      <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
+                      <ul className="mt-1 ml-4 space-y-1">
+                        <li className="flex items-start">
+                          <span className="text-electric-blue mr-2">•</span>
+                          <span>{getText('airport1', 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)')}</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-electric-blue mr-2">•</span>
+                          <span>{getText('airport2', 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)')}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <strong className="text-gray-900 dark:text-white">{getText('byTrain', 'By Train:')}</strong>
+                      <ul className="mt-1 ml-4 space-y-1">
+                        <li className="flex items-start">
+                          <span className="text-electric-blue mr-2">•</span>
+                          <span>{getText('train1', 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops')}</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-electric-blue mr-2">•</span>
+                          <span>{getText('train2', 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations')}</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <strong className="text-gray-900 dark:text-white">{getText('publicTransportation', 'Public Transportation:')}</strong>
+                      <p className="mt-1 ml-4">
+                        {getText('publicTransportationText', 'Boston University is accessible via the MBTA Green Line B train. Key stops include: BU Central, BU East, and Blandford Street. The MBTA also offers bus routes throughout the city.')}
+                      </p>
+                    </div>
+                    <div>
+                      <strong className="text-gray-900 dark:text-white">{getText('parking', 'Parking:')}</strong>
+                      <p className="mt-1 ml-4">
+                        {getText('parkingText', 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.')}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Sponsorship Section - Collapsible on Desktop and Mobile */}
@@ -2004,17 +2000,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Summit CTA Section */}
-      <section className="pt-3 bg-electric-blue">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            {getText('ctaTitle', 'Be Part of History: Join the Inaugural Summit')}
-          </h2>
-        </div>
-      </section>
-
       {/* Waitlist — bottom of page */}
-      <section id="waitlist" className="py-10 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+      <section id="waitlist" className="py-10 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-center">
             <Card className="border-2 border-electric-blue shadow-xl w-full max-w-2xl">
