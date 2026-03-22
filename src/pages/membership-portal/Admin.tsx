@@ -76,6 +76,8 @@ import {
 import { isValidEmail, isValidUrl, isValidLength, sanitizeText, sanitizeFilename } from '@/lib/security';
 import { Navigate } from 'react-router-dom';
 import { getSettings, saveSettings, PortalSettings } from '@/lib/settings';
+import { collectAdminBackupData, triggerBackupDownload } from '@/lib/adminBackup';
+import { buildStorageBackupZip, triggerStorageBackupDownload } from '@/lib/storageBackup';
 import { getActivities, addActivity } from '@/lib/activityLog';
 import { exportToCSV, exportToJSON, parseCSV } from '@/lib/export';
 import { getCurrentUser, getUserRole, isAdmin, isSuperAdmin, refreshUserSession } from '@/lib/auth';
@@ -1279,6 +1281,315 @@ function WaitlistTab() {
   );
 }
 
+// Bylaws public feedback (from /bylaws page)
+interface BylawsFeedbackEntry {
+  id: string;
+  name: string;
+  email: string;
+  organization: string;
+  message: string;
+  created_at: string;
+}
+
+function BylawsFeedbackTab() {
+  const { toast } = useToast();
+  const [entries, setEntries] = useState<BylawsFeedbackEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [entryToDelete, setEntryToDelete] = useState<string | null>(null);
+  const [showEmptyConfirm, setShowEmptyConfirm] = useState(false);
+  const [isEmptying, setIsEmptying] = useState(false);
+
+  useEffect(() => {
+    loadEntries();
+  }, []);
+
+  const loadEntries = async () => {
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('bylaws_feedback')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setEntries((data as BylawsFeedbackEntry[]) || []);
+    } catch (error: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error loading bylaws feedback:', error);
+      }
+      const errorMessage =
+        error && typeof error === 'object' && 'message' in error
+          ? String((error as { message?: string }).message)
+          : 'Failed to load bylaws feedback.';
+      toast({
+        title: 'Error',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDeleteEntry = async () => {
+    if (!entryToDelete) return;
+    try {
+      const { error } = await supabase.from('bylaws_feedback').delete().eq('id', entryToDelete);
+      if (error) throw error;
+      toast({ title: 'Deleted', description: 'Bylaws feedback entry has been deleted.' });
+      setEntryToDelete(null);
+      loadEntries();
+    } catch (error: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error deleting bylaws feedback:', error);
+      }
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to delete entry.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleEmptyAll = async () => {
+    setIsEmptying(true);
+    try {
+      const { data: allRows, error: selectError } = await supabase.from('bylaws_feedback').select('id');
+      if (selectError) throw selectError;
+      if (allRows && allRows.length > 0) {
+        const ids = allRows.map((r: { id: string }) => r.id);
+        const { error } = await supabase.from('bylaws_feedback').delete().in('id', ids);
+        if (error) throw error;
+      }
+      toast({
+        title: 'Cleared',
+        description: `All ${entries.length} bylaws feedback entries have been deleted.`,
+      });
+      setShowEmptyConfirm(false);
+      loadEntries();
+    } catch (error: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error emptying bylaws feedback:', error);
+      }
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to clear entries.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsEmptying(false);
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const exportToCSV = () => {
+    if (entries.length === 0) {
+      toast({
+        title: 'No Data',
+        description: 'There are no entries to export.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    const headers = ['Name', 'Email', 'Organization', 'Message', 'Submitted'];
+    const rows = entries.map((entry) => {
+      const date = formatDate(entry.created_at);
+      return [entry.name, entry.email, entry.organization, entry.message, date];
+    });
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) =>
+        row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+      ),
+    ].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `bylaws-feedback-export-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast({
+      title: 'Export Successful',
+      description: `Exported ${entries.length} entr${entries.length === 1 ? 'y' : 'ies'} to CSV.`,
+    });
+  };
+
+  return (
+    <Card className="glass-card floating-hover">
+      <CardHeader>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <CardTitle>Bylaws feedback</CardTitle>
+            <CardDescription>
+              Public submissions from the Bylaws page ({' '}
+              <code className="text-xs">/bylaws</code>
+              )
+            </CardDescription>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button onClick={exportToCSV} variant="outline" size="sm" className="bg-white">
+              <FileText className="h-4 w-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button onClick={loadEntries} variant="outline" size="sm" className="bg-white">
+              <History className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+            {entries.length > 0 && (
+              <Button
+                onClick={() => setShowEmptyConfirm(true)}
+                variant="outline"
+                size="sm"
+                className="bg-white text-red-600 hover:text-red-700 hover:bg-red-50 border-red-300"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete all
+              </Button>
+            )}
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-electric-blue" />
+          </div>
+        ) : entries.length === 0 ? (
+          <div className="text-center py-12">
+            <MessageSquare className="h-12 w-12 text-gray-400 dark:text-white mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-white">No bylaws feedback yet.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              Ensure the <code className="text-xs">bylaws_feedback</code> table exists in Supabase (see BYLAWS_FEEDBACK_SCHEMA.sql).
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {entries.map((entry, index) => (
+              <Card
+                key={entry.id}
+                className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]"
+              >
+                <CardContent className="pt-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-3 min-w-0">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-electric-blue/10 text-electric-blue font-semibold text-sm shrink-0">
+                          #{entries.length - index}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                            <User className="h-4 w-4 shrink-0" />
+                            {entry.name}
+                          </p>
+                          <p className="text-sm text-gray-600 dark:text-white flex items-center gap-1 mt-1">
+                            <Mail className="h-3 w-3 shrink-0" />
+                            {entry.email}
+                          </p>
+                          <p className="text-sm text-gray-600 dark:text-white flex items-center gap-1 mt-1">
+                            <Building2 className="h-3 w-3 shrink-0" />
+                            {entry.organization}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pl-0 sm:pl-11 border-t border-gray-100 dark:border-gray-700 pt-3">
+                        <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Message</p>
+                        <div className="text-sm text-gray-800 dark:text-gray-100 whitespace-pre-wrap max-h-48 overflow-y-auto rounded-md bg-gray-50 dark:bg-gray-900/50 p-3">
+                          {entry.message}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-white">
+                        <Clock className="h-3 w-3" />
+                        {formatDate(entry.created_at)}
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setEntryToDelete(entry.id)}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 shrink-0"
+                      aria-label="Delete entry"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </CardContent>
+
+      <AlertDialog open={!!entryToDelete} onOpenChange={(open) => !open && setEntryToDelete(null)}>
+        <AlertDialogContent className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900 dark:text-white">Delete this entry?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600 dark:text-white">
+              This bylaws feedback will be permanently removed.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => setEntryToDelete(null)}
+              className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 bg-white"
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteEntry} className="bg-red-600 hover:bg-red-700 text-white">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showEmptyConfirm} onOpenChange={(open) => !open && setShowEmptyConfirm(false)}>
+        <AlertDialogContent className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-gray-900 dark:text-white">Delete all bylaws feedback?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600 dark:text-white">
+              Are you sure you want to delete all {entries.length} entr{entries.length === 1 ? 'y' : 'ies'}? This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => setShowEmptyConfirm(false)}
+              className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white bg-white"
+              disabled={isEmptying}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleEmptyAll}
+              className="bg-red-600 hover:bg-red-700 text-white"
+              disabled={isEmptying}
+            >
+              {isEmptying ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting…
+                </>
+              ) : (
+                'Delete all'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </Card>
+  );
+}
+
 // Droppable Category Container Component
 function DroppableCategory({ 
   category, 
@@ -1790,6 +2101,9 @@ export default function Admin() {
     contentModeration: 'auto-approve',
   });
   const [isLoadingSettings, setIsLoadingSettings] = useState(true);
+  const [isDownloadingBackup, setIsDownloadingBackup] = useState(false);
+  const [isDownloadingStorage, setIsDownloadingStorage] = useState(false);
+  const [storageBackupStatus, setStorageBackupStatus] = useState<string | null>(null);
   const [importProgress, setImportProgress] = useState(0);
   const [isImporting, setIsImporting] = useState(false);
   const fileImportRef = useRef<HTMLInputElement>(null);
@@ -4102,6 +4416,87 @@ export default function Admin() {
     }
   };
 
+  const handleDownloadFullBackup = async () => {
+    setIsDownloadingBackup(true);
+    try {
+      const payload = await collectAdminBackupData();
+      triggerBackupDownload(payload);
+
+      const user = getCurrentUser();
+      await addActivity({
+        type: 'settings',
+        action: 'Full portal data backup downloaded',
+        name: 'Backup',
+        userId: user?.id,
+        status: 'active',
+      });
+
+      const totalRows = payload.tables.reduce((sum, t) => sum + t.rowCount, 0);
+      const failedTables = payload.tables.filter((t) => t.error);
+
+      toast({
+        title: 'Backup downloaded',
+        description:
+          failedTables.length === 0
+            ? `JSON snapshot saved (${totalRows.toLocaleString()} rows across ${payload.tables.length} tables).`
+            : `Saved ${totalRows.toLocaleString()} rows. ${failedTables.length} table(s) could not be read (check file notes).`,
+      });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Could not create backup.';
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Backup error:', error);
+      }
+      toast({
+        title: 'Backup failed',
+        description: message,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDownloadingBackup(false);
+    }
+  };
+
+  const handleDownloadStorageBackup = async () => {
+    setIsDownloadingStorage(true);
+    setStorageBackupStatus(null);
+    try {
+      const { blob, manifest } = await buildStorageBackupZip((msg) => setStorageBackupStatus(msg));
+      triggerStorageBackupDownload(blob);
+
+      const user = getCurrentUser();
+      await addActivity({
+        type: 'settings',
+        action: 'Supabase Storage backup downloaded (ZIP)',
+        name: 'Storage backup',
+        userId: user?.id,
+        status: 'active',
+      });
+
+      const parts = [
+        `${manifest.totalFiles} file(s) in ZIP`,
+        manifest.totalFailed > 0 ? `${manifest.totalFailed} download(s) failed` : null,
+      ].filter(Boolean);
+
+      toast({
+        title: 'Storage backup downloaded',
+        description: parts.join(' · ') + '. Manifest is inside the ZIP as _storage-backup-manifest.json.',
+      });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Could not create storage backup.';
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Storage backup error:', error);
+      }
+      toast({
+        title: 'Storage backup failed',
+        description: message,
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDownloadingStorage(false);
+      setStorageBackupStatus(null);
+    }
+  };
+
   // Member import
   const handleMemberImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -4188,11 +4583,12 @@ export default function Admin() {
       />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 sm:grid-cols-12 h-auto">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-[repeat(13,minmax(0,1fr))] h-auto gap-1">
           <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
           <TabsTrigger value="interest" className="text-xs sm:text-sm">Interest</TabsTrigger>
           <TabsTrigger value="tickets" className="text-xs sm:text-sm">Tickets</TabsTrigger>
           <TabsTrigger value="waiting" className="text-xs sm:text-sm">Waiting</TabsTrigger>
+          <TabsTrigger value="bylaws" className="text-xs sm:text-sm">Bylaws</TabsTrigger>
           <TabsTrigger value="members" className="text-xs sm:text-sm">Members</TabsTrigger>
           <TabsTrigger value="files" className="text-xs sm:text-sm">Files</TabsTrigger>
           <TabsTrigger value="discussions" className="text-xs sm:text-sm">Discussions</TabsTrigger>
@@ -4349,6 +4745,11 @@ export default function Admin() {
         {/* Waiting Tab */}
         <TabsContent value="waiting" className="space-y-6">
           <WaitlistTab />
+        </TabsContent>
+
+        {/* Bylaws feedback Tab */}
+        <TabsContent value="bylaws" className="space-y-6">
+          <BylawsFeedbackTab />
         </TabsContent>
 
         {/* Members Tab */}
@@ -6081,6 +6482,68 @@ export default function Admin() {
                   )}
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="glass-card floating-hover">
+            <CardHeader>
+              <CardTitle>Data backup</CardTitle>
+              <CardDescription>
+                Download a JSON snapshot of portal database tables as of now. Use this for your own records; large tables
+                (e.g. analytics) may take a moment.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-gray-600 dark:text-white">
+                The file includes members, votes, files, discussions, summit data, tickets, interest forms, waitlist,
+                settings, and more—everything your admin account can read from Supabase.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="bg-white"
+                  onClick={handleDownloadFullBackup}
+                  disabled={isDownloadingBackup || isDownloadingStorage || isLoadingSettings}
+                >
+                  {isDownloadingBackup ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Preparing backup…
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-4 w-4 mr-2" />
+                      Download full backup (JSON)
+                    </>
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="bg-white"
+                  onClick={handleDownloadStorageBackup}
+                  disabled={isDownloadingStorage || isDownloadingBackup || isLoadingSettings}
+                >
+                  {isDownloadingStorage ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      {storageBackupStatus || 'Preparing storage ZIP…'}
+                    </>
+                  ) : (
+                    <>
+                      <Folder className="h-4 w-4 mr-2" />
+                      Download storage (ZIP)
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Storage ZIP includes buckets: <code className="text-xs">files</code>,{' '}
+                <code className="text-xs">avatars</code>, <code className="text-xs">post-images</code>,{' '}
+                <code className="text-xs">flags</code>. Your account must have storage read access; a manifest lists any
+                skipped files.
+              </p>
             </CardContent>
           </Card>
         </TabsContent>

@@ -138,6 +138,10 @@ const Index = () => {
         goal2: 'Create industry-wide ethical standards',
         goal3: 'Foster collaborative innovation',
         goal4: 'Ensure equal company representation',
+        bylawsSectionTitle: 'Bylaws',
+        bylawsSectionBody: 'The SLxAI Bylaws Committee has spent the past two months collaboratively developing the organization\'s founding bylaws. The draft is now ready for community review. We invite members and stakeholders to provide feedback before the bylaws are formally adopted at the end of the SLxAI Summit on April 17, 2026.',
+        bylawsSectionLinkLead: 'Review the draft and share your input here:',
+        bylawsSectionLinkText: 'View draft bylaws & feedback',
         summitTitle: 'Summit 2026',
         summitDescription: 'The historic gathering where industry leaders will establish the cooperative nonprofit that will shape the future of sign language x AI technologies.',
         dateTimeTitle: 'Date & Time',
@@ -698,6 +702,48 @@ const Index = () => {
             </Card>
           </div>
 
+          {/* Bylaws — same card style as Mission / Vision / Goals */}
+          <Card
+            id="bylaws"
+            className="shadow-none overflow-hidden rounded-lg mt-6"
+            style={{
+              filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+              transform: 'translateY(-2px)'
+            }}
+          >
+            <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
+              <CardTitle className="text-3xl font-bold text-white">
+                {getText('bylawsSectionTitle', 'Bylaws')}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-4 sm:pt-5 rounded-b-lg px-4 sm:px-6 pb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-start">
+                <p className="text-sm text-black text-left leading-relaxed">
+                  {getText(
+                    'bylawsSectionBody',
+                    "The SLxAI Bylaws Committee has spent the past two months collaboratively developing the organization's founding bylaws. The draft is now ready for community review. We invite members and stakeholders to provide feedback before the bylaws are formally adopted at the end of the SLxAI Summit on April 17, 2026."
+                  )}
+                </p>
+                <div className="flex justify-center min-h-0 w-full">
+                  <div className="grid grid-cols-1 gap-4 w-max max-w-full justify-items-stretch">
+                    <p className="text-sm text-black leading-relaxed text-center">
+                      {getText('bylawsSectionLinkLead', 'Review the draft and share your input here:')}
+                    </p>
+                    <Button
+                      asChild
+                      className="bg-electric-blue hover:bg-electric-blue/90 text-white shadow-lg inline-flex items-center justify-center gap-2 w-full min-w-0"
+                    >
+                      <Link to="/bylaws">
+                        {getText('bylawsSectionLinkText', 'View draft bylaws & feedback')}
+                        <FileText className="h-4 w-4 shrink-0" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
         </div>
       </section>
 
@@ -717,116 +763,118 @@ const Index = () => {
           </div>
 
           <div className="mb-8">
+            {/* SOLD OUT — under title, above hero image */}
+            <div className="bg-red-600 text-white text-3xl sm:text-5xl font-bold py-6 sm:py-12 shadow-xl w-full rounded-lg text-center mb-6">
+              SOLD OUT
+            </div>
             <img 
               src="/slxai-bu-hero.png" 
               alt="SLxAI Summit at Boston University" 
               className="w-full h-auto rounded-lg shadow-lg"
             />
-            {/* SOLD OUT Banner - Matching Image Width */}
-            <div className="bg-red-600 text-white text-3xl sm:text-5xl font-bold py-6 sm:py-12 shadow-xl w-full rounded-lg text-center mt-6">
-              SOLD OUT
-            </div>
-            <div className="text-center mt-6">
-              <div className="flex flex-col items-center justify-center gap-6">
-                {/* Waitlist Form */}
-                <Card className="border-2 border-electric-blue shadow-xl w-full max-w-2xl">
-                  <CardHeader className="bg-electric-blue text-white text-center py-3 rounded-t-lg">
-                    <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
-                      Join the Waitlist
-                    </CardTitle>
-                    <CardDescription className="text-white/90 text-sm sm:text-base mt-2">
-                      Get notified when tickets become available
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    {isWaitlistSubmitted ? (
-                      <div className="text-center py-8">
-                        <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank You!</h3>
-                        <p className="text-gray-600 mb-4">
-                          You've been added to the waitlist. We'll notify you when spots become available.
-                        </p>
-                        <Button
-                          onClick={() => setIsWaitlistSubmitted(false)}
-                          variant="outline"
-                          className="bg-white"
+          </div>
+
+          {/* Sponsors — under BU image, above date & map */}
+          <div className="mb-8">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl px-8 py-4 border-2 border-electric-blue/20">
+              <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4">
+                Our Sponsors
+              </h3>
+              <style>{`
+                @keyframes scrollSponsors {
+                  0% {
+                    transform: translateX(0);
+                  }
+                  100% {
+                    transform: translateX(calc(-33.333%));
+                  }
+                }
+                @keyframes scrollSponsorsMobile {
+                  0% {
+                    transform: translateX(0);
+                  }
+                  100% {
+                    transform: translateX(calc(-33.333%));
+                  }
+                }
+              `}</style>
+              <div className="relative overflow-hidden h-80 sm:h-72 w-full">
+                <div 
+                  className="md:hidden flex h-full items-center"
+                  style={{ 
+                    width: 'calc(100% * 27)',
+                    animation: 'scrollSponsorsMobile 33s linear infinite'
+                  }}
+                >
+                  {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
+                    let logoSize = "max-h-48";
+                    if (sponsor.name === 'Kara Technologies') {
+                      logoSize = "max-h-80";
+                    } else if (sponsor.name === 'ASL Flurry') {
+                      logoSize = "max-h-64";
+                    } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
+                      logoSize = "max-h-80";
+                    }
+                    return (
+                      <div
+                        key={`${sponsor.name}-mobile-${index}`}
+                        className="flex items-center justify-center px-4 shrink-0"
+                        style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
+                      >
+                        <a
+                          href={sponsor.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center hover:opacity-80 transition-opacity"
                         >
-                          Join Again
-                        </Button>
+                          <img
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                            className={`${logoSize} w-auto object-contain`}
+                          />
+                        </a>
                       </div>
-                    ) : (
-                      <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="waitlist-name" className="flex items-center gap-2">
-                            <User className="h-4 w-4 text-electric-blue" />
-                            Name
-                          </Label>
-                          <Input
-                            id="waitlist-name"
-                            type="text"
-                            placeholder="Your full name"
-                            value={waitlistForm.name}
-                            onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
-                            required
-                            disabled={isSubmittingWaitlist}
-                            className="bg-white"
-                            maxLength={200}
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="waitlist-email" className="flex items-center gap-2">
-                            <Mail className="h-4 w-4 text-electric-blue" />
-                            Email
-                          </Label>
-                          <Input
-                            id="waitlist-email"
-                            type="email"
-                            placeholder="your.email@example.com"
-                            value={waitlistForm.email}
-                            onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
-                            required
-                            disabled={isSubmittingWaitlist}
-                            className="bg-white"
-                            maxLength={200}
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
-                            <Building2 className="h-4 w-4 text-electric-blue" />
-                            Organization (Optional)
-                          </Label>
-                          <Input
-                            id="waitlist-organization"
-                            type="text"
-                            placeholder="Your organization name"
-                            value={waitlistForm.organization}
-                            onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
-                            disabled={isSubmittingWaitlist}
-                            className="bg-white"
-                            maxLength={200}
-                          />
-                        </div>
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
-                          disabled={isSubmittingWaitlist}
+                    );
+                  })}
+                </div>
+                <div 
+                  className="hidden md:flex h-full items-center"
+                  style={{ 
+                    width: 'calc(100% * 27 / 3)',
+                    animation: 'scrollSponsors 33s linear infinite'
+                  }}
+                >
+                  {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
+                    let logoSize = "max-h-32";
+                    if (sponsor.name === 'Kara Technologies') {
+                      logoSize = "max-h-64";
+                    } else if (sponsor.name === 'ASL Flurry') {
+                      logoSize = "max-h-48";
+                    } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
+                      logoSize = "max-h-64";
+                    }
+                    return (
+                      <div
+                        key={`${sponsor.name}-desktop-${index}`}
+                        className="flex items-center justify-center px-4 shrink-0"
+                        style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
+                      >
+                        <a
+                          href={sponsor.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center hover:opacity-80 transition-opacity"
                         >
-                          {isSubmittingWaitlist ? (
-                            <>
-                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                              Submitting...
-                            </>
-                          ) : (
-                            'Join Waitlist'
-                          )}
-                        </Button>
-                      </form>
-                    )}
-                  </CardContent>
-                </Card>
+                          <img
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                            className={`${logoSize} w-auto object-contain`}
+                          />
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -887,119 +935,6 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Sponsors Carousel Section */}
-            <div className="md:col-span-2 mt-6">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl px-8 py-4 border-2 border-electric-blue/20">
-                <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-4">
-                  Our Sponsors
-                </h3>
-                <style>{`
-                  @keyframes scrollSponsors {
-                    0% {
-                      transform: translateX(0);
-                    }
-                    100% {
-                      transform: translateX(calc(-33.333%));
-                    }
-                  }
-                  @keyframes scrollSponsorsMobile {
-                    0% {
-                      transform: translateX(0);
-                    }
-                    100% {
-                      transform: translateX(calc(-33.333%));
-                    }
-                  }
-                `}</style>
-                <div className="relative overflow-hidden h-80 sm:h-72 w-full">
-                  <div 
-                    className="md:hidden flex h-full items-center"
-                    style={{ 
-                      width: 'calc(100% * 27)',
-                      animation: 'scrollSponsorsMobile 33s linear infinite'
-                    }}
-                  >
-                    {/* Mobile: Show 1 logo at a time - 3 rounds of all sponsors */}
-                    {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
-                      let logoSize = "max-h-48"; // Larger default for mobile (1 logo at a time)
-                      const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
-                      
-                      if (sponsor.name === 'Kara Technologies') {
-                        logoSize = "max-h-80"; // Double size
-                      } else if (sponsor.name === 'ASL Flurry') {
-                        logoSize = "max-h-64"; // 50% bigger
-                      } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
-                        logoSize = "max-h-80"; // Double size
-                      }
-                      
-                      return (
-                        <div
-                          key={`${sponsor.name}-mobile-${index}`}
-                          className="flex items-center justify-center px-4 shrink-0"
-                          style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
-                        >
-                          <a
-                            href={sponsor.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center hover:opacity-80 transition-opacity"
-                          >
-                            <img
-                              src={sponsor.logo}
-                              alt={sponsor.name}
-                              className={`${logoSize} w-auto object-contain`}
-                            />
-                          </a>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div 
-                    className="hidden md:flex h-full items-center"
-                    style={{ 
-                      width: 'calc(100% * 27 / 3)',
-                      animation: 'scrollSponsors 33s linear infinite'
-                    }}
-                  >
-                    {/* Desktop: Show 3 logos at a time - 3 rounds of all sponsors */}
-                    {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => {
-                      let logoSize = "max-h-32"; // Default size
-                      const isPartnersLogo = sponsor.name === 'PARTNERS Interpreting';
-                      
-                      if (sponsor.name === 'Kara Technologies') {
-                        logoSize = "max-h-64"; // Double size
-                      } else if (sponsor.name === 'ASL Flurry') {
-                        logoSize = "max-h-48"; // 50% bigger
-                      } else if (sponsor.name === 'alangu' || sponsor.name === 'GLWMax' || sponsor.name === 'Microsoft') {
-                        logoSize = "max-h-64"; // Double size
-                      }
-                      
-                      return (
-                        <div
-                          key={`${sponsor.name}-desktop-${index}`}
-                          className="flex items-center justify-center px-4 shrink-0"
-                          style={{ width: 'calc(100% / 27)', minWidth: 'calc(100% / 27)', maxWidth: 'calc(100% / 27)' }}
-                        >
-                          <a
-                            href={sponsor.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center hover:opacity-80 transition-opacity"
-                          >
-                            <img
-                              src={sponsor.logo}
-                              alt={sponsor.name}
-                              className={`${logoSize} w-auto object-contain`}
-                            />
-                          </a>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
               <CardHeader 
                 className={`bg-electric-blue text-white text-center py-2 cursor-pointer md:cursor-default ${isAboutSummitExpanded ? 'rounded-t-lg' : 'rounded-lg'} md:rounded-t-lg`}
@@ -1030,6 +965,21 @@ const Index = () => {
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{getText('programFormatTitle', 'Program Format')}</h3>
                     <p>
                       {getText('programFormatText', 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.')}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Master of Ceremonies — above Workshops & Panels */}
+                <div className="border-2 border-electric-blue rounded-lg shadow-lg bg-white dark:bg-white overflow-hidden mb-4">
+                  <div className="bg-electric-blue text-white text-center py-2">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white">Master of Ceremonies</h3>
+                  </div>
+                  <div className="px-4 py-6 text-center">
+                    <p className="text-lg sm:text-xl text-gray-700 dark:text-white leading-relaxed">
+                      <strong className="text-gray-900 dark:text-white">Andrew Bottoms</strong>
+                      {' '}and{' '}
+                      <strong className="text-gray-900 dark:text-white">Dr. Barbara Spiecker</strong>
+                      , Boston University
                     </p>
                   </div>
                 </div>
@@ -1231,7 +1181,7 @@ const Index = () => {
                               A Linguistic Approach to Sign Language Data in AI Model Development
                             </h4>
                             <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
-                              <strong>Presenter:</strong> Dr. Naomi Caselli, <em>Boston University</em>
+                              <strong>Presenters:</strong> Dr. Naomi Caselli, Dr. Kaj Kraus, <em>Boston University</em>
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                               This session brings a linguistic lens to data design for sign language AI, including what must be captured to represent the language faithfully. It will connect linguistic structure to practical annotation and modeling choices that affect performance and usability.
@@ -1512,7 +1462,7 @@ const Index = () => {
                               A Linguistic Approach to Sign Language Data in AI Model Development
                             </h4>
                             <p className="text-base text-gray-700 dark:text-gray-300 mb-2">
-                              <strong>Presenter:</strong> Dr. Naomi Caselli, <em>Boston University</em>
+                              <strong>Presenters:</strong> Dr. Naomi Caselli, Dr. Kaj Kraus, <em>Boston University</em>
                             </p>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
                               This session brings a linguistic lens to data design for sign language AI, including what must be captured to represent the language faithfully. It will connect linguistic structure to practical annotation and modeling choices that affect performance and usability.
@@ -2062,6 +2012,120 @@ const Index = () => {
           </h2>
         </div>
       </section>
+
+      {/* Waitlist — bottom of page */}
+      <section id="waitlist" className="py-10 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-center">
+            <Card className="border-2 border-electric-blue shadow-xl w-full max-w-2xl">
+              <CardHeader className="bg-electric-blue text-white text-center py-3 rounded-t-lg">
+                <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
+                  Join the Waitlist
+                </CardTitle>
+                <CardDescription className="text-white/90 text-sm sm:text-base mt-2">
+                  Get notified when tickets become available
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6">
+                {isWaitlistSubmitted ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank You!</h3>
+                    <p className="text-gray-600 mb-4">
+                      You've been added to the waitlist. We'll notify you when spots become available.
+                    </p>
+                    <Button
+                      onClick={() => setIsWaitlistSubmitted(false)}
+                      variant="outline"
+                      className="bg-white"
+                    >
+                      Join Again
+                    </Button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-name" className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-electric-blue" />
+                        Name
+                      </Label>
+                      <Input
+                        id="waitlist-name"
+                        type="text"
+                        placeholder="Your full name"
+                        value={waitlistForm.name}
+                        onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
+                        required
+                        disabled={isSubmittingWaitlist}
+                        className="bg-white"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-email" className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-electric-blue" />
+                        Email
+                      </Label>
+                      <Input
+                        id="waitlist-email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={waitlistForm.email}
+                        onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
+                        required
+                        disabled={isSubmittingWaitlist}
+                        className="bg-white"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
+                        <Building2 className="h-4 w-4 text-electric-blue" />
+                        Organization (Optional)
+                      </Label>
+                      <Input
+                        id="waitlist-organization"
+                        type="text"
+                        placeholder="Your organization name"
+                        value={waitlistForm.organization}
+                        onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
+                        disabled={isSubmittingWaitlist}
+                        className="bg-white"
+                        maxLength={200}
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+                      disabled={isSubmittingWaitlist}
+                    >
+                      {isSubmittingWaitlist ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        'Join Waitlist'
+                      )}
+                    </Button>
+                  </form>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-gray-200 bg-gray-50 dark:bg-gray-900 py-8 mt-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+          <Link to="/bylaws" className="text-electric-blue font-medium hover:underline">
+            Bylaws
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };

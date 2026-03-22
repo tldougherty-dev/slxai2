@@ -31,6 +31,7 @@ import MigrateData from "./pages/MigrateData";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import Interest from "./pages/Interest";
+import Bylaws from "./pages/Bylaws";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/interest" element={<Interest />} />
+            <Route path="/bylaws" element={<Bylaws />} />
           <Route
             path="/membership-portal"
             element={
