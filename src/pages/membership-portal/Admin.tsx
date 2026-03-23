@@ -2207,7 +2207,7 @@ export default function Admin() {
         try {
           const result = await supabase
             .from('user_roles')
-            .select('email, role, profiles!inner(full_name, organization_id)')
+            .select('email, role, full_name, organization_id')
             .in('role', ['admin', 'super_admin']);
           roleData = result.data;
           roleError = result.error;
@@ -2257,28 +2257,27 @@ export default function Admin() {
         // Process role data from user_roles table
         for (const row of roleData) {
           let organizationName = '';
-          const profile = Array.isArray(row.profiles) ? row.profiles[0] : row.profiles;
-          
-          // Get organization name if organization_id exists
-          if (profile?.organization_id) {
+          const orgId = row.organization_id;
+
+          if (orgId) {
             try {
               const { data: orgData, error: orgError } = await supabase
                 .from('members')
-                .select('organizationName')
-                .eq('id', profile.organization_id)
+                .select('organization_name')
+                .eq('id', orgId)
                 .single();
-              
+
               if (!orgError && orgData) {
-                organizationName = orgData.organizationName || '';
+                organizationName = (orgData as { organization_name?: string }).organization_name || '';
               }
             } catch (e) {
               // Ignore error, continue without org name
             }
           }
-          
+
           adminList.push({
             email: row.email,
-            name: profile?.full_name || row.email.split('@')[0],
+            name: row.full_name || row.email.split('@')[0],
             role: row.role as UserRole,
             organizationName: organizationName,
           });
