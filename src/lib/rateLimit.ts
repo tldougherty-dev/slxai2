@@ -9,6 +9,20 @@ interface RateLimitEntry {
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
 const MAX_LOGIN_ATTEMPTS = 5; // Max 5 attempts per window
 
+/** Emails exempt from client-side login attempt limits (lowercase). */
+const RATE_LIMIT_EXEMPT_EMAILS = new Set([
+  'andy@glwmax.com',
+  'joseph@avocadoweb.net',
+]);
+
+function normalizeId(identifier: string): string {
+  return identifier.toLowerCase().trim();
+}
+
+export function isRateLimitExempt(identifier: string): boolean {
+  return RATE_LIMIT_EXEMPT_EMAILS.has(normalizeId(identifier));
+}
+
 /**
  * Check if login attempt should be rate limited
  * @param identifier - Email or IP address
@@ -17,7 +31,13 @@ const MAX_LOGIN_ATTEMPTS = 5; // Max 5 attempts per window
 export function isRateLimited(identifier: string): boolean {
   if (typeof window === 'undefined') return false;
 
-  const key = `rate_limit_${identifier}`;
+  const id = normalizeId(identifier);
+  if (isRateLimitExempt(id)) {
+    localStorage.removeItem(`rate_limit_${id}`);
+    return false;
+  }
+
+  const key = `rate_limit_${id}`;
   const stored = localStorage.getItem(key);
 
   if (!stored) {
@@ -70,7 +90,7 @@ export function isRateLimited(identifier: string): boolean {
  */
 export function resetRateLimit(identifier: string): void {
   if (typeof window === 'undefined') return;
-  const key = `rate_limit_${identifier}`;
+  const key = `rate_limit_${normalizeId(identifier)}`;
   localStorage.removeItem(key);
 }
 
@@ -82,7 +102,10 @@ export function resetRateLimit(identifier: string): void {
 export function getRateLimitResetTime(identifier: string): number {
   if (typeof window === 'undefined') return 0;
 
-  const key = `rate_limit_${identifier}`;
+  const id = normalizeId(identifier);
+  if (isRateLimitExempt(id)) return 0;
+
+  const key = `rate_limit_${id}`;
   const stored = localStorage.getItem(key);
 
   if (!stored) return 0;
