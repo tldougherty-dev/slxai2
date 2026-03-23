@@ -6,8 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
-import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, Clock, Hotel, Plane, Ticket, ChevronDown, ChevronUp } from 'lucide-react';
-import InterestedCompanies from '@/components/InterestedCompanies';
+import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -21,21 +20,12 @@ const Index = () => {
   const { toast } = useToast();
   const { theme } = useTheme();
   const { language, setLanguage, translate } = useLanguage();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
   const [isTicketSubmitted, setIsTicketSubmitted] = useState(false);
   const [availableTickets, setAvailableTickets] = useState<number>(175);
   const [reservedTickets, setReservedTickets] = useState<number>(0);
   
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    organization: '',
-    reason: '',
-  });
-
   const [ticketForm, setTicketForm] = useState({
     name: '',
     email: '',
@@ -54,11 +44,6 @@ const Index = () => {
   // Mobile collapsible sections state
   const [isAboutSummitExpanded, setIsAboutSummitExpanded] = useState(false);
   const [isWorkshopPanelExpanded, setIsWorkshopPanelExpanded] = useState(false);
-  const [isEveningEventExpanded, setIsEveningEventExpanded] = useState(false);
-  const [isHotelTravelExpanded, setIsHotelTravelExpanded] = useState(false);
-  const [isInterestedMembersExpanded, setIsInterestedMembersExpanded] = useState(false);
-  const [isSponsorshipExpanded, setIsSponsorshipExpanded] = useState(false);
-  const [isMembershipExpanded, setIsMembershipExpanded] = useState(false);
   // Sponsors data
   const sponsors = [
     { name: 'ASL Flurry', logo: '/sponsors/asl-flurry.png', url: 'https://www.aslflurry.com' },
@@ -190,29 +175,6 @@ const Index = () => {
         importantDatesTitle: 'Important Dates',
         registrationFee: 'Registration Fee:',
         registrationFeeValue: '$350 plus processing fee',
-        hotelsTitle: 'Hotel Block',
-        hotelsTravelTitle: 'Hotel & Travel',
-        hotelsDescription: 'We have secured an official hotel block for the SLxAI Summit. We recommend booking early as April is a busy time in Boston.',
-        hotelBlockTitle: 'Hotel Block Available',
-        hotelBlockInfo: 'We have reserved a block of 20 rooms at Hotel Commonwealth for three nights (April 15-17, 2026). We will be sharing the booking code with ticket holders.',
-        hotelBlockNote: 'Block of 20 rooms reserved for three nights',
-        hotel1: 'Hotel Commonwealth - 500 Commonwealth Avenue (0.3 miles)',
-        hotel2: 'Hyatt Regency Boston - 1 Avenue de Lafayette (3.5 miles)',
-        hotel3: 'Boston Marriott Copley Place - 110 Huntington Avenue (2.5 miles)',
-        hotel4: 'Holiday Inn Express - 1200 Beacon Street (0.5 miles)',
-        hotel5: 'Residence Inn by Marriott - 1200 Beacon Street (0.5 miles)',
-        hotelsNote: 'Additional hotel options are available throughout Boston. Consider using booking sites to compare rates and locations.',
-        travelAdviceTitle: 'Travel Advice',
-        byAir: 'By Air:',
-        airport1: 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)',
-        airport2: 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)',
-        byTrain: 'By Train:',
-        train1: 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops',
-        train2: 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations',
-        publicTransportation: 'Public Transportation:',
-        publicTransportationText: 'Boston University is accessible via the MBTA Green Line B train. Key stops include: BU Central, BU East, and Blandford Street. The MBTA also offers bus routes throughout the city.',
-        parking: 'Parking:',
-        parkingText: 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.',
         membershipTitle: 'Become a Founding Member',
         membershipDescription: 'Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit, ensuring equal representation in shaping the future of sign language x AI technologies.',
         foundingBenefitsTitle: 'Founding Member Benefits',
@@ -257,25 +219,6 @@ const Index = () => {
 
   const getText = (key: string, fallback: string) => {
     return translatedContent[key] || fallback;
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      // No header offset needed since there's no navigation bar
-      const elementPosition = element.offsetTop;
-      
-      // Scroll to the element
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-      
-      // Reset scroll behavior after animation
-      setTimeout(() => {
-        document.documentElement.style.scrollBehavior = 'auto';
-      }, 2000);
-    }
   };
 
   const validateEmail = (email: string): boolean => {
@@ -385,105 +328,6 @@ const Index = () => {
     }
   };
 
-  const handleInterestSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Validate all fields
-    if (!formData.name || formData.name.trim() === '') {
-      toast({
-        title: "Name required",
-        description: "Please enter your name.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!formData.email || formData.email.trim() === '') {
-      toast({
-        title: "Email required",
-        description: "Please enter your email address.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!formData.organization || formData.organization.trim() === '') {
-      toast({
-        title: "Organization required",
-        description: "Please enter your organization name.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!formData.reason || formData.reason.trim() === '') {
-      toast({
-        title: "Reason required",
-        description: "Please tell us why you want to be part of this.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (!isValidLength(formData.name, 1, 200) || !isValidLength(formData.email, 1, 200) || 
-        !isValidLength(formData.organization, 1, 200) || !isValidLength(formData.reason, 10, 2000)) {
-      toast({
-        title: "Invalid input",
-        description: "Please check that all fields meet the length requirements.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('interest_submissions')
-        .insert({
-          name: sanitizeText(formData.name.trim()),
-          email: formData.email.toLowerCase().trim(),
-          organization: sanitizeText(formData.organization.trim()),
-          reason: sanitizeText(formData.reason.trim()),
-          approved: false, // Explicitly set to false so it shows in admin panel
-        });
-
-      if (error) throw error;
-
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', organization: '', reason: '' });
-      
-      toast({
-        title: "Thank you!",
-        description: "Your interest submission has been received. We'll review it and get back to you soon.",
-      });
-    } catch (error: any) {
-      console.error('Error submitting interest:', error);
-      toast({
-        title: "Submission failed",
-        description: error.message || "Failed to submit your interest. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingWaitlist(true);
@@ -579,17 +423,8 @@ const Index = () => {
       
       {/* Hero Section */}
       <section id="home" className="relative bg-white overflow-hidden">
-        {/* Member Button and Language Selector - Above Logo on Mobile, Top Right on Desktop */}
-        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-between sm:justify-start items-center sm:items-stretch gap-3 px-4 pt-4 sm:pt-0 z-50 relative">
-          {/* Member Button - Left on Mobile */}
-          <Button
-            asChild
-            className="bg-electric-blue hover:bg-electric-blue/90 text-white shadow-lg sm:w-auto"
-          >
-            <Link to="/login">Member</Link>
-          </Button>
-          
-          {/* Language Selector - Right on Mobile */}
+        {/* Language Selector — Member/login button hidden until backend is ready; /login route still works */}
+        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-end items-center gap-3 px-4 pt-4 sm:pt-0 z-50 relative w-full sm:w-auto">
           <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg px-2 py-1 sm:w-auto">
             <Globe className="h-4 w-4 text-gray-700 dark:text-gray-300" />
             <Select value={language} onValueChange={(value) => setLanguage(value as any)}>
@@ -1535,468 +1370,7 @@ const Index = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Evening Event Section — collapsible (collapsed by default on all screens) */}
-            <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
-              <CardHeader
-                className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isEveningEventExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
-                onClick={() => setIsEveningEventExpanded(!isEveningEventExpanded)}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <CardTitle className="text-white text-4xl font-bold">Evening Event</CardTitle>
-                  <ChevronDown
-                    className={`h-6 w-6 text-white transition-transform ${isEveningEventExpanded ? 'rotate-180' : ''}`}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className={`pt-6 ${isEveningEventExpanded ? 'block' : 'hidden'}`}>
-                <div className="text-center mb-6">
-                  <h3 className="text-4xl font-bold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'RedSoxFont, serif' }}>Bleacher Bar at Fenway Park</h3>
-                  <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">7-10 PM April 16th, closed for only the summit attendees</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                    <img 
-                      src="/bleacher-bar-view.png" 
-                      alt="Bleacher Bar view of Fenway Park field" 
-                      className="w-full h-80 object-cover rounded-lg shadow-lg"
-                    />
-                    <img 
-                      src="/bleacher-bar-entry.png" 
-                      alt="Bleacher Bar interior view" 
-                      className="w-full h-80 object-cover rounded-lg shadow-lg"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
-        </div>
-
-        {/* Hotel & Travel — single collapsible (collapsed by default) */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
-            <CardHeader
-              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isHotelTravelExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
-              onClick={() => setIsHotelTravelExpanded(!isHotelTravelExpanded)}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <CardTitle className="text-white text-4xl font-bold">
-                  {getText('hotelsTravelTitle', 'Hotel & Travel')}
-                </CardTitle>
-                <ChevronDown
-                  className={`h-6 w-6 text-white transition-transform ${isHotelTravelExpanded ? 'rotate-180' : ''}`}
-                />
-              </div>
-            </CardHeader>
-            <CardContent className={`pt-6 ${isHotelTravelExpanded ? 'block' : 'hidden'}`}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center md:text-left">
-                    {getText('hotelsTitle', 'Hotel Block')}
-                  </h3>
-                  <div className="space-y-2 text-sm text-gray-900 dark:text-white">
-                    <p><strong>Hotel:</strong> Residence Inn by Marriott Boston Back Bay/Fenway</p>
-                    <p><strong>Rate:</strong> $364 per night</p>
-                    <p><strong>Available dates:</strong> Evening of April 15, April 16, and April 17 only</p>
-                    <p><strong>Guests may reserve:</strong> 1 to 3 nights within these dates</p>
-                    <p className="mt-3">
-                      <strong>Reservation link:</strong>{' '}
-                      <a
-                        href="https://app.marriott.com/reslink?id=1771012154701&key=GRP&app=resvlink"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-electric-blue underline hover:text-electric-blue/80"
-                      >
-                        Book your group rate for Boston University SLxAI Summit 2026 Room Block
-                      </a>
-                    </p>
-                    <p className="text-sm mt-2">
-                      Guests may reserve online using the link above or by calling Marriott Reservations and referencing the SLxAI Summit room block. Reservations may be made or canceled at any time before the cutoff date of Monday, March 16, 2026.
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-600">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Important notes:</p>
-                    <ul className="text-sm text-gray-900 dark:text-white space-y-1">
-                      <li className="flex items-start">
-                        <span className="mr-2">•</span>
-                        <span>Guests are responsible for room rate, taxes, and any incidental charges.</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="mr-2">•</span>
-                        <span>A credit card will be required at the time of reservation and upon check in.</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="mr-2">•</span>
-                        <span>Guests are encouraged to use their Marriott Bonvoy account when booking.</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="mr-2">•</span>
-                        <span>We recommend booking early, as the block is limited and April is a busy month in Boston.</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center md:text-left">
-                    {getText('travelAdviceTitle', 'Travel Advice')}
-                  </h3>
-                  <div className="space-y-3 text-gray-700 dark:text-white text-sm">
-                    <div>
-                      <strong className="text-gray-900 dark:text-white">{getText('byAir', 'By Air:')}</strong>
-                      <ul className="mt-1 ml-4 space-y-1">
-                        <li className="flex items-start">
-                          <span className="text-electric-blue mr-2">•</span>
-                          <span>{getText('airport1', 'Boston Logan International Airport (BOS) - 6 miles from BU. Take the MBTA Silver Line or taxi/Uber (~20-30 minutes)')}</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-electric-blue mr-2">•</span>
-                          <span>{getText('airport2', 'Providence T.F. Green Airport (PVD) - 50 miles from BU. Take commuter rail to Boston South Station, then MBTA Green Line (~1.5 hours)')}</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <strong className="text-gray-900 dark:text-white">{getText('byTrain', 'By Train:')}</strong>
-                      <ul className="mt-1 ml-4 space-y-1">
-                        <li className="flex items-start">
-                          <span className="text-electric-blue mr-2">•</span>
-                          <span>{getText('train1', 'Amtrak - Arrives at Boston South Station or Back Bay Station. Take MBTA Green Line B train to BU stops')}</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-electric-blue mr-2">•</span>
-                          <span>{getText('train2', 'MBTA Commuter Rail - Connects to Boston from surrounding areas. Transfer to Green Line B at various stations')}</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <strong className="text-gray-900 dark:text-white">{getText('publicTransportation', 'Public Transportation:')}</strong>
-                      <p className="mt-1 ml-4">
-                        {getText('publicTransportationText', 'Boston University is accessible via the MBTA Green Line B train. Key stops include: BU Central, BU East, and Blandford Street. The MBTA also offers bus routes throughout the city.')}
-                      </p>
-                    </div>
-                    <div>
-                      <strong className="text-gray-900 dark:text-white">{getText('parking', 'Parking:')}</strong>
-                      <p className="mt-1 ml-4">
-                        {getText('parkingText', 'We are working with BU to secure parking spaces on campus for attendees. Limited parking is available on campus. We recommend using public transportation or ride-sharing services. Street parking is metered and limited.')}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Sponsorship Section - Collapsible on Desktop and Mobile */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
-            <CardHeader 
-              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isSponsorshipExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
-              onClick={() => setIsSponsorshipExpanded(!isSponsorshipExpanded)}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <CardTitle className="text-white text-4xl font-bold">Sponsorship</CardTitle>
-                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isSponsorshipExpanded ? 'rotate-180' : ''}`} />
-              </div>
-            </CardHeader>
-            <CardContent className={`pt-6 ${isSponsorshipExpanded ? 'block' : 'hidden'}`}>
-              <div className="flex flex-col items-center gap-6">
-                <img 
-                  src="/sponsorship-levels.png"
-                  alt="SLxAI Summit 2026 Premium Sponsorship Levels"
-                  className="w-full max-w-5xl h-auto rounded-lg"
-                />
-                <div className="text-center px-4">
-                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">
-                    Interested in becoming a sponsor?
-                  </p>
-                  <p className="text-base text-gray-600 dark:text-gray-400">
-                    Please contact us at{' '}
-                    <a 
-                      href="mailto:Travis@gosign.ai" 
-                      className="text-electric-blue hover:text-electric-blue/80 font-semibold underline"
-                    >
-                      Travis@gosign.ai
-                    </a>
-                    {' '}for more information about sponsorship opportunities.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Interested Companies Section */}
-      <section className="py-4 bg-blue-50 dark:bg-blue-900/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
-            <CardHeader 
-              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isInterestedMembersExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
-              onClick={() => setIsInterestedMembersExpanded(!isInterestedMembersExpanded)}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <CardTitle className="text-white text-4xl font-bold">Organization Members Interested</CardTitle>
-                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isInterestedMembersExpanded ? 'rotate-180' : ''}`} />
-              </div>
-            </CardHeader>
-            <CardContent className={`pt-6 ${isInterestedMembersExpanded ? 'block' : 'hidden'}`}>
-              <InterestedCompanies />
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Membership Section */}
-      <section id="membership" className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden rounded-lg">
-            <CardHeader 
-              className={`bg-electric-blue text-white text-center py-2 cursor-pointer ${isMembershipExpanded ? 'rounded-t-lg' : 'rounded-lg'}`}
-              onClick={() => setIsMembershipExpanded(!isMembershipExpanded)}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <CardTitle className="text-white text-4xl font-bold">{getText('membershipTitle', 'Become a Founding Member')}</CardTitle>
-                <ChevronDown className={`h-6 w-6 text-white transition-transform ${isMembershipExpanded ? 'rotate-180' : ''}`} />
-              </div>
-            </CardHeader>
-            <CardContent className={`pt-6 ${isMembershipExpanded ? 'block' : 'hidden'}`}>
-              <div className="max-w-6xl mx-auto bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
-                <div className="text-center mb-8">
-                  <p className="text-sm text-black">
-                    Join the inaugural group of industry leaders that will establish the SLxAI cooperative nonprofit,<br />
-                    ensuring equal representation in shaping the future of sign language x AI technologies.
-                  </p>
-                </div>
-
-            {/* Founding Member Benefits */}
-            <div className="text-center mb-8 px-4">
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('foundingStatusTitle', 'Founding Status')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                   {getText('foundingStatusText', 'Be recognized as one of the original industry leaders that established the cooperative.')}
-                 </p>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('boardRepresentationTitle', 'Board Representation')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                  {getText('boardRepresentationText', 'Equal voting rights on all cooperative decisions.')}
-                </p>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('industryLeadershipTitle', 'Industry Leadership')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                  {getText('industryLeadershipText', 'Help establish industry standards and ethical guidelines for sign language x AI.')}
-                </p>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('benchmarkingTitle', 'Benchmarking & Standardization')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                  {getText('benchmarkingText', 'Play a key role in establishing benchmarks and standards for avatar and sign language recognition (SLR) technologies, helping to guide the industry toward greater interoperability and quality.')}
-                </p>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('earlyAccessTitle', 'Early Access & Influence')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                  {getText('earlyAccessText', 'Gain early access to new research, datasets, and tools developed by the cooperative. Founding members can pilot and shape upcoming initiatives, ensuring your needs and feedback are prioritized in the development of industry resources.')}
-                </p>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="shadow-none overflow-hidden rounded-lg"
-                style={{
-                  filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                  transform: 'translateY(-2px)'
-                }}
-              >
-                <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                  <CardTitle className="text-base font-bold text-white">{getText('networkTitle', 'Network & Collaboration')}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black">
-                  {getText('networkText', 'Connect with other industry leaders, researchers, and innovators in the sign language x AI space. Build lasting partnerships and collaborate on groundbreaking projects.')}
-                </p>
-                </CardContent>
-              </Card>
-              </div>
-            </div>
-
-            {/* Interest Form */}
-            <div className="max-w-2xl mx-auto pb-8">
-            <Card className="shadow-lg rounded-lg">
-              <CardHeader className="text-center rounded-t-lg">
-                <CardTitle className="text-xl">{getText('interestFormTitle', 'Express Your Interest to Join')}</CardTitle>
-                <p className="text-sm text-gray-600">
-                  {getText('interestFormDescription', 'Fill out the form below to express your organization\'s interest in becoming a founding member of the SLxAI cooperative nonprofit.')}
-                </p>
-              </CardHeader>
-              <CardContent className="rounded-b-lg">
-                {isSubmitted ? (
-                  <div className="text-center py-8">
-                    <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{getText('thankYouTitle', 'Thank You!')}</h3>
-                    <p className="text-gray-600 mb-4">
-                      {getText('thankYouMessage', 'We\'ve received your interest form. Our team will review your submission and get back to you soon.')}
-                    </p>
-                    <Button
-                      onClick={() => setIsSubmitted(false)}
-                      variant="outline"
-                      className="bg-white"
-                    >
-                      Submit Another
-                    </Button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleInterestSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="interest-name" className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-electric-blue" />
-                        {getText('nameLabel', 'Name')}
-                      </Label>
-                      <Input
-                        id="interest-name"
-                        type="text"
-                        placeholder={getText('namePlaceholder', 'Your full name')}
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        disabled={isSubmitting}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="interest-email" className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-electric-blue" />
-                        {getText('emailLabel', 'Email')}
-                      </Label>
-                      <Input
-                        id="interest-email"
-                        type="email"
-                        placeholder={getText('emailPlaceholder', 'your.email@example.com')}
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        required
-                        disabled={isSubmitting}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="interest-organization" className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-electric-blue" />
-                        {getText('organizationLabel', 'Organization')}
-                      </Label>
-                      <Input
-                        id="interest-organization"
-                        type="text"
-                        placeholder={getText('organizationPlaceholder', 'Your organization name')}
-                        value={formData.organization}
-                        onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                        required
-                        disabled={isSubmitting}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="interest-reason" className="flex items-center gap-2">
-                        <FileText className="h-4 w-4 text-electric-blue" />
-                        {getText('reasonLabel', 'Reason for Interest')}
-                      </Label>
-                      <Textarea
-                        id="interest-reason"
-                        placeholder={getText('reasonPlaceholder', 'Tell us why your organization is interested in joining...')}
-                        value={formData.reason}
-                        onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                        required
-                        disabled={isSubmitting}
-                        className="bg-white min-h-[120px]"
-                        maxLength={2000}
-                      />
-                      <p className="text-xs text-gray-500">
-                        {formData.reason.length} / 2000 characters
-                      </p>
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          {getText('submittingButton', 'Submitting...')}
-                        </>
-                      ) : (
-                        getText('submitButton', 'Submit Interest')
-                      )}
-                    </Button>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
-            </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
@@ -2106,13 +1480,6 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="border-t border-gray-200 bg-gray-50 dark:bg-gray-900 py-8 mt-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-600 dark:text-gray-300">
-          <Link to="/bylaws" className="text-electric-blue font-medium hover:underline">
-            Bylaws
-          </Link>
-        </div>
-      </footer>
     </div>
   );
 };

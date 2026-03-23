@@ -75,7 +75,7 @@ export async function listFlagFiles(): Promise<void> {
 }
 
 /**
- * Get flag URL by country code (for InterestedCompanies component)
+ * Get flag URL by country code
  */
 export function getFlagUrlByCode(code: string): string {
   const flagMap: { [key: string]: string } = {

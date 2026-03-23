@@ -33,6 +33,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Interest from "./pages/Interest";
 import Bylaws from "./pages/Bylaws";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { SandboxBanner } from "@/components/SandboxBanner";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const App = () => (
           <TooltipProvider>
           <Toaster />
           <Sonner />
+          <SandboxBanner />
           <BrowserRouter
           future={{
             v7_startTransition: true,
