@@ -205,6 +205,8 @@ const Index = () => {
         submittingButton: 'Submitting...',
         thankYouTitle: 'Thank You!',
         thankYouMessage: 'We\'ve received your interest form. Our team will review your submission and get back to you soon.',
+        navLogin: 'Log in',
+        navMemberPortal: 'Member portal',
       };
 
       const translated: Record<string, string> = {};
@@ -423,8 +425,16 @@ const Index = () => {
       
       {/* Hero Section */}
       <section id="home" className="relative bg-white overflow-hidden">
-        {/* Language Selector — Member/login button hidden until backend is ready; /login route still works */}
-        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-end items-center gap-3 px-4 pt-4 sm:pt-0 z-50 relative w-full sm:w-auto">
+        {/* Language selector + member access */}
+        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-end items-center gap-3 px-4 pt-4 sm:pt-0 z-50 relative w-full sm:w-auto flex-wrap">
+          <div className="flex items-center gap-2 shrink-0">
+            <Button variant="outline" size="sm" className="h-9 border-gray-300 bg-white shadow-sm" asChild>
+              <Link to="/login">{getText('navLogin', 'Log in')}</Link>
+            </Button>
+            <Button size="sm" className="h-9 bg-electric-blue hover:bg-electric-blue/90 text-white shadow-sm" asChild>
+              <Link to="/membership-portal">{getText('navMemberPortal', 'Member portal')}</Link>
+            </Button>
+          </div>
           <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg px-2 py-1 sm:w-auto">
             <Globe className="h-4 w-4 text-gray-700 dark:text-gray-300" />
             <Select value={language} onValueChange={(value) => setLanguage(value as any)}>
