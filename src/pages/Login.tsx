@@ -12,7 +12,7 @@ import { Mail, Lock, User, Building2, Loader2, CheckCircle2, X, MapPin, ChevronD
 import { Checkbox } from '@/components/ui/checkbox';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { setCurrentUser } from '@/lib/auth';
+import { refreshUserSession } from '@/lib/auth';
 import { autoLinkUserToMember } from '@/lib/memberMatching';
 import { isRateLimited, resetRateLimit, getRateLimitResetTime } from '@/lib/rateLimit';
 import { COUNTRIES } from '@/lib/countries';
@@ -114,8 +114,9 @@ export default function Login() {
     }
 
     try {
+      const emailNormalized = loginEmail.toLowerCase().trim();
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
+        email: emailNormalized,
         password: loginPassword,
       });
 
@@ -139,23 +140,13 @@ export default function Login() {
         // Auto-link user to member profile if email matches
         const existingRole = data.user.user_metadata?.role;
         const match = await autoLinkUserToMember(
-          data.user.email || loginEmail,
+          data.user.email || emailNormalized,
           data.user.id,
           existingRole
         );
 
-        // Refresh user data after potential linking
-        const { data: { user: refreshedUser } } = await supabase.auth.getUser();
-
-        // Set current user in auth context
-        setCurrentUser({
-          id: refreshedUser?.id || data.user.id,
-          email: refreshedUser?.email || data.user.email || '',
-          name: refreshedUser?.user_metadata?.name || data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'User',
-          organizationId: refreshedUser?.user_metadata?.organization_id || data.user.user_metadata?.organization_id || '',
-          role: refreshedUser?.user_metadata?.role || data.user.user_metadata?.role || 'member',
-          isVotingRep: refreshedUser?.user_metadata?.is_voting_rep || data.user.user_metadata?.is_voting_rep || false,
-        });
+        // Pull latest JWT + user_metadata from server (org link, role) into auth module
+        await refreshUserSession();
 
         if (match) {
           toast({

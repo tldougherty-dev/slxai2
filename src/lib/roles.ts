@@ -144,3 +144,22 @@ export function canModerate(role: UserRole): boolean {
   return role === 'admin' || role === 'super_admin';
 }
 
+const ROLE_RANK: Record<UserRole, number> = {
+  member: 0,
+  voting_member: 1,
+  admin: 2,
+  super_admin: 3,
+};
+
+/**
+ * When merging auth metadata (e.g. after login + profile link), keep the higher-privilege role
+ * so linking never downgrades admin/super_admin/voting_member to member.
+ */
+export function maxPrivilegeRole(a: string | undefined, b: string | undefined): UserRole {
+  const valid = (r: string | undefined): UserRole =>
+    r === 'voting_member' || r === 'admin' || r === 'super_admin' ? r : 'member';
+  const va = valid(a);
+  const vb = valid(b);
+  return ROLE_RANK[va] >= ROLE_RANK[vb] ? va : vb;
+}
+

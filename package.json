@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "verify-env": "node scripts/verify-env.js",
-    "verify-env:prod": "node scripts/verify-env.js --production"
+    "verify-env:prod": "node scripts/verify-env.js --production",
+    "create-users": "node --env-file=.env create-users.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -1,5 +1,6 @@
 // Member email matching - automatically link users to their member profiles
 import { supabase } from './supabase';
+import { maxPrivilegeRole } from './roles';
 
 export interface MemberMatch {
   memberId: string;
@@ -77,11 +78,9 @@ export async function linkUserToMember(userId: string, match: MemberMatch, exist
       return;
     }
     
-    // Preserve admin role if it exists - never overwrite admin with member
-    const currentRole = currentUser.user_metadata?.role;
-    const preservedRole = currentRole === 'admin' 
-      ? 'admin' 
-      : (existingRole || currentRole || 'member');
+    // Never downgrade role when linking org metadata (admin/super_admin/voting_member vs member)
+    const currentRole = currentUser.user_metadata?.role as string | undefined;
+    const preservedRole = maxPrivilegeRole(currentRole, existingRole);
     
     // Update via user metadata update
     const { error: updateError } = await supabase.auth.updateUser({
@@ -123,6 +122,7 @@ export async function createOrganizationForUser(
     
     // Check if email is confirmed to determine status
     const { data: { user } } = await supabase.auth.getUser();
+    const roleFromSession = user?.user_metadata?.role as string | undefined;
     const isEmailConfirmed = user?.email_confirmed_at !== null;
     const status = isEmailConfirmed ? 'active' : 'pending';
     
@@ -188,7 +188,7 @@ export async function createOrganizationForUser(
       isVotingRep: personData.is_voting_rep || false,
     };
 
-    await linkUserToMember(userId, match, existingRole);
+    await linkUserToMember(userId, match, roleFromSession);
     return match;
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {

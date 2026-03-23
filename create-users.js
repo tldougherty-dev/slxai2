@@ -1,13 +1,11 @@
 // Bulk Create Users Script
-// Run: node create-users.js
-// Make sure to set your SERVICE_ROLE_KEY first!
+// Run: npm run create-users   (loads .env via Node --env-file)
+// Or:  node --env-file=.env create-users.js
 
 const { createClient } = require('@supabase/supabase-js');
 
-// ⚠️ REPLACE THIS WITH YOUR SERVICE ROLE KEY
-// Get it from: Supabase Dashboard → Settings → API → service_role key
 const SUPABASE_URL = 'https://vkeuqauhfjgtcjigiymm.supabase.co';
-const SERVICE_ROLE_KEY = 'YOUR_SERVICE_ROLE_KEY_HERE'; // ⚠️ REPLACE THIS!
+const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
   auth: {
@@ -60,9 +58,9 @@ function generatePassword() {
 }
 
 async function createUsers() {
-  if (SERVICE_ROLE_KEY === 'YOUR_SERVICE_ROLE_KEY_HERE') {
-    console.error('❌ ERROR: Please set your SERVICE_ROLE_KEY in the script!');
-    console.log('Get it from: Supabase Dashboard → Settings → API → service_role key');
+  if (!SERVICE_ROLE_KEY) {
+    console.error('❌ ERROR: Set SUPABASE_SERVICE_ROLE_KEY in .env (server secret, not VITE_).');
+    console.log('Run: npm run create-users');
     process.exit(1);
   }
 
