@@ -1,4 +1,4 @@
-// Email service using Resend via API endpoint
+// Email via serverless API (Amazon SES); see api/send-email.ts
 import { shouldSendEmailNotification, getUnsubscribeUrl } from './notificationPreferences';
 import { getCurrentUser } from './auth';
 
@@ -31,7 +31,9 @@ export async function sendEmail(
   // Check if email service is configured
   if (!isEmailConfigured()) {
     if (import.meta.env.DEV) {
-      console.warn('Email service not configured. Set VITE_RESEND_API_KEY in .env');
+      console.warn(
+        'Email API failed or SES not configured on server (AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY).'
+      );
       console.log('Would send email:', options);
     }
     return false;
@@ -55,7 +57,7 @@ export async function sendEmail(
   }
 
   try {
-    // Call the serverless API endpoint instead of Resend directly
+    // Serverless API uses Amazon SES (see api/send-email.ts)
     const response = await fetch(EMAIL_API_ENDPOINT, {
       method: 'POST',
       headers: {

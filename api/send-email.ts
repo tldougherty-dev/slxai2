@@ -1,23 +1,30 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { Resend } from 'resend';
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 
-// Use server-side environment variable (no VITE_ prefix)
-const resendApiKey = process.env.RESEND_API_KEY || process.env.VITE_RESEND_API_KEY;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
+/** Same region as SES SMTP host email-smtp.us-east-1.amazonaws.com (API uses regional endpoint, not SMTP). */
+const DEFAULT_AWS_REGION = 'us-east-1';
 
-// Default sender email - make sure this domain is verified in Resend Dashboard
-// Update this to your verified domain email once domain is verified in Resend
 const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
-// Enable CORS
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+function getSesClient(): SESClient | null {
+  const region = (process.env.AWS_REGION?.trim() || DEFAULT_AWS_REGION) as string;
+  const accessKeyId = process.env.AWS_ACCESS_KEY_ID?.trim();
+  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY?.trim();
+
+  if (!accessKeyId || !secretAccessKey) {
+    return null;
+  }
+
+  return new SESClient({
+    region,
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
+    },
+  });
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).json({}).end();
   }
@@ -26,76 +33,74 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  // Check if Resend is configured
-  if (!resend || !resendApiKey) {
-    console.error('Resend API key not configured. RESEND_API_KEY:', resendApiKey ? 'Set (hidden)' : 'Not set');
-    return res.status(500).json({ 
+  const client = getSesClient();
+  if (!client) {
+    console.error(
+      'Amazon SES not configured. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY on the server (e.g. Vercel). Optional: AWS_REGION (defaults to us-east-1, same region as email-smtp.us-east-1.amazonaws.com).'
+    );
+    return res.status(500).json({
       error: 'Email service not configured',
-      message: 'RESEND_API_KEY environment variable is not set in Vercel. Please add it in Project Settings → Environment Variables.'
+      message:
+        'Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your host environment (not VITE_*). Region defaults to us-east-1. Verify the sender in Amazon SES.',
     });
   }
 
-  const { to, subject, html, from } = req.body;
+  const { to, subject, html, from } = req.body as {
+    to?: string;
+    subject?: string;
+    html?: string;
+    from?: string;
+  };
 
-  // Validate required fields
   if (!to || !subject || !html) {
     return res.status(400).json({ error: 'Missing required fields: to, subject, html' });
   }
 
-  // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(to)) {
     return res.status(400).json({ error: 'Invalid email address' });
   }
 
+  const fromHeader = (from || DEFAULT_FROM_EMAIL).trim();
+
   try {
-    const fromEmail = from || DEFAULT_FROM_EMAIL;
-    
-    // Log request details (without sensitive data)
-    console.log('Sending email:', {
+    console.log('Sending email via SES:', {
       to,
-      from: fromEmail,
+      from: fromHeader,
       subject,
       htmlLength: html.length,
-      apiKeySet: !!resendApiKey
+      region: process.env.AWS_REGION?.trim() || DEFAULT_AWS_REGION,
     });
 
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: to,
-      subject: subject,
-      html: html,
+    const cmd = new SendEmailCommand({
+      Source: fromHeader,
+      Destination: { ToAddresses: [to] },
+      Message: {
+        Subject: { Data: subject, Charset: 'UTF-8' },
+        Body: { Html: { Data: html, Charset: 'UTF-8' } },
+      },
     });
 
-    if (result.error) {
-      console.error('Resend API error:', JSON.stringify(result.error, null, 2));
-      return res.status(500).json({ 
-        error: 'Failed to send email',
-        details: result.error.message || 'Unknown error',
-        code: result.error.name || 'RESEND_ERROR',
-        statusCode: result.error.statusCode || null,
-        help: result.error.message?.includes('domain') 
-          ? 'Make sure your domain is verified in Resend Dashboard'
-          : 'Check Resend Dashboard for more details'
-      });
-    }
+    const result = await client.send(cmd);
+    console.log('Email sent successfully:', result.MessageId);
 
-    console.log('Email sent successfully:', result.data?.id);
-    return res.status(200).json({ 
+    return res.status(200).json({
       success: true,
-      id: result.data?.id 
+      id: result.MessageId,
     });
-  } catch (error: any) {
-    console.error('Error sending email:', {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
+  } catch (error: unknown) {
+    const err = error as { message?: string; name?: string; stack?: string };
+    console.error('SES error:', {
+      message: err.message,
+      name: err.name,
+      stack: err.stack,
     });
-    return res.status(500).json({ 
+    return res.status(500).json({
       error: 'Failed to send email',
-      details: error.message || 'Unknown error',
-      type: error.constructor?.name || 'Error',
-      help: 'Check Vercel function logs for more details'
+      details: err.message || 'Unknown error',
+      type: err.name || 'Error',
+      help:
+        'Verify the From address and domain in Amazon SES (sandbox: only verified recipients). Check Vercel function logs.',
     });
   }
 }

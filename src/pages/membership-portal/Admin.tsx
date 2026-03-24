@@ -116,14 +116,14 @@ interface InterestSubmission {
   created_at: string;
 }
 
-// Email sending function using Resend
+// Email via /api/send-email (Amazon SES on server)
 import { sendApprovalEmail as sendApprovalEmailService } from '@/lib/email';
 
 async function sendApprovalEmail(email: string, name: string, signupUrl: string, passcode: string, userId?: string): Promise<void> {
   try {
     const success = await sendApprovalEmailService(email, name, signupUrl, passcode, userId);
     if (!success && import.meta.env.DEV) {
-      console.warn('Email sending failed. Check Resend API key configuration.');
+      console.warn('Email sending failed. Check Amazon SES env vars on the server (Vercel).');
     }
   } catch (error) {
     if (import.meta.env.DEV) {
