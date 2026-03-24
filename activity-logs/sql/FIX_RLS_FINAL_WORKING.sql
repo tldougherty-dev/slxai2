@@ -29,7 +29,7 @@ SELECT
   EXISTS (
     SELECT 1
     FROM auth.users
-    WHERE email = 'travis@gosign.ai'
+    WHERE email = 'travis@signapse.ai'
     AND raw_user_meta_data->>'organization_id' IS NOT NULL
     AND (raw_user_meta_data->>'organization_id')::uuid = 'f482d7bd-ec1c-4d7f-a9c9-ae9aa5d9d948'::uuid
   ) as should_allow;

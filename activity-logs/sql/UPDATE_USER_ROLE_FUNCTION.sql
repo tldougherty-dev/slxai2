@@ -64,7 +64,7 @@ GRANT EXECUTE ON FUNCTION update_user_role(TEXT, TEXT) TO authenticated;
 -- This is normal! The function still works correctly.
 -- 
 -- Test query:
--- SELECT update_user_role('travis@gosign.ai', 'super_admin');
+-- SELECT update_user_role('travis@signapse.ai', 'super_admin');
 --
 -- Expected result (wrapped in array - this is normal!):
 -- [
@@ -81,5 +81,5 @@ GRANT EXECUTE ON FUNCTION update_user_role(TEXT, TEXT) TO authenticated;
 -- To verify the role was actually updated, run:
 -- SELECT email, raw_user_meta_data->>'role' as role 
 -- FROM auth.users 
--- WHERE email = 'travis@gosign.ai';
+-- WHERE email = 'travis@signapse.ai';
 

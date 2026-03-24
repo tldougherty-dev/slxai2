@@ -74,15 +74,34 @@ const DEFAULT_PREFERENCES: Omit<NotificationPreferences, 'userId' | 'email'> = {
   emailFrequency: 'immediate',
 };
 
+/**
+ * Resolve who preferences belong to. If `email` is passed without `userId`, look up by
+ * recipient email only — do not fall back to the current session user (fixes bulk emails).
+ */
+function resolvePreferenceTarget(
+  userId?: string,
+  email?: string
+): { targetUserId?: string; targetEmail?: string } {
+  const user = getCurrentUser();
+  const u = userId?.trim();
+  const e = email?.trim().toLowerCase();
+
+  if (u) {
+    return { targetUserId: u, targetEmail: e || user?.email?.toLowerCase() };
+  }
+  if (e) {
+    return { targetUserId: undefined, targetEmail: e };
+  }
+  return { targetUserId: user?.id, targetEmail: user?.email?.toLowerCase() };
+}
+
 // Get user's notification preferences
 export async function getNotificationPreferences(
   userId?: string,
   email?: string
 ): Promise<NotificationPreferences | null> {
   try {
-    const user = getCurrentUser();
-    const targetUserId = userId || user?.id;
-    const targetEmail = email || user?.email;
+    const { targetUserId, targetEmail } = resolvePreferenceTarget(userId, email);
 
     if (!targetUserId && !targetEmail) {
       return null;
@@ -127,14 +146,12 @@ export async function getOrCreateNotificationPreferences(
     return existing;
   }
 
-  const user = getCurrentUser();
-  const targetUserId = userId || user?.id || '';
-  const targetEmail = email || user?.email || '';
+  const { targetUserId, targetEmail } = resolvePreferenceTarget(userId, email);
 
   return {
     ...DEFAULT_PREFERENCES,
-    userId: targetUserId,
-    email: targetEmail,
+    userId: targetUserId || '',
+    email: targetEmail || '',
   };
 }
 

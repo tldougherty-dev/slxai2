@@ -1,12 +1,18 @@
 // Email via serverless API (Amazon SES); see api/send-email.ts
 import { shouldSendEmailNotification, getUnsubscribeUrl } from './notificationPreferences';
-import { getCurrentUser } from './auth';
 
 // Default sender email (update with your verified domain)
 const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
-// API endpoint for sending emails (serverless function)
-const EMAIL_API_ENDPOINT = '/api/send-email';
+// Serverless email route. Use VITE_EMAIL_API_URL (e.g. https://your-app.vercel.app) in local dev
+// when Vite cannot run /api — otherwise same-origin /api/send-email.
+function getEmailApiUrl(): string {
+  const base = (import.meta.env.VITE_EMAIL_API_URL as string | undefined)?.replace(/\/$/, '');
+  if (base) {
+    return `${base}/api/send-email`;
+  }
+  return '/api/send-email';
+}
 
 // Check if email service is configured
 export function isEmailConfigured(): boolean {
@@ -39,12 +45,11 @@ export async function sendEmail(
     return false;
   }
 
-  // Check notification preferences if type is provided
+  // Check notification preferences for the recipient (options.to), not the current user
   if (notificationType) {
-    const user = getCurrentUser();
     const shouldSend = await shouldSendEmailNotification(
       notificationType,
-      options.userId || user?.id,
+      options.userId,
       options.to
     );
 
@@ -58,7 +63,7 @@ export async function sendEmail(
 
   try {
     // Serverless API uses Amazon SES (see api/send-email.ts)
-    const response = await fetch(EMAIL_API_ENDPOINT, {
+    const response = await fetch(getEmailApiUrl(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,9 +78,7 @@ export async function sendEmail(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      if (import.meta.env.DEV) {
-        console.error('Email API error:', errorData);
-      }
+      console.error('Email API error:', response.status, errorData);
       return false;
     }
 
@@ -86,9 +89,7 @@ export async function sendEmail(
 
     return result.success === true;
   } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('Error sending email:', error);
-    }
+    console.error('Error sending email:', error);
     return false;
   }
 }

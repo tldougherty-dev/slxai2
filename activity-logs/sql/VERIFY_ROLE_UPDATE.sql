@@ -10,5 +10,5 @@ SELECT
     ELSE '❌ NOT ADMIN'
   END as status
 FROM auth.users
-WHERE email = 'travis@gosign.ai';
+WHERE email = 'travis@signapse.ai';
 
