@@ -34,7 +34,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '8:50 AM to 9:00 AM',
         sessionType: 'Keynote',
         title: 'Opening Remarks From Boston University',
-        presenters: 'Azer Bestavros, Yannis Paschalidis, Naomi Caselli, Andrew Bottoms',
+        presenters: 'Azer Bestavros, Yannis Paschalidis, Dr. Naomi Caselli, Andrew Bottoms',
       },
       {
         time: '9:00 AM to 9:15 AM',
@@ -43,16 +43,16 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Ryan Hait Campbell, Convo',
         workshopSlug: 'keynote-breaking-communication-barriers',
       },
-      { time: '9:15 AM to 9:20 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '9:15 AM to 9:20 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '9:20 AM to 10:05 AM',
         sessionType: 'Panel',
         title: 'Ethics: Where Does It Stop?',
         presenters:
-          'Dr. Abraham Glasser, Adam Munder, Thomas Horejes, Dr. Maartje De Meulder, Naomi Caselli',
+          'Dr. Abraham Glasser, Adam Munder, Thomas Horejes, Dr. Maartje De Meulder, Dr. Naomi Caselli',
         workshopSlug: 'ethics-where-does-it-stop',
       },
-      { time: '10:05 AM to 10:15 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '10:05 AM to 10:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '10:15 AM to 11:05 AM',
         sessionType: 'Panel',
@@ -61,7 +61,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
           'Dr. Abraham Glasser, Tim Riker, Stephanie Kent, Celena Ponce, Jeff Shaul',
         workshopSlug: 'coset-safe-ai-communication-success',
       },
-      { time: '11:05 AM to 11:15 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '11:05 AM to 11:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '11:15 AM to 12:00 PM',
         sessionType: 'Session',
@@ -83,7 +83,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Dr. Melissa Smith, ASL Flurry',
         workshopSlug: 'trust-and-accountability-sign-language-ai',
       },
-      { time: '1:40 PM to 1:50 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '1:40 PM to 1:50 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '1:50 PM to 2:30 PM',
         sessionType: 'Session',
@@ -91,7 +91,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Craig Radford, Brandon Dopf',
         workshopSlug: 'human-ai-collaboration-sign-language-technology',
       },
-      { time: '2:30 PM to 2:40 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '2:30 PM to 2:40 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '2:40 PM to 3:10 PM',
         sessionType: 'Session',
@@ -106,7 +106,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Emanuele Chiusaroli',
         workshopSlug: 'beyond-gloss-framework-sign-language-data',
       },
-      { time: '3:40 PM to 3:50 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '3:40 PM to 3:50 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '3:50 PM to 4:20 PM',
         sessionType: 'Session',
@@ -121,7 +121,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Sławek Łuczywek, Ashod Derandonyan, Michał Plaza',
         workshopSlug: 'better-world-technology-shaped-by-deaf',
       },
-      { time: '4:50 PM to 5:00 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '4:50 PM to 5:00 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '5:00 PM to 5:20 PM',
         sessionType: 'Session',
@@ -142,7 +142,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Brian Birnbaum, Daniel Sommer',
         workshopSlug: 'lessons-dataset-creation-sustainable-sl-ai',
       },
-      { time: '9:30 AM to 9:40 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '9:30 AM to 9:40 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '9:40 AM to 10:25 AM',
         sessionType: 'Session',
@@ -150,7 +150,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Pamela Macias, University of Colorado',
         workshopSlug: 'research-data-collection-partnerships',
       },
-      { time: '10:25 AM to 10:35 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '10:25 AM to 10:35 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '10:35 AM to 11:10 AM',
         sessionType: 'Session',
@@ -159,7 +159,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
           'Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, Shelley Oishi, TWA Innovations',
         workshopSlug: 'asl-ai-authority-deaf-experts',
       },
-      { time: '11:10 AM to 11:20 AM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '11:10 AM to 11:20 AM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '11:30 AM to 12:00 PM',
         sessionType: 'Session',
@@ -180,7 +180,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Noreen Wilson, Molly Glass, Yeh Kim, Kara Technologies',
         workshopSlug: 'intentional-design-sl-translation-hybrid',
       },
-      { time: '1:50 PM to 2:00 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '1:50 PM to 2:00 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '2:00 PM to 2:50 PM',
         sessionType: 'Session',
@@ -189,7 +189,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
           'Dr. Lee Kezar, Lorna Quandt, Athena Willis, Laurel Aichler, Gallaudet University',
         workshopSlug: 'learning-with-signers-educational-slxai',
       },
-      { time: '2:50 PM to 3:00 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '2:50 PM to 3:00 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '3:00 PM to 3:30 PM',
         sessionType: 'Session',
@@ -204,7 +204,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Dr. Joseph J. Murray, World Federation of the Deaf',
         workshopSlug: 'sign-language-ai-international-policy',
       },
-      { time: '4:00 PM to 4:10 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '4:00 PM to 4:10 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '4:10 PM to 4:40 PM',
         sessionType: 'Session',
@@ -212,7 +212,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         presenters: 'Travis Dougherty, Suzy Rosen Singleton',
         workshopSlug: 'fireside-chat-fcc',
       },
-      { time: '4:40 PM to 4:45 PM', sessionType: 'Break', title: 'Break', presenters: '—' },
+      { time: '4:40 PM to 4:45 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '4:45 PM to 4:55 PM',
         sessionType: 'Closing',

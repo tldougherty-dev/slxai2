@@ -1,3 +1,4 @@
+import '@/styles/programBook2026.css';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Globe, Home } from 'lucide-react';
@@ -70,7 +71,8 @@ export function ProgramBook2026Shell({
         dateValue: 'April 16-17, 2026',
         conferenceHours: 'Conference Hours:',
         conferenceHoursValue: '8:45 AM – 5:10 PM (see schedule below)',
-        scheduleTitle: 'SLxAI Summit Schedule — April 16–17, 2026',
+        scheduleTitle: 'SLxAI Summit Schedule',
+        scheduleDateLine: 'April 16 to 17, 2026',
         locationTitle: 'Location',
         venue: 'Venue:',
         venueValue: 'Boston University',
@@ -82,7 +84,7 @@ export function ProgramBook2026Shell({
           'SLxAI Summit 2026 brings global researchers, companies, and Deaf led innovators together at Boston University. The summit focuses on the future of sign language AI, ethical design, multilingual access, and collaboration across the international ecosystem.',
         hostTitle: 'Host',
         hostText:
-          'The summit is held at Boston University. The Deaf Center at BU, directed by Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
+          'The summit is held at Boston University. The Deaf Center at BU, directed by Dr. Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
         programFormatTitle: 'Program Format',
         programFormatText:
           'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.',
@@ -113,7 +115,7 @@ export function ProgramBook2026Shell({
 
   return (
     <ProgramBook2026GetTextContext.Provider value={getText}>
-    <div className="min-h-screen bg-white" id="main-content" role="main">
+    <div className="program-book-2026 min-h-screen bg-white" id="main-content" role="main">
       <header
         id="program-book-hero"
         className="sticky top-0 z-[100] flex w-full items-center justify-between gap-3 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur-sm supports-[backdrop-filter]:bg-white/90"

@@ -558,12 +558,12 @@ export const members: Member[] = [
     id: '42',
     organizationName: 'Deaf Studies at Boston University',
     country: 'United States of America',
-    pocName: 'Naomi Caselli',
+    pocName: 'Dr. Naomi Caselli',
     pocEmail: 'nkc@bu.edu',
     pocTitle: 'Voting Representative',
     memberCount: 1,
     members: [
-      { id: '42-1', name: 'Naomi Caselli', email: 'nkc@bu.edu', isVotingRep: true }
+      { id: '42-1', name: 'Dr. Naomi Caselli', email: 'nkc@bu.edu', isVotingRep: true }
     ]
   },
   {

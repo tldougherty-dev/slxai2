@@ -515,7 +515,7 @@ export default function Summit2026() {
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Host</h3>
                   <p>
-                    The summit is held at Boston University. The Deaf Center at BU, directed by Naomi Caselli, supports research 
+                    The summit is held at Boston University. The Deaf Center at BU, directed by Dr. Naomi Caselli, supports research 
                     in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and 
                     strengthens the summit with its academic and community expertise.
                   </p>

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
 import { presenterCreditWithItalicOrgs } from '@/components/summit2026/summit2026PresenterCredit';
 import type { Summit2026Workshop } from '@/data/summit2026Workshops';
 
@@ -10,21 +9,22 @@ type Props = {
 };
 
 const cardClassName =
-  'block rounded-lg border-2 border-electric-blue bg-white p-4 shadow-lg';
+  'block rounded-lg border-2 border-electric-blue bg-white p-3 shadow-lg sm:p-4';
 
 export function WorkshopSessionCard({ session, linkToProgramBook = true }: Props) {
   const creditLine = presenterCreditWithItalicOrgs(session, { stripLeadingLabels: !linkToProgramBook });
 
   const inner = (
     <>
-      <h4 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">{session.sessionTitle}</h4>
-      <p className="mb-2 text-base text-gray-700 dark:text-gray-300">{creditLine}</p>
-      <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-400">{session.summary}</p>
+      <h4 className="mb-1.5 text-lg font-bold leading-snug text-gray-900 dark:text-white sm:text-xl">
+        {session.sessionTitle}
+      </h4>
+      <p className="mb-2 text-sm leading-snug text-gray-700 dark:text-gray-300 sm:text-base">{creditLine}</p>
+      <p className="text-sm leading-snug text-gray-600 dark:text-gray-400 max-md:line-clamp-none md:line-clamp-3">
+        {session.summary}
+      </p>
       {linkToProgramBook ? (
-        <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-electric-blue">
-          Full details
-          <ChevronRight className="h-4 w-4" aria-hidden />
-        </span>
+        <span className="mt-3 hidden text-sm font-medium text-electric-blue md:block">Full details</span>
       ) : null}
     </>
   );
@@ -36,7 +36,8 @@ export function WorkshopSessionCard({ session, linkToProgramBook = true }: Props
   return (
     <Link
       to={`/2026/workshop/${session.slug}`}
-      className={`${cardClassName} transition-colors hover:bg-blue-50/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-blue`}
+      aria-label={`${session.sessionTitle}, full workshop details`}
+      className={`${cardClassName} touch-manipulation transition-colors hover:bg-blue-50/90 active:bg-blue-100/80 max-md:shadow-md max-md:active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-blue`}
     >
       {inner}
     </Link>

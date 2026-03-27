@@ -7,7 +7,14 @@ import { ProgramBook2026Shell, useProgramBook2026GetText } from '@/components/su
  */
 function ProgramBook2026Inner() {
   const getText = useProgramBook2026GetText();
-  return <Summit2026ProgramBookContent getText={getText} hideSoldOut showProgramBookSubtitle />;
+  return (
+    <Summit2026ProgramBookContent
+      getText={getText}
+      hideSoldOut
+      showProgramBookSubtitle
+      showWorkshopsAndPanels={false}
+    />
+  );
 }
 
 const ProgramBook2026 = () => (

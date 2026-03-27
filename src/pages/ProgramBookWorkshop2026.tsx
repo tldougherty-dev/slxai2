@@ -16,7 +16,7 @@ function WorkshopDetailBody({ workshop }: { workshop: Summit2026Workshop }) {
   const verbatimRaw = getVerbatimRawForSlug(workshop.slug);
 
   return (
-    <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+    <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 max-md:px-3 max-md:py-5">
       <div className="overflow-hidden rounded-lg border-2 border-electric-blue shadow-xl">
         <div className="bg-electric-blue px-4 py-4 text-center sm:px-6 sm:py-5">
           <h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl md:text-4xl">
@@ -27,25 +27,25 @@ function WorkshopDetailBody({ workshop }: { workshop: Summit2026Workshop }) {
           <div
             className={
               scheduleSlot
-                ? 'flex flex-col items-center gap-2 text-center sm:flex-row sm:items-start sm:justify-center sm:gap-4 sm:text-left'
+                ? 'flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:justify-center md:gap-4 md:text-left'
                 : 'text-center'
             }
           >
             {scheduleSlot ? (
-              <div className="flex shrink-0 flex-wrap items-center justify-center gap-0 sm:justify-start sm:pt-0.5">
-                <span className="text-xl font-semibold text-electric-blue sm:text-2xl">
+              <div className="flex w-full shrink-0 flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:flex-wrap md:items-start md:justify-center md:gap-0">
+                <span className="text-center text-xl font-semibold text-electric-blue sm:text-2xl md:text-left">
                   {scheduleSlot.dayDate
                     ? `${scheduleSlot.dayLabel} — ${scheduleSlot.dayDate}`
                     : scheduleSlot.dayLabel}
                 </span>
-                <span className="ml-4 border-l border-gray-200 pl-4 text-xl font-semibold leading-snug text-electric-blue sm:text-2xl">
+                <span className="w-full border-t border-gray-200 pt-2 text-center text-xl font-semibold leading-snug text-electric-blue sm:text-2xl md:w-auto md:border-l md:border-t-0 md:pl-4 md:pt-0 md:text-left">
                   {scheduleSlot.time}
                 </span>
               </div>
             ) : null}
             <p
               className={`text-base leading-relaxed text-gray-800 ${
-                scheduleSlot ? 'min-w-0 sm:flex-1 sm:border-l sm:border-gray-200 sm:pl-4' : ''
+                scheduleSlot ? 'min-w-0 w-full md:flex-1 md:border-l md:border-gray-200 md:pl-4' : ''
               }`}
             >
               {presenterCreditWithItalicOrgs(workshop)}

@@ -116,7 +116,8 @@ const Index = () => {
         dateValue: 'April 16-17, 2026',
         conferenceHours: 'Conference Hours:',
         conferenceHoursValue: '8:45 AM – 5:10 PM',
-        scheduleTitle: 'SLxAI Summit Schedule — April 16–17, 2026',
+        scheduleTitle: 'SLxAI Summit Schedule',
+        scheduleDateLine: 'April 16 to 17, 2026',
         eveningEvents: 'Evening Events:',
         eveningEventsValue: 'Evening events on both nights',
         preConference: 'Pre-Conference:',
@@ -133,7 +134,7 @@ const Index = () => {
         overviewTitle: 'SLxAI Summit 2026 Overview',
         overviewText: 'SLxAI Summit 2026 brings global researchers, companies, and Deaf led innovators together at Boston University. The summit focuses on the future of sign language AI, ethical design, multilingual access, and collaboration across the international ecosystem.',
         hostTitle: 'Host',
-        hostText: 'The summit is held at Boston University. The Deaf Center at BU, directed by Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
+        hostText: 'The summit is held at Boston University. The Deaf Center at BU, directed by Dr. Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
         programFormatTitle: 'Program Format',
         programFormatText: 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.',
         focusAreasTitle: 'Focus Areas:',
@@ -471,56 +472,59 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-4 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="bg-white py-3 sm:py-4">
+        <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           {/* Mission, Vision, Goals */}
-          <div className="grid md:grid-cols-3 gap-6 mb-2">
-            <Card 
-              className="shadow-none overflow-hidden rounded-lg"
+          <div className="mb-2 grid gap-3 md:grid-cols-3 md:gap-6">
+            <Card
+              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                <CardTitle className="text-3xl font-bold text-white">{getText('missionTitle', 'Mission')}</CardTitle>
+              <CardHeader className="rounded-t-lg bg-electric-blue px-3 py-2 text-center text-white sm:px-4 sm:py-1.5">
+                <CardTitle className="text-xl font-bold leading-tight text-white md:text-2xl lg:text-3xl">
+                  {getText('missionTitle', 'Mission')}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black text-center">
+              <CardContent className="rounded-b-lg px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+                <p className="text-left text-[13px] leading-snug text-black sm:text-center sm:text-sm sm:leading-relaxed">
                   {getText('missionText', 'To unite industry leaders through a cooperative nonprofit structure, establishing ethical standards and driving innovation in sign language x AI technologies through equal representation and collaborative decision-making.')}
                 </p>
               </CardContent>
             </Card>
 
-            <Card 
-              className="shadow-none overflow-hidden rounded-lg"
+            <Card
+              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                <CardTitle className="text-3xl font-bold text-white">{getText('visionTitle', 'Vision')}</CardTitle>
+              <CardHeader className="rounded-t-lg bg-electric-blue px-3 py-2 text-center text-white sm:px-4 sm:py-1.5">
+                <CardTitle className="text-xl font-bold leading-tight text-white md:text-2xl lg:text-3xl">
+                  {getText('visionTitle', 'Vision')}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="pt-4 rounded-b-lg">
-                <p className="text-sm text-black text-center">
+              <CardContent className="rounded-b-lg px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+                <p className="text-left text-[13px] leading-snug text-black sm:text-center sm:text-sm sm:leading-relaxed">
                   {getText('visionText', 'A world where sign language x AI technologies are developed through industry-wide collaboration, with each company having an equal voice in shaping the future of accessible technology.')}
                 </p>
               </CardContent>
             </Card>
 
-            <Card 
-              className="shadow-none overflow-hidden rounded-lg"
+            <Card
+              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-                transform: 'translateY(-2px)'
               }}
             >
-              <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-                <CardTitle className="text-3xl font-bold text-white">{getText('goalsTitle', 'Goals')}</CardTitle>
+              <CardHeader className="rounded-t-lg bg-electric-blue px-3 py-2 text-center text-white sm:px-4 sm:py-1.5">
+                <CardTitle className="text-xl font-bold leading-tight text-white md:text-2xl lg:text-3xl">
+                  {getText('goalsTitle', 'Goals')}
+                </CardTitle>
               </CardHeader>
-              <CardContent className="pt-4 rounded-b-lg">
-                <ul className="text-sm text-black space-y-1">
+              <CardContent className="rounded-b-lg px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+                <ul className="space-y-1.5 text-left text-[13px] leading-snug text-black sm:text-sm sm:leading-normal">
                   <li>• {getText('goal1', 'Establish cooperative nonprofit structure')}</li>
                   <li>• {getText('goal2', 'Create industry-wide ethical standards')}</li>
                   <li>• {getText('goal3', 'Foster collaborative innovation')}</li>
@@ -533,36 +537,36 @@ const Index = () => {
           {/* Bylaws — same card style as Mission / Vision / Goals */}
           <Card
             id="bylaws"
-            className="shadow-none overflow-hidden rounded-lg mt-6"
+            className="mt-4 translate-y-0 overflow-hidden rounded-lg shadow-none sm:mt-6 md:-translate-y-0.5"
             style={{
               filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
-              transform: 'translateY(-2px)'
             }}
           >
-            <CardHeader className="bg-electric-blue text-white text-center py-1 rounded-t-lg">
-              <CardTitle className="text-3xl font-bold text-white">
+            <CardHeader className="rounded-t-lg bg-electric-blue px-3 py-2 text-center text-white sm:px-4 sm:py-1.5">
+              <CardTitle className="text-xl font-bold leading-tight text-white md:text-2xl lg:text-3xl">
                 {getText('bylawsSectionTitle', 'Bylaws')}
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4 sm:pt-5 rounded-b-lg px-4 sm:px-6 pb-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:items-start">
-                <p className="text-sm text-black text-left leading-relaxed">
+            <CardContent className="rounded-b-lg px-3 pb-4 pt-3 sm:px-6 sm:pb-6 sm:pt-5">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-start md:gap-8">
+                <p className="text-left text-[13px] leading-snug text-black sm:text-sm sm:leading-relaxed">
                   {getText(
                     'bylawsSectionBody',
                     "The SLxAI Bylaws Committee has spent the past two months collaboratively developing the organization's founding bylaws. The draft is now ready for community review. We invite members and stakeholders to provide feedback before the bylaws are formally adopted at the end of the SLxAI Summit on April 17, 2026."
                   )}
                 </p>
-                <div className="flex justify-center min-h-0 w-full">
-                  <div className="grid grid-cols-1 gap-4 w-max max-w-full justify-items-stretch">
-                    <p className="text-sm text-black leading-relaxed text-center">
+                <div className="flex min-h-0 w-full justify-center">
+                  <div className="grid w-full max-w-full grid-cols-1 justify-items-stretch gap-3 sm:gap-4 md:w-max">
+                    <p className="text-center text-[13px] leading-snug text-black sm:text-sm sm:leading-relaxed">
                       {getText('bylawsSectionLinkLead', 'Review the draft and share your input here:')}
                     </p>
                     <Button
                       asChild
-                      className="bg-electric-blue hover:bg-electric-blue/90 text-white shadow-lg inline-flex items-center justify-center gap-2 w-full min-w-0"
+                      size="sm"
+                      className="h-auto min-h-10 bg-electric-blue px-3 py-2.5 text-sm hover:bg-electric-blue/90 sm:min-h-11 sm:px-4 sm:text-base"
                     >
-                      <Link to="/bylaws">
-                        {getText('bylawsSectionLinkText', 'View draft bylaws & feedback')}
+                      <Link to="/bylaws" className="inline-flex w-full min-w-0 items-center justify-center gap-2">
+                        <span className="text-balance text-center">{getText('bylawsSectionLinkText', 'View draft bylaws & feedback')}</span>
                         <FileText className="h-4 w-4 shrink-0" />
                       </Link>
                     </Button>
@@ -571,7 +575,6 @@ const Index = () => {
               </div>
             </CardContent>
           </Card>
-
         </div>
       </section>
 
