@@ -1,5 +1,6 @@
 import { CosetWorkshopProgramSections } from '@/components/summit2026/CosetWorkshopProgramSections';
 import { GenericWorkshopProgramSections } from '@/components/summit2026/GenericWorkshopProgramSections';
+import { presenterCreditWithItalicOrgs } from '@/components/summit2026/summit2026PresenterCredit';
 import { ProgramBook2026Shell, useProgramBook2026GetText } from '@/components/summit2026/ProgramBook2026Shell';
 import { COSET_SAFE_AI_WORKSHOP_SLUG } from '@/data/summit2026WorkshopCosetRich';
 import { getVerbatimRawForSlug } from '@/data/summit2026WorkshopVerbatim';
@@ -32,7 +33,11 @@ function WorkshopDetailBody({ workshop }: { workshop: Summit2026Workshop }) {
           >
             {scheduleSlot ? (
               <div className="flex shrink-0 flex-wrap items-center justify-center gap-0 sm:justify-start sm:pt-0.5">
-                <span className="text-xl font-semibold text-electric-blue sm:text-2xl">{scheduleSlot.dayLabel}</span>
+                <span className="text-xl font-semibold text-electric-blue sm:text-2xl">
+                  {scheduleSlot.dayDate
+                    ? `${scheduleSlot.dayLabel} — ${scheduleSlot.dayDate}`
+                    : scheduleSlot.dayLabel}
+                </span>
                 <span className="ml-4 border-l border-gray-200 pl-4 text-xl font-semibold leading-snug text-electric-blue sm:text-2xl">
                   {scheduleSlot.time}
                 </span>
@@ -43,7 +48,7 @@ function WorkshopDetailBody({ workshop }: { workshop: Summit2026Workshop }) {
                 scheduleSlot ? 'min-w-0 sm:flex-1 sm:border-l sm:border-gray-200 sm:pl-4' : ''
               }`}
             >
-              {workshop.presentersLine}
+              {presenterCreditWithItalicOrgs(workshop)}
             </p>
           </div>
         </div>

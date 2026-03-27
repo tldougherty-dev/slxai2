@@ -115,8 +115,8 @@ const Index = () => {
         date: 'Date:',
         dateValue: 'April 16-17, 2026',
         conferenceHours: 'Conference Hours:',
-        conferenceHoursValue: '8:45 AM – 5:10 PM (see schedule below)',
-        scheduleTitle: 'Summit schedule',
+        conferenceHoursValue: '8:45 AM – 5:10 PM',
+        scheduleTitle: 'SLxAI Summit Schedule — April 16–17, 2026',
         eveningEvents: 'Evening Events:',
         eveningEventsValue: 'Evening events on both nights',
         preConference: 'Pre-Conference:',
@@ -575,7 +575,12 @@ const Index = () => {
         </div>
       </section>
 
-      <Summit2026ProgramBookContent getText={getText} />
+      <Summit2026ProgramBookContent
+        getText={getText}
+        showSchedule={false}
+        showLandingBuHeroImage
+        linkWorkshopCardsToProgramBook={false}
+      />
 
       {/* Waitlist — bottom of page */}
       <section id="waitlist" className="py-10 bg-gray-50 dark:bg-gray-900">

@@ -14,12 +14,15 @@ export type SummitScheduleRow = {
 
 export type SummitScheduleDay = {
   dayLabel: string;
+  /** Shown after the day label in the program book schedule table, e.g. April 16, 2026 */
+  dayDate?: string;
   rows: SummitScheduleRow[];
 };
 
 export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
   {
     dayLabel: 'Day 1',
+    dayDate: 'April 16, 2026',
     rows: [
       {
         time: '8:45 AM to 8:50 AM',
@@ -130,6 +133,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
   },
   {
     dayLabel: 'Day 2',
+    dayDate: 'April 17, 2026',
     rows: [
       {
         time: '8:45 AM to 9:30 AM',
@@ -225,14 +229,14 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
   },
 ];
 
-/** Day label and time range for a session that appears in the published schedule with a workshop link. */
+/** Day label, optional calendar date, and time range for a session linked from the published schedule. */
 export function getWorkshopScheduleSlotForSlug(
   slug: string,
-): { dayLabel: string; time: string } | undefined {
+): { dayLabel: string; time: string; dayDate?: string } | undefined {
   for (const day of SUMMIT_2026_SCHEDULE) {
     for (const row of day.rows) {
       if (row.workshopSlug === slug) {
-        return { dayLabel: day.dayLabel, time: row.time };
+        return { dayLabel: day.dayLabel, time: row.time, dayDate: day.dayDate };
       }
     }
   }

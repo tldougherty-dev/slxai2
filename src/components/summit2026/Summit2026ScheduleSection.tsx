@@ -1,5 +1,7 @@
-import { SUMMIT_2026_SCHEDULE } from '@/data/summit2026Schedule';
+import { SUMMIT_2026_SCHEDULE, type SummitScheduleRow } from '@/data/summit2026Schedule';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
+import { presenterCreditWithItalicOrgs } from '@/components/summit2026/summit2026PresenterCredit';
+import { getSummit2026WorkshopBySlug } from '@/data/summit2026Workshops';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -7,23 +9,35 @@ type Props = {
   getText: Summit2026ProgramBookGetText;
 };
 
+function SchedulePresenterAffiliationCell({ row }: { row: SummitScheduleRow }) {
+  if (!row.workshopSlug) {
+    return <span className="whitespace-pre-line">{row.presenters}</span>;
+  }
+  const workshop = getSummit2026WorkshopBySlug(row.workshopSlug);
+  if (!workshop) {
+    return <span className="whitespace-pre-line">{row.presenters}</span>;
+  }
+  return (
+    <span className="whitespace-pre-line">
+      {presenterCreditWithItalicOrgs(workshop, { stripLeadingLabels: true })}
+    </span>
+  );
+}
+
 export function Summit2026ScheduleSection({ getText }: Props) {
   return (
     <div className="mb-8 w-full md:col-span-2">
       <div className="overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl">
-        <div className="bg-electric-blue py-2 text-center">
-          <h3 className="text-xl font-bold text-white sm:text-2xl">
-            {getText('scheduleTitle', 'Summit schedule')}
+        <div className="bg-electric-blue py-3 text-center sm:py-4">
+          <h3 className="px-2 text-lg font-bold leading-snug text-white sm:text-xl md:text-2xl">
+            {getText('scheduleTitle', 'SLxAI Summit Schedule — April 16–17, 2026')}
           </h3>
-          <p className="mt-1 px-2 text-sm text-white/90 sm:text-base">
-            Final SLxAI Summit Schedule — April 16–17, 2026
-          </p>
         </div>
         <div className="space-y-8 p-4 sm:p-6">
           {SUMMIT_2026_SCHEDULE.map((day) => (
             <div key={day.dayLabel}>
               <h4 className="mb-3 border-b border-electric-blue/30 pb-2 text-xl font-bold text-electric-blue sm:text-2xl">
-                {day.dayLabel}
+                {day.dayDate ? `${day.dayLabel} — ${day.dayDate}` : day.dayLabel}
               </h4>
               <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
                 <table className="min-w-[560px] w-full border-collapse text-left text-lg text-gray-900 sm:text-xl">
@@ -77,7 +91,7 @@ export function Summit2026ScheduleSection({ getText }: Props) {
                           )}
                         </td>
                         <td className="align-top py-3 text-gray-700">
-                          <span className="whitespace-pre-line">{row.presenters}</span>
+                          <SchedulePresenterAffiliationCell row={row} />
                         </td>
                       </tr>
                     ))}

@@ -70,7 +70,7 @@ export function ProgramBook2026Shell({
         dateValue: 'April 16-17, 2026',
         conferenceHours: 'Conference Hours:',
         conferenceHoursValue: '8:45 AM – 5:10 PM (see schedule below)',
-        scheduleTitle: 'Summit schedule',
+        scheduleTitle: 'SLxAI Summit Schedule — April 16–17, 2026',
         locationTitle: 'Location',
         venue: 'Venue:',
         venueValue: 'Boston University',

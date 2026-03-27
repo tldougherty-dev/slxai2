@@ -117,7 +117,9 @@ export function GenericWorkshopProgramSections({
                   <h3 className="text-lg font-bold text-gray-900">{p.name}</h3>
                   {p.title ? <p className="mt-1 text-sm text-gray-700">{p.title}</p> : null}
                   {p.organization ? (
-                    <p className="mt-1 break-words text-sm font-semibold text-electric-blue">{p.organization}</p>
+                    <p className="mt-1 break-words text-sm text-electric-blue">
+                      <em className="font-semibold italic">{p.organization}</em>
+                    </p>
                   ) : null}
                   {p.email ? (
                     <a

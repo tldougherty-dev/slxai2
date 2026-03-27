@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { SUMMIT_SPONSORS } from '@/data/summitSponsors';
-import { SUMMIT_2026_WORKSHOPS } from '@/data/summit2026Workshops';
+import { getSummit2026WorkshopsInScheduleOrder } from '@/data/summit2026Workshops';
 import { WorkshopSessionCard } from '@/components/summit2026/WorkshopSessionCard';
 import { Summit2026ScheduleSection } from '@/components/summit2026/Summit2026ScheduleSection';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
@@ -15,16 +15,26 @@ type Summit2026ProgramBookContentProps = {
   hideSoldOut?: boolean;
   /** When true, shows "Program book" under the Summit 2026 title row. */
   showProgramBookSubtitle?: boolean;
+  /** When true, shows the full two-day schedule block (intended for /2026 program book only). Default true. */
+  showSchedule?: boolean;
+  /** When true (homepage), shows SLxAI × BU hero image between SOLD OUT and sponsors; bottom-of-section hero is omitted to avoid duplication. */
+  showLandingBuHeroImage?: boolean;
+  /** When false, workshop cards do not link to /2026/workshop/:slug (homepage before program book is public). Default true. */
+  linkWorkshopCardsToProgramBook?: boolean;
 };
 
 const Summit2026ProgramBookContent = ({
   getText,
   hideSoldOut = false,
   showProgramBookSubtitle = false,
+  showSchedule = true,
+  showLandingBuHeroImage = false,
+  linkWorkshopCardsToProgramBook = true,
 }: Summit2026ProgramBookContentProps) => {
   const [isAboutSummitExpanded, setIsAboutSummitExpanded] = useState(false);
   const [isWorkshopPanelExpanded, setIsWorkshopPanelExpanded] = useState(false);
   const sponsors = SUMMIT_SPONSORS;
+  const workshopsInScheduleOrder = getSummit2026WorkshopsInScheduleOrder();
 
   return (
     <>
@@ -55,6 +65,16 @@ const Summit2026ProgramBookContent = ({
               <div className="bg-red-600 text-white text-3xl sm:text-5xl font-bold py-6 sm:py-12 shadow-xl w-full rounded-lg text-center">
                 SOLD OUT
               </div>
+            </div>
+          ) : null}
+
+          {showLandingBuHeroImage ? (
+            <div className="mb-8">
+              <img
+                src="/slxai-bu-hero.png"
+                alt="SLxAI Summit at Boston University"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
             </div>
           ) : null}
 
@@ -178,7 +198,7 @@ const Summit2026ProgramBookContent = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-            <Summit2026ScheduleSection getText={getText} />
+            {showSchedule ? <Summit2026ScheduleSection getText={getText} /> : null}
 
             <Card className="border border-gray-200 dark:border-gray-700 shadow-xl md:col-span-2 overflow-hidden rounded-lg">
               <CardHeader 
@@ -238,8 +258,12 @@ const Summit2026ProgramBookContent = ({
                   </div>
                   <div className="bg-blue-50 dark:bg-blue-900/20 px-6 pt-4 pb-6">
                     <div className="space-y-6">
-                      {SUMMIT_2026_WORKSHOPS.map((session) => (
-                        <WorkshopSessionCard key={session.slug} session={session} />
+                      {workshopsInScheduleOrder.map((session) => (
+                        <WorkshopSessionCard
+                          key={session.slug}
+                          session={session}
+                          linkToProgramBook={linkWorkshopCardsToProgramBook}
+                        />
                       ))}
                     </div>
                   </div>
@@ -263,8 +287,12 @@ const Summit2026ProgramBookContent = ({
               <CardContent className={`pt-4 pb-0 ${isWorkshopPanelExpanded ? 'block' : 'hidden'}`}>
                 <div className="bg-blue-50 dark:bg-blue-900/20 px-4 pt-4 pb-6 -mx-6 -mb-6">
                   <div className="space-y-6">
-                      {SUMMIT_2026_WORKSHOPS.map((session) => (
-                        <WorkshopSessionCard key={session.slug} session={session} />
+                      {workshopsInScheduleOrder.map((session) => (
+                        <WorkshopSessionCard
+                          key={session.slug}
+                          session={session}
+                          linkToProgramBook={linkWorkshopCardsToProgramBook}
+                        />
                       ))}
                   </div>
                 </div>
@@ -330,13 +358,15 @@ const Summit2026ProgramBookContent = ({
             </div>
           </div>
 
-          <div className="mt-10">
-            <img
-              src="/slxai-bu-hero.png"
-              alt="SLxAI Summit at Boston University"
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
-          </div>
+          {!showLandingBuHeroImage ? (
+            <div className="mt-10">
+              <img
+                src="/slxai-bu-hero.png"
+                alt="SLxAI Summit at Boston University"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          ) : null}
         </div>
       </section>
     </>

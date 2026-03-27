@@ -3,6 +3,8 @@
  * Photos: set `photoUrl` to a path under /public when available; omit or null for placeholder.
  */
 
+import { SUMMIT_2026_SCHEDULE } from '@/data/summit2026Schedule';
+
 export type SummitWorkshopPresenter = {
   name: string;
   /** Role or credential line, e.g. PhD, Ed.D., CEO */
@@ -360,14 +362,26 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     summary:
       'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.',
     presenters: [
-      { name: 'Dr. Abraham Glasser', title: 'PhD' },
-      { name: 'Tim Riker' },
-      { name: 'Stephanie Jo Kent' },
-      { name: 'Celena Ponce' },
-      { name: 'Jeffrey Shaul' },
+      { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
+      { name: 'Tim Riker', organization: 'CoSET' },
+      { name: 'Stephanie Jo Kent', organization: 'CoSET' },
+      { name: 'Celena Ponce', organization: 'CoSET' },
+      { name: 'Jeffrey Shaul', organization: 'Sign-Speak' },
     ],
   },
 ];
+
+/** Workshop / panel order as in `summit2026Schedule.ts` (Day 1 then Day 2). */
+export function getSummit2026WorkshopsInScheduleOrder(): Summit2026Workshop[] {
+  const slugs: string[] = [];
+  for (const day of SUMMIT_2026_SCHEDULE) {
+    for (const row of day.rows) {
+      if (row.workshopSlug) slugs.push(row.workshopSlug);
+    }
+  }
+  const bySlug = new Map(SUMMIT_2026_WORKSHOPS.map((w) => [w.slug, w] as const));
+  return slugs.map((slug) => bySlug.get(slug)).filter((w): w is Summit2026Workshop => w != null);
+}
 
 export function getSummit2026WorkshopBySlug(slug: string | undefined): Summit2026Workshop | undefined {
   if (!slug) return undefined;

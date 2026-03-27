@@ -31,7 +31,9 @@ export function CosetWorkshopProgramSections() {
                 <WorkshopPresenterBioPlaceholder name={p.name} />
                 <div className="min-w-0 flex-1 overflow-hidden">
                   <h3 className="text-lg font-bold text-gray-900">{p.name}</h3>
-                  <p className="mt-1 break-words text-sm font-semibold text-electric-blue">{p.organization}</p>
+                  <p className="mt-1 break-words text-sm text-electric-blue">
+                    <em className="font-semibold italic">{p.organization}</em>
+                  </p>
                   <a
                     href={`mailto:${p.email}`}
                     className="mt-2 inline-flex min-w-0 items-center gap-1.5 break-all text-sm text-gray-600 transition-colors hover:text-electric-blue"
