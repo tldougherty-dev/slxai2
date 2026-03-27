@@ -84,7 +84,10 @@ export default function Bylaws() {
         message: sanitizeText(form.message.trim()),
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Bylaws feedback insert:', error.code, error.message, error.details);
+        throw error;
+      }
 
       setIsSubmitted(true);
       setForm({ name: '', email: '', organization: '', message: '' });
@@ -93,15 +96,22 @@ export default function Bylaws() {
         description: 'Your feedback has been submitted.',
       });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Submission failed.';
+      const pg = err as { message?: string; code?: string; details?: string };
+      const raw = pg?.message || (err instanceof Error ? err.message : '') || 'Submission failed.';
+      const missingTable =
+        raw.includes('relation') ||
+        raw.includes('does not exist') ||
+        raw.includes('schema cache') ||
+        pg?.code === '42P01' ||
+        pg?.code === 'PGRST205';
       if (process.env.NODE_ENV === 'development') {
         console.error('Bylaws feedback error:', err);
       }
       toast({
         title: 'Could not submit',
-        description: message.includes('relation') || message.includes('does not exist')
-          ? 'Feedback storage is not set up yet. Ask an administrator to run the bylaws_feedback SQL migration in Supabase.'
-          : message,
+        description: missingTable
+          ? 'Feedback storage is not set up in the database yet. An admin should run activity-logs/sql/BYLAWS_FEEDBACK_COMPLETE.sql in the Supabase SQL Editor, then try again.'
+          : raw,
         variant: 'destructive',
       });
     } finally {

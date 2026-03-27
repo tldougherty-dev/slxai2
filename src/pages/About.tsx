@@ -142,7 +142,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               <Card className="p-6 text-center border-l-4 border-l-electric-blue">
                 <div className="h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">GoSign.ai</span>
+                  <span className="text-white font-bold text-lg">Signapse</span>
                 </div>
               </Card>
 

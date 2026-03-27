@@ -427,7 +427,7 @@ export const members: Member[] = [
     pocName: 'Sally Chalk',
     pocEmail: 'sally@signapse.ai',
     pocTitle: 'Voting Representative',
-    memberCount: 2,
+    memberCount: 3,
     members: [
       { id: '32-1', name: 'Sally Chalk', email: 'sally@signapse.ai', isVotingRep: true },
       {
@@ -436,6 +436,13 @@ export const members: Member[] = [
         email: 'travis@signapse.ai',
         isVotingRep: true,
         isRegistered: true,
+      },
+      {
+        id: '32-3',
+        name: 'Jeffrey Shaul',
+        email: 'jeff@signapse.ai',
+        isVotingRep: true,
+        isRegistered: false,
       },
     ]
   },
@@ -569,18 +576,6 @@ export const members: Member[] = [
     memberCount: 1,
     members: [
       { id: '43-1', name: 'Timothy Blonksy', email: 'Timblonsky@gmail.com', isVotingRep: true }
-    ]
-  },
-  {
-    id: '44',
-    organizationName: 'GoSign.AI',
-    country: 'United States of America',
-    pocName: 'Jeffrey Shaul',
-    pocEmail: 'jeff@gosign.ai',
-    pocTitle: 'CEO',
-    memberCount: 1,
-    members: [
-      { id: '44-1', name: 'Jeffrey Shaul', email: 'jeff@gosign.ai', isVotingRep: true, isRegistered: false },
     ]
   },
   {

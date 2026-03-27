@@ -108,7 +108,7 @@ const emails = [
   'tibo@glwmax.com',
   'tiina@glwmax.com',
   'imaginashawn@gmail.com',
-  'calvin@gosign.ai',
+  'calvin@signapse.ai',
   'hasan.dikyuva@mpi.nl',
   'maciej.lewandowski@migam.org',
   'pk@migam.org',

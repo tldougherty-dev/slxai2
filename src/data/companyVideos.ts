@@ -92,14 +92,14 @@ export const companyVideos: CompanyVideo[] = [
     uploadedDate: '10 months ago',
   },
   
-  // DeafCloud Communications / GoSign.AI (Canada/USA)
+  // DeafCloud Communications / Signapse (Canada/USA)
   {
-    id: 'gosign-1',
-    organizationName: 'GoSign.AI',
+    id: 'signapse-deafcloud-1',
+    organizationName: 'Signapse',
     pocName: 'Jeffrey Shaul',
-    videoTitle: 'Deaf in the Cloud interviews the GoSign.AI team',
+    videoTitle: 'Deaf in the Cloud interviews the Signapse team',
     videoId: 'XihnDNA_LzA',
-    description: 'An interview webisode where Deaf in the Cloud host Rob Koch (of DeafCloud) and Destiny O\'Connor chat with Ryan Hait-Campbell and Jeff Shaul of GoSign.AI about their AI-driven sign language translation technology.',
+    description: 'An interview webisode where Deaf in the Cloud host Rob Koch (of DeafCloud) and Destiny O\'Connor chat with Ryan Hait-Campbell and Jeff Shaul of Signapse about their AI-driven sign language translation technology.',
     uploadedDate: '11 months ago',
   },
   

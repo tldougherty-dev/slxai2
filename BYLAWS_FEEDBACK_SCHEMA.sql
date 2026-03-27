@@ -1,5 +1,6 @@
 -- Bylaws public feedback (anonymous submissions from /bylaws page)
--- Run in Supabase SQL Editor after check_user_is_admin() exists
+-- Prefer: activity-logs/sql/BYLAWS_FEEDBACK_COMPLETE.sql (includes admin helper + NOTIFY).
+-- This file assumes check_user_is_admin() already exists.
 
 CREATE TABLE IF NOT EXISTS bylaws_feedback (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

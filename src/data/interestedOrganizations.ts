@@ -36,7 +36,6 @@ const RAW: InterestedOrgRow[] = [
   { name: 'Framingham State University', country: 'USA', code: 'us' },
   { name: 'German Deaf Association', country: 'Germany', code: 'de' },
   { name: 'GLWMax', country: 'Belgium', code: 'be' },
-  { name: 'GoSign.AI', country: 'USA', code: 'us' },
   { name: 'GoVoBo.ai', country: 'USA', code: 'us' },
   { name: 'Hand Talk', country: 'Brazil', code: 'br' },
   { name: 'Hands United', country: 'USA', code: 'us' },

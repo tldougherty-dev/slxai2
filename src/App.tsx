@@ -7,6 +7,8 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
+import ProgramBook2026 from "./pages/ProgramBook2026";
+import ProgramBookWorkshop2026 from "./pages/ProgramBookWorkshop2026";
 import MembershipPortalLayout from "./components/MembershipPortalLayout";
 import Voting from "./pages/membership-portal/Voting";
 import Discussions from "./pages/membership-portal/Discussions";
@@ -65,6 +67,8 @@ const App = () => (
         >
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/2026" element={<ProgramBook2026 />} />
+            <Route path="/2026/workshop/:slug" element={<ProgramBookWorkshop2026 />} />
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/interest" element={<Interest />} />
