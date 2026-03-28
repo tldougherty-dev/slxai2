@@ -535,7 +535,6 @@ const SidebarMenuItem = React.forwardRef<
     ref={ref}
     data-sidebar="menu-item"
     className={cn("group/menu-item relative group-data-[collapsible=icon]:p-0", className)}
-    className={cn("group/menu-item relative", className)}
     {...props}
   />
 ))
