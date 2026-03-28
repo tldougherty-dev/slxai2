@@ -1,17 +1,21 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { google } from 'googleapis';
 
-const SHEET_ID = process.env.GOOGLE_SHEET_ID!;
-const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL!;
-const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, '\n');
-
 const SHEET_NAME = 'Founding Members';
 
-async function getSheetsClient() {
+function getGoogleSheetsEnv() {
+  const sheetId = process.env.GOOGLE_SHEET_ID?.trim();
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL?.trim();
+  const rawKey = process.env.GOOGLE_PRIVATE_KEY ?? '';
+  const privateKey = rawKey.replace(/\\n/g, '\n');
+  return { sheetId, clientEmail, privateKey };
+}
+
+async function getSheetsClient(clientEmail: string, privateKey: string) {
   const auth = new google.auth.GoogleAuth({
     credentials: {
-      client_email: GOOGLE_CLIENT_EMAIL,
-      private_key: GOOGLE_PRIVATE_KEY,
+      client_email: clientEmail,
+      private_key: privateKey,
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
@@ -60,7 +64,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ];
 
     await sheets.spreadsheets.values.append({
-      spreadsheetId: SHEET_ID,
+      spreadsheetId: sheetId,
       range: `${SHEET_NAME}!A:J`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {

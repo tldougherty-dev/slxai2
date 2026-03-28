@@ -26,6 +26,12 @@ export default defineConfig(({ mode }) => {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Lower peak memory on CI (e.g. Vercel) for a large single chunk
+    rollupOptions: {
+      maxParallelFileOps: 4,
+    },
+  },
   // Load environment variables - Vite automatically loads .env files
   // The loadEnv above ensures they're available
   };
