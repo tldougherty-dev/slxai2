@@ -87,12 +87,12 @@ export function Sponsorship2027Page() {
           aria-hidden
         />
         <div className="relative z-10 mx-auto max-w-5xl px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
-          <p className="text-outline-black mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white">
+          <p className="text-outline-black mb-4 text-center text-4xl font-bold uppercase leading-tight tracking-[0.08em] text-white sm:mb-5 sm:text-5xl sm:tracking-[0.1em] md:text-6xl md:tracking-[0.12em] lg:mb-6 lg:text-7xl lg:tracking-[0.14em]">
             SLxAI Summit 2027
           </p>
           <h1
             id="sponsor-hero-heading"
-            className="text-balance text-center text-3xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.8)] sm:text-4xl md:text-5xl lg:text-[2.75rem] lg:leading-[1.15]"
+            className="text-balance text-center text-3xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.8)] sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.12]"
           >
             Sponsor the Future of Sign Language and AI
           </h1>
@@ -216,14 +216,41 @@ export function Sponsorship2027Page() {
                 Center of the second floor, connecting sessions, exhibits, and sponsor touchpoints
               </figcaption>
             </figure>
+
+            <figure className="mt-8 overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-xl ring-1 ring-slate-900/5">
+              <div className="flex justify-center bg-slate-50 p-3 sm:p-5">
+                <img
+                  src="/summit2027-venue-level-2-floor-plan.png"
+                  alt="InterContinental Miami second level mezzanine floor plan showing Grand Ballroom, Chopin and Biscayne ballrooms, central atrium, Chopin foyer, meeting rooms, and circulation"
+                  className="h-auto w-full max-w-5xl object-contain"
+                  loading="lazy"
+                  width={1200}
+                  height={900}
+                />
+              </div>
+              <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+                <span className="font-semibold text-slate-800">Second floor map</span>
+                <span className="text-slate-500"> — </span>
+                Level 2 (mezzanine): ballrooms, atrium, foyers, and meeting spaces — layout subject to final event
+                production
+              </figcaption>
+            </figure>
           </div>
 
           <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12 lg:items-start">
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900">Event Venue</h3>
-                <address className="mt-3 not-italic text-slate-800">
-                  <span className="block text-xl font-bold tracking-tight text-slate-900">InterContinental Miami</span>
+                <address className="mt-4 not-italic text-slate-800">
+                  <div className="mb-4 rounded-lg border border-slate-100 bg-white p-3 shadow-sm sm:inline-block sm:p-4">
+                    <img
+                      src="/intercontinental-miami-logo.png"
+                      alt="InterContinental Miami"
+                      className="h-14 w-auto max-w-[min(100%,320px)] object-contain object-left sm:h-16"
+                      width={320}
+                      height={64}
+                    />
+                  </div>
                   <span className="mt-1 block text-sm leading-relaxed text-slate-600">100 Chopin Plaza</span>
                   <span className="block text-sm leading-relaxed text-slate-600">Miami, Florida</span>
                 </address>
