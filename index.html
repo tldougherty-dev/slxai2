@@ -56,6 +56,21 @@
   </head>
 
   <body>
+    <!-- Runs before React: prevents global dark-mode CSS (white text on white bg) on /summit2027 -->
+    <script>
+      (function () {
+        try {
+          var path = window.location.pathname || '';
+          if (path.indexOf('summit2027') === -1) return;
+          var el = document.documentElement;
+          el.setAttribute('data-sponsorship-page', 'true');
+          el.classList.remove('dark');
+          el.style.colorScheme = 'light';
+          document.body.style.backgroundColor = '#ffffff';
+          document.body.style.color = '#0f172a';
+        } catch (_) {}
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

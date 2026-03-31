@@ -44,6 +44,8 @@ export const SPONSORSHIP_TIERS: {
   id: TierId;
   name: string;
   price: string;
+  /** Short line emphasizing how many sponsors are available at this tier */
+  availability: string;
   benefits: string[];
   featured?: boolean;
 }[] = [
@@ -52,6 +54,7 @@ export const SPONSORSHIP_TIERS: {
     name: 'Title Sponsor',
     price: '$150,000',
     featured: true,
+    availability: 'Exclusive — only 1 Title sponsor for the entire summit',
     benefits: [
       '“Presented by” branding across summit materials',
       'Opening remarks opportunity',
@@ -66,6 +69,7 @@ export const SPONSORSHIP_TIERS: {
     id: 'platinum',
     name: 'Platinum Sponsor',
     price: '$50,000',
+    availability: 'Limited — only 3 Platinum sponsors',
     benefits: [
       'Prominent logo placement',
       'Premium exhibit presence',
@@ -78,7 +82,8 @@ export const SPONSORSHIP_TIERS: {
   {
     id: 'gold',
     name: 'Gold Sponsor',
-    price: '$25,000',
+    price: '$20,000',
+    availability: 'Limited — 10 Gold sponsors',
     benefits: [
       'Exhibit space included',
       '3 summit passes',
@@ -89,7 +94,8 @@ export const SPONSORSHIP_TIERS: {
   {
     id: 'silver',
     name: 'Silver Sponsor',
-    price: '$12,500',
+    price: '$10,000',
+    availability: 'Additional capacity — many Silver sponsors welcome',
     benefits: [
       'Logo placement',
       '2 summit passes',

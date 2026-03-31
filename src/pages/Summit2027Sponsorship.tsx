@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
 import { Sponsorship2027Page } from '@/components/summit2027/Sponsorship2027Page';
+import { useTheme } from '@/contexts/ThemeContext';
 import { ArrowLeft, ArrowUp } from 'lucide-react';
 
 const PAGE_TITLE = 'SLxAI Summit Sponsorship Opportunities';
@@ -10,21 +11,23 @@ const PAGE_DESCRIPTION =
   'Sponsor SLxAI Summit and connect with leaders in sign language, AI, accessibility, research, and ethical technology innovation.';
 
 export default function Summit2027Sponsorship() {
-  // Run before paint so global `.dark main` / body styles never hide this page (fixes "blank" view).
+  const { theme, setTheme } = useTheme();
+  const themeBeforePageRef = useRef(theme);
+
+  // 1) data-sponsorship-page disables global `html.dark … { text-white }` rules in index.css
+  // 2) Force light theme so ThemeProvider does not re-add `dark` from localStorage.
   useLayoutEffect(() => {
     const root = document.documentElement;
+    root.setAttribute('data-sponsorship-page', 'true');
     root.classList.remove('dark');
-  }, []);
+    setTheme('light');
+    return () => {
+      root.removeAttribute('data-sponsorship-page');
+      setTheme(themeBeforePageRef.current);
+    };
+  }, [setTheme]);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const observer = new MutationObserver(() => {
-      if (root.classList.contains('dark')) {
-        root.classList.remove('dark');
-      }
-    });
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-
     const prevTitle = document.title;
     document.title = PAGE_TITLE;
 
@@ -38,7 +41,6 @@ export default function Summit2027Sponsorship() {
     metaDesc.setAttribute('content', PAGE_DESCRIPTION);
 
     return () => {
-      observer.disconnect();
       document.title = prevTitle;
       if (prevDesc != null) metaDesc?.setAttribute('content', prevDesc);
       else if (metaDesc?.parentNode) metaDesc.remove();

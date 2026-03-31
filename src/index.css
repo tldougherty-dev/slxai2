@@ -102,59 +102,59 @@
     @apply bg-electric-blue text-white font-inter;
   }
 
-  .dark body {
+  /* Sponsorship page: avoid default blue body peek-through; keeps full viewport readable */
+  html[data-sponsorship-page] body {
+    @apply bg-white text-slate-900;
+  }
+
+  /* Sponsorship route sets data-sponsorship-page on <html> so these global dark rules never apply there. */
+  html:not([data-sponsorship-page]).dark body {
     @apply bg-black text-white;
   }
 
-  /* Dark mode main content area - black background */
-  .dark main {
+  html:not([data-sponsorship-page]).dark main {
     @apply bg-black;
   }
 
-  /* Summit 2027 sponsorship page uses <main id="main-content"> — keep light if dark class flashes before route effect */
-  .dark main#main-content {
-    @apply bg-white;
-  }
-
   /* Dark mode text colors - only apply to elements without explicit text color classes */
-  .dark h1:not([class*="text-"]),
-  .dark h2:not([class*="text-"]),
-  .dark h3:not([class*="text-"]),
-  .dark h4:not([class*="text-"]),
-  .dark h5:not([class*="text-"]),
-  .dark h6:not([class*="text-"]),
-  .dark p:not([class*="text-"]),
-  .dark span:not([class*="text-"]),
-  .dark div:not([class*="text-"]) {
+  html:not([data-sponsorship-page]).dark h1:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark h2:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark h3:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark h4:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark h5:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark h6:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark p:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark span:not([class*="text-"]),
+  html:not([data-sponsorship-page]).dark div:not([class*="text-"]) {
     @apply text-white;
   }
 
   /* Dark mode card backgrounds */
-  .dark .glass-card {
+  html:not([data-sponsorship-page]).dark .glass-card {
     background: rgba(30, 50, 80, 0.9) !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
 
   /* Dark mode sidebar header background */
-  .dark [data-sidebar="sidebar"] .glass-card {
+  html:not([data-sponsorship-page]).dark [data-sidebar="sidebar"] .glass-card {
     background: rgba(30, 50, 80, 0.9) !important;
   }
 
   /* Dark mode icons - ensure they're white when not explicitly colored */
-  .dark svg:not([class*="text-"]) {
+  html:not([data-sponsorship-page]).dark svg:not([class*="text-"]) {
     @apply text-white;
   }
 
   /* Dark mode input fields */
-  .dark input:not([class*="bg-"]),
-  .dark textarea:not([class*="bg-"]),
-  .dark select:not([class*="bg-"]) {
+  html:not([data-sponsorship-page]).dark input:not([class*="bg-"]),
+  html:not([data-sponsorship-page]).dark textarea:not([class*="bg-"]),
+  html:not([data-sponsorship-page]).dark select:not([class*="bg-"]) {
     @apply bg-[hsl(217,40%,18%)] text-white border-[hsl(217,35%,25%)];
   }
 
   /* Dark mode input placeholders */
-  .dark input::placeholder,
-  .dark textarea::placeholder {
+  html:not([data-sponsorship-page]).dark input::placeholder,
+  html:not([data-sponsorship-page]).dark textarea::placeholder {
     @apply text-gray-400;
   }
 
@@ -237,7 +237,7 @@
     border-radius: 0;
   }
 
-  .dark .glass-card {
+  html:not([data-sponsorship-page]).dark .glass-card {
     background: rgba(30, 50, 80, 0.9);
     border-color: rgba(255, 255, 255, 0.1);
   }
@@ -249,7 +249,7 @@
     box-shadow: 0 8px 32px 0 rgba(0, 128, 255, 0.15);
   }
 
-  .dark .sidebar-header-bg {
+  html:not([data-sponsorship-page]).dark .sidebar-header-bg {
     background: rgba(30, 50, 80, 0.9);
     border-color: rgba(255, 255, 255, 0.1);
   }
@@ -327,7 +327,7 @@
     padding-right: 0.5rem;
   }
 
-  .dark .bylaws-document {
+  html:not([data-sponsorship-page]).dark .bylaws-document {
     color: #e5e7eb;
   }
 
