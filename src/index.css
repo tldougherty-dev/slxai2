@@ -175,6 +175,23 @@
 }
 
 @layer utilities {
+  /**
+   * Black stroke around glyphs — readable on bright / busy hero photos.
+   * Eight directions + soft outer shadow (not inherited by children; apply on each text node if needed).
+   */
+  .text-outline-black {
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000,
+      0 -1px 0 #000,
+      0 1px 0 #000,
+      -1px 0 0 #000,
+      1px 0 0 #000,
+      0 0 10px rgba(0, 0, 0, 0.55);
+  }
+
   .line-clamp-1 {
     overflow: hidden;
     display: -webkit-box;
