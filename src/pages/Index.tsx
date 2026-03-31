@@ -418,6 +418,14 @@ const Index = () => {
               className="h-9 border-electric-blue/40 bg-white shadow-sm text-electric-blue hover:bg-electric-blue/10 hover:text-electric-blue"
               asChild
             >
+              <Link to="/summit2027">Summit 2027 sponsorship</Link>
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 border-electric-blue/40 bg-white shadow-sm text-electric-blue hover:bg-electric-blue/10 hover:text-electric-blue"
+              asChild
+            >
               <Link to="/login">{getText('navLogin', 'Log in')}</Link>
             </Button>
           </div>
