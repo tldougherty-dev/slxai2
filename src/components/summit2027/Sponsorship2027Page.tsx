@@ -61,7 +61,7 @@ export function Sponsorship2027Page() {
     <main id="main-content" className="!bg-white bg-white text-slate-900">
       {/* Hero — Miami sunset skyline + overlays for legible white text */}
       <section
-        className="relative min-h-[22rem] overflow-hidden border-b border-slate-200/80 text-white sm:min-h-[28rem] md:min-h-[32rem]"
+        className="relative flex min-h-[22rem] items-end overflow-hidden border-b border-slate-200/80 text-white sm:min-h-[28rem] md:min-h-[32rem]"
         aria-labelledby="sponsor-hero-heading"
       >
         <div
@@ -86,7 +86,7 @@ export function Sponsorship2027Page() {
           }}
           aria-hidden
         />
-        <div className="relative z-10 mx-auto max-w-5xl px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-4 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-6 md:pb-12 md:pt-8 lg:px-8 lg:pb-14 lg:pt-10">
           <p className="text-outline-black mb-4 text-center text-4xl font-bold uppercase leading-tight tracking-[0.08em] text-white sm:mb-5 sm:text-5xl sm:tracking-[0.1em] md:text-6xl md:tracking-[0.12em] lg:mb-6 lg:text-7xl lg:tracking-[0.14em]">
             SLxAI Summit 2027
           </p>
@@ -687,3 +687,4 @@ export function Sponsorship2027Page() {
     </main>
   );
 }
+
