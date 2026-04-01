@@ -2,7 +2,17 @@
 
 export const CONTACT_EMAIL = 'contact@slxai.org';
 
-export const WHY_SPONSOR_POINTS = [
+/** Conference dates for SLxAI Summit 2027 (Miami, FL) */
+export const SUMMIT_2027_DATES = 'April 20-21, 2027';
+
+export type WhySponsorPoint = {
+  title: string;
+  body: string;
+  /** Prefer a single line for the title pill (e.g. long phrase with &) */
+  titleSingleLine?: boolean;
+};
+
+export const WHY_SPONSOR_POINTS: readonly WhySponsorPoint[] = [
   {
     title: 'Reach a high-value niche audience',
     body: 'Connect with professionals and organizations invested in sign language technology, accessibility, and responsible AI, not broad, untargeted traffic.',
@@ -20,14 +30,15 @@ export const WHY_SPONSOR_POINTS = [
     body: 'Demonstrate tools and services to attendees who evaluate and implement sign language and accessibility solutions.',
   },
   {
-    title: 'Support communication access and responsible AI',
+    title: 'Support communication access & responsible AI',
     body: 'Demonstrate commitment to communication equity and standards that benefit Deaf and hard-of-hearing communities.',
+    titleSingleLine: true,
   },
   {
     title: 'Visibility before, during, and after the summit',
     body: 'Benefit from recognition across digital channels, on-site touchpoints, and program materials surrounding the event.',
   },
-] as const;
+];
 
 export const AUDIENCE_CATEGORIES = [
   'AI and machine learning companies',
@@ -117,7 +128,7 @@ export const ADD_ON_OPPORTUNITIES: { name: string; price: string }[] = [
 
 export const EXHIBIT_LEVELS: { name: string; price: string; benefits: string[] }[] = [
   {
-    name: 'Academic/Nonprofit Exhibit',
+    name: 'Academic/Nonprofit',
     price: '$1,000',
     benefits: [
       '10x10 exhibit space',
@@ -127,7 +138,7 @@ export const EXHIBIT_LEVELS: { name: string; price: string; benefits: string[] }
     ],
   },
   {
-    name: 'Startup Exhibit',
+    name: 'Startup',
     price: '$1,500',
     benefits: [
       '10x10 exhibit space',
@@ -138,7 +149,7 @@ export const EXHIBIT_LEVELS: { name: string; price: string; benefits: string[] }
     ],
   },
   {
-    name: 'Standard Exhibit',
+    name: 'Standard',
     price: '$3,000',
     benefits: [
       '10x20 exhibit space',
@@ -149,7 +160,7 @@ export const EXHIBIT_LEVELS: { name: string; price: string; benefits: string[] }
     ],
   },
   {
-    name: 'Premium Exhibit',
+    name: 'Premium',
     price: '$6,000',
     benefits: [
       '20x20 exhibit space',
@@ -160,22 +171,3 @@ export const EXHIBIT_LEVELS: { name: string; price: string; benefits: string[] }
     ],
   },
 ];
-
-export const DIFFERENTIATORS = [
-  {
-    title: 'Cross-sector focus on sign language and AI',
-    body: 'A rare gathering that centers sign language, Deaf communities, and AI in one program, rather than spreading attention across generic “tech for good” themes.',
-  },
-  {
-    title: 'Deaf leadership and participation',
-    body: 'Community voices help shape conversations on ethics, access, and implementation, not as an afterthought, but as core to the agenda.',
-  },
-  {
-    title: 'Technical, ethical, and real-world implementation',
-    body: 'Sessions bridge research, product, policy, and practice so sponsors can connect technical depth with deployable outcomes.',
-  },
-  {
-    title: 'Partnerships and ecosystem visibility',
-    body: 'The summit is structured to spark long-term collaboration among companies, labs, advocates, and implementers.',
-  },
-] as const;

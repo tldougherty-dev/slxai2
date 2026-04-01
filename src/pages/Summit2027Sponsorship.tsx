@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
 import { Sponsorship2027Page } from '@/components/summit2027/Sponsorship2027Page';
+import { SUMMIT_2027_DATES } from '@/components/summit2027/summit2027SponsorshipData';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ArrowLeft, ArrowUp } from 'lucide-react';
 
 const PAGE_TITLE = 'SLxAI Summit Sponsorship Opportunities';
-const PAGE_DESCRIPTION =
-  'Sponsor SLxAI Summit and connect with leaders in sign language, AI, accessibility, research, and ethical technology innovation.';
+const PAGE_DESCRIPTION = `Sponsor SLxAI Summit 2027 (${SUMMIT_2027_DATES}, Miami, FL). Connect with leaders in sign language, AI, accessibility, research, and ethical technology innovation.`;
 
 export default function Summit2027Sponsorship() {
   const { theme, setTheme } = useTheme();
@@ -75,9 +75,8 @@ export default function Summit2027Sponsorship() {
               <span className="sm:hidden">Home</span>
             </Link>
           </Button>
-          <Link to="/" className="flex items-center gap-2 text-slate-900" aria-label="SLxAI home">
-            <img src="/slxai-footer-logo.png" alt="" className="h-8 w-auto" width={120} height={32} />
-            <span className="text-sm font-semibold tracking-tight">SLxAI</span>
+          <Link to="/" className="flex shrink-0 items-center text-slate-900" aria-label="SLxAI home">
+            <img src="/slxai-footer-logo.png" alt="SLxAI" className="h-8 w-auto" width={120} height={32} />
           </Link>
         </div>
       </header>
