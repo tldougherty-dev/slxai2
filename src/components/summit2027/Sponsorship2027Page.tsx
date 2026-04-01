@@ -269,7 +269,7 @@ export function Sponsorship2027Page() {
           <p className="mx-auto mt-3 max-w-4xl text-center text-sm leading-relaxed text-slate-600 sm:max-w-5xl sm:text-base">
             The summit runs{' '}
             <span className="text-base font-semibold text-slate-800 sm:text-lg">{SUMMIT_2027_DATES}</span> at the{' '}
-            <span className="font-semibold text-slate-800">InterContinental Miami</span>, a high-visibility environment
+            <span className="text-base font-semibold text-slate-800 sm:text-lg">InterContinental Miami</span>, a high-visibility environment
             <br />
             for sponsors engaging with leaders in sign language AI, accessibility technology, and research.
           </p>
