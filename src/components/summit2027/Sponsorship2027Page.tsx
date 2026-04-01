@@ -35,9 +35,9 @@ const mailto = (subject: string) =>
 const SPONSORSHIP_SECTION_TITLE_PILL_CLASS =
   'inline-flex max-w-full items-center justify-center rounded-full border border-orange-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-snug tracking-tight text-slate-900 shadow-sm sm:px-4 sm:text-base';
 
-/** Who you reach: same pill shape as Why sponsor, no outer box — tinted fill instead of white */
+/** Who you reach: white pills for max readability on rose card */
 const AUDIENCE_CATEGORY_PILL_CLASS =
-  'inline-flex w-full max-w-full items-center justify-center rounded-full border border-teal-200/75 bg-teal-50/85 px-3 py-1.5 text-center text-sm font-semibold leading-snug tracking-tight text-slate-800 shadow-sm sm:px-4 sm:text-base';
+  'inline-flex w-full max-w-full items-center justify-center rounded-full border border-slate-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-snug tracking-tight text-slate-900 shadow-sm sm:px-4 sm:text-base';
 
 /** Top banner on each sponsorship tier card */
 const TIER_TOP_BANNERS: Record<TierId, { label: string; barClass: string }> = {
@@ -557,13 +557,13 @@ export function Sponsorship2027Page() {
         aria-labelledby="audience-heading"
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-amber-200/80 bg-gradient-to-br from-yellow-50/95 via-amber-50/60 to-yellow-50/90 p-5 shadow-md ring-1 ring-amber-900/10 backdrop-blur-sm sm:p-6">
+          <div className="rounded-2xl border border-rose-200/80 bg-gradient-to-br from-rose-50/95 via-red-50/45 to-orange-50/55 p-5 shadow-md ring-1 ring-rose-900/10 backdrop-blur-sm sm:p-6">
             <div className="text-center">
               <h2 id="audience-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
                 Who You Will Reach
               </h2>
             </div>
-            <p className="mt-3 text-center text-sm leading-relaxed text-amber-950/85 sm:text-base">
+            <p className="mt-3 text-center text-sm leading-relaxed text-rose-950/90 sm:text-base">
               High-intent builders, researchers, and implementers - not general conference traffic.
             </p>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-3.5">
@@ -588,7 +588,7 @@ export function Sponsorship2027Page() {
               />
             </div>
             <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
-              <span className="font-semibold text-slate-800">Hotel setting: </span>
+              <span className="font-semibold text-slate-800">InterContinental Miami hotel: </span>
               A premium bayfront environment for receptions and sponsor hospitality
             </figcaption>
           </figure>
