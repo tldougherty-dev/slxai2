@@ -2,7 +2,7 @@
 
 The codebase is **one repo**. A “clone” for testing means: **build the same app again** and host it on a **second URL** with its own env vars (optional separate Supabase project for safe experiments).
 
-This document cannot create DNS or servers for you—you (or your host) complete those steps.
+This document cannot create DNS or servers for you. You (or your host) complete those steps.
 
 ---
 
@@ -11,7 +11,7 @@ This document cannot create DNS or servers for you—you (or your host) complete
 | What | Value |
 |------|--------|
 | **Vercel sandbox URL** | [https://slxai-3v7a.vercel.app/](https://slxai-3v7a.vercel.app/) |
-| **Custom domain (goal)** | `test.slxai.org` — add in Vercel **Domains** and DNS when ready |
+| **Custom domain (goal)** | `test.slxai.org`: add in Vercel **Domains** and DNS when ready |
 | **MySQL / MariaDB port** | **3306** (default). Use on your **server** (PHP, API, SSH tunnel)—never paste DB passwords into the frontend or this repo. The browser does not connect to port 3306 directly. |
 
 ---
@@ -36,11 +36,11 @@ Propagation can take a few minutes to 48 hours.
 
 ## 2. Same Git repo, second deployment
 
-### Option A — Vercel (matches existing `vercel.json`)
+### Option A: Vercel (matches existing `vercel.json`)
 
 1. [Vercel Dashboard](https://vercel.com) → **Add New** → **Project** → Import **the same GitHub repo** as production.
 2. Name it e.g. `slxai-test` so it’s clearly the sandbox.
-3. **Settings → Environment Variables** — copy from production, then adjust:
+3. **Settings → Environment Variables**: copy from production, then adjust:
    - Same `VITE_SUPABASE_*` **or** a **separate Supabase project** (recommended for a real sandbox).
    - Set **`VITE_SANDBOX=true`** so the UI shows the amber “Sandbox” bar (see below).
 4. **Settings → Domains** → add `test.slxai.org` and complete DNS as Vercel instructs.
@@ -58,7 +58,7 @@ Propagation can take a few minutes to 48 hours.
 
 | Approach | Pros |
 |----------|------|
-| **Same Supabase as prod** | Fast to set up; **risky**—test data and emails affect real users. |
+| **Same Supabase as prod** | Fast to set up; **risky**: test data and emails affect real users. |
 | **Second Supabase project** | Safer default: clone schema/migrations, use new URL + anon key only on `test`. |
 
 Never commit real keys. Use the host’s **Environment Variables** UI only.

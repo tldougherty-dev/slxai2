@@ -5,7 +5,7 @@ import { shouldSendEmailNotification, getUnsubscribeUrl } from './notificationPr
 const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
 // Serverless email route. Use VITE_EMAIL_API_URL (e.g. https://your-app.vercel.app) in local dev
-// when Vite cannot run /api — otherwise same-origin /api/send-email.
+// when Vite cannot run /api; otherwise same-origin /api/send-email.
 function getEmailApiUrl(): string {
   const base = (import.meta.env.VITE_EMAIL_API_URL as string | undefined)?.replace(/\/$/, '');
   if (base) {

@@ -1,5 +1,5 @@
 /**
- * Shown when VITE_SANDBOX=true (set on test.slxai.org only — not production).
+ * Shown when VITE_SANDBOX=true (set on test.slxai.org only; not production).
  */
 export function SandboxBanner() {
   const enabled = import.meta.env.VITE_SANDBOX === 'true' || import.meta.env.VITE_SANDBOX === '1';
@@ -11,7 +11,7 @@ export function SandboxBanner() {
       role="status"
       aria-live="polite"
     >
-      Sandbox / test environment — not production
+      Sandbox / test environment: not production
     </div>
   );
 }

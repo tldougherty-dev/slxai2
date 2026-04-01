@@ -1,5 +1,5 @@
 /**
- * Full portal data backup for admins — downloads a JSON snapshot of Supabase tables
+ * Full portal data backup for admins: downloads a JSON snapshot of Supabase tables
  * the admin client can read (subject to RLS).
  */
 import { supabase } from '@/lib/supabase';

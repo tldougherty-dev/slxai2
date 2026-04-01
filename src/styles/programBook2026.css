@@ -1,6 +1,6 @@
 /**
  * Summit 2026 program book routes only (/2026, /2026/workshop/*).
- * Scoped under .program-book-2026 — does not affect the main site homepage.
+ * Scoped under .program-book-2026: does not affect the main site homepage.
  */
 
 .program-book-2026 {
@@ -20,7 +20,7 @@
   }
 }
 
-/* Landscape mobile / short viewports — keep content compact without changing md+ desktop */
+/* Landscape mobile / short viewports: keep content compact without changing md+ desktop */
 @media (orientation: landscape) and (max-height: 520px) and (max-width: 1024px) {
   .program-book-2026 .pb-mobile-landscape-compact {
     padding-top: 0.35rem;

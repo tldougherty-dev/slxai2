@@ -14,7 +14,7 @@ export type SummitWorkshopPresenter = {
   bio?: string;
   /** Optional contact email (mailto link in program book) */
   email?: string;
-  /** Public URL path e.g. /summit-2026/photos/ryan-h.jpg — null/undefined shows placeholder */
+  /** Public URL path e.g. /summit-2026/photos/ryan-h.jpg; null/undefined shows placeholder */
   photoUrl?: string | null;
 };
 
@@ -68,7 +68,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     sessionTitle: 'Research and Data Collection: Strengthening Validity Through Partnerships',
     presentersLine: 'Presenter: Pamela Macias, University of Colorado Boulder',
     summary:
-      "Data collection grounded in Deaf individuals' experiences can strengthen AI companies' credibility and accountability. Using a University of Colorado study on AI-generated ASL videos as an example, the session shows how university collaboration supports data quality, rigor, and ethical accountability—and highlights practices that center Deaf expertise in research.",
+      "Data collection grounded in Deaf individuals' experiences can strengthen AI companies' credibility and accountability. Using a University of Colorado study on AI-generated ASL videos as an example, the session shows how university collaboration supports data quality, rigor, and ethical accountability, and highlights practices that center Deaf expertise in research.",
     presenters: [
       {
         name: 'Pamela Macias',
@@ -82,7 +82,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     sessionTitle: 'Intentional Design for SL Translation: AI and Hybrid Approaches',
     presentersLine: 'Presenters: Noreen Wilson, Molly Glass, Yeh Jun Kim, Kara Technologies',
     summary:
-      'This workshop explores when automated sign language translation and hybrid, human-in-the-loop approaches fit real-time Deaf access—from emergency and templated notifications to evolving communication needs. It compares automated, hybrid, and human-led models, and discusses quality, accountability, and realistic expectations in context.',
+      'This workshop explores when automated sign language translation and hybrid, human-in-the-loop approaches fit real-time Deaf access, from emergency and templated notifications to evolving communication needs. It compares automated, hybrid, and human-led models, and discusses quality, accountability, and realistic expectations in context.',
     presenters: [
       {
         name: 'Noreen Wilson',
@@ -177,7 +177,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     presentersLine:
       'Presenters: Sławek Łuczywek, Ashod Derandonyan, and Michał Plaza, Migam.ai',
     summary:
-      'Migam outlines how AI can transform sign language translation and interpretation when development is grounded in real communication challenges, using the migam.ai case study. The session stresses integrating Deaf colleagues and experts throughout the entire AI lifecycle—from design and data through testing, deployment, and ongoing dialogue with Deaf communities—so technology is shaped by Deaf expertise, not only powered by models.',
+      'Migam outlines how AI can transform sign language translation and interpretation when development is grounded in real communication challenges, using the migam.ai case study. The session stresses integrating Deaf colleagues and experts throughout the entire AI lifecycle (from design and data through testing, deployment, and ongoing dialogue with Deaf communities), so technology is shaped by Deaf expertise, not only powered by models.',
     presenters: [
       {
         name: 'Sławek Łuczywek',
@@ -193,7 +193,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     sessionTitle: 'The Future of Sign Language Translation is Transcription',
     presentersLine: 'Presenter: Dr. Amit Moryossef, Nagish',
     summary:
-      'Sign language processing often stalls at the gap between video-based signing and text-based AI. This session presents SignWriting as a universal transcription layer that connects the two: enabling translation and generation in both directions, clarifying how NLP and computer vision can divide labor in sign language pipelines, and arguing that the right basic representation—including transcription—is central to evaluation, product design, and realistic expectations.',
+      'Sign language processing often stalls at the gap between video-based signing and text-based AI. This session presents SignWriting as a universal transcription layer that connects the two: enabling translation and generation in both directions, clarifying how NLP and computer vision can divide labor in sign language pipelines, and arguing that the right basic representation, including transcription, is central to evaluation, product design, and realistic expectations.',
     presenters: [
       {
         name: 'Dr. Amit Moryossef',
@@ -227,7 +227,7 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     presentersLine:
       'Presenters: Dr. Lee Kezar, Dr. Lorna Quandt, Dr. Athena Willis, Laurel Aichler, Gallaudet University',
     summary:
-      'Researchers in educational neuroscience and SLxAI discuss how to make AI-assisted learning more accessible to students who use sign language—through collaboration among teachers, students, researchers, and systems. Topics include augmented reality interface design, domain-specific terms in sign language models, and evaluating student outcomes.',
+      'Researchers in educational neuroscience and SLxAI discuss how to make AI-assisted learning more accessible to students who use sign language, through collaboration among teachers, students, researchers, and systems. Topics include augmented reality interface design, domain-specific terms in sign language models, and evaluating student outcomes.',
     presenters: [
       {
         name: 'Dr. Lee Kezar',
@@ -263,12 +263,12 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     presentersLine:
       'Presenter: Dr. Maartje De Meulder, HU University of Applied Sciences Utrecht (Hogeschool Utrecht)',
     summary:
-      'Sign language AI risks to be deployed before it is linguistically, socially, and culturally ready, and once a system is seen as "good enough", institutions may treat it as default access – quietly reshaping choices, standards, and rights in practice. This workshop argues that technical and commercial decisions become standards: dataset provenance and inclusion rules determine what signing becomes learnable by AI; benchmarks define "quality"; and procurement contracts define what counts as "supported language" and "sufficient access".',
+      'Sign language AI risks to be deployed before it is linguistically, socially, and culturally ready, and once a system is seen as "good enough", institutions may treat it as default access, quietly reshaping choices, standards, and rights in practice. This workshop argues that technical and commercial decisions become standards: dataset provenance and inclusion rules determine what signing becomes learnable by AI; benchmarks define "quality"; and procurement contracts define what counts as "supported language" and "sufficient access".',
     presenters: [
       {
         name: 'Dr. Maartje De Meulder',
         organization: 'HU University of Applied Sciences Utrecht (Hogeschool Utrecht)',
-        bio: 'Dr. Maartje De Meulder combines Deaf Studies, language policy, and the wider social sciences to make sense of how language technologies meet deaf lives – with a particular focus on sign language AI. She is interested in how technological affordances shape language, communication, and access, and how deaf people use these technologies in their everyday lives. Alongside her academic work, she regularly collaborates with deaf organisations, interpreting professionals, and technology stakeholders to help the think critically about key questions surrounding ethics, access, and governance of language technologies. Across her work, she aims to build bridges between research, policy and practice: developing concepts and evidence that make sense to deaf communities themselves, while also challenging dominant assumptions about “access” and “inclusion” in tech development, education, and public services.',
+        bio: 'Dr. Maartje De Meulder combines Deaf Studies, language policy, and the wider social sciences to make sense of how language technologies meet deaf lives, with a particular focus on sign language AI. She is interested in how technological affordances shape language, communication, and access, and how deaf people use these technologies in their everyday lives. Alongside her academic work, she regularly collaborates with deaf organisations, interpreting professionals, and technology stakeholders to help the think critically about key questions surrounding ethics, access, and governance of language technologies. Across her work, she aims to build bridges between research, policy and practice: developing concepts and evidence that make sense to deaf communities themselves, while also challenging dominant assumptions about “access” and “inclusion” in tech development, education, and public services.',
       },
     ],
   },
@@ -289,7 +289,7 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     presentersLine:
       'Presenters: Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, PhD, Shelley Oishi, TWA Innovations LLC',
     summary:
-      'American Sign Language is often treated as a technical problem rather than a living language shaped by history, pedagogy, and community practice. This session argues that putting Deaf signers on camera is not the same as placing Deaf ASL experts in leadership—and examines documentation labor, governance, and ethical ASL–AI work that centers authority, not token inclusion.',
+      'American Sign Language is often treated as a technical problem rather than a living language shaped by history, pedagogy, and community practice. This session argues that putting Deaf signers on camera is not the same as placing Deaf ASL experts in leadership, and examines documentation labor, governance, and ethical ASL-AI work that centers authority, not token inclusion.',
     presenters: [
       {
         name: 'Elisa Abenchuchan Vita',
@@ -301,7 +301,7 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
         name: 'Lisa Gelineau',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
-        bio: 'Lisa Gelineau brings decades of experience in ASL education, proficiency evaluation, and curriculum development. She is co-founder of TWA Innovations and a professor at Austin Community College, focused on how technology—including AI—can support rather than oversimplify signed languages.',
+        bio: 'Lisa Gelineau brings decades of experience in ASL education, proficiency evaluation, and curriculum development. She is co-founder of TWA Innovations and a professor at Austin Community College, focused on how technology, including AI, can support rather than oversimplify signed languages.',
       },
       {
         name: 'Raychelle Harris',
@@ -339,13 +339,13 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     sessionTitle: 'Fireside Chat with Federal Communications Commission',
     presentersLine: 'Featuring: Travis Dougherty, Signapse; Suzy Rosen Singleton, Federal Communications Commission',
     summary:
-      'A fireside discussion on AI regulation from a U.S. government perspective, the emergency wireless act, and upcoming rulings relevant to the SLxAI industry—plus practical implications for accessibility policy and the sign language technology ecosystem.',
+      'A fireside discussion on AI regulation from a U.S. government perspective, the emergency wireless act, and upcoming rulings relevant to the SLxAI industry, plus practical implications for accessibility policy and the sign language technology ecosystem.',
     presenters: [
       {
         name: 'Travis Dougherty',
         title: 'Chief Experience Officer',
         organization: 'Signapse',
-        bio: 'Travis Dougherty is Chief Experience Officer at Signapse. He previously spent five years with Maryland Relay for Telecommunications Access of Maryland, served the National Association of State Relay Administrators (NASRA) in several leadership roles—including Member at Large, Vice Chair, and Chair—and worked with state and federal agencies. He participated in the Deaf and Hard of Hearing Consumer Advocacy Network (DHHCAN), the Safe AI Taskforce, and the FCC Disability Advisory Committee (5th term). He coauthored “Virginia Relay Digital Modernization” (January 2026).',
+        bio: 'Travis Dougherty is Chief Experience Officer at Signapse. He previously spent five years with Maryland Relay for Telecommunications Access of Maryland, served the National Association of State Relay Administrators (NASRA) in several leadership roles, including Member at Large, Vice Chair, and Chair, and worked with state and federal agencies. He participated in the Deaf and Hard of Hearing Consumer Advocacy Network (DHHCAN), the Safe AI Taskforce, and the FCC Disability Advisory Committee (5th term). He coauthored “Virginia Relay Digital Modernization” (January 2026).',
       },
       {
         name: 'Suzy Rosen Singleton',

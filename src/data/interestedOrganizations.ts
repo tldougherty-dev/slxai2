@@ -1,4 +1,4 @@
-/** Organizations previously listed on the homepage “Organization Members Interested” section — kept for admin reference. */
+/** Organizations previously listed on the homepage “Organization Members Interested” section: kept for admin reference. */
 
 export interface InterestedOrgRow {
   name: string;

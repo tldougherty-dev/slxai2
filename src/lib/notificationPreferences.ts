@@ -76,7 +76,7 @@ const DEFAULT_PREFERENCES: Omit<NotificationPreferences, 'userId' | 'email'> = {
 
 /**
  * Resolve who preferences belong to. If `email` is passed without `userId`, look up by
- * recipient email only — do not fall back to the current session user (fixes bulk emails).
+ * recipient email only; do not fall back to the current session user (fixes bulk emails).
  */
 function resolvePreferenceTarget(
   userId?: string,

@@ -73,7 +73,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '12:00 PM to 1:00 PM',
         sessionType: 'Lunch',
-        title: 'Lunch — Sponsored by Alangu',
+        title: 'Lunch: Sponsored by Alangu',
         presenters: 'Eleftherios Avramidis',
       },
       {
@@ -171,7 +171,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '12:00 PM to 1:00 PM',
         sessionType: 'Lunch',
         title: 'Lunch',
-        presenters: '—',
+        presenters: '',
       },
       {
         time: '1:00 PM to 1:50 PM',

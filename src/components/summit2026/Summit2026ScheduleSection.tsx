@@ -114,7 +114,7 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
       {SUMMIT_2026_SCHEDULE.map((day) => (
         <div key={day.dayLabel}>
           <h4 className="mb-3 border-b border-electric-blue/30 pb-2 text-xl font-bold text-electric-blue sm:text-2xl">
-            {day.dayDate ? `${day.dayLabel} — ${day.dayDate}` : day.dayLabel}
+            {day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel}
           </h4>
           <div
             className={`overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 ${programBookMobile ? 'pb-schedule-scroll md:pb-0' : ''}`}
@@ -161,7 +161,7 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
       {SUMMIT_2026_SCHEDULE.map((day) => (
         <div key={`m-${day.dayLabel}`}>
           <h4 className="mb-2 border-b border-electric-blue/30 pb-1.5 text-base font-bold leading-tight text-electric-blue sm:mb-3 sm:pb-2 sm:text-lg max-md:landscape:text-sm">
-            {day.dayDate ? `${day.dayLabel} — ${day.dayDate}` : day.dayLabel}
+            {day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel}
           </h4>
           <ul className="flex flex-col items-stretch gap-1.5 max-md:landscape:gap-1.5 sm:gap-2">
             {day.rows.map((row, idx) => (

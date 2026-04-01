@@ -455,7 +455,7 @@ export default function Summit2026() {
               <div className="text-center text-gray-700 dark:text-white">
                 <p>
                   <strong>Date:</strong> April 16-17, 2026<br />
-                  <strong>Conference Hours:</strong> 8:45 AM – 5:10 PM (see summit schedule)
+                  <strong>Conference Hours:</strong> 8:45 AM to 5:10 PM (see summit schedule)
                 </p>
               </div>
             </div>

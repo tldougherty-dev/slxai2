@@ -145,7 +145,7 @@ export default function Bylaws() {
               Back to home
             </Link>
           </Button>
-          <h1 className="sr-only">Bylaws — SLxAI</h1>
+          <h1 className="sr-only">Bylaws: SLxAI</h1>
         </div>
 
         <article
@@ -183,7 +183,7 @@ export default function Bylaws() {
             <CardContent className="pt-6">
               {isSubmitted ? (
                 <div className="text-center py-6 text-gray-700">
-                  <p className="text-lg font-medium text-gray-900 mb-2">Thank you — we received your feedback.</p>
+                  <p className="text-lg font-medium text-gray-900 mb-2">Thank you. We received your feedback.</p>
                   <Button
                     type="button"
                     variant="outline"

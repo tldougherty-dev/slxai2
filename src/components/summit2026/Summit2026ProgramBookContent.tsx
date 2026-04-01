@@ -341,7 +341,7 @@ const Summit2026ProgramBookContent = ({
                       <strong>{getText('date', 'Date:')}</strong> {getText('dateValue', 'April 16-17, 2026')}
                       <br />
                       <strong>{getText('conferenceHours', 'Conference Hours:')}</strong>{' '}
-                      {getText('conferenceHoursValue', '8:45 AM – 5:10 PM (see schedule below)')}
+                      {getText('conferenceHoursValue', '8:45 AM to 5:10 PM (see schedule below)')}
                     </p>
                   </div>
                 </div>

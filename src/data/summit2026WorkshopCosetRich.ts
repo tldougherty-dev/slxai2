@@ -41,7 +41,7 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
     name: 'Jeff Shaul',
     email: 'Jeff@sign-speak.com',
     organization: 'Sign-Speak',
-    bio: 'Jeff Shaul is a Deaf backend engineer building sign language–first systems. At Sign-Speak, he develops production platforms for language technologies. His background spans large-scale data systems and software engineering. He is a part owner of Signapse and contributes to CoSET’s work on ethical evaluation frameworks for sign language AI.',
+    bio: 'Jeff Shaul is a Deaf backend engineer building sign language-first systems. At Sign-Speak, he develops production platforms for language technologies. His background spans large-scale data systems and software engineering. He is a part owner of Signapse and contributes to CoSET’s work on ethical evaluation frameworks for sign language AI.',
   },
 ];
 

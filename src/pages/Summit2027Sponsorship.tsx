@@ -59,7 +59,7 @@ export default function Summit2027Sponsorship() {
         variant="default"
         size="icon"
         onClick={scrollToTop}
-        className="fixed right-4 top-4 z-[100] h-11 w-11 rounded-full border-0 bg-electric-blue text-white shadow-lg hover:bg-electric-blue/90 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+        className="fixed bottom-4 right-4 z-[100] h-11 w-11 rounded-full border-0 bg-electric-blue text-white shadow-lg hover:bg-electric-blue/90 focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
         aria-label="Back to top of page"
         title="Back to top"
       >

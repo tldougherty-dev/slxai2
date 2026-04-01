@@ -6497,7 +6497,7 @@ export default function Admin() {
             <CardContent className="space-y-4">
               <p className="text-sm text-gray-600 dark:text-white">
                 The file includes members, votes, files, discussions, summit data, tickets, interest forms, waitlist,
-                settings, and more—everything your admin account can read from Supabase.
+                settings, and more. Everything your admin account can read from Supabase.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
                 <Button

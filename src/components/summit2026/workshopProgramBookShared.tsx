@@ -2,7 +2,7 @@ import { User } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 /**
- * Blue banner + white body — matches CoSET program book sections.
+ * Blue banner + white body: matches CoSET program book sections.
  */
 export function WorkshopProgramSectionCard({
   headingId,

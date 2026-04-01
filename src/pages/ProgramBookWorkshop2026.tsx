@@ -35,7 +35,7 @@ function WorkshopDetailBody({ workshop }: { workshop: Summit2026Workshop }) {
               <div className="flex w-full shrink-0 flex-col items-center justify-center gap-2 md:w-auto md:flex-row md:flex-wrap md:items-start md:justify-center md:gap-0">
                 <span className="text-center text-xl font-semibold text-electric-blue sm:text-2xl md:text-left">
                   {scheduleSlot.dayDate
-                    ? `${scheduleSlot.dayLabel} — ${scheduleSlot.dayDate}`
+                    ? `${scheduleSlot.dayLabel}, ${scheduleSlot.dayDate}`
                     : scheduleSlot.dayLabel}
                 </span>
                 <span className="w-full border-t border-gray-200 pt-2 text-center text-xl font-semibold leading-snug text-electric-blue sm:text-2xl md:w-auto md:border-l md:border-t-0 md:pl-4 md:pt-0 md:text-left">
