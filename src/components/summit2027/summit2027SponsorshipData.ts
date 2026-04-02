@@ -58,6 +58,7 @@ export const BU_SUMMIT_SUCCESS_STATS: readonly {
     label: 'Companies & organizations',
     detail: 'Represented in attendance',
   },
+  { value: '15', label: 'Sponsors', detail: 'Supporting the summit' },
   {
     value: '18',
     label: 'Countries',
@@ -89,6 +90,10 @@ export const MIAMI_SUMMIT_GOALS_STATS: readonly {
   },
   { value: '3', label: 'Workshop tracks', detail: 'Concurrent tracks' },
 ];
+
+/** Boston summit timeline — short planning window and early sell-out */
+export const BU_SUMMIT_PLANNING_NOTE =
+  'The entire program was pulled together in less than three months of planning. It sold out by the seventh week of planning — more than a month before the summit.';
 
 /** Communication access delivered at the Boston summit — proof SLxAI runs inclusive programming at scale */
 export const BU_SUMMIT_ACCESS_PROOF =

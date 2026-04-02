@@ -4,6 +4,7 @@ import {
   ADD_ON_OPPORTUNITIES,
   AUDIENCE_CATEGORIES,
   BU_SUMMIT_ACCESS_PROOF,
+  BU_SUMMIT_PLANNING_NOTE,
   BU_SUMMIT_SUCCESS_STATS,
   CONTACT_EMAIL,
   MIAMI_SUMMIT_GOALS_STATS,
@@ -574,7 +575,7 @@ export function Sponsorship2027Page() {
             <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
               {BU_SUMMIT_ACCESS_PROOF}
             </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 sm:gap-4">
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4">
               {BU_SUMMIT_SUCCESS_STATS.map((row) => (
                 <li
                   key={row.label}
@@ -590,6 +591,9 @@ export function Sponsorship2027Page() {
                 </li>
               ))}
             </ul>
+            <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+              {BU_SUMMIT_PLANNING_NOTE}
+            </p>
           </div>
         </div>
       </section>
