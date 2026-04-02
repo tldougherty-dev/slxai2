@@ -3,7 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ADD_ON_OPPORTUNITIES,
   AUDIENCE_CATEGORIES,
+  BU_SUMMIT_ACCESS_PROOF,
+  BU_SUMMIT_SUCCESS_STATS,
   CONTACT_EMAIL,
+  MIAMI_SUMMIT_GOALS_STATS,
   EXHIBIT_LEVELS,
   SUMMIT_2027_DATES,
   SPONSORSHIP_TIERS,
@@ -546,6 +549,83 @@ export function Sponsorship2027Page() {
                   </li>
                 );
               })}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Boston University prior summit — proof for Miami scale */}
+      <section
+        className="border-b border-teal-200/40 bg-gradient-to-b from-slate-50/50 via-white to-cyan-50/25 pb-8 pt-8 sm:pb-10 sm:pt-10"
+        aria-labelledby="bu-success-heading"
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white/98 via-slate-50/40 to-cyan-50/30 p-5 shadow-md ring-1 ring-slate-900/5 backdrop-blur-sm sm:p-6">
+            <div className="text-center">
+              <h2 id="bu-success-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
+                Proven success at Boston University
+              </h2>
+            </div>
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+              The last SLxAI Summit on campus was a full-capacity event with sustained interest well beyond the room.
+              Those results are the strongest proof point behind expanding SLxAI Summit 2027 to roughly{' '}
+              <span className="font-semibold text-slate-900">1,000</span> attendees in Miami.
+            </p>
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+              {BU_SUMMIT_ACCESS_PROOF}
+            </p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 sm:gap-4">
+              {BU_SUMMIT_SUCCESS_STATS.map((row) => (
+                <li
+                  key={row.label}
+                  className="flex flex-col rounded-xl border border-slate-200/90 bg-white/95 px-4 py-4 text-center shadow-sm ring-1 ring-slate-900/[0.04]"
+                >
+                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">
+                    {row.value}
+                  </span>
+                  <span className="mt-1 text-sm font-semibold text-slate-800">{row.label}</span>
+                  {row.detail ? (
+                    <span className="mt-2 text-xs leading-snug text-slate-600 sm:text-[0.8125rem]">{row.detail}</span>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Miami 2027 goals */}
+      <section
+        className="border-b border-teal-200/40 bg-gradient-to-b from-cyan-50/35 via-cyan-50/20 to-orange-50/25 pb-8 pt-8 sm:pb-10 sm:pt-10"
+        aria-labelledby="miami-goals-heading"
+      >
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-teal-200/75 bg-gradient-to-br from-white/95 via-cyan-50/35 to-amber-50/25 p-5 shadow-md ring-1 ring-teal-900/10 backdrop-blur-sm sm:p-6">
+            <div className="text-center">
+              <h2 id="miami-goals-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
+                Goals of the Miami Summit
+              </h2>
+            </div>
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-teal-900/80 sm:text-base">
+              Planning targets for the SLxAI Summit in Miami ({SUMMIT_2027_DATES}): more sessions, more seats, and broader
+              international representation than we could offer on campus in Boston. This will include exhibit spaces,
+              which were not available in Boston.
+            </p>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
+              {MIAMI_SUMMIT_GOALS_STATS.map((row) => (
+                <li
+                  key={row.label}
+                  className="flex flex-col rounded-xl border border-teal-200/90 bg-white/95 px-4 py-4 text-center shadow-sm ring-1 ring-teal-900/[0.06]"
+                >
+                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">
+                    {row.value}
+                  </span>
+                  <span className="mt-1 text-sm font-semibold text-slate-800">{row.label}</span>
+                  {row.detail ? (
+                    <span className="mt-2 text-xs leading-snug text-slate-600 sm:text-[0.8125rem]">{row.detail}</span>
+                  ) : null}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -40,6 +40,60 @@ export const WHY_SPONSOR_POINTS: readonly WhySponsorPoint[] = [
   },
 ];
 
+/** Prior SLxAI Summit at Boston University — proof points for Miami 2027 scale-up */
+export const BU_SUMMIT_SUCCESS_STATS: readonly {
+  value: string;
+  label: string;
+  detail?: string;
+}[] = [
+  { value: '20', label: 'Workshop and panel sessions' },
+  { value: '1', label: 'Workshop track', detail: 'Single track' },
+  {
+    value: '225',
+    label: 'Attendees',
+    detail: 'At 220-seat capacity — demand exceeded seats',
+  },
+  {
+    value: '104',
+    label: 'Companies & organizations',
+    detail: 'Represented in attendance',
+  },
+  {
+    value: '18',
+    label: 'Countries',
+    detail: 'Home countries represented among those 225 attendees',
+  },
+  {
+    value: '300+',
+    label: 'Waiting list',
+    detail: 'Interested people who could not be seated',
+  },
+];
+
+/** Summit 2027 (Miami) targets — forward-looking goals */
+export const MIAMI_SUMMIT_GOALS_STATS: readonly {
+  value: string;
+  label: string;
+  detail?: string;
+}[] = [
+  { value: '50+', label: 'Workshops', detail: 'Workshop and panel sessions' },
+  {
+    value: '1,000',
+    label: 'Target attendees',
+    detail: 'From 25+ countries',
+  },
+  {
+    value: '250+',
+    label: 'Organizations & companies',
+    detail: 'Target representation',
+  },
+  { value: '3', label: 'Workshop tracks', detail: 'Concurrent tracks' },
+];
+
+/** Communication access delivered at the Boston summit — proof SLxAI runs inclusive programming at scale */
+export const BU_SUMMIT_ACCESS_PROOF =
+  'That summit also demonstrated full communication access: programming in American Sign Language and International Sign Language, with English through spoken audio and live text via CART (Communication Access Realtime Translation).';
+
 export const AUDIENCE_CATEGORIES = [
   'AI and machine learning companies',
   'Sign language technology companies',
