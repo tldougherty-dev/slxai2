@@ -18,7 +18,6 @@ import {
 import {
   Building2,
   Check,
-  Download,
   Globe2,
   Eye,
   IdCard,
@@ -39,11 +38,11 @@ const mailto = (subject: string) =>
 
 /** Title chip for Why sponsor cards */
 const SPONSORSHIP_SECTION_TITLE_PILL_CLASS =
-  'inline-flex max-w-full items-center justify-center rounded-full border border-orange-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-snug tracking-tight text-slate-900 shadow-sm sm:px-4 sm:text-base';
+  'inline-flex max-w-full items-center justify-center rounded-full border border-orange-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-tight tracking-tight text-slate-900 shadow-sm max-sm:px-2 max-sm:py-1 max-sm:text-[0.75rem] max-sm:leading-tight sm:px-4 sm:text-base sm:leading-snug';
 
 /** Who you reach: white pills for max readability on rose card */
 const AUDIENCE_CATEGORY_PILL_CLASS =
-  'inline-flex w-full max-w-full items-center justify-center rounded-full border border-slate-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-snug tracking-tight text-slate-900 shadow-sm sm:px-4 sm:text-base';
+  'inline-flex w-full max-w-full min-w-0 items-center justify-center rounded-full border border-slate-200/90 bg-white px-3 py-1.5 text-center text-sm font-semibold leading-tight tracking-tight text-slate-900 shadow-sm max-sm:px-2 max-sm:py-1 max-sm:text-[0.75rem] max-sm:leading-tight sm:px-4 sm:text-base sm:leading-snug';
 
 /** Top banner on each sponsorship tier card */
 const TIER_TOP_BANNERS: Record<TierId, { label: string; barClass: string }> = {
@@ -158,13 +157,21 @@ const MIAMI_HEADLINE_CARD_STYLES = [
 
 /** Mid-page section headings (~5% under prior 2.25 / 2.8125rem scale) */
 const MIDPAGE_SECTION_TITLE_CLASS =
-  'font-broadway text-center text-[2.1375rem] font-bold leading-tight tracking-tight text-slate-900 sm:text-[2.671875rem]';
+  'font-broadway text-center text-[2.1375rem] font-bold leading-tight tracking-tight text-slate-900 max-sm:px-1 max-sm:text-[1.5rem] max-sm:leading-[1.08] sm:text-[2.671875rem]';
+
+/** Sponsorship tiers page title — desktop sm+ unchanged */
+const TIERS_PAGE_TITLE_CLASS =
+  'font-broadway text-[3.75rem] font-bold leading-[1.1] tracking-tight text-slate-900 max-sm:px-2 max-sm:text-[1.875rem] max-sm:leading-[1.12] sm:text-[4.5rem]';
+
+/** Body copy: tighter lines + one step smaller on narrow phones only */
+const MOBILE_COMPACT_BODY_BASE =
+  'max-sm:text-sm max-sm:leading-snug sm:text-base sm:leading-relaxed';
 
 export function Sponsorship2027Page() {
   return (
     <main
       id="main-content"
-      className="relative text-slate-900 !bg-[linear-gradient(180deg,#ecfeff_0%,#ffffff_38%,#fffbeb_100%)] bg-white"
+      className="relative min-w-0 text-slate-900 !bg-[linear-gradient(180deg,#ecfeff_0%,#ffffff_38%,#fffbeb_100%)] bg-white max-sm:overflow-x-clip"
     >
       {/* Soft Miami “sun on water” wash behind page content */}
       <div
@@ -177,7 +184,7 @@ export function Sponsorship2027Page() {
       />
       {/* Hero: Miami sunset skyline + overlays for legible white text */}
       <section
-        className="relative flex min-h-[22rem] items-end overflow-hidden border-b border-teal-200/40 text-white sm:min-h-[28rem] md:min-h-[32rem]"
+        className="relative flex min-h-[22rem] items-end overflow-hidden border-b border-teal-200/40 text-white max-sm:min-h-[min(100svh,22rem)] landscape:max-sm:min-h-[min(100dvh,28rem)] sm:min-h-[28rem] md:min-h-[32rem]"
         aria-labelledby="sponsor-hero-heading"
       >
         <div
@@ -202,64 +209,63 @@ export function Sponsorship2027Page() {
           }}
           aria-hidden
         />
-        <div className="relative z-10 mx-auto w-full max-w-5xl px-4 pb-3 pt-4 sm:px-6 sm:pb-4 sm:pt-6 md:pb-5 md:pt-8 lg:px-8 lg:pb-6 lg:pt-10">
-          <p className="text-outline-black mb-3 text-center text-4xl font-bold leading-tight tracking-tight text-white sm:mb-4 sm:text-5xl md:text-6xl lg:mb-5 lg:text-7xl">
+        <div className="relative z-10 mx-auto w-full min-w-0 max-w-5xl px-4 pb-3 pt-4 max-sm:px-3 landscape:max-sm:pb-2 landscape:max-sm:pt-3 sm:px-6 sm:pb-4 sm:pt-6 md:pb-5 md:pt-8 lg:px-8 lg:pb-6 lg:pt-10">
+          <p className="text-outline-black mb-3 text-center text-4xl font-bold leading-[1.1] tracking-tight text-white max-sm:mb-1.5 max-sm:text-[1.5rem] max-sm:leading-[1.08] landscape:max-sm:text-[1.65rem] sm:mb-4 sm:leading-tight sm:text-5xl md:text-6xl lg:mb-5 lg:text-7xl">
             SLxAI Summit 2027
           </p>
-          <p className="text-outline-black mb-3 text-center text-xl font-semibold tracking-[0.06em] text-cyan-100 sm:mb-4 sm:text-2xl md:text-3xl">
+          <p className="text-outline-black mb-3 text-center text-xl font-semibold tracking-[0.06em] text-cyan-100 max-sm:mb-1.5 max-sm:text-sm max-sm:leading-tight landscape:max-sm:text-base sm:mb-4 sm:text-2xl md:text-3xl">
             {SUMMIT_2027_DATES}
           </p>
-          <div className="mb-4 flex justify-center sm:mb-5 lg:mb-6">
-            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-full border border-white/40 bg-white/90 px-6 py-3.5 shadow-md shadow-black/20 backdrop-blur-sm sm:gap-x-3 sm:px-8 sm:py-5">
+          <div className="mb-4 flex justify-center max-sm:mb-3 sm:mb-5 lg:mb-6">
+            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-0.5 rounded-full border border-white/40 bg-white/90 px-6 py-3.5 shadow-md shadow-black/20 backdrop-blur-sm max-sm:px-3.5 max-sm:py-2 landscape:max-sm:py-1.5 sm:gap-x-3 sm:px-8 sm:py-5">
               <span className="h-3 w-3 shrink-0 rounded-full bg-gradient-to-r from-cyan-500 to-orange-400" aria-hidden />
-              <span className="text-lg font-semibold uppercase tracking-[0.12em] text-teal-800 sm:text-xl sm:tracking-[0.14em]">
+              <span className="text-lg font-semibold uppercase tracking-[0.12em] text-teal-800 max-sm:text-xs max-sm:leading-none max-sm:tracking-[0.06em] sm:text-xl sm:tracking-[0.14em]">
                 Hosted in
               </span>
-              <span className="font-broadway text-5xl font-bold leading-none tracking-tight text-teal-800 sm:text-6xl">
+              <span className="font-broadway text-5xl font-bold leading-none tracking-tight text-teal-800 max-sm:text-[1.875rem] landscape:max-sm:text-[2.25rem] sm:text-6xl">
                 Miami, FL
               </span>
             </span>
           </div>
           <h1
             id="sponsor-hero-heading"
-            className="text-balance text-center text-3xl font-normal tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.8)] sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.12]"
+            className="text-balance text-center text-3xl font-normal tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.8)] max-sm:px-1 max-sm:text-[1.25rem] max-sm:leading-[1.2] landscape:max-sm:text-[1.35rem] sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.12]"
           >
             Sponsor the Future of Sign Language and AI
           </h1>
-          <p className="text-outline-black mx-auto mt-6 max-w-3xl text-center text-base leading-relaxed text-white sm:text-lg">
+          <p className="text-outline-black mx-auto mt-6 max-w-3xl text-center text-base leading-relaxed text-white max-sm:mt-3 max-sm:text-xs max-sm:leading-snug landscape:max-sm:mt-2.5 sm:text-lg sm:leading-relaxed">
             Support the leading summit bringing together sign language researchers, AI companies, accessibility leaders,
             universities, and Deaf community voices to shape the future of ethical and effective sign language
             technology.
           </p>
-          <p className="text-outline-black mx-auto mt-5 max-w-3xl text-center text-[1.53rem] font-semibold leading-relaxed text-white sm:text-[1.75rem]">
+          <p className="text-outline-black mx-auto mt-5 max-w-3xl text-center text-[1.53rem] font-semibold leading-relaxed text-white max-sm:mt-2.5 max-sm:text-[0.8125rem] max-sm:leading-tight landscape:max-sm:text-sm sm:text-[1.75rem] sm:leading-relaxed">
             Up to{' '}
             <span className="text-cyan-200">1,000 attendees</span> from{' '}
             <span className="text-cyan-200">25+ countries</span>
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <div className="mt-10 flex w-full min-w-0 flex-col flex-wrap items-stretch justify-center gap-3 max-sm:mt-5 max-sm:max-w-[22rem] max-sm:gap-2 max-sm:self-center landscape:max-sm:mt-4 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
             <Button
               asChild
               size="lg"
-              className="h-12 rounded-lg border border-slate-200/90 bg-white px-8 text-base font-semibold text-slate-900 shadow-lg shadow-black/10 transition hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="h-12 w-full rounded-lg border border-slate-200/90 bg-white px-8 text-base font-semibold text-slate-900 shadow-lg shadow-black/10 transition hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 max-sm:h-11 max-sm:text-sm sm:w-auto"
             >
               <a href="#sponsor-contact">Become a Sponsor</a>
             </Button>
             <Button
               asChild
               size="lg"
-              className="h-12 rounded-lg border-2 border-white/70 bg-white/10 px-8 text-base font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="h-12 w-full rounded-lg border-2 border-white/70 bg-white/10 px-8 text-base font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 max-sm:h-11 max-sm:text-sm sm:w-auto"
             >
               <a
                 href={SPONSORSHIP_PDF_PATH}
                 download="SLxAI-Summit-2027-Sponsorship.pdf"
-                className="inline-flex items-center gap-2"
+                className="inline-flex items-center justify-center text-center leading-tight max-sm:text-[0.8125rem] sm:leading-snug"
               >
-                <Download className="h-4 w-4 shrink-0" aria-hidden />
                 Download sponsorship overview
               </a>
             </Button>
           </div>
-          <p className="text-outline-black mt-8 text-center text-sm text-white">
+          <p className="text-outline-black mt-8 text-center text-sm leading-normal text-white max-sm:mt-4 max-sm:px-1 max-sm:text-[0.6875rem] max-sm:leading-tight landscape:max-sm:mt-3 sm:leading-normal">
             For sponsorship inquiries, contact{' '}
             <a
               className="text-outline-black font-semibold text-sky-200 underline underline-offset-2 decoration-sky-200/80 hover:text-white hover:decoration-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
@@ -273,28 +279,32 @@ export function Sponsorship2027Page() {
 
       {/* Venue and Location */}
       <section
-        className="relative border-b border-teal-100/60 bg-gradient-to-b from-cyan-50/50 via-white to-amber-50/35 pb-8 pt-4 sm:pb-10 sm:pt-6"
+        className="relative border-b border-teal-100/60 bg-gradient-to-b from-cyan-50/50 via-white to-amber-50/35 pb-8 pt-4 max-sm:pb-6 max-sm:pt-3 sm:pb-10 sm:pt-6"
         aria-labelledby="venue-location-heading"
       >
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-cyan-100/25 to-transparent sm:h-14"
           aria-hidden
         />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="relative mx-auto max-w-6xl min-w-0 px-4 sm:px-6 lg:px-8">
           <h2 id="venue-location-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
             <span className="bg-gradient-to-r from-teal-700 via-cyan-700 to-teal-800 bg-clip-text text-transparent">
               Venue and Location
             </span>
           </h2>
-          <p className="mx-auto mt-3 max-w-4xl text-center text-sm leading-relaxed text-slate-600 sm:max-w-5xl sm:text-base">
+          <p
+            className={`mx-auto mt-3 max-w-4xl text-center sm:max-w-5xl ${MOBILE_COMPACT_BODY_BASE} text-slate-600 max-sm:mt-2`}
+          >
             The summit runs{' '}
-            <span className="text-base font-semibold text-slate-800 sm:text-lg">{SUMMIT_2027_DATES}</span> at the{' '}
-            <span className="text-base font-semibold text-slate-800 sm:text-lg">InterContinental Miami</span>, a high-visibility environment
-            <br />
+            <span className="text-base font-semibold text-slate-800 max-sm:text-xs sm:text-lg">{SUMMIT_2027_DATES}</span> at the{' '}
+            <span className="text-base font-semibold text-slate-800 max-sm:text-xs sm:text-lg">InterContinental Miami</span>, a high-visibility environment{' '}
+            <span className="max-sm:hidden">
+              <br />
+            </span>
             for sponsors engaging with leaders in sign language AI, accessibility technology, and research.
           </p>
 
-          <figure className="mt-8 overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
+          <figure className="mt-8 max-sm:mt-5 overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
             <img
               src="/summit2027-venue-miami-skyline-intercontinental.png"
               alt="Miami bayfront skyline: InterContinental Miami and waterfront with yacht on turquoise water under a clear sky"
@@ -306,7 +316,7 @@ export function Sponsorship2027Page() {
             />
           </figure>
 
-          <figure className="mt-10 overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
+          <figure className="mt-10 max-sm:mt-6 overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
               <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[2/1]">
                 <img
                   src="/summit2027-venue-grand-ballroom.png"
@@ -317,14 +327,14 @@ export function Sponsorship2027Page() {
                   height={800}
                 />
               </div>
-              <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+              <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
                 <span className="font-semibold text-slate-800">Grand Ballroom: </span>
                 1000 seatings for keynote and plenary sessions
               </figcaption>
             </figure>
 
-          <div className="mt-12 w-full">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          <div className="mt-12 max-sm:mt-10 w-full">
+            <div className="grid gap-6 max-sm:gap-4 lg:grid-cols-2 lg:gap-8">
               <figure className="overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
                 <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[2/1]">
                   <img
@@ -336,7 +346,7 @@ export function Sponsorship2027Page() {
                     height={800}
                   />
                 </div>
-                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
                   <span className="font-semibold text-slate-800">Exhibit halls: </span>
                   We have two exhibit halls in Biscayne Ballroom and Chopin Ballroom.
                 </figcaption>
@@ -353,14 +363,14 @@ export function Sponsorship2027Page() {
                     height={800}
                   />
                 </div>
-                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
                   <span className="font-semibold text-slate-800">Atrium: </span>
                   Center of the second floor, connecting sessions, exhibits, and sponsor touchpoints
                 </figcaption>
               </figure>
             </div>
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:gap-8">
+            <div className="mt-12 max-sm:mt-10 grid gap-6 max-sm:gap-4 lg:grid-cols-2 lg:gap-8">
               <figure className="overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
                 <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[2/1]">
                   <img
@@ -372,7 +382,7 @@ export function Sponsorship2027Page() {
                     height={800}
                   />
                 </div>
-                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
                   <span className="font-semibold text-slate-800">Evening receptions and outdoor events: </span>
                   InterContinental Miami offers dramatic outdoor lawn and terrace settings for receptions and
                   sponsor-hosted evening programming, with high visibility in a premium resort-style environment.
@@ -390,7 +400,7 @@ export function Sponsorship2027Page() {
                     height={800}
                   />
                 </div>
-                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+                <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
                   <span className="font-semibold text-slate-800">Rooftop pool and hotel amenities: </span>
                   The property includes a rooftop pool deck and the Blue Water Cafe, premium spaces for informal sponsor
                   conversations and attendee downtime between summit sessions.
@@ -399,18 +409,18 @@ export function Sponsorship2027Page() {
             </div>
           </div>
 
-          <figure className="mt-12 w-full overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/50 to-amber-50/40 shadow-xl ring-1 ring-teal-900/5">
+          <figure className="mt-12 w-full min-w-0 overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/50 to-amber-50/40 shadow-xl ring-1 ring-teal-900/5">
               <div className="w-full bg-gradient-to-b from-cyan-50/60 to-amber-50/40">
                 <img
                   src="/summit2027-venue-level-2-floor-plan.png"
                   alt="InterContinental Miami second level mezzanine floor plan showing Grand Ballroom, Chopin and Biscayne ballrooms, central atrium, Chopin foyer, meeting rooms, and circulation"
-                  className="block h-auto w-full object-contain object-center"
+                  className="block h-auto w-full max-w-full object-contain object-center"
                   loading="lazy"
                   width={1200}
                   height={900}
                 />
               </div>
-              <figcaption className="border-t border-slate-100 bg-white px-4 py-4 text-center text-sm leading-relaxed text-slate-600 sm:px-6 sm:text-base">
+              <figcaption className="border-t border-slate-100 bg-white px-4 py-4 text-center text-sm leading-relaxed text-slate-600 max-sm:px-3 max-sm:py-2.5 max-sm:text-xs max-sm:leading-snug sm:px-6 sm:text-base sm:leading-relaxed">
                 The summit occupies the{' '}
                 <span className="font-semibold text-slate-800">entire second floor</span> of the InterContinental Miami.
                 The atrium at the center of that level anchors the experience: an open, high-end circulation space between
@@ -457,7 +467,7 @@ export function Sponsorship2027Page() {
                   </a>
                 </p>
               </div>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem]">
+              <p className="mt-4 flex-1 text-xs leading-snug text-slate-600 sm:text-sm sm:leading-relaxed lg:text-[0.875rem] lg:leading-relaxed">
                 The SLxAI Summit will be hosted at the InterContinental Miami, a four-diamond waterfront property
                 located on Biscayne Bay in the heart of downtown Miami. Programming uses the full second floor (the
                 ballroom, exhibit hall, and central atrium), so presentations, exhibits, and sponsor activations sit in
@@ -519,7 +529,7 @@ export function Sponsorship2027Page() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-6 text-sm leading-relaxed text-slate-600 sm:text-base">
+                <p className="mt-6 text-sm leading-relaxed text-slate-600 max-sm:mt-4 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
                   Sponsors benefit from exposure across keynote sessions, networking areas, exhibit spaces, and evening
                   reception environments within a single cohesive venue.
                 </p>
@@ -531,20 +541,20 @@ export function Sponsorship2027Page() {
 
       {/* Why sponsor */}
       <section
-        className="border-b border-teal-200/40 bg-gradient-to-b from-cyan-50/45 via-orange-50/25 to-teal-50/35 pb-8 pt-8 sm:pb-10 sm:pt-10"
+        className="border-b border-teal-200/40 bg-gradient-to-b from-cyan-50/45 via-orange-50/25 to-teal-50/35 pb-8 pt-8 max-sm:pb-6 max-sm:pt-6 sm:pb-10 sm:pt-10"
         aria-labelledby="why-sponsor-heading"
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-teal-200/70 bg-gradient-to-br from-white/95 via-cyan-50/30 to-amber-50/25 p-5 shadow-md ring-1 ring-teal-900/10 backdrop-blur-sm sm:p-6">
+          <div className="rounded-2xl border border-teal-200/70 bg-gradient-to-br from-white/95 via-cyan-50/30 to-amber-50/25 p-5 shadow-md ring-1 ring-teal-900/10 backdrop-blur-sm max-sm:p-4 sm:p-6">
             <div className="text-center">
               <h2 id="why-sponsor-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
                 Why sponsor SLxAI?
               </h2>
             </div>
-            <p className="mt-3 text-center text-sm leading-relaxed text-teal-900/80 sm:text-base">
+            <p className="mt-3 text-center text-sm leading-relaxed text-teal-900/80 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               A focused audience, credible programming, and alignment with inclusive innovation.
             </p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-3.5">
+            <ul className="mt-5 grid gap-3 max-sm:mt-3 max-sm:gap-2 sm:grid-cols-2 sm:gap-3.5">
               {WHY_SPONSOR_POINTS.map((item, i) => {
                 const shell = MIAMI_HEADLINE_CARD_STYLES[i % MIAMI_HEADLINE_CARD_STYLES.length];
                 return (
@@ -554,12 +564,12 @@ export function Sponsorship2027Page() {
                     >
                       <div className="flex justify-center px-2 pt-2.5 sm:px-3 sm:pt-3">
                         <span
-                          className={`${SPONSORSHIP_SECTION_TITLE_PILL_CLASS} ${item.titleSingleLine ? 'whitespace-nowrap' : ''}`}
+                          className={`${SPONSORSHIP_SECTION_TITLE_PILL_CLASS} ${item.titleSingleLine ? 'whitespace-nowrap max-sm:whitespace-normal' : ''}`}
                         >
                           {item.title}
                         </span>
                       </div>
-                      <p className="flex-1 px-3 pb-2.5 pt-2 text-xs leading-relaxed text-slate-600 sm:px-3 sm:pb-3 sm:text-sm">
+                      <p className="flex-1 px-3 pb-2.5 pt-2 text-xs leading-relaxed text-slate-600 max-sm:pb-2 max-sm:pt-1.5 max-sm:leading-snug max-sm:text-[0.6875rem] sm:px-3 sm:pb-3 sm:text-sm sm:leading-relaxed">
                         {item.body}
                       </p>
                     </div>
@@ -573,41 +583,45 @@ export function Sponsorship2027Page() {
 
       {/* Boston University prior summit — proof for Miami scale */}
       <section
-        className="border-b border-teal-200/40 bg-gradient-to-b from-slate-50/50 via-white to-cyan-50/25 pb-8 pt-8 sm:pb-10 sm:pt-10"
+        className="border-b border-teal-200/40 bg-gradient-to-b from-slate-50/50 via-white to-cyan-50/25 pb-8 pt-8 max-sm:pb-6 max-sm:pt-6 sm:pb-10 sm:pt-10"
         aria-labelledby="bu-success-heading"
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white/98 via-slate-50/40 to-cyan-50/30 p-5 shadow-md ring-1 ring-slate-900/5 backdrop-blur-sm sm:p-6">
+          <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-white/98 via-slate-50/40 to-cyan-50/30 p-5 shadow-md ring-1 ring-slate-900/5 backdrop-blur-sm max-sm:p-4 sm:p-6">
             <div className="text-center">
               <h2 id="bu-success-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
                 Proven success at Boston University
               </h2>
             </div>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               The last SLxAI Summit on campus was a full-capacity event with sustained interest well beyond the room.
               Those results are the strongest proof point behind expanding SLxAI Summit 2027 to roughly{' '}
               <span className="font-semibold text-slate-900">1,000</span> attendees in Miami.
             </p>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-slate-700 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               {BU_SUMMIT_ACCESS_PROOF}
             </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4">
+            <ul className="mt-6 grid grid-cols-1 gap-3 max-sm:mt-4 max-sm:gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4">
               {BU_SUMMIT_SUCCESS_STATS.map((row) => (
                 <li
                   key={row.label}
-                  className="flex flex-col rounded-xl border border-slate-200/90 bg-white/95 px-4 py-4 text-center shadow-sm ring-1 ring-slate-900/[0.04]"
+                  className="flex min-w-0 flex-col rounded-xl border border-slate-200/90 bg-white/95 px-3 py-3 text-center shadow-sm ring-1 ring-slate-900/[0.04] max-sm:px-1.5 max-sm:py-3 sm:px-4 sm:py-4"
                 >
-                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">
+                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 max-sm:text-[1.35rem] max-sm:leading-none sm:text-[2rem]">
                     {row.value}
                   </span>
-                  <span className="mt-1 text-sm font-semibold text-slate-800">{row.label}</span>
+                  <span className="mt-1 text-sm font-semibold leading-tight text-slate-800 max-sm:mt-0.5 max-sm:text-[0.6875rem] max-sm:leading-tight sm:leading-normal sm:text-sm">
+                    {row.label}
+                  </span>
                   {row.detail ? (
-                    <span className="mt-2 text-xs leading-snug text-slate-600 sm:text-[0.8125rem]">{row.detail}</span>
+                    <span className="mt-2 text-xs leading-snug text-slate-600 max-sm:mt-1 max-sm:leading-tight max-sm:text-[0.625rem] sm:text-[0.8125rem] sm:leading-snug">
+                      {row.detail}
+                    </span>
                   ) : null}
                 </li>
               ))}
             </ul>
-            <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-slate-700 sm:text-base">
+            <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-relaxed text-slate-700 max-sm:mt-4 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               {BU_SUMMIT_PLANNING_NOTE}
             </p>
           </div>
@@ -616,33 +630,37 @@ export function Sponsorship2027Page() {
 
       {/* Miami 2027 goals */}
       <section
-        className="border-b border-teal-200/40 bg-gradient-to-b from-cyan-50/35 via-cyan-50/20 to-orange-50/25 pb-8 pt-8 sm:pb-10 sm:pt-10"
+        className="border-b border-teal-200/40 bg-gradient-to-b from-cyan-50/35 via-cyan-50/20 to-orange-50/25 pb-8 pt-8 max-sm:pb-6 max-sm:pt-6 sm:pb-10 sm:pt-10"
         aria-labelledby="miami-goals-heading"
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-teal-200/75 bg-gradient-to-br from-white/95 via-cyan-50/35 to-amber-50/25 p-5 shadow-md ring-1 ring-teal-900/10 backdrop-blur-sm sm:p-6">
+          <div className="rounded-2xl border border-teal-200/75 bg-gradient-to-br from-white/95 via-cyan-50/35 to-amber-50/25 p-5 shadow-md ring-1 ring-teal-900/10 backdrop-blur-sm max-sm:p-4 sm:p-6">
             <div className="text-center">
               <h2 id="miami-goals-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
                 Goals of the Miami Summit
               </h2>
             </div>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-teal-900/80 sm:text-base">
+            <p className="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-teal-900/80 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               Planning targets for the SLxAI Summit in Miami ({SUMMIT_2027_DATES}): more sessions, more seats, and broader
               international representation than we could offer on campus in Boston. This will include exhibit spaces,
               which were not available in Boston.
             </p>
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
+            <ul className="mt-6 grid grid-cols-1 gap-3 max-sm:mt-4 max-sm:gap-2 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
               {MIAMI_SUMMIT_GOALS_STATS.map((row) => (
                 <li
                   key={row.label}
-                  className="flex flex-col rounded-xl border border-teal-200/90 bg-white/95 px-4 py-4 text-center shadow-sm ring-1 ring-teal-900/[0.06]"
+                  className="flex min-w-0 flex-col rounded-xl border border-teal-200/90 bg-white/95 px-3 py-3 text-center shadow-sm ring-1 ring-teal-900/[0.06] max-sm:px-1.5 sm:px-4 sm:py-4"
                 >
-                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">
+                  <span className="font-broadway text-3xl font-bold tracking-tight text-slate-900 max-sm:text-[1.35rem] max-sm:leading-none sm:text-[2rem]">
                     {row.value}
                   </span>
-                  <span className="mt-1 text-sm font-semibold text-slate-800">{row.label}</span>
+                  <span className="mt-1 text-sm font-semibold leading-tight text-slate-800 max-sm:mt-0.5 max-sm:text-[0.6875rem] max-sm:leading-tight sm:leading-normal sm:text-sm">
+                    {row.label}
+                  </span>
                   {row.detail ? (
-                    <span className="mt-2 text-xs leading-snug text-slate-600 sm:text-[0.8125rem]">{row.detail}</span>
+                    <span className="mt-2 text-xs leading-snug text-slate-600 max-sm:mt-1 max-sm:leading-tight max-sm:text-[0.625rem] sm:text-[0.8125rem] sm:leading-snug">
+                      {row.detail}
+                    </span>
                   ) : null}
                 </li>
               ))}
@@ -653,20 +671,20 @@ export function Sponsorship2027Page() {
 
       {/* Audience */}
       <section
-        className="border-t border-teal-200/40 bg-gradient-to-b from-teal-50/35 via-cyan-50/30 to-orange-50/20 pb-4 pt-8 sm:pb-5 sm:pt-10"
+        className="border-t border-teal-200/40 bg-gradient-to-b from-teal-50/35 via-cyan-50/30 to-orange-50/20 pb-4 pt-8 max-sm:pb-3 max-sm:pt-6 sm:pb-5 sm:pt-10"
         aria-labelledby="audience-heading"
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-rose-200/80 bg-gradient-to-br from-rose-50/95 via-red-50/45 to-orange-50/55 p-5 shadow-md ring-1 ring-rose-900/10 backdrop-blur-sm sm:p-6">
+          <div className="rounded-2xl border border-rose-200/80 bg-gradient-to-br from-rose-50/95 via-red-50/45 to-orange-50/55 p-5 shadow-md ring-1 ring-rose-900/10 backdrop-blur-sm max-sm:p-4 sm:p-6">
             <div className="text-center">
               <h2 id="audience-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
                 Who You Will Reach
               </h2>
             </div>
-            <p className="mt-3 text-center text-sm leading-relaxed text-rose-950/90 sm:text-base">
+            <p className="mt-3 text-center text-sm leading-relaxed text-rose-950/90 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
               High-intent builders, researchers, and implementers - not general conference traffic.
             </p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-3.5">
+            <ul className="mt-5 grid gap-3 max-sm:mt-3 max-sm:gap-2 sm:grid-cols-2 sm:gap-3.5">
               {AUDIENCE_CATEGORIES.map((label) => (
                 <li key={label} className="flex justify-center">
                   <span className={AUDIENCE_CATEGORY_PILL_CLASS}>{label}</span>
@@ -675,7 +693,7 @@ export function Sponsorship2027Page() {
             </ul>
           </div>
 
-          <figure className="mt-8 w-full overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
+          <figure className="mt-8 max-sm:mt-6 w-full overflow-hidden rounded-2xl border border-teal-200/50 bg-gradient-to-br from-cyan-50/40 to-amber-50/30 shadow-xl ring-1 ring-teal-900/5">
             <div className="w-full bg-slate-900/[0.03]">
               <img
                 src="/summit2027-venue-bayfront-hotel.png"
@@ -687,7 +705,7 @@ export function Sponsorship2027Page() {
                 decoding="async"
               />
             </div>
-            <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600">
+            <figcaption className="border-t border-slate-100 bg-white px-4 py-3 text-center text-sm text-slate-600 max-sm:px-3 max-sm:py-2 max-sm:text-xs max-sm:leading-snug">
               <span className="font-semibold text-slate-800">InterContinental Miami hotel: </span>
               A premium bayfront environment for receptions and sponsor hospitality
             </figcaption>
@@ -702,30 +720,27 @@ export function Sponsorship2027Page() {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2
-              id="tiers-heading"
-              className="font-broadway text-[3.75rem] font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-[4.5rem]"
-            >
+            <h2 id="tiers-heading" className={TIERS_PAGE_TITLE_CLASS}>
               Sponsorship tiers
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-slate-600">
+            <p className="mx-auto mt-3 max-w-2xl px-1 text-slate-600 max-sm:mt-2 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-normal">
               Compare packages and choose the level of visibility that fits your organization.
             </p>
           </div>
 
-          <div className="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-6 grid gap-8 max-sm:gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
             {TIER_IDS_ORDER.map((tierId) => {
               const tier = SPONSORSHIP_TIERS.find((t) => t.id === tierId);
               if (!tier) return null;
               const banner = TIER_TOP_BANNERS[tierId];
               const stats = TIER_AVAILABILITY_STATS[tierId];
               return (
-                <div key={tierId} className="group flex flex-col gap-8">
+                <div key={tierId} className="group flex min-w-0 flex-col gap-8 max-sm:gap-5">
                   <div
                     className={`overflow-hidden rounded-xl border shadow-sm transition duration-200 ${SPOT_BOX_BORDER[tierId]} ${SPOT_BOX_GROUP_HOVER[tierId]}`}
                   >
                     <p
-                      className={`py-2.5 text-center text-xl font-semibold uppercase leading-tight tracking-wider text-white shadow-sm sm:py-3 sm:text-2xl ${banner.barClass}`}
+                      className={`py-2.5 text-center text-xl font-semibold uppercase leading-tight tracking-wider text-white shadow-sm max-sm:px-1 max-sm:text-base max-sm:leading-snug sm:py-3 sm:text-2xl ${banner.barClass}`}
                     >
                       {TIER_SPOT_HEADER_LABEL[tierId]}
                     </p>
@@ -759,10 +774,10 @@ export function Sponsorship2027Page() {
                     >
                       {TIER_TOP_BANNERS[tier.id].label}
                     </p>
-                    <div className="flex flex-1 flex-col items-center p-6">
-                      <h3 className="text-center text-xl font-bold text-slate-900">{tier.name}</h3>
-                      <p className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900">{tier.price}</p>
-                      <ul className="mt-5 flex w-full flex-1 flex-col gap-3 text-left text-sm text-slate-600">
+                    <div className="flex flex-1 flex-col items-center p-6 max-sm:p-4">
+                      <h3 className="text-center text-xl font-bold text-slate-900 max-sm:text-lg">{tier.name}</h3>
+                      <p className="mt-2 text-center text-3xl font-bold tracking-tight text-slate-900 max-sm:text-2xl">{tier.price}</p>
+                      <ul className="mt-5 flex w-full flex-1 flex-col gap-3 text-left text-sm text-slate-600 max-sm:mt-4 max-sm:gap-2 max-sm:text-xs max-sm:leading-snug sm:text-sm sm:leading-normal">
                         {tier.benefits.map((b) => (
                           <li key={b} className="flex gap-2">
                             <Check className="mt-0.5 h-4 w-4 shrink-0 text-electric-blue" aria-hidden />
@@ -798,7 +813,7 @@ export function Sponsorship2027Page() {
           <h2 id="addons-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
             Additional Sponsorship Opportunities
           </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-sm leading-relaxed text-slate-600 sm:text-base">
+          <p className="mx-auto mt-2 max-w-2xl text-center text-sm leading-relaxed text-slate-600 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-relaxed">
             Layer targeted visibility across receptions, meals, materials, and on-site amenities. Custom packages are
             available on request.
           </p>
@@ -848,13 +863,13 @@ export function Sponsorship2027Page() {
           <h2 id="exhibit-heading" className={MIDPAGE_SECTION_TITLE_CLASS}>
             Exhibit Opportunities
           </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-center text-slate-600">
+          <p className="mx-auto mt-4 max-w-3xl px-1 text-center text-slate-600 max-sm:mt-3 max-sm:leading-snug max-sm:text-xs sm:text-base sm:leading-normal">
             Exhibit space puts your team in direct conversation with summit attendees in a focused environment, ideal for
             demos, discovery calls, and relationship building alongside plenary content. Exhibit halls are located in
             both the Biscayne Ballroom and Chopin Ballroom.
           </p>
           <div className="group mx-auto mt-12 w-full max-w-5xl">
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-6 max-sm:gap-4 md:grid-cols-2 xl:grid-cols-4">
               {EXHIBIT_LEVELS.map((ex, i) => {
                 const shell = MIAMI_HEADLINE_CARD_STYLES[i] ?? MIAMI_HEADLINE_CARD_STYLES[0];
                 return (
@@ -863,13 +878,13 @@ export function Sponsorship2027Page() {
                     className={`flex flex-col overflow-hidden rounded-2xl border shadow-sm transition hover:shadow-lg ${shell.shell}`}
                   >
                     <h3
-                      className={`rounded-t-2xl px-3 py-3 text-center text-lg font-bold leading-snug text-white shadow-sm sm:text-xl ${shell.barClass}`}
+                      className={`rounded-t-2xl px-3 py-3 text-center text-lg font-bold leading-snug text-white shadow-sm max-sm:px-2 max-sm:py-2.5 max-sm:text-base sm:text-xl ${shell.barClass}`}
                     >
                       {ex.name}
                     </h3>
-                    <div className="flex flex-1 flex-col p-6">
-                      <p className="text-center text-3xl font-bold tracking-tight text-slate-900">{ex.price}</p>
-                      <ul className="mt-5 flex w-full flex-1 flex-col gap-3 text-left text-sm text-slate-600">
+                    <div className="flex flex-1 flex-col p-6 max-sm:p-4">
+                      <p className="text-center text-3xl font-bold tracking-tight text-slate-900 max-sm:text-2xl">{ex.price}</p>
+                      <ul className="mt-5 flex w-full flex-1 flex-col gap-3 text-left text-sm text-slate-600 max-sm:mt-4 max-sm:gap-2 max-sm:text-xs max-sm:leading-snug sm:text-sm sm:leading-normal">
                         {ex.benefits.map((b) => (
                           <li key={b} className="flex gap-2">
                             <Check className="mt-0.5 h-4 w-4 shrink-0 text-electric-blue" aria-hidden />
@@ -897,7 +912,7 @@ export function Sponsorship2027Page() {
       {/* Final CTA: South Beach dusk photo + readable overlay */}
       <section
         id="sponsor-contact"
-        className="relative min-h-[22rem] overflow-hidden border-t border-cyan-900/40 py-16 text-white sm:min-h-[26rem] sm:py-24"
+        className="relative min-h-[22rem] overflow-hidden border-t border-cyan-900/40 py-16 text-white max-sm:min-h-[min(100svh,20rem)] landscape:max-sm:min-h-[min(100dvh,24rem)] sm:min-h-[26rem] sm:py-24"
         aria-labelledby="final-cta-heading"
       >
         <div
@@ -918,24 +933,24 @@ export function Sponsorship2027Page() {
           }}
           aria-hidden
         />
-        <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-3xl min-w-0 px-4 text-center sm:px-6 lg:px-8">
           <h2
             id="final-cta-heading"
-            className="text-3xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.85)] sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-white [text-shadow:0_2px_14px_rgba(0,0,0,0.85)] max-sm:px-1 max-sm:text-2xl max-sm:leading-snug sm:text-4xl"
           >
             Interested in Sponsoring SLxAI?
           </h2>
-          <p className="mt-4 text-lg font-medium leading-relaxed text-white/95 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
+          <p className="mt-4 text-lg font-medium leading-relaxed text-white/95 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)] max-sm:mt-2.5 max-sm:leading-snug max-sm:text-sm landscape:max-sm:text-[0.9375rem] sm:text-lg sm:leading-relaxed">
             Join us{' '}
             <span className="text-xl font-semibold text-white sm:text-2xl">{SUMMIT_2027_DATES}</span> in Miami. We would
             be glad to discuss sponsorship options, exhibit opportunities,
             and custom partnership packages.
           </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <div className="mt-10 flex w-full min-w-0 flex-col flex-wrap items-stretch justify-center gap-3 max-sm:mt-6 max-sm:max-w-[22rem] max-sm:gap-2.5 max-sm:self-center landscape:max-sm:mt-5 sm:flex-row sm:items-center sm:gap-4">
             <Button
               asChild
               size="lg"
-              className="h-12 rounded-lg border border-slate-200/90 bg-white px-8 font-semibold text-slate-900 shadow-lg shadow-black/15 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="h-12 w-full rounded-lg border border-slate-200/90 bg-white px-8 text-base font-semibold text-slate-900 shadow-lg shadow-black/15 hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 max-sm:h-11 max-sm:text-sm sm:w-auto"
             >
               <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center justify-center gap-2">
                 <Mail className="h-4 w-4 text-slate-800" aria-hidden />
@@ -945,14 +960,13 @@ export function Sponsorship2027Page() {
             <Button
               asChild
               size="lg"
-              className="h-12 rounded-lg border-2 border-white/70 bg-transparent px-8 font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="h-12 w-full rounded-lg border-2 border-white/70 bg-transparent px-8 text-base font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 max-sm:h-11 max-sm:text-sm sm:w-auto"
             >
               <a
                 href={SPONSORSHIP_PDF_PATH}
                 download="SLxAI-Summit-2027-Sponsorship.pdf"
-                className="inline-flex items-center justify-center gap-2"
+                className="inline-flex items-center justify-center text-center leading-tight max-sm:text-[0.8125rem] sm:leading-snug"
               >
-                <Download className="h-4 w-4 shrink-0" aria-hidden />
                 Download sponsorship overview
               </a>
             </Button>
