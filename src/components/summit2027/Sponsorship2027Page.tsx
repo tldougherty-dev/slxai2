@@ -10,6 +10,7 @@ import {
   MIAMI_SUMMIT_GOALS_STATS,
   EXHIBIT_LEVELS,
   SUMMIT_2027_DATES,
+  SPONSORSHIP_PDF_PATH,
   SPONSORSHIP_TIERS,
   WHY_SPONSOR_POINTS,
   type TierId,
@@ -17,6 +18,7 @@ import {
 import {
   Building2,
   Check,
+  Download,
   Globe2,
   Eye,
   IdCard,
@@ -234,13 +236,27 @@ export function Sponsorship2027Page() {
             <span className="text-cyan-200">1,000 attendees</span> from{' '}
             <span className="text-cyan-200">25+ countries</span>
           </p>
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Button
               asChild
               size="lg"
               className="h-12 rounded-lg border border-slate-200/90 bg-white px-8 text-base font-semibold text-slate-900 shadow-lg shadow-black/10 transition hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             >
               <a href="#sponsor-contact">Become a Sponsor</a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="h-12 rounded-lg border-2 border-white/70 bg-white/10 px-8 text-base font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            >
+              <a
+                href={SPONSORSHIP_PDF_PATH}
+                download="SLxAI-Summit-2027-Sponsorship.pdf"
+                className="inline-flex items-center gap-2"
+              >
+                <Download className="h-4 w-4 shrink-0" aria-hidden />
+                Download sponsorship overview
+              </a>
             </Button>
           </div>
           <p className="text-outline-black mt-8 text-center text-sm text-white">
@@ -915,7 +931,7 @@ export function Sponsorship2027Page() {
             be glad to discuss sponsorship options, exhibit opportunities,
             and custom partnership packages.
           </p>
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Button
               asChild
               size="lg"
@@ -924,6 +940,20 @@ export function Sponsorship2027Page() {
               <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center justify-center gap-2">
                 <Mail className="h-4 w-4 text-slate-800" aria-hidden />
                 Contact Us
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="h-12 rounded-lg border-2 border-white/70 bg-transparent px-8 font-semibold text-white shadow-lg shadow-black/20 backdrop-blur-sm hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+            >
+              <a
+                href={SPONSORSHIP_PDF_PATH}
+                download="SLxAI-Summit-2027-Sponsorship.pdf"
+                className="inline-flex items-center justify-center gap-2"
+              >
+                <Download className="h-4 w-4 shrink-0" aria-hidden />
+                Download sponsorship overview
               </a>
             </Button>
           </div>

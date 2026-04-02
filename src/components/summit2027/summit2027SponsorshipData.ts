@@ -2,6 +2,9 @@
 
 export const CONTACT_EMAIL = 'contact@slxai.org';
 
+/** Public URL for the downloadable sponsorship PDF (file lives in /public) */
+export const SPONSORSHIP_PDF_PATH = '/summit2027-sponsorship.pdf';
+
 /** Conference dates for SLxAI Summit 2027 (Miami, FL) */
 export const SUMMIT_2027_DATES = 'April 20-21, 2027';
 
