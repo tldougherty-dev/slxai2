@@ -95,115 +95,113 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
       }
     >
       <h3 className="px-2 text-lg font-bold leading-tight text-white sm:text-xl md:text-2xl">
-        <span className="block">{getText('scheduleTitle', 'SLxAI Summit Schedule')}</span>
-        <span
-          className={
-            programBookMobile
-              ? 'mt-0.5 block text-sm font-semibold leading-tight text-white/95 sm:text-base md:mt-1 md:text-lg md:leading-snug lg:text-xl'
-              : 'mt-1 block text-base font-semibold leading-snug text-white/95 sm:text-lg md:text-xl'
-          }
-        >
-          {getText('scheduleDateLine', 'April 16 to 17, 2026')}
-        </span>
+        {getText('scheduleTitle', 'SLxAI Summit Schedule')}
       </h3>
     </div>
   );
 
-  const tableBody = (
-    <>
-      {SUMMIT_2026_SCHEDULE.map((day) => (
-        <div key={day.dayLabel}>
-          <h4 className="mb-3 border-b border-electric-blue/30 pb-2 text-xl font-bold text-electric-blue sm:text-2xl">
-            {day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel}
-          </h4>
-          <div
-            className={`overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 ${programBookMobile ? 'pb-schedule-scroll md:pb-0' : ''}`}
-          >
-            <table className="min-w-[560px] w-full border-collapse text-left text-gray-900">
-              <thead>
-                <tr className="border-b-2 border-electric-blue bg-blue-50/80">
-                  <th className="py-3 pr-3 text-xl font-semibold sm:pr-4 sm:text-2xl">Time</th>
-                  <th className="py-3 pr-3 text-lg font-semibold sm:pr-4 sm:text-xl">Session</th>
-                  <th className="py-3 text-lg font-semibold sm:text-xl">Presenter(s) / Affiliation</th>
-                </tr>
-              </thead>
-              <tbody>
-                {day.rows.map((row, idx) => (
-                  <tr
-                    key={`${day.dayLabel}-${idx}-${row.time}`}
-                    className={
-                      row.sessionType === 'Break'
-                        ? 'border-b border-gray-200 bg-gray-100'
-                        : row.sessionType === 'Lunch'
-                          ? 'border-b border-gray-100 bg-amber-50/40'
-                          : 'border-b border-gray-100'
-                    }
-                  >
-                    <td className="align-top py-3 pr-3 whitespace-nowrap text-gray-800 sm:pr-4">{row.time}</td>
-                    <td className="align-top py-3 pr-3 text-gray-900 sm:pr-4">
-                      <ScheduleSessionTitle row={row} variant="table" />
-                    </td>
-                    <td className="align-top py-3 text-lg text-gray-700 sm:text-xl">
-                      <SchedulePresenterAffiliationCell row={row} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
-    </>
-  );
+  const dayHeading = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) =>
+    day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel;
 
-  const mobileCards = (
-    <div className="space-y-4 text-center sm:space-y-5">
-      {SUMMIT_2026_SCHEDULE.map((day) => (
-        <div key={`m-${day.dayLabel}`}>
-          <h4 className="mb-2 border-b border-electric-blue/30 pb-1.5 text-base font-bold leading-tight text-electric-blue sm:mb-3 sm:pb-2 sm:text-lg max-md:landscape:text-sm">
-            {day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel}
-          </h4>
-          <ul className="flex flex-col items-stretch gap-1.5 max-md:landscape:gap-1.5 sm:gap-2">
-            {day.rows.map((row, idx) => (
-              <li
-                key={`${day.dayLabel}-${idx}-${row.time}`}
-                className={`flex flex-col items-center rounded-lg px-2.5 py-2 pb-mobile-card-compact text-center sm:px-3 sm:py-2.5 max-md:landscape:py-1.5 ${rowCardClass(row)}`}
-              >
-                <p
-                  className={`w-full text-sm font-semibold leading-tight sm:text-base sm:leading-snug md:text-lg ${
-                    row.sessionType === 'Break' ? 'text-gray-600' : 'text-electric-blue'
-                  }`}
-                >
-                  {row.time}
-                </p>
-                <div className="mt-1 w-full max-w-full text-[14px] leading-snug text-gray-900 sm:mt-1.5 sm:text-[15px] max-md:landscape:mt-0.5 max-md:landscape:text-sm">
-                  <ScheduleSessionTitle row={row} variant="card" compactMobileCard mobileCentered />
-                </div>
-                <div className="mt-1 w-full text-xs leading-snug text-gray-700 sm:mt-1.5 sm:text-sm sm:leading-relaxed max-md:landscape:text-[11px] max-md:landscape:leading-tight">
-                  <SchedulePresenterAffiliationCell row={row} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+  const dayHeaderBar = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) => (
+    <div
+      className={
+        programBookMobile
+          ? 'bg-electric-blue py-2 text-center sm:py-2.5 md:py-3 pb-mobile-landscape-compact'
+          : 'bg-electric-blue py-2.5 text-center sm:py-3 pb-mobile-landscape-compact'
+      }
+    >
+      <h4 className="px-2 text-base font-bold leading-tight text-white sm:text-lg md:text-xl">
+        {dayHeading(day)}
+      </h4>
     </div>
   );
 
-  return (
-    <div className="mb-8 w-full md:col-span-2">
-      <div className="overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl">
-        {headerBar}
+  const renderDayTable = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) => (
+    <div
+      className={`overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 ${programBookMobile ? 'pb-schedule-scroll md:pb-0' : ''}`}
+    >
+      <table className="min-w-[560px] w-full border-collapse text-left text-gray-900">
+        <thead>
+          <tr className="border-b-2 border-electric-blue bg-blue-50/80">
+            <th className="py-3 pr-3 text-xl font-semibold sm:pr-4 sm:text-2xl">Time</th>
+            <th className="py-3 pr-3 text-lg font-semibold sm:pr-4 sm:text-xl">Session</th>
+            <th className="py-3 text-lg font-semibold sm:text-xl">Presenter(s) / Affiliation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {day.rows.map((row, idx) => (
+            <tr
+              key={`${day.dayLabel}-${idx}-${row.time}`}
+              className={
+                row.sessionType === 'Break'
+                  ? 'border-b border-gray-200 bg-gray-100'
+                  : row.sessionType === 'Lunch'
+                    ? 'border-b border-gray-100 bg-amber-50/40'
+                    : 'border-b border-gray-100'
+              }
+            >
+              <td className="align-top py-3 pr-3 whitespace-nowrap text-base text-gray-800 sm:pr-4">{row.time}</td>
+              <td className="align-top py-3 pr-3 text-base text-gray-900 sm:pr-4">
+                <ScheduleSessionTitle row={row} variant="table" />
+              </td>
+              <td className="align-top py-3 text-base text-gray-700">
+                <SchedulePresenterAffiliationCell row={row} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 
-        {programBookMobile ? (
-          <>
-            <div className="hidden space-y-8 p-4 sm:p-6 md:block">{tableBody}</div>
-            <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{mobileCards}</div>
-          </>
-        ) : (
-          <div className="space-y-8 p-4 sm:p-6">{tableBody}</div>
-        )}
-      </div>
+  const renderDayMobileCards = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) => (
+    <ul className="flex flex-col items-stretch gap-1.5 max-md:landscape:gap-1.5 sm:gap-2">
+      {day.rows.map((row, idx) => (
+        <li
+          key={`${day.dayLabel}-${idx}-${row.time}`}
+          className={`flex flex-col items-center rounded-lg px-2.5 py-2 pb-mobile-card-compact text-center sm:px-3 sm:py-2.5 max-md:landscape:py-1.5 ${rowCardClass(row)}`}
+        >
+          <p
+            className={`w-full text-sm font-semibold leading-tight sm:text-base sm:leading-snug md:text-lg ${
+              row.sessionType === 'Break' ? 'text-gray-600' : 'text-electric-blue'
+            }`}
+          >
+            {row.time}
+          </p>
+          <div className="mt-1 w-full max-w-full text-sm leading-snug text-gray-900 sm:mt-1.5 sm:text-base max-md:landscape:mt-0.5 max-md:landscape:text-sm">
+            <ScheduleSessionTitle row={row} variant="card" compactMobileCard mobileCentered />
+          </div>
+          <div className="mt-1 w-full text-sm leading-snug text-gray-700 sm:mt-1.5 sm:text-base sm:leading-relaxed max-md:landscape:text-sm max-md:landscape:leading-tight">
+            <SchedulePresenterAffiliationCell row={row} />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const scheduleDaySections = SUMMIT_2026_SCHEDULE.map((day) => (
+    <div
+      key={day.dayLabel}
+      id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
+      className="scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl"
+    >
+      {dayHeaderBar(day)}
+      {programBookMobile ? (
+        <>
+          <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
+          <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{renderDayMobileCards(day)}</div>
+        </>
+      ) : (
+        <div className="p-4 sm:p-6">{renderDayTable(day)}</div>
+      )}
+    </div>
+  ));
+
+  return (
+    <div className="mb-8 flex w-full flex-col gap-6 sm:gap-8 md:col-span-2">
+      <div className="overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl">{headerBar}</div>
+      {scheduleDaySections}
     </div>
   );
 }

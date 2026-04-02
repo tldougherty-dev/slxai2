@@ -502,31 +502,32 @@ export default function Summit2026() {
               <CardTitle className="text-white text-4xl font-bold">About Summit 2026</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 pt-4">
+              <div className="overflow-hidden rounded-lg shadow-lg">
+                <img
+                  src="/slxai-bu-hero.png"
+                  alt="SLxAI Summit at Boston University"
+                  className="h-auto w-full"
+                />
+              </div>
               <div className="space-y-4 text-gray-700 dark:text-white leading-relaxed">
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">SLxAI Summit 2026 Overview</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">At a glance</h3>
                   <p>
-                    SLxAI Summit 2026 brings global researchers, companies, and Deaf led innovators together at Boston University. 
-                    The summit focuses on the future of sign language AI, ethical design, multilingual access, and collaboration 
-                    across the international ecosystem.
+                    The inaugural SLxAI Summit gathers researchers, industry, Deaf-led organizations, and community partners at
+                    Boston University for shared dialogue on sign language and AI: ethics, responsible deployment, data governance,
+                    benchmarks, accessibility, and real-world impact. A single plenary program keeps every attendee in the same room
+                    for the full agenda, so discussions stay transparent and aligned. The event advances SLxAI’s cooperative nonprofit
+                    work, including community engagement around bylaws and long-term governance.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Host</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Hosts</h3>
                   <p>
-                    The summit is held at Boston University. The Deaf Center at BU, directed by Dr. Naomi Caselli, supports research 
-                    in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and 
-                    strengthens the summit with its academic and community expertise.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Program Format</h3>
-                  <p>
-                    The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. 
-                    This format ensures everyone hears the same discussions and engages in the same conversations without splitting 
-                    the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.
+                    Your hosts are Dr. Naomi Caselli and Travis Dougherty. Dr. Caselli is at Boston University as Director of the
+                    Deaf Center, advancing sign language linguistics, Deaf studies, and technology; the university is proud to host
+                    the summit on campus. Travis Dougherty convenes SLxAI’s global stakeholder community and co-hosts the gathering
+                    alongside Dr. Caselli.
                   </p>
                 </div>
               </div>

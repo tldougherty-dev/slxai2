@@ -66,7 +66,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
   {
     slug: 'research-data-collection-partnerships',
     sessionTitle: 'Research and Data Collection: Strengthening Validity Through Partnerships',
-    presentersLine: 'Presenter: Pamela Macias, University of Colorado Boulder',
+    presentersLine: 'Presenters: Pamela Macias, Marta Sanzari, University of Colorado Boulder',
     summary:
       "Data collection grounded in Deaf individuals' experiences can strengthen AI companies' credibility and accountability. Using a University of Colorado study on AI-generated ASL videos as an example, the session shows how university collaboration supports data quality, rigor, and ethical accountability, and highlights practices that center Deaf expertise in research.",
     presenters: [
@@ -74,6 +74,10 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
         name: 'Pamela Macias',
         organization: 'University of Colorado Boulder',
         email: 'pamela.macias@colorado.edu',
+      },
+      {
+        name: 'Marta Sanzari',
+        organization: 'University of Colorado Boulder',
       },
     ],
   },

@@ -21,6 +21,8 @@ export default {
 		extend: {
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],
+				/** Prefer `.welcome-letter-signature-name` in CSS so program-book Inter cannot win */
+				'signature': ['Allura', 'Great Vibes', 'cursive'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

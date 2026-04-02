@@ -115,9 +115,26 @@ const Index = () => {
         date: 'Date:',
         dateValue: 'April 16-17, 2026',
         conferenceHours: 'Conference Hours:',
-        conferenceHoursValue: '8:45 AM to 5:10 PM',
+        conferenceHoursValue: '8:45 AM to 5:10 PM (see schedule below)',
         scheduleTitle: 'SLxAI Summit Schedule',
-        scheduleDateLine: 'April 16 to 17, 2026',
+        tocNavLabel: 'Table of contents',
+        tocTitle: 'Table of contents',
+        tocDay1: 'Day 1',
+        tocDay2: 'Day 2',
+        tocSponsors: 'Sponsors',
+        tocAbout: 'About the Summit',
+        tocMasterOfCeremonies: 'Master of Ceremonies',
+        tocWelcomeLetter: 'Welcome Letter from the Host',
+        tocStorySlxai: 'The story of SLxAI',
+        tocSummitCommittee: 'Summit Committee',
+        welcomeLetterTitle: 'Welcome Letter from the Host',
+        storySlxaiTitle: 'The Story Behind SLxAI',
+        summitCommitteeTitle: 'Summit Committee',
+        summitCommitteeIntro:
+          'This summit would not be possible without the committee members below. Each contributed in their own way to help ensure a successful event.',
+        sponsorsSectionTitle: 'Sponsors',
+        sponsorsSectionThankYou:
+          'We are grateful to our incredible sponsors for making this summit possible. Without your support, none of this would happen. Thank you to each of you.',
         eveningEvents: 'Evening Events:',
         eveningEventsValue: 'Evening events on both nights',
         preConference: 'Pre-Conference:',
@@ -131,12 +148,13 @@ const Index = () => {
         addressValue: '1 Silber Way',
         addressValue2: 'Boston, MA 02215',
         aboutSummitTitle: 'About Summit 2026',
-        overviewTitle: 'SLxAI Summit 2026 Overview',
-        overviewText: 'SLxAI Summit 2026 brings global researchers, companies, and Deaf led innovators together at Boston University. The summit focuses on the future of sign language AI, ethical design, multilingual access, and collaboration across the international ecosystem.',
-        hostTitle: 'Host',
-        hostText: 'The summit is held at Boston University. The Deaf Center at BU, directed by Dr. Naomi Caselli, supports research in sign language linguistics, Deaf studies, and technology. It serves as a core partner for this event and strengthens the summit with its academic and community expertise.',
-        programFormatTitle: 'Program Format',
-        programFormatText: 'The event is built around plenary sessions. All attendees share the same room for every talk, demo, and panel. This format ensures everyone hears the same discussions and engages in the same conversations without splitting the audience. Presenter teams come from universities, companies, and Deaf led organizations. The summit features 20 workshops and panels.',
+        overviewTitle: 'At a glance',
+        overviewText:
+          'The inaugural SLxAI Summit gathers researchers, industry, Deaf-led organizations, and community partners at Boston University for shared dialogue on sign language and AI: ethics, responsible deployment, data governance, benchmarks, accessibility, and real-world impact. A single plenary program keeps every attendee in the same room for the full agenda, so discussions stay transparent and aligned. The event advances SLxAI’s cooperative nonprofit work, including community engagement around bylaws and long-term governance.',
+        hostTitle: 'Hosts',
+        hostText:
+          'Your hosts are Dr. Naomi Caselli and Travis Dougherty. Dr. Caselli is at Boston University as Director of the Deaf Center, advancing sign language linguistics, Deaf studies, and technology; the university is proud to host the summit on campus. Travis Dougherty convenes SLxAI’s global stakeholder community and co-hosts the gathering alongside Dr. Caselli.',
+        masterOfCeremoniesTitle: 'Master of Ceremonies',
         focusAreasTitle: 'Focus Areas:',
         focusArea1: 'Sign Language Recognition (SLR)',
         focusArea2: 'Ethics and Governance',
@@ -580,8 +598,7 @@ const Index = () => {
 
       <Summit2026ProgramBookContent
         getText={getText}
-        showSchedule={false}
-        showLandingBuHeroImage
+        showSchedule
         linkWorkshopCardsToProgramBook={false}
       />
 

@@ -12,6 +12,7 @@ function ProgramBook2026Inner() {
       getText={getText}
       hideSoldOut
       showProgramBookSubtitle
+      showSchedule
       showWorkshopsAndPanels={false}
     />
   );

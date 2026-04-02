@@ -1,6 +1,6 @@
 /**
- * Final SLxAI Summit Schedule (slxai_summit_schedule.pdf).
- * Wording matches the published schedule document.
+ * Final SLxAI Summit Schedule — matches the published PDF
+ * (Final SLxAI Summit Schedule - slxai_summit_schedule).
  */
 
 export type SummitScheduleRow = {
@@ -147,7 +147,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '9:40 AM to 10:25 AM',
         sessionType: 'Session',
         title: 'Research and Data Collection: Strengthening Validity Through Partnerships',
-        presenters: 'Pamela Macias, University of Colorado',
+        presenters: 'Pamela Macias, Marta Sanzari, University of Colorado',
         workshopSlug: 'research-data-collection-partnerships',
       },
       { time: '10:25 AM to 10:35 AM', sessionType: 'Break', title: 'Break', presenters: '' },
@@ -163,9 +163,9 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '11:30 AM to 12:00 PM',
         sessionType: 'Session',
-        title: 'A Linguistic Approach to Sign Language Data in AI Model Development',
-        presenters: 'Dr. Naomi Caselli, Kaj Kraus',
-        workshopSlug: 'linguistic-approach-sign-language-data-ai',
+        title: 'Fireside Chat with Federal Communications Commission',
+        presenters: 'Travis Dougherty, Suzy Rosen Singleton',
+        workshopSlug: 'fireside-chat-fcc',
       },
       {
         time: '12:00 PM to 1:00 PM',
@@ -208,22 +208,22 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '4:10 PM to 4:40 PM',
         sessionType: 'Session',
-        title: 'Fireside Chat with Federal Communications Commission',
-        presenters: 'Travis Dougherty, Suzy Rosen Singleton',
-        workshopSlug: 'fireside-chat-fcc',
+        title: 'A Linguistic Approach to Sign Language Data in AI Model Development',
+        presenters: 'Dr. Naomi Caselli, Kaj Kraus',
+        workshopSlug: 'linguistic-approach-sign-language-data-ai',
       },
       { time: '4:40 PM to 4:45 PM', sessionType: 'Break', title: 'Break', presenters: '' },
       {
         time: '4:45 PM to 4:55 PM',
         sessionType: 'Closing',
-        title: 'Closing Remarks by Boston University',
-        presenters: '????',
+        title: 'The voting session to approve and adopt the bylaws, and final words.',
+        presenters: 'Travis Dougherty, SLxAI',
       },
       {
         time: '4:55 PM to 5:10 PM',
         sessionType: 'Closing',
-        title: 'The voting session to approve and adopt the bylaws, and final words.',
-        presenters: 'Travis Dougherty, SLxAI',
+        title: 'Closing Remarks by Boston University',
+        presenters: 'Yannis Paschalidis',
       },
     ],
   },
