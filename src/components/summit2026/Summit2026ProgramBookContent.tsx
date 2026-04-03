@@ -321,6 +321,8 @@ const Summit2026ProgramBookContent = ({
               </CardContent>
             </Card>
 
+            <Summit2026StorySlxaiSection getText={getText} />
+
             <Card
               id="summit-master-of-ceremonies"
               className="scroll-mt-28 w-full overflow-hidden rounded-lg border border-gray-200 shadow-xl dark:border-gray-700"
@@ -390,7 +392,6 @@ const Summit2026ProgramBookContent = ({
               </Card>
             ) : null}
 
-            <Summit2026StorySlxaiSection getText={getText} />
             <Summit2026CommitteeSection getText={getText} />
             </div>
           ) : null}

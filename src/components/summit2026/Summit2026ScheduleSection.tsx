@@ -1,5 +1,6 @@
 import { SUMMIT_2026_SCHEDULE, type SummitScheduleRow } from '@/data/summit2026Schedule';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
+import { Summit2026EveningEventSection } from '@/components/summit2026/Summit2026EveningEventSection';
 import { presenterCreditWithItalicOrgs } from '@/components/summit2026/summit2026PresenterCredit';
 import { getSummit2026WorkshopBySlug } from '@/data/summit2026Workshops';
 import { Link } from 'react-router-dom';
@@ -180,23 +181,37 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
     </ul>
   );
 
-  const scheduleDaySections = SUMMIT_2026_SCHEDULE.map((day) => (
-    <div
-      key={day.dayLabel}
-      id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
-      className="scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl"
-    >
-      {dayHeaderBar(day)}
-      {programBookMobile ? (
-        <>
-          <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
-          <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{renderDayMobileCards(day)}</div>
-        </>
-      ) : (
-        <div className="p-4 sm:p-6">{renderDayTable(day)}</div>
-      )}
-    </div>
-  ));
+  const scheduleDaySections = SUMMIT_2026_SCHEDULE.flatMap((day, dayIndex) => {
+    const daySection = (
+      <div
+        key={day.dayLabel}
+        id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
+        className="scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl"
+      >
+        {dayHeaderBar(day)}
+        {programBookMobile ? (
+          <>
+            <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
+            <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{renderDayMobileCards(day)}</div>
+          </>
+        ) : (
+          <div className="p-4 sm:p-6">{renderDayTable(day)}</div>
+        )}
+      </div>
+    );
+
+    if (dayIndex === 0) {
+      return [
+        daySection,
+        <Summit2026EveningEventSection
+          key="summit-evening-event"
+          getText={getText}
+          programBookMobile={programBookMobile}
+        />,
+      ];
+    }
+    return [daySection];
+  });
 
   return (
     <div className="mb-8 flex w-full flex-col gap-6 sm:gap-8 md:col-span-2">

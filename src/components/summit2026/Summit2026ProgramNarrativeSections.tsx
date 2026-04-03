@@ -28,25 +28,60 @@ function ProseBlock({ paragraphs }: { paragraphs: string[] }) {
   );
 }
 
+/** Aged legal-paper body: left red margin, ink-colored type on light tan. */
+function WelcomeLetterPaperBody({ paragraphs }: { paragraphs: string[] }) {
+  return (
+    <div className="relative min-h-[8rem]">
+      {/* Classic legal-pad vertical rule (~1 in from sheet edge on sm+) */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
+        aria-hidden
+      />
+      <div className="space-y-3 px-4 py-5 pl-[calc(1.75rem+1.125rem)] text-left text-sm leading-tight text-[#2a231c] sm:px-6 sm:py-6 sm:pl-[calc(1in+1.5rem)] dark:text-[#ece8df]">
+        {paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Outer card: matches story/committee; white mat under the blue title bar. */
+const welcomeLetterSectionShell =
+  'scroll-mt-28 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900';
+
+/** Tan “sheet” only — lifted shadow so it reads as floating on the white mat. */
+const welcomeLetterFloatingPaper =
+  'overflow-hidden rounded-sm border-2 border-[#a69072]/50 bg-[#f3ebe0] shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-4px_rgba(55,42,28,0.18),0_20px_40px_-12px_rgba(45,35,22,0.12)] dark:border-[#5c4d3d] dark:bg-[#2b2620] dark:shadow-[0_10px_30px_-6px_rgba(0,0,0,0.55),0_24px_48px_-16px_rgba(0,0,0,0.45)]';
+
 export function Summit2026WelcomeLetterSection({ getText }: Props) {
   return (
-    <section id="summit-welcome-letter" className={sectionShell}>
+    <section id="summit-welcome-letter" className={welcomeLetterSectionShell}>
       <div className={narrativeHeroHeaderBar}>
-        <h2 className={narrativeHeroTitle}>{getText('welcomeLetterTitle', 'Welcome Letter from the Host')}</h2>
+        <h2 className={narrativeHeroTitle}>{getText('welcomeLetterTitle', 'Welcome Letter')}</h2>
       </div>
-      <ProseBlock paragraphs={SUMMIT_2026_WELCOME_LETTER_PARAGRAPHS} />
-      <div className="flex justify-end border-t border-gray-100 bg-gradient-to-b from-gray-50/80 to-transparent px-4 pb-6 pt-6 dark:border-gray-700 dark:from-gray-900/50 sm:px-6 sm:pb-8">
-        <div className="max-w-lg text-right">
-          <p className="text-sm font-medium tracking-wide text-gray-600 dark:text-gray-400">
-            {SUMMIT_2026_WELCOME_LETTER_SIGNATURE.closing}
-          </p>
-          <p
-            className="welcome-letter-signature-name mt-3 text-[2.5rem] leading-none tracking-wide text-slate-900 [text-shadow:0_1px_0_rgba(255,255,255,0.6)] dark:text-slate-100 dark:[text-shadow:0_1px_1px_rgba(0,0,0,0.35)] sm:text-[3rem]"
-            lang="en"
-          >
-            {SUMMIT_2026_WELCOME_LETTER_SIGNATURE.name}
-          </p>
-          <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">{SUMMIT_2026_WELCOME_LETTER_SIGNATURE.role}</p>
+      {/* White mat on the sides; letter is a narrower floating sheet */}
+      <div className="bg-white px-4 py-8 dark:bg-gray-900 sm:px-8 sm:py-10">
+        <div className={`mx-auto w-[67.76%] max-w-full min-w-0 ${welcomeLetterFloatingPaper}`}>
+          <WelcomeLetterPaperBody paragraphs={SUMMIT_2026_WELCOME_LETTER_PARAGRAPHS} />
+          <div className="relative flex justify-end border-t border-[#c9b896]/70 bg-[#ebe3d4]/90 px-4 pb-6 pt-6 dark:border-[#4a4034] dark:bg-[#242019]/90 sm:px-6 sm:pb-8">
+            <div
+              className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
+              aria-hidden
+            />
+            <div className="max-w-lg pl-[calc(1.75rem+1.125rem)] text-right sm:pl-[calc(1in+1.5rem)]">
+              <p className="text-sm font-medium tracking-wide text-[#4a4034] dark:text-[#b5ab9c]">
+                {SUMMIT_2026_WELCOME_LETTER_SIGNATURE.closing}
+              </p>
+              <p
+                className="welcome-letter-signature-name mt-3 text-[2.5rem] leading-none tracking-wide text-[#1c1915] [text-shadow:0_1px_0_rgba(255,255,255,0.45)] dark:text-[#f0ebe3] dark:[text-shadow:0_1px_1px_rgba(0,0,0,0.35)] sm:text-[3rem]"
+                lang="en"
+              >
+                {SUMMIT_2026_WELCOME_LETTER_SIGNATURE.name}
+              </p>
+              <p className="mt-4 text-sm text-[#4a4034] dark:text-[#a39888]">{SUMMIT_2026_WELCOME_LETTER_SIGNATURE.role}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

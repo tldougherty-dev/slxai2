@@ -17,7 +17,7 @@ export const SUMMIT_2026_WELCOME_LETTER_PARAGRAPHS: string[] = [
 export const SUMMIT_2026_WELCOME_LETTER_SIGNATURE = {
   closing: 'Cheers,',
   name: 'Travis Dougherty',
-  role: 'SLxAI Summit Host',
+  role: 'SLxAI Summit Organizer',
 } as const;
 
 export const SUMMIT_2026_STORY_SLXAI_PARAGRAPHS: string[] = [
