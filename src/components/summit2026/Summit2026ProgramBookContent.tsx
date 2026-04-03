@@ -12,10 +12,39 @@ import {
   Summit2026StorySlxaiSection,
   Summit2026WelcomeLetterSection,
 } from '@/components/summit2026/Summit2026ProgramNarrativeSections';
-import { getSummitSponsorMarqueeLogoClasses } from '@/components/summit2026/summit2026SponsorLogoClasses';
+import {
+  getSummitSponsorMarqueeLogoClasses,
+  isSummitSponsorCircularLogo,
+  SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS,
+  SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS,
+} from '@/components/summit2026/summit2026SponsorLogoClasses';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
 
 export type { Summit2026ProgramBookGetText };
+
+/** Scrolling strip: same circular crop as tiered `SponsorRow` for With Direction LLC. */
+function SummitMarqueeSponsorLogo({ name, logo }: { name: string; logo: string }) {
+  if (isSummitSponsorCircularLogo(name)) {
+    return (
+      <span className={SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS}>
+        <img
+          src={logo}
+          alt={name}
+          className={SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+    );
+  }
+  return (
+    <img
+      src={logo}
+      alt={name}
+      className={`${getSummitSponsorMarqueeLogoClasses(name)} w-auto object-contain`}
+    />
+  );
+}
 
 type Summit2026ProgramBookContentProps = {
   getText: Summit2026ProgramBookGetText;
@@ -133,11 +162,7 @@ const Summit2026ProgramBookContent = ({
                         rel="noopener noreferrer"
                         className="flex items-center justify-center hover:opacity-80 transition-opacity"
                       >
-                        <img
-                          src={sponsor.logo}
-                          alt={sponsor.name}
-                          className={`${getSummitSponsorMarqueeLogoClasses(sponsor.name)} w-auto object-contain`}
-                        />
+                        <SummitMarqueeSponsorLogo name={sponsor.name} logo={sponsor.logo} />
                       </a>
                     </div>
                   ))}
@@ -165,11 +190,7 @@ const Summit2026ProgramBookContent = ({
                         rel="noopener noreferrer"
                         className="flex items-center justify-center hover:opacity-80 transition-opacity"
                       >
-                        <img
-                          src={sponsor.logo}
-                          alt={sponsor.name}
-                          className={`${getSummitSponsorMarqueeLogoClasses(sponsor.name)} w-auto object-contain`}
-                        />
+                        <SummitMarqueeSponsorLogo name={sponsor.name} logo={sponsor.logo} />
                       </a>
                     </div>
                   ))}

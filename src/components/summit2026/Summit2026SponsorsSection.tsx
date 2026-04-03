@@ -4,7 +4,12 @@ import {
   type Summit2026SponsorTierGroup,
 } from '@/data/summit2026SponsorsByTier';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
-import { getSummitSponsorMarqueeLogoClasses } from '@/components/summit2026/summit2026SponsorLogoClasses';
+import {
+  getSummitSponsorMarqueeLogoClasses,
+  isSummitSponsorCircularLogo,
+  SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS,
+  SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS,
+} from '@/components/summit2026/summit2026SponsorLogoClasses';
 
 type Props = {
   getText: Summit2026ProgramBookGetText;
@@ -83,8 +88,7 @@ function SponsorRow({
   const isDoubleTitleBu =
     tierLabel === 'Title Sponsor' && name.trim().toLowerCase().includes('boston university');
 
-  /** Circular crop drops rectangular canvas / gray around the badge (With Direction LLC). */
-  const isCircularBrandLogo = name.toLowerCase().includes('with direction');
+  const isCircularBrandLogo = isSummitSponsorCircularLogo(name);
 
   const imgClass = isDoubleTitleBu
     ? 'max-h-72 w-auto max-w-full object-contain md:max-h-64'
@@ -107,11 +111,11 @@ function SponsorRow({
 
   const logoMarkup =
     logo && isCircularBrandLogo ? (
-      <span className="box-border mx-auto flex aspect-square w-full max-w-[11.5rem] shrink-0 items-center justify-center overflow-hidden rounded-full border-0 bg-white p-0 shadow-sm ring-1 ring-gray-100 dark:bg-white dark:ring-gray-200 sm:max-w-[12.5rem] md:max-w-[13rem]">
+      <span className={SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS}>
         <img
           src={logo}
           alt=""
-          className="h-full w-full scale-[1.06] object-cover object-center"
+          className={SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS}
           loading="lazy"
           decoding="async"
         />
