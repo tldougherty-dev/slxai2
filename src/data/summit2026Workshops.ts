@@ -4,6 +4,7 @@
  */
 
 import { SUMMIT_2026_SCHEDULE } from '@/data/summit2026Schedule';
+import { TRUST_AND_ACCOUNTABILITY_ADDITIONAL_INFORMATION } from '@/data/summit2026TrustWorkshopAdditionalInformation';
 
 export type SummitWorkshopPresenter = {
   name: string;
@@ -25,6 +26,8 @@ export type Summit2026Workshop = {
   /** One-line credit for list cards (matches former “Presenter(s):” line) */
   presentersLine: string;
   presenters: SummitWorkshopPresenter[];
+  /** Optional extra section after presenters on the program book workshop page */
+  additionalInformation?: string;
 };
 
 export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
@@ -56,17 +59,43 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
   {
     slug: 'trust-and-accountability-sign-language-ai',
     sessionTitle: 'Trust and Accountability in Sign Language AI Innovation',
-    presentersLine: 'Presenter: Dr. Melissa Smith, Ed.D., ASL Flurry',
-    summary:
-      'As sign language AI systems increasingly rely on large-scale video, translation, annotation, and written-language representations to train avatar and language models, trust between the Deaf community and technology companies has become a critical foundation for innovation. This workshop examines how trust is built and sustained across the full lifecycle of sign language AI development, from early, least-accurate models to real-world comprehension by diverse Deaf users. AI development requires more than data. It requires human expertise at multiple stages, including translation, cultural and linguistic annotation, video production, model review, and iterative feedback. Deaf professionals play essential roles across these stages, yet Deaf identity alone does not equate to expertise in all domains.',
+    presentersLine: 'Presenters: Dr. Melissa Smith, Ed.D., and Rupert Dubler, ASL Flurry',
+    summary: `As sign language AI systems increasingly rely on large-scale video, translation, annotation, and written-language representations to train avatar and language models, trust between the Deaf community and technology companies has become a critical foundation for innovation. This workshop examines how trust is built and sustained across the full lifecycle of sign language AI development, from early, least-accurate models to real-world comprehension by diverse Deaf users.
+
+AI development requires more than data. It requires human expertise at multiple stages, including translation, cultural and linguistic annotation, video production, model review, and iterative feedback. Deaf professionals play essential roles across these stages, yet Deaf identity alone does not equate to expertise in all domains.
+
+Trust, Leadership, and Human Infrastructure
+Trust within the Deaf community is built over decades through accountability, relationships, and respect for language and culture. Technology companies, however, often operate on rapid development timelines. This workshop explores how leadership, vetting, and organizational infrastructure can bridge these differing expectations while supporting responsible innovation.
+
+Equity and Access
+More than 80% of Deaf and hard of hearing individuals in the United States experience early language deprivation, affecting comprehension, education, and access. Without intentional design and review, sign language AI risks serving only highly bilingual or academically elite users. This workshop emphasizes that "getting it right" requires designing for comprehension, not just accuracy.`,
     presenters: [
-      { name: 'Dr. Melissa Smith', title: 'Ed.D.', organization: 'ASL Flurry' },
+      {
+        name: 'Dr. Melissa Smith',
+        title: 'Ed.D.',
+        organization: 'ASL Flurry',
+        photoUrl: '/summit-2026/photos/melissa-smith.png',
+        bio: `Melissa, a professor emeritus and former director of the ASL-English interpreting program at Palomar College (1997–2021), holds a doctorate and master's in Teaching and Learning from UC San Diego. Her research on interpreters in public schools was published by Gallaudet University Press.
+
+With a background in education, language acquisition, and interpreting, she brings a multidimensional perspective to her work. As a parent of a Deaf young adult and former foster parent to Deaf children, her passion for sign language education is deeply personal, driving her commitment to building meaningful connections and accessibility.`,
+      },
+      {
+        name: 'Rupert Dubler',
+        organization: 'ASL Flurry',
+        photoUrl: '/summit-2026/photos/rupert-dubler.png',
+        bio: `For over a decade, I have worked at the intersection of accessible technology, workforce readiness, and the Deaf community. My experience includes interpreting for governors, mayors, and the White House, managing multimillion-dollar relay operations, directing federal grant programs, and designing ASL-first curriculum grounded in universal design.
+
+I co-developed the Deaf Interpreting Workshop, delivering more than 500 hours of CDI training across seven states, and contributed to expanding the national pipeline.
+
+Today I lead AI partnership strategy and sign language data initiatives at ASL Flurry, connecting large ASL media libraries with enterprise AI partners. I am a retired Certified Deaf Interpreter whose work has been covered nationally and cited in the NAD v. Trump lawsuit, and I continue advancing professional standards in the field.`,
+      },
     ],
+    additionalInformation: TRUST_AND_ACCOUNTABILITY_ADDITIONAL_INFORMATION,
   },
   {
     slug: 'research-data-collection-partnerships',
     sessionTitle: 'Research and Data Collection: Strengthening Validity Through Partnerships',
-    presentersLine: 'Presenters: Pamela Macias, Marta Sanzari, University of Colorado Boulder',
+    presentersLine: 'Presenter: Pamela Macias, University of Colorado Boulder',
     summary:
       "Data collection grounded in Deaf individuals' experiences can strengthen AI companies' credibility and accountability. Using a University of Colorado study on AI-generated ASL videos as an example, the session shows how university collaboration supports data quality, rigor, and ethical accountability, and highlights practices that center Deaf expertise in research.",
     presenters: [
@@ -74,10 +103,6 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
         name: 'Pamela Macias',
         organization: 'University of Colorado Boulder',
         email: 'pamela.macias@colorado.edu',
-      },
-      {
-        name: 'Marta Sanzari',
-        organization: 'University of Colorado Boulder',
       },
     ],
   },
@@ -133,21 +158,27 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     slug: 'practical-applications-ai-sl-translation',
     sessionTitle: 'Practical Applications of AI Sign Language Translation',
     presentersLine: 'Presenters: Ben Saunders, Marcus Oaten, Signapse',
-    summary:
-      'AI sign language translation is advancing rapidly - but what does the Deaf community actually need from it? This workshop showcases Signapse\'s latest photo-realistic BSL and ASL generation technology, then opens a collaborative discussion on how it should be applied. Participants will explore which use cases (live translation, pre-recorded content, public information, and beyond) best serve Deaf communities, and how centering Deaf perspectives in AI and product development leads to technology that truly meets real-world needs.',
+    summary: `AI sign language translation is advancing rapidly, but how does the Deaf community actually want to see it used? This workshop showcases Signapse's latest photo-realistic BSL and ASL translation technology, from the Text to Sign pipeline through to real-world deployments. Through real-world examples, we'll highlight what the technology is capable of today and where its current limitations lie.
+
+Participants will explore which use cases best serve Deaf communities and which are gaining the most commercial traction, including SignStream for real-time translation in live environments, and SignStudio for translating post-production video content. With case studies from streaming, HR training and enterprise, we'll discuss what practical, scalable sign language accessibility looks like. We'll also examine how Signapse works with the Deaf community throughout AI and product development, and the path forward for "closed signing" to become as standard as closed captions.`,
     presenters: [
       {
         name: 'Ben Saunders',
         organization: 'Signapse',
+        photoUrl: '/summit-2026/photos/ben-saunders.png',
         bio: "Dr Ben Saunders is Co-Founder and Chief Scientist at Signapse, a UK-based company developing photo-realistic sign language translation using artificial intelligence. He completed his PhD in Artificial Intelligence at the University of Surrey's Centre for Vision, Speech and Signal Processing. His doctoral and postdoctoral research has focused on AI-generated sign language production, translating spoken or written input into continuous, human-like signed output in both British and American Sign Language.",
       },
-      { name: 'Marcus Oaten', organization: 'Signapse' },
+      {
+        name: 'Marcus Oaten',
+        organization: 'Signapse',
+        photoUrl: '/summit-2026/photos/marcus-oaten.png',
+      },
     ],
   },
   {
     slug: 'beyond-gloss-framework-sign-language-data',
     sessionTitle: 'Beyond Gloss: A New Framework for Sign Language Data',
-    presentersLine: 'Presenters: Emanuele Chiusaroli, Marta Sanzari, Handy Signs',
+    presentersLine: 'Presenter: Emanuele Chiusaroli, Handy Signs',
     summary:
       'Beyond glosses: structured, machine-readable representations for sign languages. Most Sign Language Translation and Sign Language Processing pipelines rely on glosses as an intermediate representation between visual input and spoken-language text. However, glosses constitute an inherently lossy representation and are poorly suited to encode core properties of sign languages, such as non-manual markers, spatial indexing, and information structure. This session discusses structured, declarative, and multi-level representations that go beyond glosses, including a sparse, machine-readable schema for annotation, models, and applied systems.',
     presenters: [
@@ -155,23 +186,34 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
         name: 'Emanuele Chiusaroli',
         organization: 'Handy Signs',
         email: 'emanuele@handysigns.it',
+        photoUrl: '/summit-2026/photos/emanuele-chiusaroli.png',
         bio: 'Emanuele coordinates the development teams and handles funding. He is an experienced Project Manager and Scrum Master with 25 years of experience in Telco and 3 years in Enterprise Sales.',
       },
-      { name: 'Marta Sanzari', organization: 'Handy Signs', email: 'marta@handysigns.it' },
     ],
   },
   {
     slug: 'bridging-gap-ai-avatars-sign-language-animation',
     sessionTitle: 'Bridging the Gap: Real Time AI Avatars and Sign Language Animation',
-    presentersLine: 'Presenter: Dr. Burak Uyanık, Vosia.ai',
-    summary:
-      'This session introduces a novel approach to automated sign language generation from vosia.ai, including real-time, high-fidelity 3D sign language avatars. The discussion focuses on text-to-sign conversion, performance benchmarks, and challenges in processing authentic mimic and gesture nuances, together with community-informed design for accessible AI tools.',
+    presentersLine: 'Presenters: Egehan Karabulut and Dr. Burak Uyanık, Vosia.ai',
+    summary: `This session presents Vosia.ai's real-time approach to sign language animation and critically examines the role of AI avatars in advancing accessible communication across everyday and institutional contexts. It begins by addressing the persistent gap in real-time access for sign language users and argues that sign language generation cannot be reduced to a simple word-for-word transformation of spoken language. Rather, effective sign language animation requires the coordinated modeling of linguistic structure, temporal alignment, facial expression, upper-body movement, and low-latency interaction in order to produce output that is both intelligible and naturalistic.
+
+The session then introduces a practical real-time generation pipeline encompassing streaming input, language planning, sign structure generation, motion planning, avatar control, and rendering. Particular attention is given to the technical principles that characterize high-performing systems, including streaming-first architecture, multimodal coordination, chunk-based motion generation, latency optimization, and confidence-aware fallback strategies. In this context, the presentation also discusses the current state of development at Vosia.ai, including a live prototype for Turkish Sign Language, AI-assisted speech-to-text and grammar conversion, and interpreter-reviewed processes for sign language data and output validation.
+
+Finally, the session considers possible deployment models, including web-based delivery, cloud-supported streaming, and secure on-site deployment through dedicated hardware. Taken together, the presentation offers a technical and applied perspective on the design of real-time AI avatar systems for sign language animation, emphasizing their potential to enhance accessibility, operational reliability, and future adaptation across diverse sign languages and real-world communication environments.`,
     presenters: [
+      {
+        name: 'Egehan Karabulut',
+        organization: 'Vosia.ai',
+        email: 'egehann46@hotmail.com',
+        photoUrl: '/summit-2026/photos/egehan-karabulut.png',
+        bio: 'Egehan Karabulut is a senior student in Management Information Systems at Sakarya University and Co-Founder of Vosia.ai. He is involved in product strategy, technical development coordination, and the implementation of AI-powered systems, interactive interfaces, and 3D avatar technologies. His areas of expertise include Python, JavaScript, React, Three.js, natural language processing, computer vision, machine learning, SQL, and Blender.',
+      },
       {
         name: 'Dr. Burak Uyanık',
         organization: 'Vosia.ai',
         email: 'dr.buyanik@gmail.com',
-        bio: 'Dr. Burak Uyanık is a Computer Engineer and a pioneering researcher at Vosia.ai. He holds the distinction of being the first Deaf person in Turkey to earn a PhD, having completed his doctoral studies in Computer Engineering at Kocaeli University. In addition to his role as a Lead Developer at a leading technology corporation, he serves as a core team member at Vosia.ai. Combining his high-level technical background with his native fluency in sign language, he leads our R&D efforts in accessible AI technologies.',
+        photoUrl: '/summit-2026/photos/burak-uyanik.png',
+        bio: 'Dr. Burak Uyanık is a deaf software engineer, researcher, and civil society leader working in accessibility, education, and technology. He completed his PhD in Computer Engineering in 2023 and is recognized as the first hearing-impaired computer engineer in Türkiye to complete a doctoral degree. He has worked in software, automation, AI, and R&D across industry and public-sector institutions, and he is also the President of the Association of Hearing Impaired Solidarity, where he leads projects focused on accessibility, STEM, and inclusive participation.',
       },
     ],
   },
@@ -203,6 +245,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
         name: 'Dr. Amit Moryossef',
         organization: 'Nagish',
         email: 'amit@nagish.com',
+        photoUrl: '/summit-2026/photos/amit-moryossef.png',
         bio: 'Dr. Amit Moryossef is a researcher and entrepreneur in sign-language technology. He completed his Ph.D. at Bar-Ilan University and a postdoc at the University of Zurich. He founded sign.mt, a real-time sign-language translation platform, which was recently acquired by Nagish, where he now leads research. His work has received multiple best paper awards at ACL and EMNLP, focusing on making signed languages accessible through machine learning.',
       },
     ],
@@ -212,7 +255,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     sessionTitle: 'Human AI Collaboration in Sign Language Technology',
     presentersLine: 'Presenters: Craig Radford, Brandon Dopf, 360 Direct Access',
     summary:
-      'This workshop examines how people and AI can collaborate in real deployments without degrading service quality. It will cover practical patterns for hybrid delivery, reliability expectations, and what breaks when organizations treat AI as a full replacement.',
+      'As sign language AI moves from research into real world deployment, the technical questions are increasingly inseparable from ethical ones. Who decides what counts as "good enough" accuracy, and who carries the cost when a product fails? Whose signing is in the training data, and what happens to sign language diversity when models scale toward a dominant variety?\n\nThis workshop uses a statement based format to work through a series of issues: data scarcity and governance, what accuracy benchmarks actually measure and for whom, what happens to sign language diversity at scale, and the difference between advising on a product and having real decision making power over it. Drawing on research across Deaf Studies, sign language studies, Human Computer Interaction, and language technology, the session is designed for practitioners building or deploying sign language AI who want to move beyond technical metrics toward more rigorous thinking about real world impact.',
     presenters: [
       {
         name: 'Craig Radford',
@@ -267,11 +310,12 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     presentersLine:
       'Presenter: Dr. Maartje De Meulder, HU University of Applied Sciences Utrecht (Hogeschool Utrecht)',
     summary:
-      'Sign language AI risks to be deployed before it is linguistically, socially, and culturally ready, and once a system is seen as "good enough", institutions may treat it as default access, quietly reshaping choices, standards, and rights in practice. This workshop argues that technical and commercial decisions become standards: dataset provenance and inclusion rules determine what signing becomes learnable by AI; benchmarks define "quality"; and procurement contracts define what counts as "supported language" and "sufficient access".',
+      'As sign language AI moves from research into real-world deployment, the technical questions are increasingly inseparable from ethical ones. Who decides what counts as "good enough" accuracy — and who carries the cost when a product fails? Whose signing is in the training data, and what happens to sign language diversity when models scale toward a dominant variety?\n\nThis workshop uses a statement-based format to work through a series of statements: about data scarcity and governance, about what accuracy benchmarks actually measure and for whom, about what happens to sign language diversity at scale, and about the difference between advising on a product and having real decision-making power over it. Drawing on research across Deaf Studies, sign language studies, Human-Computer Interaction, and language technology, the session is designed for practitioners building or deploying sign language AI who want to move beyond technical metrics toward more rigorous thinking about real-world impact.',
     presenters: [
       {
         name: 'Dr. Maartje De Meulder',
         organization: 'HU University of Applied Sciences Utrecht (Hogeschool Utrecht)',
+        photoUrl: '/summit-2026/photos/maartje-de-meulder.png',
         bio: 'Dr. Maartje De Meulder combines Deaf Studies, language policy, and the wider social sciences to make sense of how language technologies meet deaf lives, with a particular focus on sign language AI. She is interested in how technological affordances shape language, communication, and access, and how deaf people use these technologies in their everyday lives. Alongside her academic work, she regularly collaborates with deaf organisations, interpreting professionals, and technology stakeholders to help the think critically about key questions surrounding ethics, access, and governance of language technologies. Across her work, she aims to build bridges between research, policy and practice: developing concepts and evidence that make sense to deaf communities themselves, while also challenging dominant assumptions about “access” and “inclusion” in tech development, education, and public services.',
       },
     ],
@@ -280,8 +324,13 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     slug: 'linguistic-approach-sign-language-data-ai',
     sessionTitle: 'A Linguistic Approach to Sign Language Data in AI Model Development',
     presentersLine: 'Presenters: Dr. Naomi Caselli, Dr. Kaj Kraus, Boston University',
-    summary:
-      'This session brings a linguistic lens to data design for sign language AI, including what must be captured to represent the language faithfully. It will connect linguistic structure to practical annotation and modeling choices that affect performance and usability.',
+    summary: `Sign languages are among the most complex human behaviors. They are visual-manual languages with rich grammatical structure. Building technology for them is a multimodal challenge spanning computer vision, computer graphics, and natural language processing, and it requires deep knowledge of how sign languages are structured and used. Yet too often sign language technologies have treated sign languages as gesture or as a vision problem rather than as a language. This session considers how more than 70 years of sign language linguistics can inform new technologies by focusing on two core issues.
+
+The first is how to account for the unique properties of sign languages in ways that support computational modeling. Unlike spoken languages, sign languages are highly simultaneous: handshape, movement, location, facial expression, and eye gaze can all carry grammatical meaning at the same time. Many signs are iconic, bearing a visual resemblance to what they represent, and signing can be grounded in the immediate environment, with signers pointing to or interacting with objects and people that are physically present. Eye gaze is critical for sign languages in ways that it is not for spoken languages: a signer can only be understood if the perceiver is looking at them. All of these modality differences are critical to successful communication, and annotation schemes and model development should consider how to account for these features.
+
+The second is error analysis. Sign language users can often tell when a model has failed, but much of our knowledge of language is intuitive and difficult for non-linguists to articulate. A user may recognize that something is wrong without being able to explain what or why. Linguists have a suite of tools that can help bridge that gap. Error analysis can take a user's judgment that something "looks off" and identify the precise source of the failure. Language assessments, eye tracking, brain imaging, and many other tools can also help identify sources of model failure.
+
+Sign language linguists offer more than annotation skills. We argue for a linguistically grounded approach to sign language technology, one that treats sign languages as languages and brings linguistics into the full development pipeline, from data collection and annotation through model design and evaluation.`,
     presenters: [
       { name: 'Dr. Naomi Caselli', organization: 'Boston University' },
       { name: 'Dr. Kaj Kraus', organization: 'Boston University' },
@@ -292,19 +341,26 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     sessionTitle: 'ASL, AI, and Authority: Centering Deaf ASL Experts in Language Technologies',
     presentersLine:
       'Presenters: Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, PhD, Shelley Oishi, TWA Innovations LLC',
-    summary:
-      'American Sign Language is often treated as a technical problem rather than a living language shaped by history, pedagogy, and community practice. This session argues that putting Deaf signers on camera is not the same as placing Deaf ASL experts in leadership, and examines documentation labor, governance, and ethical ASL-AI work that centers authority, not token inclusion.',
+    summary: `Deaf ASL experts are not interchangeable with Deaf signers, and sign language data is not interchangeable with sign language knowledge. This workshop, led by the team behind TWA Innovations, one of the most comprehensive Deaf-authored ASL textbook, dictionary, and learning platforms, makes that argument with specificity, evidence, and urgency.
+
+Drawing on more than a decade of daily work filming, documenting, curating, and teaching ASL, the presenters walk through eight concrete points where AI sign language projects most commonly fail and why those failures are not technical problems but authority problems.
+
+The session examines the 2D flattening of three-dimensional signing space, the linguistic complexity of joint point and proximalization that standard parameter models miss, the difference between naturalistic XMH signing and pedagogical HMH forms, the infinite generativity of unrealized inceptive aspect, the limits of English gloss labels, the mismatch between sign language simultaneity and sequential AI processing, the sociolinguistic reality of Deaf code switching, and the "24/7 Effect," the finding that Deaf signers who use ASL exclusively produce measurably stronger ASL outcomes.
+
+Throughout, the presenters distinguish between Deaf-sourced projects, where Deaf people provide data but hearing teams control design, labeling, and validation, and truly Deaf-powered ones, where Deaf ASL experts hold authority at every stage. The workshop closes with a challenge to the field: the question is not whether a team includes a Deaf person, but whether Deaf expertise shapes decisions from capture through deployment.`,
     presenters: [
       {
         name: 'Elisa Abenchuchan Vita',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
+        photoUrl: '/summit-2026/photos/elisa-abenchuchan-vita.png',
         bio: 'Elisa Abenchuchan Vita brings expertise in ASL linguistics, education, and language learning. As ASL Dictionary Curator and Project Manager for the TWA Dictionary, she leads linguistic research, community-used sign documentation, filming, and entries for accuracy and accessibility as ASL resources intersect with AI.',
       },
       {
         name: 'Lisa Gelineau',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
+        photoUrl: '/summit-2026/photos/lisa-gelineau.png',
         bio: 'Lisa Gelineau brings decades of experience in ASL education, proficiency evaluation, and curriculum development. She is co-founder of TWA Innovations and a professor at Austin Community College, focused on how technology, including AI, can support rather than oversimplify signed languages.',
       },
       {
@@ -312,12 +368,14 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
         title: 'PhD',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
+        photoUrl: '/summit-2026/photos/raychelle-harris.png',
         bio: 'Raychelle Harris is a Deaf ASL educator and co-owner of TWA Innovations, with academic leadership for the TWA Textbook, Dictionary, and Academy. Her work focuses on ASL teaching methods, assessment, ethical representation of signed languages in digital systems, and Deaf-led expert authority in emerging technologies.',
       },
       {
         name: 'Shelley Oishi',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
+        photoUrl: '/summit-2026/photos/shelley-oishi.png',
         bio: 'Shelley Oishi is CEO of TWA Innovations, advancing accessible, language-centered technology for the Deaf community across the TWA Textbook, Dictionary, and Academy. She focuses on responsible integration of AI into sign language resources with linguistic accuracy and ethical design.',
       },
     ],
@@ -326,9 +384,19 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     slug: 'eud-sign-language-era-ai',
     sessionTitle: 'EUD: Sign Language in the Era of Artificial Intelligence',
     presentersLine: 'Presenter: Andy Van Hoorebeke, European Union of the Deaf',
-    summary:
-      'The European Union of the Deaf outlines its perspective on sign language in the AI era: building on EUD’s AI-related work to shape policy recommendations for EU institutions so deaf sign language users’ rights are reflected in the AI Act and related digital legislation.',
-    presenters: [{ name: 'Andy Van Hoorebeke', organization: 'European Union of the Deaf' }],
+    summary: `This session presents the European Union of the Deaf (EUD) perspective on sign language in the era of artificial intelligence. As a key stakeholder in the EU policy landscape, EUD builds on its AI work to develop tailored policy recommendations for EU institutions, aiming to ensure that the rights of Deaf sign language users are reflected in the implementation of the AI Act and related digital legislation.
+
+The development and implementation of EUD's strategic approach to artificial intelligence is driven by EUD staff, who are responsible for research, policy development, and operational follow-up. Andy Van Hoorebeke is a strong supporter of this work at the board level and plays an important role in promoting and disseminating staff-led outputs, including EUD's landmark AI report—the first of its kind globally—which outlines ethical principles and policy recommendations on sign language technologies and AI development.`,
+    presenters: [
+      {
+        name: 'Andy Van Hoorebeke',
+        organization: 'European Union of the Deaf',
+        photoUrl: '/summit-2026/photos/andy-van-hoorebeke.png',
+        bio: `Andy Van Hoorebeke is a Belgian ICT professional with extensive expertise in network, systems and security management, and a strong interest in digital accessibility and emerging technologies.
+
+He serves as a Board Member of the European Union of the Deaf (EUD), where he leads EUD's Working Group on ICT & Technology. In this role, he provides strategic guidance and political support for EUD's work in technology and artificial intelligence.`,
+      },
+    ],
   },
   {
     slug: 'sign-language-ai-international-policy',
@@ -336,24 +404,34 @@ A serial entrepreneur with three successful exits including one nearing $1 billi
     presentersLine: 'Presenter: Dr. Joseph J. Murray, World Federation of the Deaf',
     summary:
       'A global policy session on how sign language AI is showing up in international forums, standards discussions, and advocacy work. Attendees will learn what issues are emerging and how to participate responsibly across countries and sign languages.',
-    presenters: [{ name: 'Dr. Joseph J. Murray', organization: 'World Federation of the Deaf' }],
+    presenters: [
+      {
+        name: 'Dr. Joseph J. Murray',
+        organization: 'World Federation of the Deaf',
+        photoUrl: '/summit-2026/photos/joseph-j-murray.png',
+      },
+    ],
   },
   {
     slug: 'fireside-chat-fcc',
     sessionTitle: 'Fireside Chat with Federal Communications Commission',
     presentersLine: 'Featuring: Travis Dougherty, Signapse; Suzy Rosen Singleton, Federal Communications Commission',
-    summary:
-      'A fireside discussion on AI regulation from a U.S. government perspective, the emergency wireless act, and upcoming rulings relevant to the SLxAI industry, plus practical implications for accessibility policy and the sign language technology ecosystem.',
+    summary: `FCC's accessibility work will be discussed, including proceedings and activities that touch on sign language driven by artificial intelligence in the spaces of video programming, modern communications, and emergency communications.
+
+Information will be shared about the FCC's advisory committees and existing ways for the public to engage with the FCC via the FCC's ASL Line, and filing comments and complaints.`,
     presenters: [
       {
         name: 'Travis Dougherty',
         title: 'Chief Experience Officer',
         organization: 'Signapse',
+        email: 'travis@signapse.ai',
         bio: 'Travis Dougherty is Chief Experience Officer at Signapse. He previously spent five years with Maryland Relay for Telecommunications Access of Maryland, served the National Association of State Relay Administrators (NASRA) in several leadership roles, including Member at Large, Vice Chair, and Chair, and worked with state and federal agencies. He participated in the Deaf and Hard of Hearing Consumer Advocacy Network (DHHCAN), the Safe AI Taskforce, and the FCC Disability Advisory Committee (5th term). He coauthored “Virginia Relay Digital Modernization” (January 2026).',
       },
       {
         name: 'Suzy Rosen Singleton',
         organization: 'Federal Communications Commission',
+        email: 'Suzanne.Singleton@fcc.gov',
+        photoUrl: '/summit-2026/photos/suzy-rosen-singleton.png',
         bio: 'Suzy Rosen Singleton, a native user of American Sign Language, is Chief of the Disability Rights Office in the Consumer and Governmental Affairs Bureau of the Federal Communications Commission (since 2012). Her career includes civil rights litigation, government affairs for the National Association of the Deaf, special education compliance at the U.S. Department of Education, and ombuds work at Gallaudet University. She holds a J.D. from UCLA School of Law.',
       },
     ],

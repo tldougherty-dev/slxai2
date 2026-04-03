@@ -122,6 +122,7 @@ export function ProgramBook2026Shell({
         workshopDescriptionMissing:
           'No workshop description is in the program book data for this session. Add it in src/data/workshopVerbatimFromDocs.json (or WORKSHOP_VERBATIM_RAW_BY_SLUG in summit2026WorkshopVerbatim.ts). Slug: {slug}.',
         learningObjectiveMissing: 'Not specified in the submitted materials.',
+        additionalInformationHeading: 'Additional information',
       };
 
       const translated: Record<string, string> = {};

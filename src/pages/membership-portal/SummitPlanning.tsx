@@ -1077,33 +1077,31 @@ export default function SummitPlanning() {
                 <Link
                   key={member.email}
                   to={`/membership-portal/member/${encodeURIComponent(member.email)}`}
-                  className="flex items-start gap-4 p-4 border border-electric-blue/20 rounded-lg bg-electric-blue/5 backdrop-blur-sm hover:bg-electric-blue/10 transition-all cursor-pointer"
+                  className="block flow-root p-4 border border-electric-blue/20 rounded-lg bg-electric-blue/5 backdrop-blur-sm hover:bg-electric-blue/10 transition-all cursor-pointer"
                 >
-                  <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                  <div className="float-left mb-2 mr-4">
                     <UserAvatar
                       email={member.email}
                       name={member.name}
                       size="2xl"
                     />
                   </div>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <h4 className="font-medium text-sm text-gray-900 dark:text-white">{member.name}</h4>
-                    <span 
-                      className="text-sm text-electric-blue hover:underline flex items-center gap-1.5 cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.location.href = `mailto:${member.email}`;
-                      }}
-                    >
-                      <Mail className="h-4 w-4" />
-                      <span className="truncate">{member.email}</span>
-                    </span>
-                    {member.addedAt && (
-                      <p className="text-xs text-gray-500 dark:text-white mt-1">
-                        Added {format(new Date(member.addedAt), 'MMM d, yyyy')}
-                      </p>
-                    )}
-                  </div>
+                  <h4 className="font-medium text-sm text-gray-900 dark:text-white">{member.name}</h4>
+                  <span
+                    className="mt-1 flex min-w-0 items-center gap-1.5 text-sm text-electric-blue hover:underline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.location.href = `mailto:${member.email}`;
+                    }}
+                  >
+                    <Mail className="h-4 w-4 shrink-0" />
+                    <span className="break-all">{member.email}</span>
+                  </span>
+                  {member.addedAt && (
+                    <p className="mt-1 text-xs text-gray-500 dark:text-white">
+                      Added {format(new Date(member.addedAt), 'MMM d, yyyy')}
+                    </p>
+                  )}
                 </Link>
               ))}
             </div>
