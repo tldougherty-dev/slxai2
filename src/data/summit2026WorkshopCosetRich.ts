@@ -5,8 +5,10 @@
 
 export type CosetWorkshopPresenterDetail = {
   name: string;
-  email: string;
-  organization: string;
+  /** Omit when no public email should be shown. */
+  email?: string;
+  /** Omit when the presenter has no organizational affiliation. */
+  organization?: string;
   bio: string;
 };
 
@@ -20,22 +22,16 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
     bio: 'Dr. Abraham Glasser is an Assistant Professor in the MS/PhD Accessible Human Centered Computing and Policy (AHCP) program at Gallaudet University. He is an active member of CoSET.',
   },
   {
-    name: 'Tim Riker',
-    email: 'tim.riker@coset.org',
-    organization: 'CoSET',
-    bio: 'Tim Riker is a Certified Deaf Interpreter, educator, and community advocate serving on the Coalition on Sign Language Equity in Technology (CoSET). He works at the intersection of Deaf-led design, language justice, and AI, advancing ethical, accessible technologies that center Deaf, DeafBlind, and multilingual communities through collaboration, research, and systems change.',
-  },
-  {
     name: 'Stephanie Kent',
     email: 'steph.kent@coset.org',
     organization: 'CoSET',
     bio: 'Steph is an action researcher of communication, interpreting and social change; and founder of the Learning Lab for Resiliency®.',
   },
   {
-    name: 'Celena Ponce',
-    email: 'celena.ponce@coset.org',
+    name: 'Erin Sanders-Sigmon',
+    email: 'erinfran777@gmail.com',
     organization: 'CoSET',
-    bio: 'Celena Ponce holds a BS in Electrical Engineering with a focus in Digital Sign Processing and Masters in Electrical Engineering and Computer Science with a focus on sign language recognition. She runs a disability- and immigrant-forward nonprofit called Hands United.',
+    bio: 'Erin Sanders-Sigmon is a Deaf Interpreter (MCDHH DI, 2018). She is a filmmaker and justice advocate, and contributes to the Coalition on Sign Language Equity in Technology (CoSET).',
   },
   {
     name: 'Jeff Shaul',

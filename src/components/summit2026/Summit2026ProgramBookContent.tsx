@@ -12,6 +12,8 @@ import {
   Summit2026StorySlxaiSection,
   Summit2026WelcomeLetterSection,
 } from '@/components/summit2026/Summit2026ProgramNarrativeSections';
+import { WorkshopPresenterBioCard } from '@/components/summit2026/workshopProgramBookShared';
+import { SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO } from '@/data/summit2026ProgramBookNarrative';
 import {
   getSummitSponsorMarqueeLogoClasses,
   isSummitSponsorCircularLogo,
@@ -332,14 +334,33 @@ const Summit2026ProgramBookContent = ({
                   {getText('masterOfCeremoniesTitle', 'Master of Ceremonies')}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 py-6 text-center">
-                <p className="text-lg leading-relaxed text-gray-700 dark:text-white sm:text-xl">
-                  <strong className="text-gray-900 dark:text-white">Andrew Bottoms</strong>
-                  {' '}
-                  and{' '}
-                  <strong className="text-gray-900 dark:text-white">Dr. Barbara Spiecker</strong>
-                  , Boston University
-                </p>
+              <CardContent className="px-4 py-6 text-left sm:px-6">
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start md:gap-8 lg:gap-10">
+                  <div className="min-w-0">
+                    <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
+                      {getText('tocDay1', 'Day 1')}
+                    </h3>
+                    <WorkshopPresenterBioCard
+                      name="Andrew Bottoms"
+                      title="Master of Ceremonies, Day 1"
+                      organization="Boston University"
+                      photoUrl="/summit2026/andrew-bottoms.png"
+                      bio={SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
+                      {getText('tocDay2', 'Day 2')}
+                    </h3>
+                    <p className="text-center text-lg leading-relaxed text-gray-700 dark:text-gray-200 sm:text-xl md:text-left">
+                      <strong className="text-gray-900 dark:text-white">Dr. Barbara Spiecker</strong>
+                      {', '}
+                      <span className="text-gray-800 dark:text-gray-100">Boston University</span>
+                      {' — '}
+                      <span className="text-gray-700 dark:text-gray-300">Master of Ceremonies, Day 2</span>
+                    </p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 

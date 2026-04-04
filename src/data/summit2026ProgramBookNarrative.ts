@@ -31,6 +31,13 @@ export const SUMMIT_2026_STORY_SLXAI_PARAGRAPHS: string[] = [
   'What started as one unexpected three hour conversation became many more. Those conversations grew into a shared realization that the field needed collaboration, transparency, and accountability. SLxAI was created to bring those voices together and ensure the future of sign language and AI is shaped collectively. From one conversation to a global summit, SLxAI represents what happens when collaboration replaces competition and accountability becomes shared. The journey has just begun.',
 ];
 
+/** Program book: Master of Ceremonies, Day 1 (Andrew Bottoms). */
+export const SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO =
+  'Andrew Bottoms is the Program Director of Deaf Studies at Boston University, where he provides strategic leadership in curriculum innovation, program development, and community engagement. He was instrumental in establishing the American Sign Language program at Harvard University, where he designed and advanced a comprehensive ASL curriculum that significantly expanded access to Deaf-centered education. He also teaches American Sign Language courses at the Massachusetts Institute of Technology (MIT).\n\n' +
+  'A native ASL user from a Deaf family, Andrew brings a deeply rooted personal and cultural perspective to his work. His experiences drive a strong commitment to ensuring that Deaf children have full access to language and education, while embracing Deaf identity and community.\n\n' +
+  "With over a decade of experience in ASL and Deaf Studies, Andrew's work is distinguished by his focus on ASL literature, storytelling, and transformative pedagogical approaches that move beyond traditional frameworks. He is dedicated to elevating Deaf cultural narratives while cultivating immersive and accessible learning environments for diverse communities.\n\n" +
+  'His current work includes the development of initiatives centered on ASL storytelling, Deaf folklore, and community-based scholarship, with the aim of strengthening the relationship between academic institutions and the Deaf community.';
+
 export type Summit2026CommitteeMember = {
   name: string;
   organization: string;

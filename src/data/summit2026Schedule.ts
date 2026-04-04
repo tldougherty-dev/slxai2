@@ -34,7 +34,8 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '8:50 AM to 9:00 AM',
         sessionType: 'Keynote',
         title: 'Opening Remarks From Boston University',
-        presenters: 'Azer Bestavros, Yannis Paschalidis, Dr. Naomi Caselli, Andrew Bottoms',
+        presenters:
+          'Provost Azer Bestavros, Dean Penny Bishop, Dr. Naomi Caselli, Andrew Bottoms',
       },
       {
         time: '9:00 AM to 9:15 AM',
@@ -49,7 +50,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Panel',
         title: 'Ethics: Where Does It Stop?',
         presenters:
-          'Dr. Abraham Glasser, Adam Munder, Thomas Horejes, Dr. Maartje De Meulder, Dr. Naomi Caselli',
+          'Dr. Abraham Glasser, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, SignWow; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Naomi Caselli, Boston University',
         workshopSlug: 'ethics-where-does-it-stop',
       },
       { time: '10:05 AM to 10:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
@@ -58,7 +59,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Panel',
         title: 'CoSET SAFE AI: Designing for Communication Success',
         presenters:
-          'Dr. Abraham Glasser, Tim Riker, Stephanie Kent, Celena Ponce, Jeff Shaul',
+          'Dr. Abraham Glasser, Gallaudet University; Stephanie Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeff Shaul, Sign-Speak',
         workshopSlug: 'coset-safe-ai-communication-success',
       },
       { time: '11:05 AM to 11:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
@@ -170,8 +171,8 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '12:00 PM to 1:00 PM',
         sessionType: 'Lunch',
-        title: 'Lunch',
-        presenters: '',
+        title: 'Lunch: Sponsored by TCS Teams',
+        presenters: 'TBA',
       },
       {
         time: '1:00 PM to 1:50 PM',
@@ -223,7 +224,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '4:55 PM to 5:10 PM',
         sessionType: 'Closing',
         title: 'Closing Remarks by Boston University',
-        presenters: 'Yannis Paschalidis',
+        presenters: 'Distinguished Professor Yannis Paschalidis',
       },
     ],
   },

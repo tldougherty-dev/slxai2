@@ -22,7 +22,7 @@ export function CosetWorkshopProgramSections() {
       <WorkshopProgramSectionCard headingId="coset-presenters-heading" title="Presenters">
         <ul className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2">
           {COSET_SAFE_AI_PRESENTER_DETAILS.map((p) => (
-            <li key={p.email}>
+            <li key={p.name}>
               <WorkshopPresenterBioCard
                 name={p.name}
                 organization={p.organization}

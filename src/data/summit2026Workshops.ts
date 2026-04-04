@@ -38,22 +38,27 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     summary:
       'Ryan will open the summit with a look back at the early commercial foundations of sign language and AI and how the ecosystem has evolved since then. He will also outline what the next phase demands from the field, including quality, trust, and real world usability.',
     presenters: [
-      { name: 'Ryan Hait-Campbell', title: 'Presenter', organization: 'Convo Communications' },
+      {
+        name: 'Ryan Hait-Campbell',
+        title: 'Presenter',
+        organization: 'Convo Communications',
+        photoUrl: '/summit-2026/photos/ryan-hait-campbell.png',
+      },
     ],
   },
   {
     slug: 'ethics-where-does-it-stop',
     sessionTitle: 'Ethics: Where Does It Stop?',
     presentersLine:
-      'Presenters: Dr. Abraham Glasser, PhD, Adam Munder, Thomas Horejes, Ph.D., CDI, Dr. Maartje De Meulder, Dr. Naomi Caselli',
+      'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, Ph.D., CDI, SignWow; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Naomi Caselli, Boston University',
     summary:
       'A panel on ethical boundaries and who carries responsibility when sign language AI systems are deployed at scale. Discussion will focus on power, consent, accountability, and what guardrails should be expected across research, product development, and procurement.',
     presenters: [
-      { name: 'Dr. Abraham Glasser', title: 'PhD' },
-      { name: 'Adam Munder' },
-      { name: 'Thomas Horejes', title: 'Ph.D., CDI' },
-      { name: 'Dr. Maartje De Meulder' },
-      { name: 'Dr. Naomi Caselli' },
+      { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
+      { name: 'Adam Munder', organization: 'Sorenson Communications' },
+      { name: 'Thomas Horejes', title: 'Ph.D., CDI', organization: 'SignWow' },
+      { name: 'Dr. Maartje De Meulder', organization: 'University of Applied Sciences Utrecht' },
+      { name: 'Dr. Naomi Caselli', organization: 'Boston University' },
     ],
   },
   {
@@ -265,7 +270,17 @@ Finally, the session considers possible deployment models, including web-based d
 
 A serial entrepreneur with three successful exits including one nearing $1 billion, Craig has been featured in Forbes, Business Insider, and CNN. He also serves as Executive Director of USA Deaf Basketball, preparing U.S. national teams for the 2025 Deaflympics. Previously, he was on the coaching staff for the USA Deaf Men's Basketball Team, where he helped lead the team to a gold medal in one year and a silver medal in another.`,
       },
-      { name: 'Brandon Dopf', organization: '360 Direct Access', email: 'brandon@360directaccess.com' },
+      {
+        name: 'Brandon Dopf',
+        organization: '360 Direct Access',
+        email: 'brandon@360directaccess.com',
+        photoUrl: '/summit-2026/photos/brandon-dopf.png',
+        bio: `Brandon Dopf is a Deaf professional with over 20 years of experience spanning project management, IT, and customer service. He currently leads the Customer Success Program at 360 Direct Access, where he focuses on delivering accessible, high-quality customer experiences for Deaf, DeafBlind, and Hard of Hearing communities. He holds a Master's degree in Information Security and Project Management and began his career supporting a Fortune 500 initiative, managing a multi-million-dollar project that helped shape his approach to execution, collaboration, and results.
+
+Throughout his career, Brandon has taken on roles such as sales engineer, product manager, and project manager, consistently working at the intersection of technology and accessibility. He has played a key role in launching sign language-based customer service contact centers, helping design training and quality programs that center both communication and experience.
+
+Known for his practical mindset and passion for inclusion, Brandon is driven by a simple goal: to make sure accessibility is not an afterthought, but the standard.`,
+      },
     ],
   },
   {
@@ -440,14 +455,13 @@ Information will be shared about the FCC's advisory committees and existing ways
     slug: 'coset-safe-ai-communication-success',
     sessionTitle: 'CoSET SAFE AI: Designing for Communication Success',
     presentersLine:
-      'Presenters: Dr. Abraham Glasser, PhD, Tim Riker, Stephanie Jo Kent, Celena Ponce, Jeffrey Shaul',
+      'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Stephanie Jo Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeffrey Shaul, Sign-Speak',
     summary:
       'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.',
     presenters: [
       { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
-      { name: 'Tim Riker', organization: 'CoSET' },
       { name: 'Stephanie Jo Kent', organization: 'CoSET' },
-      { name: 'Celena Ponce', organization: 'CoSET' },
+      { name: 'Erin Sanders-Sigmon', email: 'erinfran777@gmail.com', organization: 'CoSET' },
       { name: 'Jeffrey Shaul', organization: 'Sign-Speak' },
     ],
   },
