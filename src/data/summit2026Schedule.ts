@@ -104,7 +104,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '3:10 PM to 3:40 PM',
         sessionType: 'Session',
         title: 'Beyond Gloss: A New Framework for Sign Language Data',
-        presenters: 'Emanuele Chiusaroli',
+        presenters: 'Emanuele Chiusaroli, Manuel Granchelli',
         workshopSlug: 'beyond-gloss-framework-sign-language-data',
       },
       { time: '3:40 PM to 3:50 PM', sessionType: 'Break', title: 'Break', presenters: '' },

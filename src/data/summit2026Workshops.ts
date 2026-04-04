@@ -183,7 +183,7 @@ Participants will explore which use cases best serve Deaf communities and which 
   {
     slug: 'beyond-gloss-framework-sign-language-data',
     sessionTitle: 'Beyond Gloss: A New Framework for Sign Language Data',
-    presentersLine: 'Presenter: Emanuele Chiusaroli, Handy Signs',
+    presentersLine: 'Presenters: Emanuele Chiusaroli and Manuel Granchelli, Handy Signs',
     summary:
       'Beyond glosses: structured, machine-readable representations for sign languages. Most Sign Language Translation and Sign Language Processing pipelines rely on glosses as an intermediate representation between visual input and spoken-language text. However, glosses constitute an inherently lossy representation and are poorly suited to encode core properties of sign languages, such as non-manual markers, spatial indexing, and information structure. This session discusses structured, declarative, and multi-level representations that go beyond glosses, including a sparse, machine-readable schema for annotation, models, and applied systems.',
     presenters: [
@@ -193,6 +193,11 @@ Participants will explore which use cases best serve Deaf communities and which 
         email: 'emanuele@handysigns.it',
         photoUrl: '/summit-2026/photos/emanuele-chiusaroli.png',
         bio: 'Emanuele coordinates the development teams and handles funding. He is an experienced Project Manager and Scrum Master with 25 years of experience in Telco and 3 years in Enterprise Sales.',
+      },
+      {
+        name: 'Manuel Granchelli',
+        organization: 'Handy Signs',
+        email: 'manuel@handysigns.it',
       },
     ],
   },
