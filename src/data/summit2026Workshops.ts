@@ -199,6 +199,7 @@ The session highlights practices that center Deaf expertise in research. Partici
         organization: 'Kara Technologies',
         email: 'noreen@kara.tech',
         photoUrl: '/summit-2026/photos/noreen-wilson.png',
+        photoImgClassName: 'origin-top object-top scale-[1.28]',
         bio: 'As a CODA, bilingual in American and New Zealand Sign Languages, she brings a unique cross-cultural lens to inclusive technology. With an extensive background in accessible resource leadership, sign language interpreting, and founding a translation company, she has comprehensive experience leading complex initiatives with strategic insight, collaboration, and a sharp eye for detail. Grounded in a Deaf-first mindset, Noreen focuses on AI-supported solutions that bridge accessibility gaps, working alongside the Deaf community to apply innovative, cutting-edge technology within meaningful and inclusive areas.',
       },
       {
