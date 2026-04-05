@@ -63,15 +63,39 @@ export function WorkshopProgramSectionCard({
   );
 }
 
-export function WorkshopPresenterBioPlaceholder({ name }: { name: string }) {
+const presenterPhotoFrameClasses = {
+  default: 'h-28 w-28 sm:h-32 sm:w-32',
+  compact: 'h-20 w-20 sm:h-24 sm:w-24',
+} as const;
+
+export type WorkshopPresenterPhotoSize = keyof typeof presenterPhotoFrameClasses;
+
+export function WorkshopPresenterBioPlaceholder({
+  name,
+  size = 'default',
+}: {
+  name: string;
+  size?: WorkshopPresenterPhotoSize;
+}) {
+  const frame = presenterPhotoFrameClasses[size];
   return (
     <div
-      className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-gray-100/80 p-2 text-center text-gray-500 shadow-inner sm:h-32 sm:w-32"
+      className={cn(
+        'flex shrink-0 flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-gray-100/80 p-2 text-center text-gray-500 shadow-inner',
+        frame,
+      )}
       role="img"
       aria-label={`Bio photo placeholder for ${name}`}
     >
-      <User className="mb-1 h-9 w-9 opacity-55" aria-hidden />
-      <span className="text-[10px] font-medium leading-tight sm:text-xs">Bio photo</span>
+      <User className={cn('mb-1 opacity-55', size === 'compact' ? 'h-6 w-6 sm:h-7 sm:w-7' : 'h-9 w-9')} aria-hidden />
+      <span
+        className={cn(
+          'font-medium leading-tight',
+          size === 'compact' ? 'text-[9px] sm:text-[10px]' : 'text-[10px] sm:text-xs',
+        )}
+      >
+        Bio photo
+      </span>
     </div>
   );
 }
@@ -81,16 +105,24 @@ export function WorkshopPresenterPhotoOrPlaceholder({
   name,
   photoUrl,
   imgClassName,
+  size = 'default',
 }: {
   name: string;
   photoUrl?: string | null;
   /** Merged into the image `className` for object-position / scale (tighter face crops). */
   imgClassName?: string;
+  size?: WorkshopPresenterPhotoSize;
 }) {
   const src = photoUrl?.trim();
+  const frame = presenterPhotoFrameClasses[size];
   if (src) {
     return (
-      <div className="h-28 w-28 shrink-0 overflow-hidden rounded-xl border-2 border-gray-200/90 bg-gray-100 shadow-inner sm:h-32 sm:w-32">
+      <div
+        className={cn(
+          'shrink-0 overflow-hidden rounded-xl border-2 border-gray-200/90 bg-gray-100 shadow-inner',
+          frame,
+        )}
+      >
         <img
           src={src}
           alt={`Portrait of ${name}`}
@@ -104,7 +136,7 @@ export function WorkshopPresenterPhotoOrPlaceholder({
       </div>
     );
   }
-  return <WorkshopPresenterBioPlaceholder name={name} />;
+  return <WorkshopPresenterBioPlaceholder name={name} size={size} />;
 }
 
 /** Presenter bio block: image floats left; name, org, email, and bio wrap beside and under the photo. */

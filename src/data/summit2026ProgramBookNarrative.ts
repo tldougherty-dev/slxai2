@@ -41,17 +41,26 @@ export const SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO =
 export type Summit2026CommitteeMember = {
   name: string;
   organization: string;
+  /** Public path under `/public`, e.g. `/summit-2026/photos/…` (same assets as workshop presenters where applicable). */
+  photoUrl?: string | null;
+  /** Optional crop/position tweaks for the headshot, matching workshop `photoImgClassName` when shared. */
+  photoImgClassName?: string;
 };
 
 export const SUMMIT_2026_COMMITTEE_MEMBERS: Summit2026CommitteeMember[] = [
-  { name: 'Joseph Brzezowski', organization: 'AvocadoWeb Services' },
-  { name: 'Naomi Caselli', organization: 'Boston University' },
-  { name: 'Travis Dougherty', organization: 'Signapse' },
-  { name: 'Molly Glass', organization: 'Kara Technologies' },
-  { name: 'Andy Van Hoorebeke', organization: 'GLWMax' },
-  { name: 'Thomas Horejes', organization: 'SignWow' },
-  { name: 'Yeh Kim', organization: 'Kara Technologies' },
-  { name: 'Adam Munder', organization: 'Sorenson' },
-  { name: 'Marcus Oaten', organization: 'Signapse' },
-  { name: 'Daniel Sommer', organization: 'Birnbaum Interpreting Services' },
+  { name: 'Joseph Brzezowski', organization: 'AvocadoWeb Services', photoUrl: '/summit-2026/photos/joseph-brzezowski.png' },
+  { name: 'Naomi Caselli', organization: 'Boston University', photoUrl: '/summit-2026/photos/naomi-caselli.png' },
+  { name: 'Travis Dougherty', organization: 'Signapse', photoUrl: '/summit-2026/photos/travis-dougherty.png' },
+  { name: 'Molly Glass', organization: 'Kara Technologies', photoUrl: '/summit-2026/photos/molly-glass.png' },
+  {
+    name: 'Andy Van Hoorebeke',
+    organization: 'GLWMax',
+    photoUrl: '/summit-2026/photos/andy-van-hoorebeke.png',
+    photoImgClassName: 'scale-[1.45] object-top translate-y-2',
+  },
+  { name: 'Thomas Horejes', organization: 'SignWow', photoUrl: '/summit-2026/photos/thomas-horejes.png' },
+  { name: 'Yeh Kim', organization: 'Kara Technologies', photoUrl: '/summit-2026/photos/yeh-jun-kim.png' },
+  { name: 'Adam Munder', organization: 'Sorenson', photoUrl: '/summit-2026/photos/adam-munder.png' },
+  { name: 'Marcus Oaten', organization: 'Signapse', photoUrl: '/summit-2026/photos/marcus-oaten.png' },
+  { name: 'Daniel Sommer', organization: 'Birnbaum Interpreting Services', photoUrl: '/summit-2026/photos/daniel-sommer.png' },
 ];

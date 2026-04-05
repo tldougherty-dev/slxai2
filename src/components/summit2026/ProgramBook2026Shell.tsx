@@ -72,6 +72,7 @@ export function ProgramBook2026Shell({
       const sections: Record<string, string> = {
         navHome: 'Home',
         navBackProgram: 'Back to program book',
+        navBackProgramShort: 'Back',
         backToTop: 'Back to top',
         programBookHeroLine: 'Program book',
         summitTitle: 'Summit 2026',
@@ -162,7 +163,8 @@ export function ProgramBook2026Shell({
           {topLeftNav === 'programBook' ? (
             <Link to="/2026" className="inline-flex min-w-0 items-center gap-2">
               <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
-              <span className="truncate">{getText('navBackProgram', 'Back to program book')}</span>
+              <span className="sm:hidden">{getText('navBackProgramShort', 'Back')}</span>
+              <span className="hidden truncate sm:inline">{getText('navBackProgram', 'Back to program book')}</span>
             </Link>
           ) : (
             <Link to="/" className="inline-flex items-center gap-2">

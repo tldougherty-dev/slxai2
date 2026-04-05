@@ -50,8 +50,10 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     presenters: [
       {
         name: 'Ryan Hait-Campbell',
+        title: 'Program Lead',
         organization: 'Convo Communications',
         photoUrl: '/summit-2026/photos/ryan-hait-campbell.png',
+        bio: 'Ryan Hait-Campbell is a Deaf entrepreneur, designer, and technology leader working at the intersection of accessibility, innovation, and sign language technology. He currently serves as Program Lead at Convo, where he supports go-to-market initiatives and helps bring new ideas and products into the hands of the Deaf community. He is also widely known for his earlier leadership in sign language technology entrepreneurship, including MotionSavvy, and for his continued work advancing Deaf-led innovation.',
       },
     ],
   },
@@ -98,8 +100,17 @@ Her research has been supported by more than $7 million in grants from the Natio
         email: 'abraham.glasser@gallaudet.edu',
         bio: 'Dr. Abraham Glasser is an Assistant Professor in the MS/PhD Accessible Human Centered Computing and Policy (AHCP) program at Gallaudet University. He is an active member of CoSET.',
       },
-      { name: 'Adam Munder', organization: 'Sorenson Communications' },
-      { name: 'Thomas Horejes', title: 'Ph.D., CDI', organization: 'SignWow' },
+      {
+        name: 'Adam Munder',
+        organization: 'Sorenson Communications',
+        photoUrl: '/summit-2026/photos/adam-munder.png',
+      },
+      {
+        name: 'Thomas Horejes',
+        title: 'Ph.D., CDI',
+        organization: 'SignWow',
+        photoUrl: '/summit-2026/photos/thomas-horejes.png',
+      },
     ],
   },
   {
@@ -194,6 +205,7 @@ The session highlights practices that center Deaf expertise in research. Partici
         title: 'CDI Translation Specialist & Project Coordinator',
         organization: 'Kara Technologies',
         email: 'molly@kara.tech',
+        photoUrl: '/summit-2026/photos/molly-glass.png',
         bio: `She brings both lived experience and specialized expertise in signed language access within emerging and innovative technologies. For the past three years, she has worked at Kara Technologies as an ASL Specialist, where she contributes to the development and quality assurance of sign language translations. Her goal is to provide Deaf-centered solutions with a strong focus on usability, linguistic accuracy, and respect for Deaf community needs.
 
 Molly holds certificates in Deaf Interpreting and Signed Language Translation from the National Technical Institute for the Deaf (NTID). In addition to her professional work, she serves on the leadership team of a Deaf-run, international coalition advancing safe, ethical, fair, and accountable standards for the use of artificial intelligence in translation and interpreting.`,
@@ -203,6 +215,7 @@ Molly holds certificates in Deaf Interpreting and Signed Language Translation fr
         title: 'AI Sign Linguistics & Community Engagement Advisor',
         organization: 'Kara Technologies',
         email: 'yeh@kara.tech',
+        photoUrl: '/summit-2026/photos/yeh-jun-kim.png',
         bio: `He brings over eight years of experience in sign language interpreting and translation, seven years of teaching American Sign Language (ASL), and several years of teaching Korean Sign Language (KSL), along with graduate-level research experience in language and communication.
 
 Through close collaboration with Deaf professionals, educators, interpreters, and community organizations, he helps ensure that sign language AI reflects authentic language use, cultural integrity, and real-world communication needs. His work centers Deaf and DeafDisabled communities by bridging linguistic expertise, accessibility practice, and Deaf-led AI development. At Kara, he supports the evaluation and refinement of automated sign language translation through linguistic review, database quality, and human-in-the-loop workflows, primarily in ASL.`,
@@ -681,6 +694,13 @@ Dr. Murray is Professor of Deaf Studies at Gallaudet University and has publishe
     summary: `FCC's accessibility work will be discussed, including proceedings and activities that touch on sign language driven by artificial intelligence in the spaces of video programming, modern communications, and emergency communications.
 
 Information will be shared about the FCC's advisory committees and existing ways for the public to engage with the FCC via the FCC's ASL Line, and filing comments and complaints.`,
+    learningObjectives: {
+      items: [
+        "Understand the FCC's role, strategic priorities, and how accessibility including AI-driven communication technologies fits within federal communications policy.",
+        'Identify key FCC rulemakings and policy areas impacting sign language AI, including modern communications, emergency communications, and televised video programming.',
+        'Learn how startups and researchers can engage with the FCC and prepare for future performance benchmarks, quality standards, and regulatory expectations for AI-driven accessibility tools.',
+      ],
+    },
     presenters: [
       {
         name: 'Travis Dougherty',
@@ -727,6 +747,20 @@ export function getSummit2026WorkshopsInScheduleOrder(): Summit2026Workshop[] {
   }
   const bySlug = new Map(SUMMIT_2026_WORKSHOPS.map((w) => [w.slug, w] as const));
   return slugs.map((slug) => bySlug.get(slug)).filter((w): w is Summit2026Workshop => w != null);
+}
+
+/** Neighbors in `getSummit2026WorkshopsInScheduleOrder()` for prev/next navigation on `/2026/workshop/:slug`. */
+export function getAdjacentWorkshopsInScheduleOrder(slug: string): {
+  prev: Summit2026Workshop | undefined;
+  next: Summit2026Workshop | undefined;
+} {
+  const ordered = getSummit2026WorkshopsInScheduleOrder();
+  const idx = ordered.findIndex((w) => w.slug === slug);
+  if (idx === -1) return { prev: undefined, next: undefined };
+  return {
+    prev: idx > 0 ? ordered[idx - 1] : undefined,
+    next: idx < ordered.length - 1 ? ordered[idx + 1] : undefined,
+  };
 }
 
 export function getSummit2026WorkshopBySlug(slug: string | undefined): Summit2026Workshop | undefined {

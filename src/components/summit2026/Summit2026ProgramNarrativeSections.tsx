@@ -5,6 +5,7 @@ import {
   SUMMIT_2026_WELCOME_LETTER_SIGNATURE,
 } from '@/data/summit2026ProgramBookNarrative';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
+import { WorkshopPresenterPhotoOrPlaceholder } from '@/components/summit2026/workshopProgramBookShared';
 
 type Props = {
   getText: Summit2026ProgramBookGetText;
@@ -112,14 +113,22 @@ export function Summit2026CommitteeSection({ getText }: Props) {
             'This summit would not be possible without the committee members below. Each contributed in their own way to help ensure a successful event.',
           )}
         </p>
-        <ul className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-2.5">
+        <ul className="grid grid-cols-1 gap-2.5 md:grid-cols-2 md:gap-3">
           {SUMMIT_2026_COMMITTEE_MEMBERS.map((m, i) => (
             <li
               key={`${m.name}-${i}`}
-              className="flex min-h-[5rem] flex-col items-center justify-center rounded-md border border-gray-200 bg-gray-50/80 px-3 py-3 text-center dark:border-gray-600 dark:bg-gray-800/40 sm:min-h-[5.25rem]"
+              className="flex min-h-0 items-center gap-3 rounded-md border border-gray-200 bg-gray-50/80 px-3 py-2.5 text-left dark:border-gray-600 dark:bg-gray-800/40 sm:gap-3.5 sm:px-3.5 sm:py-3"
             >
-              <p className="text-base font-semibold leading-tight text-gray-900 dark:text-white sm:text-lg">{m.name}</p>
-              <p className="mt-1.5 text-sm leading-snug text-gray-600 dark:text-gray-300 sm:text-base">{m.organization}</p>
+              <WorkshopPresenterPhotoOrPlaceholder
+                name={m.name}
+                photoUrl={m.photoUrl}
+                imgClassName={m.photoImgClassName}
+                size="compact"
+              />
+              <div className="min-w-0 flex-1 py-0.5">
+                <p className="text-base font-semibold leading-tight text-gray-900 dark:text-white sm:text-lg">{m.name}</p>
+                <p className="mt-1 text-sm leading-snug text-gray-600 dark:text-gray-300 sm:text-base">{m.organization}</p>
+              </div>
             </li>
           ))}
         </ul>
