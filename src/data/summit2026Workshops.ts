@@ -217,6 +217,7 @@ Molly holds certificates in Deaf Interpreting and Signed Language Translation fr
         organization: 'Kara Technologies',
         email: 'yeh@kara.tech',
         photoUrl: '/summit-2026/photos/yeh-jun-kim.png',
+        photoImgClassName: 'object-top',
         bio: `He brings over eight years of experience in sign language interpreting and translation, seven years of teaching American Sign Language (ASL), and several years of teaching Korean Sign Language (KSL), along with graduate-level research experience in language and communication.
 
 Through close collaboration with Deaf professionals, educators, interpreters, and community organizations, he helps ensure that sign language AI reflects authentic language use, cultural integrity, and real-world communication needs. His work centers Deaf and DeafDisabled communities by bridging linguistic expertise, accessibility practice, and Deaf-led AI development. At Kara, he supports the evaluation and refinement of automated sign language translation through linguistic review, database quality, and human-in-the-loop workflows, primarily in ASL.`,

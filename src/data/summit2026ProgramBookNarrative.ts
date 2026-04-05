@@ -59,7 +59,12 @@ export const SUMMIT_2026_COMMITTEE_MEMBERS: Summit2026CommitteeMember[] = [
     photoImgClassName: 'scale-[1.45] object-top translate-y-2',
   },
   { name: 'Thomas Horejes', organization: 'SignWow', photoUrl: '/summit-2026/photos/thomas-horejes.png' },
-  { name: 'Yeh Kim', organization: 'Kara Technologies', photoUrl: '/summit-2026/photos/yeh-jun-kim.png' },
+  {
+    name: 'Yeh Kim',
+    organization: 'Kara Technologies',
+    photoUrl: '/summit-2026/photos/yeh-jun-kim.png',
+    photoImgClassName: 'object-top',
+  },
   { name: 'Adam Munder', organization: 'Sorenson', photoUrl: '/summit-2026/photos/adam-munder.png' },
   { name: 'Marcus Oaten', organization: 'Signapse', photoUrl: '/summit-2026/photos/marcus-oaten.png' },
   { name: 'Daniel Sommer', organization: 'Birnbaum Interpreting Services', photoUrl: '/summit-2026/photos/daniel-sommer.png' },
