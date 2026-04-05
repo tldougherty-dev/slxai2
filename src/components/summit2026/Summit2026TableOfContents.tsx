@@ -22,11 +22,14 @@ export function Summit2026TableOfContents({ getText }: Props) {
 
   return (
     <nav
-      aria-label={getText('tocNavLabel', 'Table of contents')}
+      aria-labelledby="summit-program-toc-title"
       className="mb-8 w-full md:col-span-2"
     >
       <div className="rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
-        <h3 className="rounded-t-lg bg-gray-100 px-4 py-2.5 text-center text-base font-bold text-gray-900 dark:bg-gray-800 dark:text-white sm:py-3 sm:text-lg">
+        <h3
+          id="summit-program-toc-title"
+          className="rounded-t-lg bg-gray-100 px-4 py-3 text-center text-2xl font-bold leading-tight text-gray-900 dark:bg-gray-800 dark:text-white sm:py-3.5 sm:text-3xl"
+        >
           {getText('tocTitle', 'Table of contents')}
         </h3>
         <div className="rounded-b-lg p-2.5 sm:p-4">

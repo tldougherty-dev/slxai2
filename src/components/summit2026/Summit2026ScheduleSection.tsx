@@ -1,4 +1,8 @@
-import { SUMMIT_2026_SCHEDULE, type SummitScheduleRow } from '@/data/summit2026Schedule';
+import {
+  SUMMIT_2026_SCHEDULE,
+  type SummitScheduleDay,
+  type SummitScheduleRow,
+} from '@/data/summit2026Schedule';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
 import { Summit2026EveningEventSection } from '@/components/summit2026/Summit2026EveningEventSection';
 import { presenterCreditWithItalicOrgs } from '@/components/summit2026/summit2026PresenterCredit';
@@ -91,13 +95,13 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
     <div
       className={
         programBookMobile
-          ? 'bg-electric-blue py-2 text-center sm:py-3 md:py-4 pb-mobile-landscape-compact'
-          : 'bg-electric-blue py-3 text-center sm:py-4 pb-mobile-landscape-compact'
+          ? 'bg-electric-blue py-3 text-center sm:py-3.5 md:py-4 pb-mobile-landscape-compact'
+          : 'bg-electric-blue py-3.5 text-center sm:py-4 md:py-5 pb-mobile-landscape-compact'
       }
     >
-      <h3 className="px-2 text-lg font-bold leading-tight text-white sm:text-xl md:text-2xl">
+      <h2 className="px-2 text-xl font-bold leading-tight text-white sm:text-2xl md:text-3xl">
         {getText('scheduleTitle', 'SLxAI Summit Schedule')}
-      </h3>
+      </h2>
     </div>
   );
 
@@ -181,42 +185,46 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
     </ul>
   );
 
-  const scheduleDaySections = SUMMIT_2026_SCHEDULE.flatMap((day, dayIndex) => {
-    const daySection = (
-      <div
-        key={day.dayLabel}
-        id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
-        className="scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl"
-      >
-        {dayHeaderBar(day)}
-        {programBookMobile ? (
-          <>
-            <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
-            <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{renderDayMobileCards(day)}</div>
-          </>
-        ) : (
-          <div className="p-4 sm:p-6">{renderDayTable(day)}</div>
-        )}
-      </div>
-    );
+  const renderDaySection = (day: SummitScheduleDay, { showTopBorder }: { showTopBorder: boolean }) => (
+    <section
+      key={day.dayLabel}
+      id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
+      className={`scroll-mt-28 ${showTopBorder ? 'border-t-2 border-electric-blue/35' : ''}`}
+    >
+      {dayHeaderBar(day)}
+      {programBookMobile ? (
+        <>
+          <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
+          <div className="p-2 pb-3 sm:p-3 sm:pb-4 md:hidden">{renderDayMobileCards(day)}</div>
+        </>
+      ) : (
+        <div className="p-4 sm:p-6">{renderDayTable(day)}</div>
+      )}
+    </section>
+  );
 
-    if (dayIndex === 0) {
-      return [
-        daySection,
-        <Summit2026EveningEventSection
-          key="summit-evening-event"
-          getText={getText}
-          programBookMobile={programBookMobile}
-        />,
-      ];
-    }
-    return [daySection];
-  });
+  const day1 = SUMMIT_2026_SCHEDULE[0];
+  const day2 = SUMMIT_2026_SCHEDULE[1];
 
   return (
-    <div className="mb-8 flex w-full flex-col gap-6 sm:gap-8 md:col-span-2">
-      <div className="overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl">{headerBar}</div>
-      {scheduleDaySections}
+    <div className="mb-8 w-full md:col-span-2">
+      <div className="overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl dark:border-gray-600 dark:bg-gray-900/40">
+        {headerBar}
+        <div className="flex flex-col">
+          {day1 ? renderDaySection(day1, { showTopBorder: false }) : null}
+          <section
+            id="summit-evening-event"
+            className="scroll-mt-28 border-t-2 border-electric-blue/35"
+          >
+            <Summit2026EveningEventSection
+              getText={getText}
+              programBookMobile={programBookMobile}
+              nested
+            />
+          </section>
+          {day2 ? renderDaySection(day2, { showTopBorder: true }) : null}
+        </div>
+      </div>
     </div>
   );
 }

@@ -40,7 +40,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '9:00 AM to 9:15 AM',
         sessionType: 'Keynote',
-        title: 'Breaking Communication Barriers',
+        title: 'Keynote: Breaking Communication Barriers',
         presenters: 'Ryan Hait Campbell, Convo',
         workshopSlug: 'keynote-breaking-communication-barriers',
       },
@@ -50,7 +50,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Panel',
         title: 'Ethics: Where Does It Stop?',
         presenters:
-          'Dr. Abraham Glasser, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, SignWow; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Naomi Caselli, Boston University',
+          'Dr. Naomi Caselli, Boston University; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Abraham Glasser, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, SignWow',
         workshopSlug: 'ethics-where-does-it-stop',
       },
       { time: '10:05 AM to 10:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
@@ -147,8 +147,8 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '9:40 AM to 10:25 AM',
         sessionType: 'Session',
-        title: 'Research and Data Collection: Strengthening Validity Through Partnerships',
-        presenters: 'Pamela Macias, University of Colorado',
+        title: 'Research & Data Collection: Strengthening Validity Through Partnerships',
+        presenters: 'Pamela Macias, University of Colorado Boulder',
         workshopSlug: 'research-data-collection-partnerships',
       },
       { time: '10:25 AM to 10:35 AM', sessionType: 'Break', title: 'Break', presenters: '' },

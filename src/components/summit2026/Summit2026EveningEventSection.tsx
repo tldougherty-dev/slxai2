@@ -3,12 +3,18 @@ import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summi
 type Props = {
   getText: Summit2026ProgramBookGetText;
   programBookMobile?: boolean;
+  /** When true, render without outer card frame (nested under SLxAI Summit Schedule). */
+  nested?: boolean;
 };
 
 const EVENING_PHOTO_VIEW = '/bleacher-bar-view.png';
 const EVENING_PHOTO_INTERIOR = '/bleacher-bar-entry.png';
 
-export function Summit2026EveningEventSection({ getText, programBookMobile = false }: Props) {
+export function Summit2026EveningEventSection({
+  getText,
+  programBookMobile = false,
+  nested = false,
+}: Props) {
   const headerBar = (
     <div
       className={
@@ -25,8 +31,12 @@ export function Summit2026EveningEventSection({ getText, programBookMobile = fal
 
   return (
     <div
-      id="summit-evening-event"
-      className="scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl dark:bg-gray-900/40"
+      id={nested ? undefined : 'summit-evening-event'}
+      className={
+        nested
+          ? undefined
+          : 'scroll-mt-28 overflow-hidden rounded-lg border-2 border-electric-blue bg-white shadow-xl dark:bg-gray-900/40'
+      }
     >
       {headerBar}
       <div className={programBookMobile ? 'p-3 sm:p-4 md:p-6' : 'p-4 sm:p-6'}>

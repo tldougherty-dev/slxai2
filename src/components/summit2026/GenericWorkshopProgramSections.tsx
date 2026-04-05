@@ -5,7 +5,7 @@ import {
   TRUST_ADDITIONAL_INFORMATION_TITLE,
 } from '@/data/summit2026TrustWorkshopAdditionalInformation';
 import { getProgramBookSectionsFromVerbatim } from '@/data/summit2026WorkshopVerbatimLayout';
-import type { Summit2026Workshop } from '@/data/summit2026Workshops';
+import type { Summit2026Workshop, SummitWorkshopLearningObjectives } from '@/data/summit2026Workshops';
 import type { ReactNode } from 'react';
 
 const TRUST_WORKSHOP_SLUG = 'trust-and-accountability-sign-language-ai';
@@ -61,6 +61,27 @@ function WorkshopDescriptionContent({ text }: { text: string }) {
         );
       })}
     </div>
+  );
+}
+
+function WorkshopLearningObjectivesBlock({
+  lo,
+  headingTitle,
+}: {
+  lo: SummitWorkshopLearningObjectives;
+  headingTitle: string;
+}) {
+  return (
+    <WorkshopProgramSectionCard headingId="workshop-learning-objectives-heading" title={headingTitle}>
+      {lo.preamble ? <p className="mb-4 font-medium text-gray-900">{lo.preamble}</p> : null}
+      <ul className="list-disc space-y-3 pl-5 text-base leading-relaxed text-gray-800 marker:text-gray-800">
+        {lo.items.map((item, i) => (
+          <li key={i} className="pl-1">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </WorkshopProgramSectionCard>
   );
 }
 
@@ -135,8 +156,8 @@ function AdditionalInformationContent({
 }
 
 /**
- * Program book: description → Presenters → optional Additional information.
- * Keynote: section title "Keynote description"; others: "Workshop Description". No learning objective block.
+ * Program book: description → optional Learning objectives → Presenters → optional Additional information.
+ * Keynote: section title "Keynote description"; others: "Workshop Description".
  */
 export function GenericWorkshopProgramSections({
   workshop,
@@ -168,6 +189,13 @@ export function GenericWorkshopProgramSections({
         <WorkshopDescriptionContent text={workshopDescription} />
       </WorkshopProgramSectionCard>
 
+      {workshop.learningObjectives?.items.length ? (
+        <WorkshopLearningObjectivesBlock
+          lo={workshop.learningObjectives}
+          headingTitle={getText('learningObjectivesHeading', 'Learning objectives')}
+        />
+      ) : null}
+
       <WorkshopProgramSectionCard
         headingId="workshop-presenters-heading"
         title={isSinglePresenter ? 'Presenter' : 'Presenters'}
@@ -178,6 +206,7 @@ export function GenericWorkshopProgramSections({
               <WorkshopPresenterBioCard
                 name={p.name}
                 photoUrl={p.photoUrl}
+                photoImgClassName={p.photoImgClassName}
                 title={p.title}
                 organization={p.organization}
                 email={p.email}

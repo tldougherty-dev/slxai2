@@ -1,5 +1,41 @@
 import { Mail, User } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
+
+/** Renders optional [label](url) segments in bio text as external links (trusted program-book copy). */
+function PresenterBioText({ text }: { text: string }) {
+  const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const segments: ReactNode[] = [];
+  let lastIndex = 0;
+  let m: RegExpExecArray | null;
+  let linkKey = 0;
+  while ((m = linkPattern.exec(text)) !== null) {
+    if (m.index > lastIndex) {
+      segments.push(text.slice(lastIndex, m.index));
+    }
+    const href = m[2].trim();
+    segments.push(
+      <a
+        key={`bio-link-${linkKey++}`}
+        href={href}
+        className="font-medium text-electric-blue underline underline-offset-2 hover:opacity-90"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {m[1]}
+      </a>,
+    );
+    lastIndex = m.index + m[0].length;
+  }
+  if (lastIndex < text.length) {
+    segments.push(text.slice(lastIndex));
+  }
+  const children = segments.length > 0 ? segments : text;
+  return (
+    <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-gray-700">{children}</p>
+  );
+}
 
 /**
  * Blue banner + white body: matches CoSET program book sections.
@@ -44,9 +80,12 @@ export function WorkshopPresenterBioPlaceholder({ name }: { name: string }) {
 export function WorkshopPresenterPhotoOrPlaceholder({
   name,
   photoUrl,
+  imgClassName,
 }: {
   name: string;
   photoUrl?: string | null;
+  /** Merged into the image `className` for object-position / scale (tighter face crops). */
+  imgClassName?: string;
 }) {
   const src = photoUrl?.trim();
   if (src) {
@@ -55,7 +94,10 @@ export function WorkshopPresenterPhotoOrPlaceholder({
         <img
           src={src}
           alt={`Portrait of ${name}`}
-          className="h-full w-full object-cover object-[center_18%]"
+          className={cn(
+            'h-full w-full origin-center object-cover',
+            imgClassName ?? 'object-[center_18%]',
+          )}
           loading="lazy"
           decoding="async"
         />
@@ -69,6 +111,7 @@ export function WorkshopPresenterPhotoOrPlaceholder({
 export type WorkshopPresenterBioCardProps = {
   name: string;
   photoUrl?: string | null;
+  photoImgClassName?: string;
   title?: string;
   organization?: string;
   email?: string;
@@ -78,6 +121,7 @@ export type WorkshopPresenterBioCardProps = {
 export function WorkshopPresenterBioCard({
   name,
   photoUrl,
+  photoImgClassName,
   title,
   organization,
   email,
@@ -86,7 +130,7 @@ export function WorkshopPresenterBioCard({
   return (
     <article className="flow-root rounded-xl border border-gray-200/90 bg-gray-50/80 p-4 shadow-md transition-shadow hover:border-electric-blue/25 hover:shadow-lg sm:p-5">
       <div className="float-left mb-2 mr-4">
-        <WorkshopPresenterPhotoOrPlaceholder name={name} photoUrl={photoUrl} />
+        <WorkshopPresenterPhotoOrPlaceholder name={name} photoUrl={photoUrl} imgClassName={photoImgClassName} />
       </div>
       <h3 className="text-lg font-bold text-gray-900">{name}</h3>
       {title ? <p className="mt-1 text-sm text-gray-700">{title}</p> : null}
@@ -104,9 +148,7 @@ export function WorkshopPresenterBioCard({
           {email}
         </a>
       ) : null}
-      {bio ? (
-        <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-gray-700">{bio}</p>
-      ) : null}
+      {bio ? <PresenterBioText text={bio} /> : null}
     </article>
   );
 }
