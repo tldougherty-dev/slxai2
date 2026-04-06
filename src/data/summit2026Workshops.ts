@@ -61,7 +61,7 @@ export const SUMMIT_2026_WORKSHOPS: Summit2026Workshop[] = [
     slug: 'ethics-where-does-it-stop',
     sessionTitle: 'Ethics: Where Does It Stop?',
     presentersLine:
-      'Presenters: Dr. Naomi Caselli, Boston University; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Abraham Glasser, PhD, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, Ph.D., CDI, SignWow',
+      'Presenters: Dr. Naomi Caselli, Boston University; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Abraham Glasser, PhD, Gallaudet University; Adam Munder, Sorenson Communications; Thomas P. Horejes, Ph.D., CDI, SignWow',
     summary: `As sign language AI accelerates, ethical questions are no longer theoretical. They are immediate, complex, and deeply connected to language, identity, ownership, and power. This panel brings together leaders from research, industry, community, and policy to examine where innovation should move forward, and where boundaries must be set.
 
 Topics will include data ownership, consent, compensation, cultural sovereignty, model deployment risks, governance, and the role of Deaf leadership in shaping the future of sign language AI. Panelists will explore real-world scenarios, competing priorities, and unresolved tensions that developers, companies, and communities are already facing.
@@ -113,10 +113,12 @@ He is the founder and former General Manager of OmniBridge, an Intel-backed vent
 Adam's career spans engineering, machine learning, and innovation strategy, but his core mission is clear: to break communication barriers by turning fragmented signals into meaningful insight—so AI systems can learn, improve, and truly serve the people they are built for.`,
       },
       {
-        name: 'Thomas Horejes',
-        title: 'Ph.D., CDI',
+        name: 'Thomas P. Horejes',
+        title: 'Chief Advocacy Officer, Ph.D., CDI',
         organization: 'SignWow',
+        email: 'thomas.horejes@signwow.com',
         photoUrl: '/summit-2026/photos/thomas-horejes.png',
+        bio: "Thomas P. Horejes, Ph.D., CDI is SignWow's Chief Advocacy Officer who brings decades of experience in legal policy, advocacy, and accessibility, with a multidisciplinary focus on law and public administration. He has 18+ years teaching disability policy, law, and sociology in higher education, 15+ published articles, and 70+ scholarly presentations worldwide.",
       },
     ],
   },

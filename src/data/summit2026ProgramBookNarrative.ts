@@ -63,7 +63,7 @@ export const SUMMIT_2026_COMMITTEE_MEMBERS: Summit2026CommitteeMember[] = [
     photoUrl: '/summit-2026/photos/andy-van-hoorebeke.png',
     photoImgClassName: 'scale-[1.45] object-top translate-y-2',
   },
-  { name: 'Thomas Horejes', organization: 'SignWow', photoUrl: '/summit-2026/photos/thomas-horejes.png' },
+  { name: 'Thomas P. Horejes', organization: 'SignWow', photoUrl: '/summit-2026/photos/thomas-horejes.png' },
   {
     name: 'Yeh Kim',
     organization: 'Kara Technologies',

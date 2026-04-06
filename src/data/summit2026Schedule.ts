@@ -50,7 +50,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Panel',
         title: 'Ethics: Where Does It Stop?',
         presenters:
-          'Dr. Naomi Caselli, Boston University; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Abraham Glasser, Gallaudet University; Adam Munder, Sorenson Communications; Thomas Horejes, SignWow',
+          'Dr. Naomi Caselli, Boston University; Dr. Maartje De Meulder, University of Applied Sciences Utrecht; Dr. Abraham Glasser, Gallaudet University; Adam Munder, Sorenson Communications; Thomas P. Horejes, SignWow',
         workshopSlug: 'ethics-where-does-it-stop',
       },
       { time: '10:05 AM to 10:15 AM', sessionType: 'Break', title: 'Break', presenters: '' },
