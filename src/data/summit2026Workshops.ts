@@ -118,7 +118,7 @@ Adam's career spans engineering, machine learning, and innovation strategy, but 
         organization: 'SignWow',
         email: 'thomas.horejes@signwow.com',
         photoUrl: '/summit-2026/photos/thomas-horejes.png',
-        bio: "Thomas P. Horejes, Ph.D., CDI is SignWow's Chief Advocacy Officer who brings decades of experience in legal policy, advocacy, and accessibility, with a multidisciplinary focus on law and public administration. He has 18+ years teaching disability policy, law, and sociology in higher education, 15+ published articles, and 70+ scholarly presentations worldwide.",
+        bio: "Dr. Thomas P. Horejes, Ph.D., CDI is SignWow's Chief Advocacy Officer who brings decades of experience in legal policy, advocacy, and accessibility, with a multidisciplinary focus on law and public administration. He has 18+ years teaching disability policy, law, and sociology in higher education, 15+ published articles, and 70+ scholarly presentations worldwide.",
       },
     ],
   },
