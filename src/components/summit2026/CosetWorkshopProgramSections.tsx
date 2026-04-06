@@ -25,6 +25,8 @@ export function CosetWorkshopProgramSections() {
             <li key={p.name}>
               <WorkshopPresenterBioCard
                 name={p.name}
+                photoUrl={p.photoUrl}
+                photoImgClassName={p.photoImgClassName}
                 organization={p.organization}
                 email={p.email}
                 bio={p.bio}

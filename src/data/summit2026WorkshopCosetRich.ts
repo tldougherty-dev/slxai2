@@ -10,6 +10,10 @@ export type CosetWorkshopPresenterDetail = {
   /** Omit when the presenter has no organizational affiliation. */
   organization?: string;
   bio: string;
+  /** Public path under `/public`, e.g. `/summit-2026/photos/…` */
+  photoUrl?: string | null;
+  /** Optional crop/position tweaks for the headshot. */
+  photoImgClassName?: string;
 };
 
 export const COSET_SAFE_AI_WORKSHOP_SLUG = 'coset-safe-ai-communication-success' as const;
@@ -37,7 +41,8 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
     name: 'Jeff Shaul',
     email: 'Jeff@sign-speak.com',
     organization: 'Sign-Speak',
-    bio: 'Jeff Shaul is a Deaf backend engineer building sign language-first systems. At Sign-Speak, he develops production platforms for language technologies. His background spans large-scale data systems and software engineering. He is a part owner of Signapse and contributes to CoSET’s work on ethical evaluation frameworks for sign language AI.',
+    photoUrl: '/summit-2026/photos/jeff-shaul.png',
+    bio: 'Jeff Shaul is a Deaf backend engineer building sign language–first systems. At Sign-Speak, he develops production platforms for language technologies. His background spans large-scale data systems and software engineering. He is a part owner of GoSign.AI and contributes to CoSET’s work on ethical evaluation frameworks for sign language AI. Using ASL and written English to communicate, he is currently based in Rochester, New York.',
   },
 ];
 

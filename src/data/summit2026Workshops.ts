@@ -735,14 +735,20 @@ Information will be shared about the FCC's advisory committees and existing ways
     slug: 'coset-safe-ai-communication-success',
     sessionTitle: 'CoSET SAFE AI: Designing for Communication Success',
     presentersLine:
-      'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Stephanie Jo Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeffrey Shaul, Sign-Speak',
+      'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Stephanie Jo Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeff Shaul, Sign-Speak',
     summary:
       'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.',
     presenters: [
       { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
       { name: 'Stephanie Jo Kent', organization: 'CoSET' },
       { name: 'Erin Sanders-Sigmon', email: 'erinfran777@gmail.com', organization: 'CoSET' },
-      { name: 'Jeffrey Shaul', organization: 'Sign-Speak' },
+      {
+        name: 'Jeff Shaul',
+        organization: 'Sign-Speak',
+        email: 'Jeff@sign-speak.com',
+        photoUrl: '/summit-2026/photos/jeff-shaul.png',
+        bio: 'Jeff Shaul is a Deaf backend engineer building sign language–first systems. At Sign-Speak, he develops production platforms for language technologies. His background spans large-scale data systems and software engineering. He is a part owner of GoSign.AI and contributes to CoSET’s work on ethical evaluation frameworks for sign language AI. Using ASL and written English to communicate, he is currently based in Rochester, New York.',
+      },
     ],
   },
 ];
