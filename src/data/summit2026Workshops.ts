@@ -182,6 +182,7 @@ The session highlights practices that center Deaf expertise in research. Partici
         title: 'Assistant Professor, ASL Program; Co-Principal Investigator',
         organization: 'University of Colorado Boulder',
         email: 'pamela.macias@colorado.edu',
+        photoUrl: '/summit-2026/photos/pamela-macias.png',
         bio: "Pamela Macias is Assistant Professor in the ASL Program at the University of Colorado Boulder and Co-Principal Investigator of research on AI-generated ASL videos and related data collection. Her work examines how partnerships between universities, Deaf communities, and industry can strengthen validity, rigor, and ethical accountability in sign language AI.",
       },
     ],
