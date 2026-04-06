@@ -38,6 +38,10 @@ export const SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO =
   "With over a decade of experience in ASL and Deaf Studies, Andrew's work is distinguished by his focus on ASL literature, storytelling, and transformative pedagogical approaches that move beyond traditional frameworks. He is dedicated to elevating Deaf cultural narratives while cultivating immersive and accessible learning environments for diverse communities.\n\n" +
   'His current work includes the development of initiatives centered on ASL storytelling, Deaf folklore, and community-based scholarship, with the aim of strengthening the relationship between academic institutions and the Deaf community.';
 
+/** Program book: Master of Ceremonies, Day 2 (Dr. Barbara Spiecker). */
+export const SUMMIT_2026_MOC_BARBARA_SPIECKER_BIO =
+  'Barbara Spiecker (she/her) is a deaf marine ecologist whose research combines mathematical and statistical tools with experimental and field-based approaches to understand how marine communities respond to climate change and to strengthen the monitoring and management of marine habitats. She also serves as director of outreach and training at the Boston University Deaf Center and as co-founder and executive director of Atomic Hands, a nonprofit that makes science, technology, engineering, and mathematics (STEM) engaging and accessible through American Sign Language (ASL). She holds a Ph.D. in Integrative Biology from Oregon State University, an M.S. in Marine Biology from Northeastern University, and a B.S. in Biology from the Rochester Institute of Technology.';
+
 export type Summit2026CommitteeMember = {
   name: string;
   organization: string;

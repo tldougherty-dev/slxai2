@@ -13,7 +13,10 @@ import {
   Summit2026WelcomeLetterSection,
 } from '@/components/summit2026/Summit2026ProgramNarrativeSections';
 import { WorkshopPresenterBioCard } from '@/components/summit2026/workshopProgramBookShared';
-import { SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO } from '@/data/summit2026ProgramBookNarrative';
+import {
+  SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO,
+  SUMMIT_2026_MOC_BARBARA_SPIECKER_BIO,
+} from '@/data/summit2026ProgramBookNarrative';
 import {
   getSummitSponsorMarqueeLogoClasses,
   isSummitSponsorCircularLogo,
@@ -352,13 +355,13 @@ const Summit2026ProgramBookContent = ({
                     <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
                       {getText('tocDay2', 'Day 2')}
                     </h3>
-                    <p className="text-center text-lg leading-relaxed text-gray-700 dark:text-gray-200 sm:text-xl md:text-left">
-                      <strong className="text-gray-900 dark:text-white">Dr. Barbara Spiecker</strong>
-                      {', '}
-                      <span className="text-gray-800 dark:text-gray-100">Boston University</span>
-                      {' — '}
-                      <span className="text-gray-700 dark:text-gray-300">Master of Ceremonies, Day 2</span>
-                    </p>
+                    <WorkshopPresenterBioCard
+                      name="Dr. Barbara Spiecker"
+                      title="Master of Ceremonies, Day 2"
+                      organization="Boston University"
+                      photoUrl="/summit-2026/photos/barbara-spiecker.png"
+                      bio={SUMMIT_2026_MOC_BARBARA_SPIECKER_BIO}
+                    />
                   </div>
                 </div>
               </CardContent>
