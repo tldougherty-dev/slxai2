@@ -598,7 +598,7 @@ He earned a PhD in Linguistics from Gallaudet University with a dissertation tit
     slug: 'asl-ai-authority-deaf-experts',
     sessionTitle: 'ASL, AI, and Authority: Centering Deaf ASL Experts in Language Technologies',
     presentersLine:
-      'Presenters: Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, PhD, Shelley Oishi, TWA Innovations LLC',
+      'Presenters: Elisa Abenchuchan Vita, Lisa Gelineau, Dr. Raychelle Harris, Shelley Oishi, TWA Innovations LLC',
     summary: `Deaf ASL experts are not interchangeable with Deaf signers, and sign language data is not interchangeable with sign language knowledge. This workshop, led by the team behind TWA Innovations, one of the most comprehensive Deaf-authored ASL textbook, dictionary, and learning platforms, makes that argument with specificity, evidence, and urgency.
 
 Drawing on more than a decade of daily work filming, documenting, curating, and teaching ASL, the presenters walk through eight concrete points where AI sign language projects most commonly fail and why those failures are not technical problems but authority problems.
@@ -632,12 +632,12 @@ Throughout, the presenters distinguish between Deaf-sourced projects, where Deaf
         bio: 'Lisa Gelineau brings decades of experience in ASL education, proficiency evaluation, and curriculum development. She is co-founder of TWA Innovations and a professor at Austin Community College, focused on how technology, including AI, can support rather than oversimplify signed languages.',
       },
       {
-        name: 'Raychelle Harris, Ph.D.',
+        name: 'Dr. Raychelle Harris',
         title: 'Academic Director & Researcher',
         organization: 'TWA Innovations LLC',
         email: 'hello@truewayasl.com',
         photoUrl: '/summit-2026/photos/raychelle-harris.png',
-        bio: 'Raychelle Harris is a Deaf ASL educator and co-owner of TWA Innovations, with academic leadership for the TWA Textbook, Dictionary, and Academy. Her work focuses on ASL teaching methods, assessment, ethical representation of signed languages in digital systems, and Deaf-led expert authority in emerging technologies.',
+        bio: 'She is a Deaf ASL educator and co-owner of TWA Innovations, with academic leadership for the TWA Textbook, Dictionary, and Academy. Her work focuses on ASL teaching methods, assessment, ethical representation of signed languages in digital systems, and Deaf-led expert authority in emerging technologies.',
       },
       {
         name: 'Shelley Oishi',

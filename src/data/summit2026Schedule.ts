@@ -157,7 +157,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Session',
         title: 'ASL, AI, and Authority: Centering Deaf ASL Experts in Language Technologies',
         presenters:
-          'Elisa Abenchuchan Vita, Lisa Gelineau, Raychelle Harris, Shelley Oishi, TWA Innovations',
+          'Elisa Abenchuchan Vita, Lisa Gelineau, Dr. Raychelle Harris, Shelley Oishi, TWA Innovations',
         workshopSlug: 'asl-ai-authority-deaf-experts',
       },
       { time: '11:10 AM to 11:20 AM', sessionType: 'Break', title: 'Break', presenters: '' },
