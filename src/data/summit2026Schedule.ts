@@ -35,7 +35,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         sessionType: 'Keynote',
         title: 'Opening Remarks From Boston University',
         presenters:
-          'Provost Azer Bestavros, Dean Penny Bishop, Dr. Naomi Caselli, Andrew Bottoms',
+          'Associate Provost Azer Bestavros, Dean Penny Bishop, Dr. Naomi Caselli, Andrew Bottoms',
       },
       {
         time: '9:00 AM to 9:15 AM',
