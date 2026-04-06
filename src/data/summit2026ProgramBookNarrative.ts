@@ -52,7 +52,7 @@ export const SUMMIT_2026_COMMITTEE_MEMBERS: Summit2026CommitteeMember[] = [
     name: 'Joseph Brzezowski',
     organization: 'AvocadoWeb Services',
     photoUrl: '/summit-2026/photos/joseph-brzezowski.png',
-    photoImgClassName: 'object-top',
+    photoImgClassName: 'origin-top object-top scale-[1.38]',
   },
   { name: 'Naomi Caselli', organization: 'Boston University', photoUrl: '/summit-2026/photos/naomi-caselli.png' },
   { name: 'Travis Dougherty', organization: 'Signapse', photoUrl: '/summit-2026/photos/travis-dougherty.png' },
