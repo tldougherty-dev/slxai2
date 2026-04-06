@@ -105,6 +105,7 @@ Her research has been supported by more than $7 million in grants from the Natio
         title: 'Head of Insights, AI Sign Language',
         organization: 'Sorenson Communications',
         photoUrl: '/summit-2026/photos/adam-munder.png',
+        photoImgClassName: 'origin-top scale-[1.2] object-[56%_0]',
         bio: `Adam Munder is Head of Insights for Sorenson's AI Sign Language team, where he leads the effort to unify feedback, data, and real-world learning into a cohesive system that improves AI-driven communication. Deaf and a lifelong signer, Adam brings a deeply personal and systemic perspective to accessibility—shaping how organizations understand model quality, user trust, and real-world impact.
 
 He is the founder and former General Manager of OmniBridge, an Intel-backed venture focused on real-time sign language translation, later acquired by Sorenson. His work sits at the intersection of AI, product, and community—ensuring that advances in technology are grounded in the lived experiences of Deaf and hard-of-hearing users.
