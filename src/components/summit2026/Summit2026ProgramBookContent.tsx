@@ -89,6 +89,9 @@ const Summit2026ProgramBookContent = ({
   const isFullProgramBook = showSchedule && !landingSummit;
   const showTocAndSchedule = isFullProgramBook;
   const showTieredSponsorsSection = isFullProgramBook || landingSummit;
+  /** Homepage landing: tiered sponsors appear after workshops; program book keeps them after schedule. */
+  const showTieredSponsorsInDefaultSlot = showTieredSponsorsSection && !landingSummit;
+  const showTieredSponsorsAfterWorkshops = showTieredSponsorsSection && landingSummit;
   const showWelcomeLetterSection = isFullProgramBook;
   const showAboutSummitCard = isFullProgramBook || landingSummit;
   const showStorySlxaiSection = isFullProgramBook;
@@ -222,12 +225,20 @@ const Summit2026ProgramBookContent = ({
 
           {showTocAndSchedule ? <Summit2026TableOfContents getText={getText} /> : null}
 
-          {showTocAndSchedule || showTieredSponsorsSection || showWelcomeLetterSection || showAboutSummitCard || showStorySlxaiSection || showMasterOfCeremoniesCard || showSummitCommitteeSection || showWorkshopsAndPanels ? (
+          {showTocAndSchedule ||
+          showTieredSponsorsInDefaultSlot ||
+          showWelcomeLetterSection ||
+          showAboutSummitCard ||
+          showStorySlxaiSection ||
+          showMasterOfCeremoniesCard ||
+          showSummitCommitteeSection ||
+          showWorkshopsAndPanels ||
+          showTieredSponsorsAfterWorkshops ? (
             <div className="flex flex-col gap-8">
               {showTocAndSchedule ? (
                 <Summit2026ScheduleSection getText={getText} programBookMobile />
               ) : null}
-              {showTieredSponsorsSection ? <Summit2026SponsorsSection getText={getText} /> : null}
+              {showTieredSponsorsInDefaultSlot ? <Summit2026SponsorsSection getText={getText} /> : null}
               {showWelcomeLetterSection ? <Summit2026WelcomeLetterSection getText={getText} /> : null}
 
             {showAboutSummitCard ? (
@@ -444,6 +455,7 @@ const Summit2026ProgramBookContent = ({
             ) : null}
 
             {showSummitCommitteeSection ? <Summit2026CommitteeSection getText={getText} /> : null}
+            {showTieredSponsorsAfterWorkshops ? <Summit2026SponsorsSection getText={getText} /> : null}
             </div>
           ) : null}
         </div>

@@ -501,7 +501,7 @@ const Index = () => {
       <section id="about" className="bg-white py-3 sm:py-4">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           {/* Mission, Vision, Goals, Bylaws */}
-          <div className="mb-2 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-6">
+          <div className="mb-2 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
             <Card
               className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
               style={{
@@ -561,7 +561,7 @@ const Index = () => {
 
             <Card
               id="bylaws"
-              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
+              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5 xl:col-span-3"
               style={{
                 filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
               }}
