@@ -100,6 +100,11 @@ const Index = () => {
         missionText: 'To unite industry leaders through a cooperative nonprofit structure, establishing ethical standards and driving innovation in sign language x AI technologies through equal representation and collaborative decision-making.',
         visionTitle: 'Vision',
         visionText: 'A world where sign language x AI technologies are developed through industry-wide collaboration, with each company having an equal voice in shaping the future of accessible technology.',
+        goalsTitle: 'Goals',
+        goal1: 'Establish cooperative nonprofit structure',
+        goal2: 'Create industry-wide ethical standards',
+        goal3: 'Foster collaborative innovation',
+        goal4: 'Ensure equal company representation',
         bylawsSectionTitle: 'Bylaws',
         bylawsSectionBody: 'The SLxAI Bylaws Committee has spent the past two months collaboratively developing the organization\'s founding bylaws. The draft is now ready for community review. We invite members and stakeholders to provide feedback before the bylaws are formally adopted at the end of the SLxAI Summit on April 17, 2026.',
         bylawsSectionLinkLead: 'Review the draft and share your input here:',
@@ -495,8 +500,8 @@ const Index = () => {
       {/* About Section */}
       <section id="about" className="bg-white py-3 sm:py-4">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-          {/* Mission, Vision, Bylaws */}
-          <div className="mb-2 grid gap-3 md:grid-cols-3 md:gap-6">
+          {/* Mission, Vision, Goals, Bylaws */}
+          <div className="mb-2 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4 xl:gap-6">
             <Card
               className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
               style={{
@@ -530,6 +535,27 @@ const Index = () => {
                 <p className="text-left text-[13px] leading-snug text-black sm:text-center sm:text-sm sm:leading-relaxed">
                   {getText('visionText', 'A world where sign language x AI technologies are developed through industry-wide collaboration, with each company having an equal voice in shaping the future of accessible technology.')}
                 </p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="translate-y-0 overflow-hidden rounded-lg shadow-none md:-translate-y-0.5"
+              style={{
+                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))',
+              }}
+            >
+              <CardHeader className="rounded-t-lg bg-electric-blue px-3 py-2 text-center text-white sm:px-4 sm:py-1.5">
+                <CardTitle className="text-xl font-bold leading-tight text-white md:text-2xl lg:text-3xl">
+                  {getText('goalsTitle', 'Goals')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="rounded-b-lg px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+                <ul className="space-y-1.5 text-left text-[13px] leading-snug text-black sm:text-sm sm:leading-normal">
+                  <li>• {getText('goal1', 'Establish cooperative nonprofit structure')}</li>
+                  <li>• {getText('goal2', 'Create industry-wide ethical standards')}</li>
+                  <li>• {getText('goal3', 'Foster collaborative innovation')}</li>
+                  <li>• {getText('goal4', 'Ensure equal company representation')}</li>
+                </ul>
               </CardContent>
             </Card>
 
