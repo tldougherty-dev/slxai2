@@ -46,8 +46,18 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
   },
 ];
 
-/** Full workshop description (formerly proposal text). */
-export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION = `This 50-minute workshop will introduce the Coalition for Sign Language Equity in Technology (CoSET), giving an overview of who we are, what we’ve accomplished, and what we aim to do with sign languages and artificial intelligence (AI). We’ll describe the 3D Risk Framework introduced in the AI Interpreting Solutions Evaluation Toolkit Part A: Organization, Implementation, and Management and the Hazard Triangle and SAFE Zone which is illustrated in the Toolkit Part B: Technical Specifications. The presentation will include our Vision, Mission, and Purpose to institute an objective technical harness and innovative social testbed for the identification of risk factors that must be managed in communication technologies intended to provide language access in live, real-world human-to-human interactions. We will provide ample time for Q&A.`;
+/** Publication-style titles for italics in the workshop description (CoSET SAFE AI). */
+export const COSET_AI_TOOLKIT_PART_A_TITLE =
+  'AI Interpreting Solutions Evaluation Toolkit Part A: Organization, Implementation, and Management';
+export const COSET_AI_TOOLKIT_PART_B_TITLE = 'Toolkit Part B: Technical Specifications';
+
+/** Plain text segments around the italic toolkit titles (see CosetWorkshopProgramSections). */
+export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_LEAD =
+  'This 50-minute workshop will introduce the Coalition for Sign Language Equity in Technology (CoSET), giving an overview of who we are, what we’ve accomplished, and what we aim to do with sign languages and artificial intelligence (AI). We’ll describe the 3D Risk Framework introduced in the ';
+export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_MIDDLE =
+  ' and the Hazard Triangle and SAFE Zone which will be illustrated in the ';
+export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_TAIL =
+  '. The presentation will include our Vision, Mission, and Purpose to institute an objective technical harness and innovative social testbed for the identification of risk factors that must be managed in communication technologies intended to provide language access in live, real-world human-to-human interactions. We will provide ample time for Q&A.';
 
 export const COSET_SAFE_AI_LEARNING_OBJECTIVE =
-  'Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.';
+  'A more specific learning objective is being finalized with the CoSET team and will be posted here when it is available.';

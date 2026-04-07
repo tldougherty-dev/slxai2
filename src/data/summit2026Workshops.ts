@@ -740,7 +740,7 @@ Information will be shared about the FCC's advisory committees and existing ways
     presentersLine:
       'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Stephanie Jo Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeff Shaul, Sign-Speak',
     summary:
-      'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. Participants will leave with a clearer framework for assessing systems, setting requirements, and communicating limitations responsibly.',
+      'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. A more specific learning objective will be published in the program book when finalized by CoSET.',
     presenters: [
       { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
       { name: 'Stephanie Jo Kent', organization: 'CoSET' },
