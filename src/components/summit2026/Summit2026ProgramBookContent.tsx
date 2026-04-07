@@ -86,6 +86,8 @@ const Summit2026ProgramBookContent = ({
   const sponsors = SUMMIT_SPONSORS;
   const sponsorSlotCount = sponsors.length * 3;
   const workshopsInScheduleOrder = showWorkshopsAndPanels ? getSummit2026WorkshopsInScheduleOrder() : [];
+  /** Homepage landing: show only two-sentence preview per workshop in Workshops & Panels. */
+  const workshopCardMaxSummarySentences = landingSummit ? 2 : undefined;
 
   /** Full program book stack (TOC → committee); not used on homepage `landingSummit`. */
   const isFullProgramBook = showSchedule && !landingSummit;
@@ -498,6 +500,7 @@ const Summit2026ProgramBookContent = ({
                         key={session.slug}
                         session={session}
                         linkToProgramBook={linkWorkshopCardsToProgramBook}
+                        maxSummarySentences={workshopCardMaxSummarySentences}
                       />
                     ))}
                   </div>
@@ -527,6 +530,7 @@ const Summit2026ProgramBookContent = ({
                           key={session.slug}
                           session={session}
                           linkToProgramBook={linkWorkshopCardsToProgramBook}
+                          maxSummarySentences={workshopCardMaxSummarySentences}
                         />
                       ))}
                     </div>

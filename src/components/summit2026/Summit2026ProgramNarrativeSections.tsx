@@ -35,10 +35,10 @@ function WelcomeLetterPaperBody({ paragraphs }: { paragraphs: string[] }) {
     <div className="relative min-h-[8rem]">
       {/* Classic legal-pad vertical rule (~1 in from sheet edge on sm+) */}
       <div
-        className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
+        className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] max-md:portrait:left-3 sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
         aria-hidden
       />
-      <div className="space-y-3 px-4 py-5 pl-[calc(1.75rem+1.125rem)] text-left text-sm leading-tight text-[#2a231c] sm:px-6 sm:py-6 sm:pl-[calc(1in+1.5rem)] dark:text-[#ece8df]">
+      <div className="space-y-3 px-4 py-5 pl-[calc(1.75rem+1.125rem)] text-left text-sm leading-tight text-[#2a231c] max-md:portrait:px-2 max-md:portrait:py-4 max-md:portrait:pl-[calc(0.5rem+1.125rem)] sm:px-6 sm:py-6 sm:pl-[calc(1in+1.5rem)] dark:text-[#ece8df]">
         {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
@@ -61,16 +61,18 @@ export function Summit2026WelcomeLetterSection({ getText }: Props) {
       <div className={narrativeHeroHeaderBar}>
         <h2 className={narrativeHeroTitle}>{getText('welcomeLetterTitle', 'Welcome Letter')}</h2>
       </div>
-      {/* White mat on the sides; letter is a narrower floating sheet */}
-      <div className="bg-white px-4 py-8 dark:bg-gray-900 sm:px-8 sm:py-10">
-        <div className={`mx-auto w-[67.76%] max-w-full min-w-0 ${welcomeLetterFloatingPaper}`}>
+      {/* White mat on the sides; letter is a narrower floating sheet (full width on small portrait to avoid huge side gaps) */}
+      <div className="bg-white px-4 py-8 dark:bg-gray-900 max-md:portrait:px-2 sm:px-8 sm:py-10">
+        <div
+          className={`mx-auto min-w-0 max-w-full w-[67.76%] max-md:portrait:w-full ${welcomeLetterFloatingPaper}`}
+        >
           <WelcomeLetterPaperBody paragraphs={SUMMIT_2026_WELCOME_LETTER_PARAGRAPHS} />
-          <div className="relative flex justify-end border-t border-[#c9b896]/70 bg-[#ebe3d4]/90 px-4 pb-6 pt-6 dark:border-[#4a4034] dark:bg-[#242019]/90 sm:px-6 sm:pb-8">
+          <div className="relative flex justify-end border-t border-[#c9b896]/70 bg-[#ebe3d4]/90 px-4 pb-6 pt-6 dark:border-[#4a4034] dark:bg-[#242019]/90 max-md:portrait:px-2 sm:px-6 sm:pb-8">
             <div
-              className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
+              className="pointer-events-none absolute bottom-0 left-7 top-0 w-[2px] bg-[#b42318] opacity-[0.92] max-md:portrait:left-3 sm:left-[1in] dark:bg-[#c43c32] dark:opacity-[0.88]"
               aria-hidden
             />
-            <div className="max-w-lg pl-[calc(1.75rem+1.125rem)] text-right sm:pl-[calc(1in+1.5rem)]">
+            <div className="max-w-lg pl-[calc(1.75rem+1.125rem)] text-right max-md:portrait:pl-[calc(0.5rem+1.125rem)] sm:pl-[calc(1in+1.5rem)]">
               <p className="text-sm font-medium tracking-wide text-[#4a4034] dark:text-[#b5ab9c]">
                 {SUMMIT_2026_WELCOME_LETTER_SIGNATURE.closing}
               </p>
