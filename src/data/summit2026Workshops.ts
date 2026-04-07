@@ -316,13 +316,15 @@ He is also the human model behind Signapse's AI digital signer "Mars," helping s
     presenters: [
       {
         name: 'Emanuele Chiusaroli',
-        title: 'Founder and CEO',
+        title: 'Founder, CEO, and AI for Good Strategist',
         organization: 'Handy Signs',
         email: 'emanuele@handysigns.it',
-        photoUrl: '/summit-2026/photos/emanuele-chiusaroli.png',
-        bio: `Emanuele Chiusaroli is the founder and CEO of Handy Signs, an Italian startup developing artificial intelligence technology for translation between Italian Sign Language and spoken Italian to improve accessibility in public services and everyday communication. He previously co-founded E lisir, an early online video interpreting service, where he began working closely with the Deaf community and identifying the need for scalable AI-based sign language communication tools.
+        photoUrl: '/summit-2026/photos/emanuele-chiusaroli.png?v=2',
+        bio: `Emanuele Chiusaroli is an engineer, project manager, entrepreneur, and visionary of AI as a tool to help people with their daily challenges.
 
-At Handy Signs, Chiusaroli coordinates development teams and oversees funding and strategic partnerships. He is an experienced Project Manager and Scrum Master with more than 25 years of experience in the telecommunications sector and three years in enterprise sales. His work focuses on bringing AI-driven sign language solutions into real-world deployments across government services, healthcare, banking, and cultural institutions.`,
+With nearly 30 years in the ICT sector, Emanuele has been a pioneer of "internet everywhere" since 2002, launching internet connection services based on all wireless and mobile technologies to connect trains, ships, planes, and homes in the middle of nowhere.
+
+In 2018, he founded Handy Signs—a bridge over communication barriers—the first Italian startup for the translation of sign languages from around the world using AI. He is also the CEO and AI for Good strategist of Handy Signs, thanks to a "rainbow team" of twenty extraordinary people, more than half of whom are Deaf.`,
       },
       {
         name: 'Manuel Granchelli',
@@ -444,7 +446,7 @@ Finally, it explores scalability across languages and regions, positioning Migam
     sessionTitle: 'Human AI Collaboration in Sign Language Technology',
     presentersLine: 'Presenters: Craig Radford, Brandon Dopf, 360 Direct Access',
     summary:
-      'As sign language AI moves from research into real world deployment, the technical questions are increasingly inseparable from ethical ones. Who decides what counts as "good enough" accuracy, and who carries the cost when a product fails? Whose signing is in the training data, and what happens to sign language diversity when models scale toward a dominant variety?\n\nThis workshop uses a statement based format to work through a series of issues: data scarcity and governance, what accuracy benchmarks actually measure and for whom, what happens to sign language diversity at scale, and the difference between advising on a product and having real decision making power over it. Drawing on research across Deaf Studies, sign language studies, Human Computer Interaction, and language technology, the session is designed for practitioners building or deploying sign language AI who want to move beyond technical metrics toward more rigorous thinking about real world impact.',
+      'Delve into how AI can complement — not substitute — human expertise in sign language communication. From real-time recognition engines to avatar systems and seamless customer support experiences, this session highlights approaches that balance automated tools, ethical data use, and human cultural expertise. Attendees will walk away with design principles and case studies that reflect inclusive AI development at the cutting edge.',
     learningObjectives: {
       items: [
         'Describe how AI sign language recognition and avatar technologies are used in real-world accessibility solutions.',

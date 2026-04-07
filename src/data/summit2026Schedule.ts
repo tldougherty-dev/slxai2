@@ -172,7 +172,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
         time: '12:00 PM to 1:00 PM',
         sessionType: 'Lunch',
         title: 'Lunch: Sponsored by TCS Teams',
-        presenters: 'TBA',
+        presenters: 'Jessica Aiello, Kevin Bendickson',
       },
       {
         time: '1:00 PM to 1:50 PM',
