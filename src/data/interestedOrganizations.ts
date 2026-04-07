@@ -64,7 +64,7 @@ const RAW: InterestedOrgRow[] = [
   { name: 'Sign-Speak', country: 'USA', code: 'us' },
   { name: 'SignAvatar', country: 'Serbia', code: 'rs' },
   { name: 'SignForDeaf', country: 'Turkey', code: 'tr' },
-  { name: 'SignLab', country: 'Norway', code: 'no' },
+  { name: 'ASL Bloom', country: 'Norway', code: 'no' },
   { name: 'SignLang Consultancy', country: 'South Africa', code: 'za' },
   { name: 'SignaVision Solutions', country: 'Canada', code: 'ca' },
   { name: 'Sign.mt', country: 'Israel', code: 'il' },

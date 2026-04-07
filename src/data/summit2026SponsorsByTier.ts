@@ -57,9 +57,9 @@ export const SUMMIT_2026_SPONSORS_BY_TIER: Summit2026SponsorTierGroup[] = [
         logo: '/sponsors/microsoft.png',
       },
       {
-        name: 'SignLab',
-        url: 'https://signlab.co',
-        logo: '/sponsors/signlab.png',
+        name: 'ASL Bloom',
+        url: 'https://www.aslbloom.com',
+        logo: '/sponsors/asl-bloom.png',
       },
     ],
   },
