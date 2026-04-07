@@ -57,7 +57,12 @@ type Summit2026ProgramBookContentProps = {
   hideSoldOut?: boolean;
   /** When true, shows "Program book" under the Summit 2026 title row. */
   showProgramBookSubtitle?: boolean;
-  /** When true, shows the full two-day schedule block (intended for /2026 program book only). Default true. */
+  /**
+   * When true, homepage layout: sold out + sponsor marquee + tiered sponsors + about summit + workshops only.
+   * Omits TOC, schedule, welcome letter, story, master of ceremonies, committee.
+   */
+  landingSummit?: boolean;
+  /** When true, shows the full two-day schedule block (intended for /2026 program book only). Default true. Ignored when `landingSummit` is true. */
   showSchedule?: boolean;
   /** When false, workshop cards do not link to /2026/workshop/:slug (homepage before program book is public). Default true. */
   linkWorkshopCardsToProgramBook?: boolean;
@@ -69,6 +74,7 @@ const Summit2026ProgramBookContent = ({
   getText,
   hideSoldOut = false,
   showProgramBookSubtitle = false,
+  landingSummit = false,
   showSchedule = true,
   linkWorkshopCardsToProgramBook = true,
   showWorkshopsAndPanels = true,
@@ -78,6 +84,16 @@ const Summit2026ProgramBookContent = ({
   const sponsors = SUMMIT_SPONSORS;
   const sponsorSlotCount = sponsors.length * 3;
   const workshopsInScheduleOrder = showWorkshopsAndPanels ? getSummit2026WorkshopsInScheduleOrder() : [];
+
+  /** Full program book stack (TOC → committee); not used on homepage `landingSummit`. */
+  const isFullProgramBook = showSchedule && !landingSummit;
+  const showTocAndSchedule = isFullProgramBook;
+  const showTieredSponsorsSection = isFullProgramBook || landingSummit;
+  const showWelcomeLetterSection = isFullProgramBook;
+  const showAboutSummitCard = isFullProgramBook || landingSummit;
+  const showStorySlxaiSection = isFullProgramBook;
+  const showMasterOfCeremoniesCard = isFullProgramBook;
+  const showSummitCommitteeSection = isFullProgramBook;
 
   const sponsorSectionOuterClass = 'mb-4 sm:mb-6 md:mb-8';
   const sponsorCardClass =
@@ -204,14 +220,17 @@ const Summit2026ProgramBookContent = ({
             </div>
           </div>
 
-          {showSchedule ? <Summit2026TableOfContents getText={getText} /> : null}
+          {showTocAndSchedule ? <Summit2026TableOfContents getText={getText} /> : null}
 
-          {showSchedule ? (
+          {showTocAndSchedule || showTieredSponsorsSection || showWelcomeLetterSection || showAboutSummitCard || showStorySlxaiSection || showMasterOfCeremoniesCard || showSummitCommitteeSection || showWorkshopsAndPanels ? (
             <div className="flex flex-col gap-8">
-              <Summit2026ScheduleSection getText={getText} programBookMobile />
-              <Summit2026SponsorsSection getText={getText} />
-              <Summit2026WelcomeLetterSection getText={getText} />
+              {showTocAndSchedule ? (
+                <Summit2026ScheduleSection getText={getText} programBookMobile />
+              ) : null}
+              {showTieredSponsorsSection ? <Summit2026SponsorsSection getText={getText} /> : null}
+              {showWelcomeLetterSection ? <Summit2026WelcomeLetterSection getText={getText} /> : null}
 
+            {showAboutSummitCard ? (
             <Card
               id="summit-about"
               className="scroll-mt-28 w-full overflow-hidden rounded-lg border border-gray-200 shadow-xl dark:border-gray-700"
@@ -271,7 +290,12 @@ const Summit2026ProgramBookContent = ({
                             <strong>{getText('date', 'Date:')}</strong> {getText('dateValue', 'April 16-17, 2026')}
                             <br />
                             <strong>{getText('conferenceHours', 'Conference Hours:')}</strong>{' '}
-                            {getText('conferenceHoursValue', '8:45 AM to 5:10 PM (see schedule below)')}
+                            {getText(
+                              landingSummit ? 'conferenceHoursValueNoSchedule' : 'conferenceHoursValue',
+                              landingSummit
+                                ? '8:45 AM to 5:10 PM'
+                                : '8:45 AM to 5:10 PM (see schedule below)',
+                            )}
                           </p>
                         </div>
                       </div>
@@ -325,9 +349,11 @@ const Summit2026ProgramBookContent = ({
                 </div>
               </CardContent>
             </Card>
+            ) : null}
 
-            <Summit2026StorySlxaiSection getText={getText} />
+            {showStorySlxaiSection ? <Summit2026StorySlxaiSection getText={getText} /> : null}
 
+            {showMasterOfCeremoniesCard ? (
             <Card
               id="summit-master-of-ceremonies"
               className="scroll-mt-28 w-full overflow-hidden rounded-lg border border-gray-200 shadow-xl dark:border-gray-700"
@@ -366,6 +392,7 @@ const Summit2026ProgramBookContent = ({
                 </div>
               </CardContent>
             </Card>
+            ) : null}
 
             {showWorkshopsAndPanels ? (
               <Card className="hidden overflow-hidden rounded-lg border border-gray-200 shadow-xl dark:border-gray-700 md:block">
@@ -416,7 +443,7 @@ const Summit2026ProgramBookContent = ({
               </Card>
             ) : null}
 
-            <Summit2026CommitteeSection getText={getText} />
+            {showSummitCommitteeSection ? <Summit2026CommitteeSection getText={getText} /> : null}
             </div>
           ) : null}
         </div>

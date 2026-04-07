@@ -2,8 +2,8 @@ import Summit2026ProgramBookContent from '@/components/summit2026/Summit2026Prog
 import { ProgramBook2026Shell, useProgramBook2026GetText } from '@/components/summit2026/ProgramBook2026Shell';
 
 /**
- * Public program book for Summit 2026 at /2026: same summit content as the homepage
- * without mission/vision/goals, bylaws, founding interest, or waitlist. Top bar: Home + language.
+ * Public program book for Summit 2026 at /2026: full schedule, welcome letter, story, MoC, committee, etc.
+ * (Homepage uses a slimmer `landingSummit` layout.) Top bar: Home + language.
  */
 function ProgramBook2026Inner() {
   const getText = useProgramBook2026GetText();
