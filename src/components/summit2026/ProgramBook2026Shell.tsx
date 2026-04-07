@@ -74,7 +74,7 @@ export function ProgramBook2026Shell({
         navBackProgram: 'Back to program book',
         navBackProgramShort: 'Back',
         backToTop: 'Back to top',
-        programBookHeroLine: 'Program book',
+        programBookHeroLine: 'Program Book',
         summitTitle: 'Summit 2026',
         dateTimeTitle: 'Date & Time',
         date: 'Date:',
@@ -121,6 +121,9 @@ export function ProgramBook2026Shell({
         sponsorsSectionThankYou:
           'We are grateful to our incredible sponsors for making this summit possible. Without your support, none of this would happen. Thank you to each of you.',
         workshopListTitle: 'Workshops & Panels',
+        socialFollowLinkedIn: 'Follow on LinkedIn',
+        socialFollowFacebook: 'Follow on Facebook',
+        socialFollowInstagram: 'Follow on Instagram',
         photoPlaceholder: 'Photo coming soon',
         sessionSummaryHeading: 'Session summary',
         programListingHeading: 'Program listing (short summary)',

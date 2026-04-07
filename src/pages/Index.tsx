@@ -6,7 +6,29 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import Navigation from '@/components/Navigation';
-import { Calendar, Users, Globe, BookOpen, ArrowUp, Target, Eye, Award, Star, CheckCircle, Mail, Phone, MapPin, ExternalLink, FileText, User, Building2, Loader2 } from 'lucide-react';
+import {
+  Calendar,
+  Users,
+  Globe,
+  BookOpen,
+  ArrowUp,
+  Target,
+  Eye,
+  Award,
+  Star,
+  CheckCircle,
+  Mail,
+  Phone,
+  MapPin,
+  ExternalLink,
+  FileText,
+  User,
+  Building2,
+  Loader2,
+  Linkedin,
+  Facebook,
+  Instagram,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -203,6 +225,7 @@ const Index = () => {
         networkTitle: 'Network & Collaboration',
         networkText: 'Connect with other industry leaders, researchers, and innovators in the sign language x AI space. Build lasting partnerships and collaborate on groundbreaking projects.',
         interestFormTitle: 'Express Your Interest',
+        landingProgramBookCtaLabel: 'View full program, schedule & details',
         interestFormDescription: 'Fill out the form below to express your organization\'s interest in becoming a founding member of the SLxAI cooperative nonprofit.',
         nameLabel: 'Name',
         namePlaceholder: 'Your full name',
@@ -217,6 +240,9 @@ const Index = () => {
         thankYouTitle: 'Thank You!',
         thankYouMessage: 'We\'ve received your interest form. Our team will review your submission and get back to you soon.',
         navLogin: 'Log in',
+        socialFollowLinkedIn: 'Follow on LinkedIn',
+        socialFollowFacebook: 'Follow on Facebook',
+        socialFollowInstagram: 'Follow on Instagram',
       };
 
       const translated: Record<string, string> = {};
@@ -435,8 +461,8 @@ const Index = () => {
       
       {/* Hero Section */}
       <section id="home" className="relative bg-white overflow-hidden">
-        {/* Language selector + member access */}
-        <div className="flex flex-row sm:absolute sm:top-4 sm:right-4 justify-end items-center gap-3 px-4 pt-4 sm:pt-0 z-50 relative w-full sm:w-auto flex-wrap">
+        {/* Language + member access */}
+        <div className="relative z-50 flex w-full flex-wrap items-center justify-end gap-3 px-4 pt-4">
           <div className="flex items-center gap-2 shrink-0">
             <Button
               variant="outline"
@@ -500,6 +526,60 @@ const Index = () => {
       {/* About Section */}
       <section id="about" className="bg-white py-3 sm:py-4">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
+          {/* Social CTAs — same column layout as Mission / Vision / Goals on xl */}
+          <div className="mb-6 sm:mb-5">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+              <Button
+                asChild
+                size="sm"
+                className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+              >
+                <a
+                  href="https://www.linkedin.com/company/slxai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2"
+                >
+                  <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
+                  <span>{getText('socialFollowLinkedIn', 'Follow on LinkedIn')}</span>
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="sm"
+                className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+              >
+                <a
+                  href="https://www.facebook.com/profile.php?id=61577817126798"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2"
+                >
+                  <Facebook className="h-4 w-4 shrink-0" aria-hidden />
+                  <span>{getText('socialFollowFacebook', 'Follow on Facebook')}</span>
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="sm"
+                className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+              >
+                <a
+                  href="https://www.instagram.com/slxaisummit/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2"
+                >
+                  <Instagram className="h-4 w-4 shrink-0" aria-hidden />
+                  <span>{getText('socialFollowInstagram', 'Follow on Instagram')}</span>
+                  <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                </a>
+              </Button>
+            </div>
+          </div>
+
           {/* Mission, Vision, Goals, Bylaws */}
           <div className="mb-2 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
             <Card
@@ -601,7 +681,6 @@ const Index = () => {
         getText={getText}
         landingSummit
         showSchedule={false}
-        linkWorkshopCardsToProgramBook={false}
       />
 
       {/* Waitlist: bottom of page */}

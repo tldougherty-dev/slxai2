@@ -5,20 +5,36 @@ type Props = {
 };
 
 const tocLinkClass =
-  'flex min-h-[44px] w-full items-center justify-center rounded-md border border-electric-blue/80 bg-electric-blue px-2 py-2 text-center text-xs font-bold leading-snug text-white shadow-sm transition-colors hover:bg-electric-blue/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-blue dark:bg-electric-blue dark:text-white dark:hover:bg-electric-blue/90 md:min-h-[56px] md:px-3 md:py-2.5 md:text-base md:leading-tight lg:text-lg';
+  'flex min-h-[44px] w-full items-center justify-center rounded-md border border-electric-blue/80 bg-electric-blue px-2 py-2 text-center text-xs font-bold leading-snug text-white shadow-[0_4px_12px_rgba(0,0,0,0.22),0_2px_8px_rgba(0,128,255,0.28)] transition-[color,box-shadow] duration-200 ease-out hover:bg-electric-blue/90 hover:shadow-[0_8px_20px_rgba(0,0,0,0.26),0_4px_14px_rgba(0,128,255,0.38)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric-blue dark:bg-electric-blue dark:text-white dark:shadow-[0_4px_14px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,128,255,0.25)] dark:hover:bg-electric-blue/90 dark:hover:shadow-[0_8px_22px_rgba(0,0,0,0.5),0_4px_14px_rgba(0,128,255,0.35)] md:min-h-[56px] md:px-3 md:py-2.5 md:text-base md:leading-tight lg:text-lg';
+
+const tocItems = [
+  { href: '#summit-schedule-day-1', labelKey: 'tocDay1', fallback: 'Day 1' },
+  { href: '#summit-evening-event', labelKey: 'tocEveningEvent', fallback: 'Evening event' },
+  { href: '#summit-schedule-day-2', labelKey: 'tocDay2', fallback: 'Day 2' },
+  { href: '#summit-sponsors-by-tier', labelKey: 'tocSponsors', fallback: 'Sponsors' },
+  { href: '#summit-welcome-letter', labelKey: 'tocWelcomeLetter', fallback: 'Welcome Letter' },
+  { href: '#summit-about', labelKey: 'tocAbout', fallback: 'About the Summit' },
+  { href: '#summit-story-slxai', labelKey: 'tocStorySlxai', fallback: 'The Story Behind SLxAI' },
+  { href: '#summit-master-of-ceremonies', labelKey: 'tocMasterOfCeremonies', fallback: 'Master of Ceremonies' },
+  { href: '#summit-committee', labelKey: 'tocSummitCommittee', fallback: 'Summit Committee' },
+] as const;
+
+/** Desktop: 5 + 4 layout; smaller screens: 2-column grid per row block. */
+const TOC_ROW1 = tocItems.slice(0, 5);
+const TOC_ROW2 = tocItems.slice(5, 9);
 
 export function Summit2026TableOfContents({ getText }: Props) {
-  const items = [
-    { href: '#summit-schedule-day-1', labelKey: 'tocDay1', fallback: 'Day 1' },
-    { href: '#summit-evening-event', labelKey: 'tocEveningEvent', fallback: 'Evening event' },
-    { href: '#summit-schedule-day-2', labelKey: 'tocDay2', fallback: 'Day 2' },
-    { href: '#summit-sponsors-by-tier', labelKey: 'tocSponsors', fallback: 'Sponsors' },
-    { href: '#summit-welcome-letter', labelKey: 'tocWelcomeLetter', fallback: 'Welcome Letter' },
-    { href: '#summit-about', labelKey: 'tocAbout', fallback: 'About the Summit' },
-    { href: '#summit-story-slxai', labelKey: 'tocStorySlxai', fallback: 'The Story Behind SLxAI' },
-    { href: '#summit-master-of-ceremonies', labelKey: 'tocMasterOfCeremonies', fallback: 'Master of Ceremonies' },
-    { href: '#summit-committee', labelKey: 'tocSummitCommittee', fallback: 'Summit Committee' },
-  ] as const;
+  const renderRow = (row: readonly (typeof tocItems)[number][]) => (
+    <>
+      {row.map((item) => (
+        <li key={item.href} className="min-w-0">
+          <a href={item.href} className={tocLinkClass}>
+            {getText(item.labelKey, item.fallback)}
+          </a>
+        </li>
+      ))}
+    </>
+  );
 
   return (
     <nav
@@ -33,15 +49,15 @@ export function Summit2026TableOfContents({ getText }: Props) {
           {getText('tocTitle', 'Table of contents')}
         </h3>
         <div className="rounded-b-lg p-2.5 sm:p-4">
-          <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
-            {items.map((item) => (
-              <li key={item.href} className="min-w-0">
-                <a href={item.href} className={tocLinkClass}>
-                  {getText(item.labelKey, item.fallback)}
-                </a>
-              </li>
-            ))}
-          </ul>
+          {/* Mobile: 2-col; tablet: 3-col; desktop (lg+): 5 then 4 */}
+          <div className="flex flex-col gap-2 md:gap-3">
+            <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-5">
+              {renderRow(TOC_ROW1)}
+            </ul>
+            <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4">
+              {renderRow(TOC_ROW2)}
+            </ul>
+          </div>
         </div>
       </div>
     </nav>

@@ -1,5 +1,6 @@
 import Summit2026ProgramBookContent from '@/components/summit2026/Summit2026ProgramBookContent';
 import { ProgramBook2026Shell, useProgramBook2026GetText } from '@/components/summit2026/ProgramBook2026Shell';
+import { useLayoutEffect } from 'react';
 
 /**
  * Public program book for Summit 2026 at /2026: full schedule, welcome letter, story, MoC, committee, etc.
@@ -7,6 +8,10 @@ import { ProgramBook2026Shell, useProgramBook2026GetText } from '@/components/su
  */
 function ProgramBook2026Inner() {
   const getText = useProgramBook2026GetText();
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Summit2026ProgramBookContent
       getText={getText}

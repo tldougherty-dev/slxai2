@@ -1,6 +1,8 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, ExternalLink, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SUMMIT_SPONSORS } from '@/data/summitSponsors';
 import { getSummit2026WorkshopsInScheduleOrder } from '@/data/summit2026Workshops';
 import { WorkshopSessionCard } from '@/components/summit2026/WorkshopSessionCard';
@@ -55,7 +57,7 @@ type Summit2026ProgramBookContentProps = {
   getText: Summit2026ProgramBookGetText;
   /** When true, hides the red SOLD OUT banner (e.g. /2026 program book page). Default false. */
   hideSoldOut?: boolean;
-  /** When true, shows "Program book" under the Summit 2026 title row. */
+  /** When true, shows "Program Book" under the Summit 2026 title row. */
   showProgramBookSubtitle?: boolean;
   /**
    * When true, homepage layout: sold out + sponsor marquee + tiered sponsors + about summit + workshops only.
@@ -64,7 +66,7 @@ type Summit2026ProgramBookContentProps = {
   landingSummit?: boolean;
   /** When true, shows the full two-day schedule block (intended for /2026 program book only). Default true. Ignored when `landingSummit` is true. */
   showSchedule?: boolean;
-  /** When false, workshop cards do not link to /2026/workshop/:slug (homepage before program book is public). Default true. */
+  /** When false, workshop cards do not link to /2026/workshop/:slug. Default true. */
   linkWorkshopCardsToProgramBook?: boolean;
   /** When false, hides the Workshops & Panels list (duplicate of schedule links). Use false on /2026 program book. Default true. */
   showWorkshopsAndPanels?: boolean;
@@ -114,23 +116,84 @@ const Summit2026ProgramBookContent = ({
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="mb-8 flex justify-center px-1">
-            <div className="flex w-fit max-w-full flex-col items-stretch gap-3 text-center">
-              <h2 className="text-4xl sm:text-6xl font-bold text-gray-900 dark:text-white flex flex-wrap items-center justify-center gap-2">
+            <div
+              className={`flex w-fit max-w-full flex-col items-stretch gap-3 text-center ${
+                showProgramBookSubtitle
+                  ? 'md:flex-row md:flex-nowrap md:items-center md:justify-center md:gap-3'
+                  : ''
+              }`}
+            >
+              <h2 className="flex flex-wrap items-center justify-center gap-2 text-4xl font-bold text-gray-900 dark:text-white sm:text-6xl md:flex-nowrap">
                 <img
                   src="/slxai-footer-logo.png"
                   alt="SLxAI Logo"
-                  className="w-auto inline-block align-middle"
+                  className="inline-block w-auto shrink-0 align-middle"
                   style={{ height: '54px' }}
                 />
                 <span className="whitespace-nowrap">{getText('summitTitle', 'Summit 2026')}</span>
               </h2>
               {showProgramBookSubtitle ? (
-                <p className="w-full text-4xl font-bold leading-tight tracking-tight text-electric-blue sm:text-6xl">
-                  {getText('programBookHeroLine', 'Program book')}
+                <p className="w-full text-4xl font-bold leading-tight tracking-tight text-electric-blue sm:text-6xl md:w-auto md:shrink-0">
+                  {getText('programBookHeroLine', 'Program Book')}
                 </p>
               ) : null}
             </div>
           </div>
+
+          {showProgramBookSubtitle && !landingSummit ? (
+            <div className="mb-8 px-1">
+              <div className="mx-auto grid max-w-4xl grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+                >
+                  <a
+                    href="https://www.linkedin.com/company/slxai/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2"
+                  >
+                    <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
+                    <span>{getText('socialFollowLinkedIn', 'Follow on LinkedIn')}</span>
+                    <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+                >
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61577817126798"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2"
+                  >
+                    <Facebook className="h-4 w-4 shrink-0" aria-hidden />
+                    <span>{getText('socialFollowFacebook', 'Follow on Facebook')}</span>
+                    <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-auto min-h-10 w-full gap-2 border-0 bg-electric-blue px-3 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_-2px_rgba(0,128,255,0.55)] hover:bg-electric-blue/90 hover:shadow-[0_6px_18px_-2px_rgba(0,128,255,0.5)]"
+                >
+                  <a
+                    href="https://www.instagram.com/slxaisummit/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2"
+                  >
+                    <Instagram className="h-4 w-4 shrink-0" aria-hidden />
+                    <span>{getText('socialFollowInstagram', 'Follow on Instagram')}</span>
+                    <ExternalLink className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          ) : null}
 
           {!hideSoldOut ? (
             <div className="mb-8">
@@ -360,6 +423,24 @@ const Summit2026ProgramBookContent = ({
                 </div>
               </CardContent>
             </Card>
+            ) : null}
+
+            {landingSummit && showAboutSummitCard && showWorkshopsAndPanels ? (
+              <div className="flex justify-center px-1">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-auto min-h-12 w-full max-w-lg bg-electric-blue px-6 py-3 text-base font-semibold text-white hover:bg-electric-blue/90 sm:min-h-14 sm:text-lg"
+                >
+                  <Link to="/2026" className="inline-flex items-center justify-center gap-2">
+                    {getText(
+                      'landingProgramBookCtaLabel',
+                      'View full program, schedule & details',
+                    )}
+                    <ArrowRight className="h-5 w-5 shrink-0" aria-hidden />
+                  </Link>
+                </Button>
+              </div>
             ) : null}
 
             {showStorySlxaiSection ? <Summit2026StorySlxaiSection getText={getText} /> : null}

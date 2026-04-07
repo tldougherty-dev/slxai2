@@ -95,8 +95,8 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
     <div
       className={
         programBookMobile
-          ? 'bg-electric-blue py-3 text-center sm:py-3.5 md:py-4 pb-mobile-landscape-compact'
-          : 'bg-electric-blue py-3.5 text-center sm:py-4 md:py-5 pb-mobile-landscape-compact'
+          ? 'bg-electric-blue pt-3 pb-1.5 text-center sm:pt-3.5 sm:pb-2 md:pt-4 md:pb-2 pb-mobile-landscape-compact'
+          : 'bg-electric-blue pt-3.5 pb-1.5 text-center sm:pt-4 sm:pb-2 md:pt-5 md:pb-2 pb-mobile-landscape-compact'
       }
     >
       <h2 className="px-2 text-xl font-bold leading-tight text-white sm:text-2xl md:text-3xl">
@@ -108,19 +108,27 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
   const dayHeading = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) =>
     day.dayDate ? `${day.dayLabel}, ${day.dayDate}` : day.dayLabel;
 
-  const dayHeaderBar = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) => (
-    <div
-      className={
-        programBookMobile
-          ? 'bg-electric-blue py-2 text-center sm:py-2.5 md:py-3 pb-mobile-landscape-compact'
-          : 'bg-electric-blue py-2.5 text-center sm:py-3 pb-mobile-landscape-compact'
-      }
-    >
-      <h4 className="px-2 text-base font-bold leading-tight text-white sm:text-lg md:text-xl">
-        {dayHeading(day)}
-      </h4>
-    </div>
-  );
+  const dayHeaderBar = (
+    day: (typeof SUMMIT_2026_SCHEDULE)[number],
+    opts?: { tightUnderScheduleTitle?: boolean },
+  ) => {
+    const tight = opts?.tightUnderScheduleTitle;
+    return (
+      <div
+        className={
+          tight
+            ? 'bg-electric-blue pt-1 pb-2 text-center sm:pt-1.5 sm:pb-2.5 md:pt-1.5 md:pb-2.5 pb-mobile-landscape-compact'
+            : programBookMobile
+              ? 'bg-electric-blue py-2 text-center sm:py-2.5 md:py-3 pb-mobile-landscape-compact'
+              : 'bg-electric-blue py-2.5 text-center sm:py-3 pb-mobile-landscape-compact'
+        }
+      >
+        <h4 className="px-2 text-base font-bold leading-tight text-white sm:text-lg md:text-xl">
+          {dayHeading(day)}
+        </h4>
+      </div>
+    );
+  };
 
   const renderDayTable = (day: (typeof SUMMIT_2026_SCHEDULE)[number]) => (
     <div
@@ -191,7 +199,7 @@ export function Summit2026ScheduleSection({ getText, programBookMobile = false }
       id={`summit-schedule-${day.dayLabel.toLowerCase().replace(/\s+/g, '-')}`}
       className={`scroll-mt-28 ${showTopBorder ? 'border-t-2 border-electric-blue/35' : ''}`}
     >
-      {dayHeaderBar(day)}
+      {dayHeaderBar(day, { tightUnderScheduleTitle: !showTopBorder })}
       {programBookMobile ? (
         <>
           <div className="hidden p-4 sm:p-6 md:block">{renderDayTable(day)}</div>
