@@ -458,7 +458,7 @@ const Summit2026ProgramBookContent = ({
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-4 py-6 text-left sm:px-6">
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start md:gap-8 lg:gap-10">
+                <div className="grid grid-cols-1 gap-8">
                   <div className="min-w-0">
                     <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
                       {getText('tocDay1', 'Day 1')}
