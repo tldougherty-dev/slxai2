@@ -29,11 +29,11 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
     bio: 'Dr. Abraham Glasser is a faculty member in the Accessible Human-Centered Computing and Policy program at Gallaudet University, where he is also co-director of the Rehabilitation Engineering Research Center on Technology for the Deaf and Hard of Hearing (DHH RERC). He is a member of the Coalition for Sign Language Equity in Technology (CoSET), has contributed to published resources supporting standards work including AI-based interpreting, and serves on committees and working groups including WFD and W3C. Overall, he and his students conduct Human Computer Interaction (HCI) research involving AI, immersive technologies, and accessible computing for Deaf and Hard of Hearing users.',
   },
   {
-    name: 'Stephanie Kent',
+    name: 'Stephanie Jo Kent',
     email: 'steph.kent@coset.org',
     organization: 'CoSET',
     photoUrl: '/summit-2026/photos/stephanie-kent.png',
-    bio: 'Steph is an action researcher of communication, interpreting and social change; and founder of the Learning Lab for Resiliency®.',
+    bio: 'Steph is an action researcher of communication, interpreting, and social change; and founder of the Learning Lab for Resiliency®.',
   },
   {
     name: 'Erin Sanders-Sigmon',
