@@ -1,5 +1,5 @@
 /**
- * Rich program-book content for CoSET SAFE AI workshop (coset-safe-ai-communication-success).
+ * Rich program-book content for CoSET S.A.F.E. AI workshop (coset-safe-ai-communication-success).
  * Source: submitter text; used for layout instead of a single verbatim block.
  */
 
@@ -51,7 +51,7 @@ export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
   },
 ];
 
-/** Publication-style titles for italics in the workshop description (CoSET SAFE AI). */
+/** Publication-style titles for italics in the workshop description (CoSET S.A.F.E. AI). */
 export const COSET_AI_TOOLKIT_PART_A_TITLE =
   'AI Interpreting Solutions Evaluation Toolkit Part A: Organization, Implementation, and Management';
 export const COSET_AI_TOOLKIT_PART_B_TITLE = 'Toolkit Part B: Technical Specifications';
@@ -60,7 +60,7 @@ export const COSET_AI_TOOLKIT_PART_B_TITLE = 'Toolkit Part B: Technical Specific
 export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_LEAD =
   'This 50-minute workshop will introduce the Coalition for Sign Language Equity in Technology (CoSET), giving an overview of who we are, what we’ve accomplished, and what we aim to do with sign languages and artificial intelligence (AI). We’ll describe the 3D Risk Framework introduced in the ';
 export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_MIDDLE =
-  ' and the Hazard Triangle and SAFE Zone which will be illustrated in the ';
+  ' and the Hazard Triangle and S.A.F.E. Zone which will be illustrated in the ';
 export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_TAIL =
   '. The presentation will include our Vision, Mission, and Purpose to institute an objective technical harness and innovative social testbed for the identification of risk factors that must be managed in communication technologies intended to provide language access in live, real-world human-to-human interactions. We will provide ample time for Q&A.';
 

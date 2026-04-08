@@ -57,7 +57,7 @@ export const SUMMIT_2026_SCHEDULE: SummitScheduleDay[] = [
       {
         time: '10:15 AM to 11:05 AM',
         sessionType: 'Panel',
-        title: 'CoSET SAFE AI: Designing for Communication Success',
+        title: 'CoSET S.A.F.E. AI: Designing for Communication Success',
         presenters:
           'Dr. Abraham Glasser, Gallaudet University; Stephanie Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeff Shaul, Sign-Speak',
         workshopSlug: 'coset-safe-ai-communication-success',

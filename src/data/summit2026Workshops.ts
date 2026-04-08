@@ -746,11 +746,11 @@ Information will be shared about the FCC's advisory committees and existing ways
   },
   {
     slug: 'coset-safe-ai-communication-success',
-    sessionTitle: 'CoSET SAFE AI: Designing for Communication Success',
+    sessionTitle: 'CoSET S.A.F.E. AI: Designing for Communication Success',
     presentersLine:
       'Presenters: Dr. Abraham Glasser, PhD, Gallaudet University; Stephanie Jo Kent, CoSET; Erin Sanders-Sigmon, CoSET; Jeff Shaul, Sign-Speak',
     summary:
-      'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. A more specific learning objective will be published in the program book when finalized by CoSET.',
+      'A structured session introducing the CoSET S.A.F.E. AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. A more specific learning objective will be published in the program book when finalized by CoSET.',
     presenters: [
       {
         name: 'Dr. Abraham Glasser',

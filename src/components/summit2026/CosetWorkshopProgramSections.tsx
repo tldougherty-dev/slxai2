@@ -10,7 +10,7 @@ import {
 } from '@/data/summit2026WorkshopCosetRich';
 
 /**
- * CoSET SAFE AI program book: workshop description → learning objective → presenter bios with image placeholders.
+ * CoSET S.A.F.E. AI program book: workshop description → learning objective → presenter bios with image placeholders.
  */
 export function CosetWorkshopProgramSections() {
   return (
