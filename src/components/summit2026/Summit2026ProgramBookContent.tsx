@@ -460,7 +460,7 @@ const Summit2026ProgramBookContent = ({
               <CardContent className="px-4 py-6 text-left sm:px-6">
                 <div className="grid grid-cols-1 gap-8">
                   <div className="min-w-0">
-                    <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
+                    <h3 className="mb-4 text-center text-2xl font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300">
                       {getText('tocDay1', 'Day 1')}
                     </h3>
                     <WorkshopPresenterBioCard
@@ -472,7 +472,7 @@ const Summit2026ProgramBookContent = ({
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="mb-4 text-center text-base font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300 md:text-left">
+                    <h3 className="mb-4 text-center text-2xl font-semibold uppercase tracking-wide text-electric-blue dark:text-sky-300">
                       {getText('tocDay2', 'Day 2')}
                     </h3>
                     <WorkshopPresenterBioCard
