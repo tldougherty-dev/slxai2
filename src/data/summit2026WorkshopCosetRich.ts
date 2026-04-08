@@ -5,6 +5,7 @@
 
 export type CosetWorkshopPresenterDetail = {
   name: string;
+  title?: string;
   /** Omit when no public email should be shown. */
   email?: string;
   /** Omit when the presenter has no organizational affiliation. */
@@ -21,20 +22,24 @@ export const COSET_SAFE_AI_WORKSHOP_SLUG = 'coset-safe-ai-communication-success'
 export const COSET_SAFE_AI_PRESENTER_DETAILS: CosetWorkshopPresenterDetail[] = [
   {
     name: 'Abraham Glasser',
+    title: 'Co-Director, Deaf and Hard of Hearing Technology Rehabilitation Engineering Research Center',
     email: 'abraham.glasser@gallaudet.edu',
     organization: 'Gallaudet University',
-    bio: 'Dr. Abraham Glasser is an Assistant Professor in the MS/PhD Accessible Human Centered Computing and Policy (AHCP) program at Gallaudet University. He is an active member of CoSET.',
+    photoUrl: '/summit-2026/photos/abraham-glasser.png',
+    bio: 'Dr. Abraham Glasser is a faculty member in the Accessible Human-Centered Computing and Policy program at Gallaudet University, where he is also co-director of the Rehabilitation Engineering Research Center on Technology for the Deaf and Hard of Hearing (DHH RERC). He is a member of the Coalition for Sign Language Equity in Technology (CoSET), has contributed to published resources supporting standards work including AI-based interpreting, and serves on committees and working groups including WFD and W3C. Overall, he and his students conduct Human Computer Interaction (HCI) research involving AI, immersive technologies, and accessible computing for Deaf and Hard of Hearing users.',
   },
   {
     name: 'Stephanie Kent',
     email: 'steph.kent@coset.org',
     organization: 'CoSET',
+    photoUrl: '/summit-2026/photos/stephanie-kent.png',
     bio: 'Steph is an action researcher of communication, interpreting and social change; and founder of the Learning Lab for Resiliency®.',
   },
   {
     name: 'Erin Sanders-Sigmon',
     email: 'erinfran777@gmail.com',
     organization: 'CoSET',
+    photoUrl: '/summit-2026/photos/erin-sanders-sigmon.png',
     bio: 'Erin Sanders-Sigmon is a Deaf Interpreter (MCDHH DI, 2018). She is a filmmaker and justice advocate, and contributes to the Coalition on Sign Language Equity in Technology (CoSET).',
   },
   {
@@ -60,4 +65,4 @@ export const COSET_SAFE_AI_WORKSHOP_DESCRIPTION_TAIL =
   '. The presentation will include our Vision, Mission, and Purpose to institute an objective technical harness and innovative social testbed for the identification of risk factors that must be managed in communication technologies intended to provide language access in live, real-world human-to-human interactions. We will provide ample time for Q&A.';
 
 export const COSET_SAFE_AI_LEARNING_OBJECTIVE =
-  'A more specific learning objective is being finalized with the CoSET team and will be posted here when it is available.';
+  'Participants will consider the analytical lens of sociotechnical systems as the benchmarking risk framework for metrics related to automated interpreting.';

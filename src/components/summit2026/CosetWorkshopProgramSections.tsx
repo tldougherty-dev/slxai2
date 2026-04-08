@@ -30,13 +30,14 @@ export function CosetWorkshopProgramSections() {
       </WorkshopProgramSectionCard>
 
       <WorkshopProgramSectionCard headingId="coset-presenters-heading" title="Presenters">
-        <ul className="grid gap-5 sm:grid-cols-1 lg:grid-cols-2">
+        <ul className="grid gap-5 sm:grid-cols-1">
           {COSET_SAFE_AI_PRESENTER_DETAILS.map((p) => (
             <li key={p.name}>
               <WorkshopPresenterBioCard
                 name={p.name}
                 photoUrl={p.photoUrl}
                 photoImgClassName={p.photoImgClassName}
+                title={p.title}
                 organization={p.organization}
                 email={p.email}
                 bio={p.bio}

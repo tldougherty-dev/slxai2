@@ -95,10 +95,11 @@ Her research has been supported by more than $7 million in grants from the Natio
       },
       {
         name: 'Dr. Abraham Glasser',
-        title: 'PhD',
+        title: 'Co-Director, Deaf and Hard of Hearing Technology Rehabilitation Engineering Research Center',
         organization: 'Gallaudet University',
         email: 'abraham.glasser@gallaudet.edu',
-        bio: 'Dr. Abraham Glasser is an Assistant Professor in the MS/PhD Accessible Human Centered Computing and Policy (AHCP) program at Gallaudet University. He is an active member of CoSET.',
+        photoUrl: '/summit-2026/photos/abraham-glasser.png',
+        bio: 'Dr. Abraham Glasser is a faculty member in the Accessible Human-Centered Computing and Policy program at Gallaudet University, where he is also co-director of the Rehabilitation Engineering Research Center on Technology for the Deaf and Hard of Hearing (DHH RERC). He is a member of the Coalition for Sign Language Equity in Technology (CoSET), has contributed to published resources supporting standards work including AI-based interpreting, and serves on committees and working groups including WFD and W3C. Overall, he and his students conduct Human Computer Interaction (HCI) research involving AI, immersive technologies, and accessible computing for Deaf and Hard of Hearing users.',
       },
       {
         name: 'Adam Munder',
@@ -118,6 +119,7 @@ Adam's career spans engineering, machine learning, and innovation strategy, but 
         organization: 'SignWow',
         email: 'thomas.horejes@signwow.com',
         photoUrl: '/summit-2026/photos/thomas-horejes.png',
+        photoImgClassName: 'object-[center_30%]',
         bio: "He is SignWow's Chief Advocacy Officer who brings decades of experience in legal policy, advocacy, and accessibility, with a multidisciplinary focus on law and public administration. He has 18+ years teaching disability policy, law, and sociology in higher education, 15+ published articles, and 70+ scholarly presentations worldwide.",
       },
     ],
@@ -331,9 +333,9 @@ In 2018, he founded Handy Signs—a bridge over communication barriers—the fir
         title: 'AI Engineer',
         organization: 'Handy Signs',
         email: 'manuel@handysigns.it',
-        bio: `Manuel Granchelli is an AI Engineer at Handy Signs, an Italian company developing AI-powered translation between Italian Sign Language and spoken Italian to improve accessibility in public services and everyday communication. He works on machine learning and technical development supporting real-time sign language interpretation technologies.
+        bio: `Manuel Granchelli is CTO and AI Researcher at Handy Signs, with a Master's degree in Computer Engineering and a lifelong passion for technology and innovation. Over the last two years, he has been a core member of the technical team building intelligent systems that break down communication barriers for the Deaf community.
 
-Handy Signs focuses on deploying AI-based LIS interpretation tools for environments such as public administration, tourism, and service counters, aiming to support communication between Deaf and hearing users.`,
+Driven by the belief that technology should serve people, he works at the intersection of artificial intelligence, big data, and real-world impact, turning complex problems into tools that genuinely improve everyday lives.`,
       },
     ],
   },
@@ -605,7 +607,7 @@ He earned a PhD in Linguistics from Gallaudet University with a dissertation tit
 
 Drawing on more than a decade of daily work filming, documenting, curating, and teaching ASL, the presenters walk through eight concrete points where AI sign language projects most commonly fail and why those failures are not technical problems but authority problems.
 
-The session examines the 2D flattening of three-dimensional signing space, the linguistic complexity of joint point and proximalization that standard parameter models miss, the difference between naturalistic XMH signing and pedagogical HMH forms, the infinite generativity of unrealized inceptive aspect, the limits of English gloss labels, the mismatch between sign language simultaneity and sequential AI processing, the sociolinguistic reality of Deaf code switching, and the "24/7 Effect," the finding that Deaf signers who use ASL exclusively produce measurably stronger ASL outcomes.
+The session examines the 2D flattening of three-dimensional signing space, the linguistic complexity of joint point and proximalization that standard parameter models miss, the difference between naturalistic XMH signing and pedagogical HMH forms, the infinite generativity of unrealized inceptive aspect, the limits of English gloss labels, the mismatch between sign language simultaneity and sequential AI processing, the sociolinguistic reality of Deaf code switching, and the core asymmetry between Deaf-sourced and Deaf-powered design - that hearing architecture with Deaf input is not the same as Deaf powered architecture.
 
 Throughout, the presenters distinguish between Deaf-sourced projects, where Deaf people provide data but hearing teams control design, labeling, and validation, and truly Deaf-powered ones, where Deaf ASL experts hold authority at every stage. The workshop closes with a challenge to the field: the question is not whether a team includes a Deaf person, but whether Deaf expertise shapes decisions from capture through deployment.`,
     learningObjectives: {
@@ -744,7 +746,14 @@ Information will be shared about the FCC's advisory committees and existing ways
     summary:
       'A structured session introducing the CoSET SAFE AI approach and how it can be used to evaluate communication outcomes, safety, and reliability. A more specific learning objective will be published in the program book when finalized by CoSET.',
     presenters: [
-      { name: 'Dr. Abraham Glasser', title: 'PhD', organization: 'Gallaudet University' },
+      {
+        name: 'Dr. Abraham Glasser',
+        title: 'Co-Director, Deaf and Hard of Hearing Technology Rehabilitation Engineering Research Center',
+        organization: 'Gallaudet University',
+        email: 'abraham.glasser@gallaudet.edu',
+        photoUrl: '/summit-2026/photos/abraham-glasser.png',
+        bio: 'Dr. Abraham Glasser is a faculty member in the Accessible Human-Centered Computing and Policy program at Gallaudet University, where he is also co-director of the Rehabilitation Engineering Research Center on Technology for the Deaf and Hard of Hearing (DHH RERC). He is a member of the Coalition for Sign Language Equity in Technology (CoSET), has contributed to published resources supporting standards work including AI-based interpreting, and serves on committees and working groups including WFD and W3C. Overall, he and his students conduct Human Computer Interaction (HCI) research involving AI, immersive technologies, and accessible computing for Deaf and Hard of Hearing users.',
+      },
       { name: 'Stephanie Jo Kent', organization: 'CoSET' },
       { name: 'Erin Sanders-Sigmon', email: 'erinfran777@gmail.com', organization: 'CoSET' },
       {
