@@ -19,6 +19,8 @@ export type SummitWorkshopPresenter = {
   photoUrl?: string | null;
   /** Optional extra Tailwind classes for the headshot <img> (e.g. object-position, scale) for tighter crops */
   photoImgClassName?: string;
+  /** When true, do not show the default "Bio photo" placeholder if photoUrl is missing. */
+  hidePhotoPlaceholder?: boolean;
 };
 
 /** Optional numbered learning outcomes on `/2026/workshop/:slug` (between description and presenters). */
@@ -148,7 +150,7 @@ More than 80% of Deaf and hard of hearing individuals in the United States exper
     presenters: [
       {
         name: 'Dr. Melissa Smith',
-        title: 'Ed.D.',
+        title: 'CEO',
         organization: 'ASL Flurry',
         photoUrl: '/summit-2026/photos/melissa-smith.png',
         bio: `Melissa, a professor emeritus and former director of the ASL-English interpreting program at Palomar College (1997–2021), holds a doctorate and master's in Teaching and Learning from UC San Diego. Her research on interpreters in public schools was published by Gallaudet University Press.
@@ -333,6 +335,7 @@ In 2018, he founded Handy Signs—a bridge over communication barriers—the fir
         title: 'AI Engineer',
         organization: 'Handy Signs',
         email: 'manuel@handysigns.it',
+        photoUrl: '/summit-2026/photos/manuel-granchelli.png',
         bio: `Manuel Granchelli is CTO and AI Researcher at Handy Signs, with a Master's degree in Computer Engineering and a lifelong passion for technology and innovation. Over the last two years, he has been a core member of the technical team building intelligent systems that break down communication barriers for the Deaf community.
 
 Driven by the belief that technology should serve people, he works at the intersection of artificial intelligence, big data, and real-world impact, turning complex problems into tools that genuinely improve everyday lives.`,
@@ -368,6 +371,7 @@ Finally, the session considers possible deployment models, including web-based d
         organization: 'Vosia.ai',
         email: 'dr.buyanik@gmail.com',
         photoUrl: '/summit-2026/photos/burak-uyanik.png',
+        photoImgClassName: 'object-[center_34%]',
         bio: 'Dr. Burak Uyanık is a deaf software engineer, researcher, and civil society leader working in accessibility, education, and technology. He completed his PhD in Computer Engineering in 2023 and is recognized as the first hearing-impaired computer engineer in Türkiye to complete a doctoral degree. He has worked in software, automation, AI, and R&D across industry and public-sector institutions, and he is also the President of the Association of Hearing Impaired Solidarity, where he leads projects focused on accessibility, STEM, and inclusive participation.',
       },
     ],
@@ -518,6 +522,7 @@ Known for his practical mindset and passion for inclusion, Brandon is driven by 
         title: 'Independent Researcher, HCI & Educational Neuroscience',
         organization: 'Independent researcher',
         email: 'athena.s.willis@gmail.com',
+        hidePhotoPlaceholder: true,
         bio: 'Dr. Athena Willis is an independent researcher in HCI and educational neuroscience, focusing on the design and evaluation of AI and augmented reality systems that collaborate with signing users for intellectual and language development.',
       },
       {
@@ -525,6 +530,7 @@ Known for his practical mindset and passion for inclusion, Brandon is driven by 
         title: 'Doctoral Student & Research Assistant, Action and Brain Lab',
         organization: 'Gallaudet University',
         email: 'laurel.aichler@gallaudet.edu',
+        hidePhotoPlaceholder: true,
         bio: 'Laurel Aichler is a doctoral student in Educational Neuroscience at Gallaudet and a research assistant in the Action and Brain Lab. She holds an M.A. in Linguistics (sign languages) and was an ASL interpreter for about a decade, with work on STEM learning for signing users.',
       },
     ],

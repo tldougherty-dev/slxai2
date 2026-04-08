@@ -144,6 +144,7 @@ export type WorkshopPresenterBioCardProps = {
   name: string;
   photoUrl?: string | null;
   photoImgClassName?: string;
+  hidePhotoPlaceholder?: boolean;
   title?: string;
   organization?: string;
   email?: string;
@@ -154,16 +155,26 @@ export function WorkshopPresenterBioCard({
   name,
   photoUrl,
   photoImgClassName,
+  hidePhotoPlaceholder,
   title,
   organization,
   email,
   bio,
 }: WorkshopPresenterBioCardProps) {
+  const hasPhoto = !!photoUrl?.trim();
+  const showPhotoBlock = hasPhoto || !hidePhotoPlaceholder;
+
   return (
     <article className="flow-root rounded-xl border border-gray-200/90 bg-gray-50/80 p-4 shadow-md transition-shadow hover:border-electric-blue/25 hover:shadow-lg sm:p-5">
-      <div className="float-left mb-2 mr-4">
-        <WorkshopPresenterPhotoOrPlaceholder name={name} photoUrl={photoUrl} imgClassName={photoImgClassName} />
-      </div>
+      {showPhotoBlock ? (
+        <div className="float-left mb-2 mr-4">
+          <WorkshopPresenterPhotoOrPlaceholder
+            name={name}
+            photoUrl={photoUrl}
+            imgClassName={photoImgClassName}
+          />
+        </div>
+      ) : null}
       <h3 className="text-lg font-bold text-gray-900">{name}</h3>
       {title ? <p className="mt-1 text-sm text-gray-700">{title}</p> : null}
       {organization ? (

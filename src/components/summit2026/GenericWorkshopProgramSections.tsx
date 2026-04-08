@@ -165,7 +165,6 @@ export function GenericWorkshopProgramSections({
   getText,
 }: GenericWorkshopProgramSectionsProps) {
   const isKeynote = workshop.slug === KEYNOTE_WORKSHOP_SLUG;
-  const isEthicsPanel = workshop.slug === 'ethics-where-does-it-stop';
 
   const { workshopDescription: parsedDesc } = getProgramBookSectionsFromVerbatim(verbatimRaw);
 
@@ -201,19 +200,14 @@ export function GenericWorkshopProgramSections({
         headingId="workshop-presenters-heading"
         title={isSinglePresenter ? 'Presenter' : 'Presenters'}
       >
-        <ul
-          className={
-            isSinglePresenter || isEthicsPanel
-              ? 'grid gap-5 sm:grid-cols-1'
-              : 'grid gap-5 sm:grid-cols-1 lg:grid-cols-2'
-          }
-        >
+        <ul className="grid gap-5 sm:grid-cols-1">
           {workshop.presenters.map((p, idx) => (
             <li key={`${p.name}-${idx}`}>
               <WorkshopPresenterBioCard
                 name={p.name}
                 photoUrl={p.photoUrl}
                 photoImgClassName={p.photoImgClassName}
+                hidePhotoPlaceholder={p.hidePhotoPlaceholder}
                 title={p.title}
                 organization={p.organization}
                 email={p.email}
