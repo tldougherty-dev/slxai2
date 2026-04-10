@@ -116,6 +116,11 @@ export const SUMMIT_2026_SPONSORS_BY_TIER: Summit2026SponsorTierGroup[] = [
         url: 'https://glwmax.com',
         logo: '/sponsors/glwmax.png',
       },
+      {
+        name: 'Amazon',
+        url: 'https://www.amazon.com',
+        logo: '/sponsors/amazon.png',
+      },
     ],
   },
 ];

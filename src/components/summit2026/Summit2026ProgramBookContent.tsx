@@ -19,7 +19,9 @@ import {
   SUMMIT_2026_MOC_BARBARA_SPIECKER_BIO,
 } from '@/data/summit2026ProgramBookNarrative';
 import {
+  AMAZON_SPONSOR_LOGO_IMG_CLASS,
   getSummitSponsorMarqueeLogoClasses,
+  isAmazonSponsor,
   isSummitSponsorCircularLogo,
   SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS,
   SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS,
@@ -47,7 +49,7 @@ function SummitMarqueeSponsorLogo({ name, logo }: { name: string; logo: string }
     <img
       src={logo}
       alt={name}
-      className={`${getSummitSponsorMarqueeLogoClasses(name)} w-auto object-contain`}
+      className={`${getSummitSponsorMarqueeLogoClasses(name)} w-auto object-contain${isAmazonSponsor(name) ? ` ${AMAZON_SPONSOR_LOGO_IMG_CLASS}` : ''}`}
     />
   );
 }
@@ -104,17 +106,17 @@ const Summit2026ProgramBookContent = ({
 
   const sponsorSectionOuterClass = 'mb-4 sm:mb-6 md:mb-8';
   const sponsorCardClass =
-    'bg-white dark:bg-gray-800 rounded-lg shadow-xl border-2 border-electric-blue/20 px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4';
+    'bg-white dark:bg-white rounded-lg shadow-xl border-2 border-electric-blue/20 px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4';
   const sponsorHeadingClass =
-    'text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-2 sm:mb-3 md:mb-4';
-  const sponsorCarouselClass = 'relative overflow-hidden h-48 sm:h-56 md:h-72 w-full';
+    'text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-900 mb-2 sm:mb-3 md:mb-4';
+  const sponsorCarouselClass = 'relative overflow-hidden h-52 sm:h-60 md:h-80 w-full bg-white dark:bg-white';
 
   return (
     <>
       {/* Summit Section */}
       <section
         id="summit"
-        className="py-4 bg-gray-50 dark:bg-gray-900 max-md:py-3 max-md:pb-5"
+        className="py-4 bg-white dark:bg-white max-md:py-3 max-md:pb-5"
       >
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="mb-8 flex justify-center px-1">

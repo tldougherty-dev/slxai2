@@ -70,3 +70,9 @@
   font-weight: 400;
   font-synthesis: none;
 }
+
+/* Friends of SLxAI tier: solid white card body (avoids gray page strip or global dark fills behind logos). */
+.program-book-2026 .summit-friends-tier,
+.program-book-2026 .summit-friends-tier > div {
+  background-color: #ffffff !important;
+}
