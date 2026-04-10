@@ -31,6 +31,7 @@ import {
   Shield,
   Lock,
   Scale,
+  Cookie,
   LogOut,
   Building2,
   Calendar,
@@ -584,18 +585,40 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
                       tooltip={t('common.privacyPolicy')}
                       className={cn(
                         "transition-all duration-200 hover:bg-electric-blue/10 h-9 md:h-8 text-xs md:text-sm lg:text-base pl-1.5 md:pl-2 pr-1 md:pr-1 min-h-[36px] md:min-h-[32px]",
-                        location.pathname === '/membership-portal/privacy' 
+                        location.pathname === '/privacy'
                           ? "font-semibold" 
                           : ""
                       )}
                     >
                       <MenuItemLink 
-                        href="/membership-portal/privacy"
-                        isActive={location.pathname === '/membership-portal/privacy'}
+                        href="/privacy"
+                        isActive={location.pathname === '/privacy'}
                         className="flex items-center gap-1.5 md:gap-2 w-full"
                       >
                         <Lock className="h-3.5 w-3.5 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5 flex-shrink-0" />
                         <span className="text-xs md:text-sm lg:text-base truncate">{t('common.privacyPolicy')}</span>
+                      </MenuItemLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      asChild
+                      size="sm"
+                      tooltip={t('common.cookiePolicy')}
+                      className={cn(
+                        "transition-all duration-200 hover:bg-electric-blue/10 h-9 md:h-8 text-xs md:text-sm lg:text-base pl-1.5 md:pl-2 pr-1 md:pr-1 min-h-[36px] md:min-h-[32px]",
+                        location.pathname === '/cookies'
+                          ? "font-semibold" 
+                          : ""
+                      )}
+                    >
+                      <MenuItemLink 
+                        href="/cookies"
+                        isActive={location.pathname === '/cookies'}
+                        className="flex items-center gap-1.5 md:gap-2 w-full"
+                      >
+                        <Cookie className="h-3.5 w-3.5 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5 flex-shrink-0" />
+                        <span className="text-xs md:text-sm lg:text-base truncate">{t('common.cookiePolicy')}</span>
                       </MenuItemLink>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

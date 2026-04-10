@@ -35,7 +35,7 @@ export function ProgramBook2026Shell({
   documentTitle = 'SLxAI Summit 2026 Program Book | SLxAI',
   topLeftNav = 'home',
 }: Props) {
-  const { language, setLanguage, translate } = useLanguage();
+  const { language, setLanguage, translate, t } = useLanguage();
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -110,10 +110,8 @@ export function ProgramBook2026Shell({
         tocAbout: 'About the Summit',
         tocMasterOfCeremonies: 'Master of Ceremonies',
         tocWelcomeLetter: 'Welcome Letter',
-        tocStorySlxai: 'The Story Behind SLxAI',
         tocSummitCommittee: 'Summit Committee',
         welcomeLetterTitle: 'Welcome Letter',
-        storySlxaiTitle: 'The Story Behind SLxAI',
         summitCommitteeTitle: 'Summit Committee',
         summitCommitteeIntro:
           'This summit would not be possible without the committee members below. Each contributed in their own way to help ensure a successful event.',
@@ -205,6 +203,24 @@ export function ProgramBook2026Shell({
       </header>
 
       {children}
+
+      <footer
+        className="border-t border-gray-200 bg-gray-50 px-4 py-5 text-center text-sm text-gray-600"
+        role="contentinfo"
+        aria-label="Legal"
+      >
+        <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link to="/privacy" className="text-electric-blue hover:underline">
+            {t('common.privacyPolicy')}
+          </Link>
+          <span className="text-gray-300" aria-hidden>
+            |
+          </span>
+          <Link to="/cookies" className="text-electric-blue hover:underline">
+            {t('common.cookiePolicy')}
+          </Link>
+        </nav>
+      </footer>
 
       {showBackToTop ? (
         <Button

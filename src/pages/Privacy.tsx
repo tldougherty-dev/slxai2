@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Lock, Eye, FileText, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useEffect, useState } from 'react';
 
@@ -18,7 +19,7 @@ export default function Privacy() {
       const sections = {
         lastUpdated: 'Last updated: November 18, 2024',
         introductionTitle: 'Introduction',
-        introductionText1: 'SLxAI Cooperative ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our member portal and services.',
+        introductionText1: 'SLxAI Cooperative ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our public website (slxai.org) and when you use our member portal and related services.',
         introductionText2: 'By accessing or using our services, you agree to the collection and use of information in accordance with this policy.',
         informationTitle: 'Information We Collect',
         personalInfoTitle: 'Personal Information',
@@ -64,6 +65,7 @@ export default function Privacy() {
         rightsContact: 'To exercise these rights, please contact us using the information provided below.',
         cookiesTitle: 'Cookies and Tracking',
         cookiesText: 'We use cookies and similar tracking technologies to maintain your session, remember your preferences, and improve our services. You can control cookie settings through your browser preferences.',
+        cookiesSeeAlso: 'For more detail, see',
         childrenTitle: 'Children\'s Privacy',
         childrenText: 'Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children.',
         changesTitle: 'Changes to This Privacy Policy',
@@ -108,7 +110,7 @@ export default function Privacy() {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-700 dark:text-gray-300">
           <p>
-            {getText('introductionText1', 'SLxAI Cooperative ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our member portal and services.')}
+            {getText('introductionText1', 'SLxAI Cooperative ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our public website (slxai.org) and when you use our member portal and related services.')}
           </p>
           <p>
             {getText('introductionText2', 'By accessing or using our services, you agree to the collection and use of information in accordance with this policy.')}
@@ -221,7 +223,12 @@ export default function Privacy() {
         </CardHeader>
         <CardContent className="space-y-4 text-gray-700 dark:text-gray-300">
           <p>
-            {getText('cookiesText', 'We use cookies and similar tracking technologies to maintain your session, remember your preferences, and improve our services. You can control cookie settings through your browser preferences.')}
+            {getText('cookiesText', 'We use cookies and similar tracking technologies to maintain your session, remember your preferences, and improve our services. You can control cookie settings through your browser preferences.')}{' '}
+            {getText('cookiesSeeAlso', 'For more detail, see')}{' '}
+            <Link to="/cookies" className="font-medium text-electric-blue underline hover:no-underline">
+              {t('common.cookiePolicy')}
+            </Link>
+            .
           </p>
         </CardContent>
       </Card>

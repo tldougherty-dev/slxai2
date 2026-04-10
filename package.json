@@ -15,7 +15,8 @@
     "verify-env": "node scripts/verify-env.js",
     "verify-env:prod": "node scripts/verify-env.js --production",
     "create-users": "node --env-file=.env create-users.js",
-    "check-db": "node --env-file=.env scripts/check-supabase-db.cjs"
+    "check-db": "node --env-file=.env scripts/check-supabase-db.cjs",
+    "generate-badge-contacts": "node scripts/generate-badge-contacts.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1016.0",

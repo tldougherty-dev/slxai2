@@ -40,7 +40,7 @@ import Summit2026ProgramBookContent from '@/components/summit2026/Summit2026Prog
 
 const Index = () => {
   const { toast } = useToast();
-  const { language, setLanguage, translate } = useLanguage();
+  const { language, setLanguage, translate, t } = useLanguage();
   const [translatedContent, setTranslatedContent] = useState<Record<string, string>>({});
   const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
   const [isTicketSubmitted, setIsTicketSubmitted] = useState(false);
@@ -155,10 +155,8 @@ const Index = () => {
         tocAbout: 'About the Summit',
         tocMasterOfCeremonies: 'Master of Ceremonies',
         tocWelcomeLetter: 'Welcome Letter',
-        tocStorySlxai: 'The story of SLxAI',
         tocSummitCommittee: 'Summit Committee',
         welcomeLetterTitle: 'Welcome Letter',
-        storySlxaiTitle: 'The Story Behind SLxAI',
         summitCommitteeTitle: 'Summit Committee',
         summitCommitteeIntro:
           'This summit would not be possible without the committee members below. Each contributed in their own way to help ensure a successful event.',
@@ -788,6 +786,24 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <footer
+        className="border-t border-gray-200 bg-gray-50 py-6 text-center text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
+        role="contentinfo"
+        aria-label="Site information"
+      >
+        <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link to="/privacy" className="text-electric-blue hover:underline">
+            {t('common.privacyPolicy')}
+          </Link>
+          <span className="text-gray-300 dark:text-gray-600" aria-hidden>
+            |
+          </span>
+          <Link to="/cookies" className="text-electric-blue hover:underline">
+            {t('common.cookiePolicy')}
+          </Link>
+        </nav>
+      </footer>
 
     </div>
   );

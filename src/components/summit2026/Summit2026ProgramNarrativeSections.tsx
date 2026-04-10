@@ -1,6 +1,5 @@
 import {
   SUMMIT_2026_COMMITTEE_MEMBERS,
-  SUMMIT_2026_STORY_SLXAI_PARAGRAPHS,
   SUMMIT_2026_WELCOME_LETTER_PARAGRAPHS,
   SUMMIT_2026_WELCOME_LETTER_SIGNATURE,
 } from '@/data/summit2026ProgramBookNarrative';
@@ -18,16 +17,6 @@ const sectionShell =
 const narrativeHeroHeaderBar = 'bg-electric-blue px-4 py-3 text-center sm:py-3.5';
 const narrativeHeroTitle =
   'text-balance text-lg font-bold leading-tight text-white sm:text-xl md:text-2xl';
-
-function ProseBlock({ paragraphs }: { paragraphs: string[] }) {
-  return (
-    <div className="space-y-4 px-4 py-5 text-left text-base leading-relaxed text-gray-800 dark:text-gray-100 sm:px-6 sm:py-6">
-      {paragraphs.map((p, i) => (
-        <p key={i}>{p}</p>
-      ))}
-    </div>
-  );
-}
 
 /** Aged legal-paper body: left red margin, ink-colored type on light tan. */
 function WelcomeLetterPaperBody({ paragraphs }: { paragraphs: string[] }) {
@@ -91,17 +80,6 @@ export function Summit2026WelcomeLetterSection({ getText }: Props) {
   );
 }
 
-export function Summit2026StorySlxaiSection({ getText }: Props) {
-  return (
-    <section id="summit-story-slxai" className={sectionShell}>
-      <div className={narrativeHeroHeaderBar}>
-        <h2 className={narrativeHeroTitle}>{getText('storySlxaiTitle', 'The Story Behind SLxAI')}</h2>
-      </div>
-      <ProseBlock paragraphs={SUMMIT_2026_STORY_SLXAI_PARAGRAPHS} />
-    </section>
-  );
-}
-
 export function Summit2026CommitteeSection({ getText }: Props) {
   return (
     <section id="summit-committee" className={sectionShell}>
@@ -139,12 +117,10 @@ export function Summit2026CommitteeSection({ getText }: Props) {
   );
 }
 
-/** Legacy: all three narrative blocks in default order (welcome → story → committee). Prefer composing sections individually in the program book. */
+/** Legacy: narrative blocks. Welcome letter temporarily omitted — restore Summit2026WelcomeLetterSection when needed. */
 export function Summit2026ProgramNarrativeSections({ getText }: Props) {
   return (
     <div className="flex w-full flex-col gap-8">
-      <Summit2026WelcomeLetterSection getText={getText} />
-      <Summit2026StorySlxaiSection getText={getText} />
       <Summit2026CommitteeSection getText={getText} />
     </div>
   );

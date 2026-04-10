@@ -12,16 +12,14 @@ const tocItems = [
   { href: '#summit-evening-event', labelKey: 'tocEveningEvent', fallback: 'Evening event' },
   { href: '#summit-schedule-day-2', labelKey: 'tocDay2', fallback: 'Day 2' },
   { href: '#summit-sponsors-by-tier', labelKey: 'tocSponsors', fallback: 'Sponsors' },
-  { href: '#summit-welcome-letter', labelKey: 'tocWelcomeLetter', fallback: 'Welcome Letter' },
   { href: '#summit-about', labelKey: 'tocAbout', fallback: 'About the Summit' },
-  { href: '#summit-story-slxai', labelKey: 'tocStorySlxai', fallback: 'The Story Behind SLxAI' },
   { href: '#summit-master-of-ceremonies', labelKey: 'tocMasterOfCeremonies', fallback: 'Master of Ceremonies' },
   { href: '#summit-committee', labelKey: 'tocSummitCommittee', fallback: 'Summit Committee' },
 ] as const;
 
-/** Desktop: 5 + 4 layout; smaller screens: 2-column grid per row block. */
-const TOC_ROW1 = tocItems.slice(0, 5);
-const TOC_ROW2 = tocItems.slice(5, 9);
+/** Row 1: four items in four columns; row 2: three items in three columns (see grid classes below). */
+const TOC_ROW1 = tocItems.slice(0, 4);
+const TOC_ROW2 = tocItems.slice(4);
 
 export function Summit2026TableOfContents({ getText }: Props) {
   const renderRow = (row: readonly (typeof tocItems)[number][]) => (
@@ -49,12 +47,11 @@ export function Summit2026TableOfContents({ getText }: Props) {
           {getText('tocTitle', 'Table of contents')}
         </h3>
         <div className="rounded-b-lg p-2.5 sm:p-4">
-          {/* Mobile: 2-col; tablet: 3-col; desktop (lg+): 5 then 4 */}
           <div className="flex flex-col gap-2 md:gap-3">
-            <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-5">
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
               {renderRow(TOC_ROW1)}
             </ul>
-            <ul className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4">
+            <ul className="grid grid-cols-3 gap-2 sm:gap-3">
               {renderRow(TOC_ROW2)}
             </ul>
           </div>

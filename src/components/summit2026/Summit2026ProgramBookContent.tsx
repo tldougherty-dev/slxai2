@@ -11,7 +11,6 @@ import { Summit2026SponsorsSection } from '@/components/summit2026/Summit2026Spo
 import { Summit2026TableOfContents } from '@/components/summit2026/Summit2026TableOfContents';
 import {
   Summit2026CommitteeSection,
-  Summit2026StorySlxaiSection,
   Summit2026WelcomeLetterSection,
 } from '@/components/summit2026/Summit2026ProgramNarrativeSections';
 import { WorkshopPresenterBioCard } from '@/components/summit2026/workshopProgramBookShared';
@@ -61,7 +60,7 @@ type Summit2026ProgramBookContentProps = {
   showProgramBookSubtitle?: boolean;
   /**
    * When true, homepage layout: sold out + sponsor marquee + tiered sponsors + about summit + workshops only.
-   * Omits TOC, schedule, welcome letter, story, master of ceremonies, committee.
+   * Omits TOC, schedule, welcome letter, master of ceremonies, committee.
    */
   landingSummit?: boolean;
   /** When true, shows the full two-day schedule block (intended for /2026 program book only). Default true. Ignored when `landingSummit` is true. */
@@ -96,9 +95,10 @@ const Summit2026ProgramBookContent = ({
   /** Homepage landing: tiered sponsors appear after workshops; program book keeps them after schedule. */
   const showTieredSponsorsInDefaultSlot = showTieredSponsorsSection && !landingSummit;
   const showTieredSponsorsAfterWorkshops = showTieredSponsorsSection && landingSummit;
-  const showWelcomeLetterSection = isFullProgramBook;
+  /** TEMP: set `true` to show Welcome Letter again on /2026 when `isFullProgramBook`. */
+  const SHOW_WELCOME_LETTER_SECTION = false;
+  const showWelcomeLetterSection = SHOW_WELCOME_LETTER_SECTION && isFullProgramBook;
   const showAboutSummitCard = isFullProgramBook || landingSummit;
-  const showStorySlxaiSection = isFullProgramBook;
   const showMasterOfCeremoniesCard = isFullProgramBook;
   const showSummitCommitteeSection = isFullProgramBook;
 
@@ -294,7 +294,6 @@ const Summit2026ProgramBookContent = ({
           showTieredSponsorsInDefaultSlot ||
           showWelcomeLetterSection ||
           showAboutSummitCard ||
-          showStorySlxaiSection ||
           showMasterOfCeremoniesCard ||
           showSummitCommitteeSection ||
           showWorkshopsAndPanels ||
@@ -444,8 +443,6 @@ const Summit2026ProgramBookContent = ({
                 </Button>
               </div>
             ) : null}
-
-            {showStorySlxaiSection ? <Summit2026StorySlxaiSection getText={getText} /> : null}
 
             {showMasterOfCeremoniesCard ? (
             <Card

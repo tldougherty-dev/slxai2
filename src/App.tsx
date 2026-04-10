@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -27,7 +27,9 @@ import Summit2026 from "./pages/membership-portal/Summit2026";
 import Feedback from "./pages/membership-portal/Feedback";
 import NotificationPreferences from "./pages/membership-portal/NotificationPreferences";
 import Privacy from "./pages/Privacy";
+import CookiePolicy from "./pages/CookiePolicy";
 import Terms from "./pages/Terms";
+import LegalPublicLayout from "./components/LegalPublicLayout";
 import NotFound from "./pages/NotFound";
 import MigrateData from "./pages/MigrateData";
 import Login from "./pages/Login";
@@ -75,6 +77,22 @@ const App = () => (
             <Route path="/interest" element={<Interest />} />
             <Route path="/bylaws" element={<Bylaws />} />
             <Route path="/summit2027" element={<Summit2027Sponsorship />} />
+            <Route
+              path="/privacy"
+              element={
+                <LegalPublicLayout>
+                  <Privacy />
+                </LegalPublicLayout>
+              }
+            />
+            <Route
+              path="/cookies"
+              element={
+                <LegalPublicLayout>
+                  <CookiePolicy />
+                </LegalPublicLayout>
+              }
+            />
           <Route
             path="/membership-portal"
             element={
@@ -279,16 +297,7 @@ const App = () => (
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/membership-portal/privacy"
-            element={
-              <ProtectedRoute>
-                <MembershipPortalLayout>
-                  <Privacy />
-                </MembershipPortalLayout>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/membership-portal/privacy" element={<Navigate to="/privacy" replace />} />
           <Route
             path="/membership-portal/terms"
             element={
