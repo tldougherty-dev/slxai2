@@ -37,13 +37,14 @@ export function getSummitSponsorMarqueeLogoClasses(name: string): string {
   if (n.includes('glwmax')) {
     return 'max-h-[12.6rem] md:max-h-[16.8rem] lg:max-h-[18.2rem]';
   }
-  /** Amazon: ~10% smaller than shared Bronze row (max-h-56 / md:64). */
+  /** Amazon: 25% smaller than Bronze row baseline (max-h-56 / md:64 → 10.5rem / 12rem). */
   if (n.includes('amazon')) {
-    return 'max-h-[12.6rem] md:max-h-[14.4rem]';
+    return 'max-h-[10.5rem] md:max-h-[12rem]';
   }
   if (
     n.includes('alangu') ||
     n === 'microsoft' ||
+    n.includes('360 direct access') ||
     n.includes('nagish') ||
     n.includes('sorenson') ||
     n.includes('tcs') ||
@@ -60,6 +61,18 @@ export function getSummitSponsorMarqueeLogoClasses(name: string): string {
   }
 
   return 'max-h-36 md:max-h-32';
+}
+
+/**
+ * Scrolling “Our Sponsors” strip only: tiered cards use {@link getSummitSponsorMarqueeLogoClasses}.
+ * 360 Direct Access is ~10% smaller here only (Bronze tier grid keeps full Nagish/Sorenson scale).
+ */
+export function getSummitMarqueeScrollLogoClasses(name: string): string {
+  const n = name.trim().toLowerCase();
+  if (n.includes('360 direct access')) {
+    return 'max-h-[12.6rem] md:max-h-[14.4rem]';
+  }
+  return getSummitSponsorMarqueeLogoClasses(name);
 }
 
 /** Friends of SLxAI tier cards: larger logos than the scrolling marquee. */

@@ -97,6 +97,11 @@ export const SUMMIT_2026_SPONSORS_BY_TIER: Summit2026SponsorTierGroup[] = [
     tierLabel: 'Bronze Sponsors',
     sponsors: [
       {
+        name: '360 Direct Access',
+        url: 'https://www.360directaccess.com/',
+        logo: '/sponsors/360-direct-access.png',
+      },
+      {
         name: 'Nagish',
         url: 'https://nagish.com',
         logo: '/sponsors/nagish.png',

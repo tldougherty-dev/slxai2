@@ -20,7 +20,7 @@ import {
 } from '@/data/summit2026ProgramBookNarrative';
 import {
   AMAZON_SPONSOR_LOGO_IMG_CLASS,
-  getSummitSponsorMarqueeLogoClasses,
+  getSummitMarqueeScrollLogoClasses,
   isAmazonSponsor,
   isSummitSponsorCircularLogo,
   SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS,
@@ -49,7 +49,7 @@ function SummitMarqueeSponsorLogo({ name, logo }: { name: string; logo: string }
     <img
       src={logo}
       alt={name}
-      className={`${getSummitSponsorMarqueeLogoClasses(name)} w-auto object-contain${isAmazonSponsor(name) ? ` ${AMAZON_SPONSOR_LOGO_IMG_CLASS}` : ''}`}
+      className={`${getSummitMarqueeScrollLogoClasses(name)} w-auto object-contain${isAmazonSponsor(name) ? ` ${AMAZON_SPONSOR_LOGO_IMG_CLASS}` : ''}`}
     />
   );
 }

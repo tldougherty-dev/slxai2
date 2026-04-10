@@ -66,11 +66,11 @@ function isSilverTier(tierLabel: string): boolean {
   return tierLabel === 'Silver Sponsors';
 }
 
-/** Grid classes: Platinum & Gold use three columns on md+; Friends full row with two columns for logos; other tiers stay two columns. */
+/** Grid classes: Platinum, Gold, and Bronze use three columns on md+; Friends two columns; other tiers two columns. */
 function tierSponsorGridClass(tierLabel: string): string {
   const base =
     'mx-auto grid w-full grid-cols-1 justify-items-center gap-x-6 gap-y-5 sm:gap-x-8 sm:gap-y-6';
-  if (isPlatinumOrGoldTier(tierLabel)) {
+  if (isPlatinumOrGoldTier(tierLabel) || tierLabel === 'Bronze Sponsors') {
     return `${base} max-w-5xl md:grid-cols-3`;
   }
   if (tierLabel === 'Friends of SLxAI') {
@@ -217,7 +217,8 @@ function SponsorTierGroupCard({ group }: { group: Summit2026SponsorTierGroup }) 
           <ul className={tierSponsorGridClass(group.tierLabel)}>
             {group.sponsors.map((s, idx) => {
               const n = group.sponsors.length;
-              const threeCol = isPlatinumOrGoldTier(group.tierLabel);
+              const threeCol =
+                isPlatinumOrGoldTier(group.tierLabel) || group.tierLabel === 'Bronze Sponsors';
               const spanFullRowCenter = threeCol
                 ? n === 1 || (idx === n - 1 && n > 1 && n % 3 === 1)
                 : n === 1 || (idx === n - 1 && n % 2 === 1);
