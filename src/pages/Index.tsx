@@ -28,6 +28,7 @@ import {
   Linkedin,
   Facebook,
   Instagram,
+  Rss,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -37,6 +38,15 @@ import { sanitizeText, isValidLength } from '@/lib/security';
 import { useLanguage, SUPPORTED_LANGUAGES } from '@/contexts/LanguageContext';
 import { submitTicketReservation, getAvailableTicketCount, getReservedTicketCount } from '@/data/summit2026';
 import Summit2026ProgramBookContent from '@/components/summit2026/Summit2026ProgramBookContent';
+
+const METRICOOL_HASH = 'ac83e2d5ea5afb1178d6b5f3f3b451d5';
+const METRICOOL_SCRIPT_SRC = 'https://tracker.metricool.com/resources/be.js';
+const METRICOOL_SCRIPT_ATTR = 'data-metricool-be';
+const BLOG_RSS_FEED_URL = 'https://slxai.org/blog/rss.xml';
+
+function initMetricoolTracker() {
+  window.beTracker?.t({ hash: METRICOOL_HASH });
+}
 
 const Index = () => {
   const { toast } = useToast();
@@ -61,6 +71,23 @@ const Index = () => {
   });
   const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
   const [isWaitlistSubmitted, setIsWaitlistSubmitted] = useState(false);
+  const landingBlogPosts = [
+    {
+      title: 'SLxAI Summit 2026: Why This Matters',
+      excerpt: 'A quick overview of the mission, participants, and long-term goals behind SLxAI.',
+      href: '/about',
+    },
+    {
+      title: 'Founding Membership: What To Expect',
+      excerpt: 'How board representation, governance, and collaboration work for founding members.',
+      href: '#waitlist',
+    },
+    {
+      title: 'Ethics, Benchmarks, and Shared Standards',
+      excerpt: 'How SLxAI approaches responsible AI development for sign language technology.',
+      href: '/bylaws',
+    },
+  ];
   
   // Force light mode on homepage
   useEffect(() => {
@@ -101,6 +128,25 @@ const Index = () => {
       }
     };
     loadTicketAvailability();
+  }, []);
+
+  // Load Metricool tracker on landing page (hidden from UI).
+  useEffect(() => {
+    const existing = document.querySelector<HTMLScriptElement>(`script[${METRICOOL_SCRIPT_ATTR}]`);
+    if (existing) {
+      initMetricoolTracker();
+      return;
+    }
+
+    const head = document.getElementsByTagName('head')[0];
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = METRICOOL_SCRIPT_SRC;
+    script.setAttribute(METRICOOL_SCRIPT_ATTR, '1');
+    const run = () => initMetricoolTracker();
+    script.onreadystatechange = run;
+    script.onload = run;
+    head.appendChild(script);
   }, []);
 
   // Translate all homepage content
@@ -787,11 +833,53 @@ const Index = () => {
         </div>
       </section>
 
+      <section id="blog" className="bg-white py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">SLxAI Blog</h2>
+              <p className="mt-1 text-sm text-gray-600">
+                Updates, insights, and announcements from the SLxAI community.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild variant="outline" className="border-electric-blue text-electric-blue hover:bg-electric-blue/10">
+                <a href={BLOG_RSS_FEED_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
+                  <Rss className="h-4 w-4" aria-hidden />
+                  RSS Feed
+                </a>
+              </Button>
+            </div>
+          </div>
+
+          <div className="mb-4 rounded-md border border-dashed border-electric-blue/40 bg-blue-50/40 p-3 text-sm text-gray-700">
+            Connect this feed URL: <code className="rounded bg-white px-1.5 py-0.5 text-xs">{BLOG_RSS_FEED_URL}</code>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {landingBlogPosts.map((post) => (
+              <Card key={post.title} className="h-full border border-gray-200 shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-gray-900">{post.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-gray-600">{post.excerpt}</p>
+                  <Button asChild variant="link" className="h-auto p-0 text-electric-blue">
+                    <Link to={post.href}>Read more</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <footer
         className="border-t border-gray-200 bg-gray-50 py-6 text-center text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
         role="contentinfo"
         aria-label="Site information"
       >
+        <div id="metricool-footer-hidden" className="hidden" aria-hidden="true" />
         <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
           <Link to="/privacy" className="text-electric-blue hover:underline">
             {t('common.privacyPolicy')}

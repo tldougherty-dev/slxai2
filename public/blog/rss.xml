@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>SLxAI Blog</title>
+    <link>https://slxai.org/</link>
+    <description>Updates, insights, and announcements from SLxAI.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Apr 2026 00:00:00 GMT</lastBuildDate>
+
+    <item>
+      <title>SLxAI Summit 2026: Why This Matters</title>
+      <link>https://slxai.org/about</link>
+      <guid>https://slxai.org/about#slxai-summit-2026-why-this-matters</guid>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
+      <description>A quick overview of the mission, participants, and long-term goals behind SLxAI.</description>
+    </item>
+
+    <item>
+      <title>Founding Membership: What To Expect</title>
+      <link>https://slxai.org/#waitlist</link>
+      <guid>https://slxai.org/#waitlist-founding-membership-what-to-expect</guid>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
+      <description>How board representation, governance, and collaboration work for founding members.</description>
+    </item>
+
+    <item>
+      <title>Ethics, Benchmarks, and Shared Standards</title>
+      <link>https://slxai.org/bylaws</link>
+      <guid>https://slxai.org/bylaws#ethics-benchmarks-and-shared-standards</guid>
+      <pubDate>Mon, 13 Apr 2026 00:00:00 GMT</pubDate>
+      <description>How SLxAI approaches responsible AI development for sign language technology.</description>
+    </item>
+  </channel>
+</rss>

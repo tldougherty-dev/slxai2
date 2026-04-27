@@ -1,62 +1,47 @@
 BYLAWS OF SLxAI
 A Nonprofit Public Benefit Corporation
-
 ARTICLE I: NAME AND PURPOSE
-
 Section 1.1 Name
 The name of this corporation is SLxAI (the "Organization").
-
 Section 1.2 Purpose
 SLxAI is organized exclusively for charitable and educational purposes under Section 501(c)(3) of the Internal Revenue Code.
 The Organization's specific purpose is to advance technology innovation, adoption, and accessibility for Deaf and hard of hearing people globally.
-
 Section 1.3 Objectives
 The Organization's objectives are to:
-● Support the development and adoption of innovative technologies that improve accessibility and quality of life for Deaf and hard of hearing individuals
-● Establish technological standards and guidelines to ensure accessibility and interoperability in products and services for the Deaf community
-● Facilitate knowledge exchange among technology companies, researchers, and organizations working on Deaf-related technology
-● Advocate for technology policies that consider the needs of Deaf and hard of hearing individuals
-● Bridge the gap between technology developers and the Deaf community to ensure user-centered design and respect for Deaf culture
-● Promote education and training in technology fields for Deaf individuals
-
+Support the development and adoption of innovative technologies that improve accessibility and quality of life for Deaf and hard of hearing individuals
+Establish technological standards and guidelines to ensure accessibility and interoperability in products and services for the Deaf community
+Facilitate knowledge exchange among technology companies, researchers, and organizations working on Deaf-related technology
+Advocate for technology policies that consider the needs of Deaf and hard of hearing individuals
+Bridge the gap between technology developers and the Deaf community to ensure user-centered design and respect for Deaf culture
+Promote education and training in technology fields for Deaf individuals
 Section 1.4 Activities
 The Organization may organize meetings, conferences, workshops, and events to achieve its objectives. It may conduct research, publish reports, and collaborate with other organizations with similar goals. The Organization may acquire, own, lease, and dispose of property necessary to fulfill its mission.
-
 Section 1.5 Nonprofit Status
 No part of the net earnings of the Organization shall inure to the benefit of, or be distributable to, its members, directors, officers, or other private persons, except that the Organization shall be authorized to pay reasonable compensation for services rendered and to make payments in furtherance of its exempt purposes. No director, officer, member, or private individual shall receive any part of the Organization's net earnings except for reasonable compensation for services rendered and reimbursement of expenses.
-
 Section 1.6 Prohibition on Political Activity
 The Organization shall not participate in or intervene in any political campaign on behalf of or in opposition to any candidate for public office. No substantial part of the activities of the Organization shall consist of carrying on propaganda or otherwise attempting to influence legislation, except to the extent permitted under Section 501(c)(3) of the Internal Revenue Code.
-
 ARTICLE II: REGISTERED OFFICE
-
 Section 2.1 Registered Office
 The registered office of the Organization shall be located at [Address to be determined]. The Board of Directors may change the registered office from time to time as permitted by applicable law.
-
 Section 2.2 Fiscal Year
 The fiscal year of the Organization shall be the calendar year, from January 1 through December 31.
-
 ARTICLE III: MEMBERSHIP
-
 Section 3.1 Member Categories
 The Organization shall have one category of voting membership:
 
-A. Members: Membership shall be limited to legal entities, including corporations, nonprofit organizations, universities, research institutes, and other entities duly organized under the laws of their respective jurisdictions, that are involved in or support the creation, development, research, or implementation of technology solutions for Deaf and hard of hearing individuals. Natural persons (individuals) are not eligible for membership.
+Membership shall be limited to legal entities, including corporations, nonprofit organizations, universities, research institutes, and other entities duly organized under the laws of their respective jurisdictions, that are involved in or support the creation, development, research, or implementation of technology solutions for Deaf and hard of hearing individuals. Natural persons (individuals) are not eligible for membership.
 
 Each Member organization shall designate one authorized representative to exercise its voting rights and participate in governance on its behalf. Members have voting rights and may serve on the Board of Directors through their designated representative.
-
 Section 3.2 Founding Members
 The founding members of the Organization are: [List to be inserted].
-
 Section 3.3 Admission of New Members
 A. Application Process for Members: Entities seeking membership must submit a written application to the Board of Directors that includes:
-● Description of the applicant's activities, interests, or involvement related to Deaf technology
-● For legal entities: proof of legal registration or incorporation
-● Statement of commitment to the Organization's purpose and objectives
+Description of the applicant's activities, interests, or involvement related to Deaf technology
+For legal entities: proof of legal registration or incorporation
+Statement of commitment to the Organization's purpose and objectives
 B. Approval Requirements for Members:
 Admission of new members requires approval by the Board of Directors. The Board shall review membership applications and may approve admission by a simple majority vote at a Board meeting or by authorized electronic vote. The Board may establish additional membership criteria consistent with these Bylaws.
 C. Acceptance: Membership begins upon approval by the Board of Directors, agreement to these Bylaws, and payment of applicable membership dues.
-
 Section 3.4 Rights and Obligations
 A. Members:
 Have one vote at General Meetings
@@ -66,14 +51,14 @@ May access all services and resources provided by the Organization
 Must comply with these Bylaws and any rules and regulations adopted by the Organization
 B. Membership does not create any personal liability beyond membership obligations.
 C. Members have only those rights expressly granted in these Bylaws.
-
 Section 3.5 Membership Dues
 A. The Board of Directors shall determine annual membership dues for Members, which may be tiered based on:
-● The size and budget of the legal entity
-● Geographic location or other relevant factors
+The size and budget of the legal entity
+Geographic location or other relevant factors
 B. Dues are payable annually by a date determined by the Board of Directors.
 C. Members who fail to pay dues by the due date shall be assessed a late fee as determined by the Board of Directors. In addition, voting rights are suspended until payment dues are met.
 D. Members whose dues remain unpaid on December 31 of the year in which they were due shall receive a formal notice of default. Continued non-payment may result in termination of membership.
+
 
 Section 3.6 Termination of Membership
 A. Regular Membership terminates upon:
@@ -83,46 +68,36 @@ A. Regular Membership terminates upon:
 4. Automatic termination for failure to pay membership dues as provided in Section 3.5.
 
 B. The Board of Directors may temporarily suspend a member's rights for violation of these Bylaws or adopted policies pending a vote on expulsion by the General Meeting.
-
 Section 3.7 No Property Rights
 Members who resign, are expelled, or whose membership otherwise terminates shall have no right, title, or interest in any property or assets of the Organization.
-
 ARTICLE IV: GENERAL MEETINGS
-
 Section 4.1 Annual General Meeting
 The Organization shall hold an Annual General Meeting once each year by the end of June at the latest, at a date, time, and location (in person/virtual/hybrid) determined by the Board of Directors.
-
 Section 4.2 Special General Meetings
 Special General Meetings may be called by:
-● The Board of Directors
-● The Chair of the Board
-● Written request of at least one-half of the Board members
-● Written request of at least one-half of Members with voting rights
-
+The Board of Directors
+The Chair of the Board
+Written request of at least one-half of the Board members
+Written request of at least one-half of Members with voting rights
 Section 4.3 Notice of Meetings
 A. Written notice of each General Meeting shall be delivered to all Members at least six (6) weeks prior to the meeting date. Notice is sent to the electronic address indicated by the Member.
 B. Requests for accommodations must be made in writing four (4) weeks in advance.
 C. Notice shall include the date, time, location (or videoconference details), and agenda.
 D. The agenda for the Annual General Meeting shall be provided at least two (2) weeks prior to the meeting.
 E. Additional agenda items may be added only with approval of two-thirds (2/3) of Members present or represented at the meeting.
-
 Section 4.4 Participation
 A. Members may attend and vote at General Meetings.
 B. Meetings may be held in person, by videoconference, or by a combination thereof, if the majority of Members does not oppose the mode indicated in the notice of the meeting.
-
 Section 4.5 Representation by Proxy
 A. Members may be represented by proxy at General Meetings.
 B. For organizational members, a proxy may be any authorized representative of the organization.
 C. Written proxy authorization must be submitted to the Chair prior to the meeting.
 D. No person may represent more than one other member by proxy.
 E. Proxy authorization may be general or limited to specific agenda items.
-
 Section 4.6 Voting Rights
 A. Each Member in good standing has one (1) vote.
-
 Section 4.7 Quorum
 A quorum for a General Meeting consists of a majority of Members present in person or by proxy, except as otherwise specified in these Bylaws.
-
 Section 4.8 Voting Requirements
 A. Simple Majority: Unless otherwise specified, matters shall be decided by a simple majority of votes cast by Members present or represented at the meeting.
 B. Two-Thirds Majority Required for:
@@ -134,241 +109,181 @@ Amendments to the Organization's purpose
 Voluntary dissolution
 Merger with another organization
 D. Invalid votes and abstentions are not counted in determining majorities.
-
 Section 4.9 Voting by Electronic Means
 With authorization by the Board of Directors indicated in the meeting notice, Members may cast votes by secure electronic means by the deadline specified. The Board may authorize secure electronic voting systems for elections and member decisions when participation in a meeting is impractical.
-
 Section 4.10 Action by Written Consent
 Members may take action without a meeting by unanimous written consent of all Members entitled to vote on the matter.
-
 Section 4.11 Powers of the General Meeting
 The General Meeting has exclusive authority to:
-● Amend these Bylaws
-● Elect and remove members of the Board of Directors
-● Approve annual budgets and financial statements
-● Approve the acts of the Board of Directors
-● Expel members
-● Authorize merger or dissolution of the Organization
-● Exercise other powers expressly granted by these Bylaws
-
+Amend these Bylaws
+Elect and remove members of the Board of Directors
+Approve annual budgets and financial statements
+Approve the acts of the Board of Directors
+Expel members
+Authorize merger or dissolution of the Organization
+Exercise other powers expressly granted by these Bylaws
 Section 4.12 Minutes
 A. Minutes shall be kept of all General Meetings.
 B. Minutes shall be signed by the meeting chair and the Secretary.
 C. Minutes shall be maintained at the Organization's principal office and be available for inspection by Members. Access to minutes shall be provided through membership online.
-
 ARTICLE V: BOARD OF DIRECTORS
-
 Section 5.1 General Powers
 The Board of Directors shall manage the business and affairs of the Organization, subject to the powers reserved to the General Meeting.
-
 Section 5.2 Composition
 A. Number: The Board of Directors shall consist of five (5) directors holding the following positions:
-● Chair
-● Vice Chair
-● Treasurer
-● Secretary
-● Member at Large
+Chair
+Vice Chair
+Treasurer
+Secretary
+Member at Large
 B. Eligibility: Directors must be Members in good standing. The Board should represent diverse stakeholder perspectives, including technology companies, Deaf-led organizations, individual advocates, education institutions, research institutes, and different geographic regions.
-
 Section 5.3 Terms of Office
 A. Staggered Terms: Directors shall serve two-year terms as follows:
-● Even-Year Elections: Chair and Secretary (elected in even-numbered years)
-● Odd-Year Elections: Vice Chair, Treasurer, and Member at Large (elected in odd-numbered years)
+Even-Year Elections: Chair and Secretary (elected in even-numbered years)
+Odd-Year Elections: Vice Chair, Treasurer, and Member at Large (elected in odd-numbered years)
 B. Term Limits: Directors may serve consecutive terms without limit, with the exception of Chair that may serve two (2) consecutive terms.
 C. Term Commencement: Terms begin immediately following the General Meeting at which the director is elected.
-
 Section 5.4 Election of Directors
 A. Directors shall be elected by the General Meeting.
 B. Nominees may be proposed by any Member or by the Board of Directors.
 C. Election requires a simple majority vote of Members present or represented at the General Meeting.
 D. Only Members are eligible to serve as directors.
-
 Section 5.5 Duties of Officers
 A. Chair: The Chair shall preside at all Board and General Meetings, provide strategic leadership, ensure execution of organizational goals, appoint committee chairs, serve as primary representative of the Organization, and perform other duties assigned by the Board.
 B. Vice Chair: The Vice Chair shall assist the Chair and assume the Chair's responsibilities in the event of absence, incapacity, or vacancy. The Vice Chair may oversee special initiatives as delegated.
 C. Treasurer: The Treasurer shall oversee financial affairs, monitor revenues and expenditures, ensure proper financial controls, present regular financial reports, and support budget preparation.
 D. Secretary: The Secretary shall maintain official records, record minutes of meetings, maintain bylaws and governance documents, manage official correspondence, and ensure proper meeting notice.
 E. Member at Large: The Member at Large shall represent the broader membership, participate fully in Board deliberations, and undertake specific responsibilities assigned by the Board.
-
 Section 5.6 Vacancies
 A. If a Board position becomes vacant, the remaining Board members may appoint a replacement Member to serve the remainder of the unexpired term.
 B. The replacement appointment requires a two-thirds (2/3) vote of remaining Board members.
 C. The next General Meeting shall ratify the appointment or elect a new director.
-
 Section 5.7 Removal of Directors
 A. A director may be removed from office by:
-1. Membership Action: Three-fourths (3/4) majority vote of the Members, or
-2. General Meeting Action: Two-thirds (2/3) majority vote of Members present or represented at a General Meeting
+Membership Action: Two-thirds (2/3) majority vote of the Members, or
+General Meeting Action: Two-thirds (2/3) majority vote of Members present or represented at a General Meeting
 B. The director shall be given notice and an opportunity to be heard before removal as explained in the Policies and Procedures manual.
 C. Removal may be with or without cause.
 
 Section 5.8 Resignation
 A director may resign by giving thirty (30) days' written notice to the Board. Resignation is effective upon receipt of notice or at a later date specified in the notice.
-
 Section 5.9 Compensation
 Directors shall serve without compensation for their service as directors, except that directors may be reimbursed for reasonable expenses incurred in performing their duties. The General Meeting may authorize compensation if deemed appropriate.
-
 Section 5.10 No Personal Liability
 Directors shall not incur personal liability for the Organization's debts, obligations, or liabilities by reason of their service as directors, except as provided by law.
-
 Section 5.11 Standard of Care
 Directors shall discharge their duties in good faith, with the care an ordinarily prudent person in a like position would exercise under similar circumstances, and in a manner reasonably believed to be in the best interests of the Organization.
-
 ARTICLE VI: BOARD MEETINGS AND PROCEDURES
-
 Section 6.1 Regular Meetings
 The Board shall meet at least four (4) times per year at times and places determined by the Board.
-
 Section 6.2 Special Meetings
 Special meetings may be called by the Chair or by any two (2) Board members.
-
 Section 6.3 Notice
-A. Written notice of each Board meeting shall be given to all directors at least eight (8) days before the meeting.
+A. Written notice of each Board meeting shall be given to all directors at least fourteen (14) days before the meeting.
 B. Notice shall state the date, time, location (or videoconference details), and agenda.
 C. Notice may be waived by written consent of all directors or by attendance at the meeting.
-
 Section 6.4 Participation
 Board meetings may be conducted in person, by videoconference, or by a combination thereof.
-
 Section 6.5 Quorum
 A majority of the Board members then in office constitutes a quorum for conducting business.
-
 Section 6.6 Voting
 A. Each director has one (1) vote.
 B. Except as otherwise specified in these Bylaws, actions of the Board of Directors shall be approved by a simple majority of the votes cast at a meeting where a quorum is present.
 C. In case of a tie, the Chair (or presiding officer) has the deciding vote.
 D. Directors may not vote by proxy.
 E. Abstentions shall not be counted as votes cast.
-
 Section 6.7 Action Without Meeting
 The Board may take action without a meeting if:
-● Unanimous Written Consent: All directors consent in writing to the action, or
-● Electronic Voting: All directors are notified of the proposed action, none objects to the electronic process, and the required majority approves
-
+Unanimous Written Consent: All directors consent in writing to the action, or
+Electronic Voting: All directors are notified of the proposed action, none objects to the electronic process, and the required majority approves
 Section 6.8 Minutes
 A. Minutes shall be kept of all Board meetings.
 B. Minutes shall be signed by the meeting chair and the Secretary.
 C. Minutes shall be maintained at the Organization's principal office and available for inspection by directors and Members.
-
 ARTICLE VII: COMMITTEES
-
 Section 7.1 Committees
 The Board may establish standing or ad hoc committees as needed to advance the Organization's mission.
-
 Section 7.2 Committee Authority
 Committees shall have such authority as delegated by the Board but may not take actions reserved to the Board or General Meeting.
-
 Section 7.3 Committee Composition
 A. The Board shall appoint committee chairs and may appoint committee members.
 B. Committees may include Board members, Members and non-members.
-
 ARTICLE VIII: OFFICERS AND STAFF
-
 Section 8.1 Officers
 The officers of the Organization are the Chair, Vice Chair, Treasurer, Secretary, and Member-at-large who shall be members of the Board of Directors as provided in Article V.
-
 Section 8.2 Executive Director
 A. The Board may appoint an Executive Director to manage day-to-day operations.
 B. The Executive Director shall serve at the pleasure of the Board.
 C. The Board shall define the Executive Director's authority, responsibilities, and compensation.
 D. The Executive Director may attend Board meetings but has no vote unless also serving as a director.
-
 Section 8.3 Other Staff
 The Board or Executive Director may employ such staff as necessary to carry out the Organization's mission.
-
 ARTICLE IX: FINANCIAL MATTERS
-
 Section 9.1 Fiscal Management
 A. The Board shall ensure proper financial management and internal controls.
 B. The Organization shall maintain accurate books and records of account.
-C. The Treasurer shall provide regular financial reports to the Board.
-
+C. The Treasurer shall provide financial reports to the Board during their board meetings.
 Section 9.2 Annual Budget
 The Board shall prepare and approve an annual budget for each fiscal year.
-
 Section 9.3 Financial Statements
 A. The Board shall prepare annual financial statements in accordance with generally accepted accounting principles.
 B. Annual financial statements shall be submitted to the General Meeting for approval.
 C. Approved financial statements shall be maintained at the Organization's principal office.
-
 Section 9.4 Audit
 The General Meeting may appoint an independent auditor to audit the Organization's financial statements if deemed appropriate or required by law.
-
 Section 9.5 Contracts and Obligations
 A. The Board may authorize officers or agents to enter into contracts or execute instruments on behalf of the Organization.
 B. Unless authorized by the Board, no officer, agent, or employee may bind the Organization.
-
 Section 9.6 Loans
 No loans shall be made by the Organization to any director or officer.
-
 Section 9.7 Deposits and Withdrawals
 All funds shall be deposited in such banks or financial institutions as the Board designates. Withdrawals shall be made in accordance with procedures established by the Board.
-
 Section 9.8 Compensation Review
 Any compensation arrangement involving a director, officer, or key employee must be reviewed and approved by disinterested members of the Board, consistent with the Organization's conflict of interest policy.
-
 ARTICLE X: INDEMNIFICATION
-
 Section 10.1 Indemnification
 The Organization shall indemnify its directors, officers, employees, and agents to the fullest extent permitted by applicable law against expenses, judgments, fines, and amounts paid in settlement actually and reasonably incurred in connection with any proceeding arising from their service to the Organization.
-
 Section 10.2 Insurance
 The Organization may purchase and maintain insurance, including directors and officers liability insurance, on behalf of any person entitled to indemnification under this Article, consistent with the adopted Policies and Procedures.
-
 ARTICLE XI: AMENDMENTS
-
 Section 11.1 Amendment Procedure
 A. These Bylaws may be amended by the General Meeting.
 B. Notice of proposed amendments must be included in the meeting notice sent at least four (4) weeks before the General Meeting.
 C. A quorum of two-thirds (2/3) of Members must be present or represented to vote on amendments. If this quorum is not met, a second meeting may be called under the same notice requirements, at which amendments may be voted upon regardless of attendance.
 D. Amendments require a two-thirds (2/3) majority vote of Members present or represented.
 E. Amendments to the Organization's purpose require a four-fifths (4/5) majority vote.
-
 Section 11.2 Board Authority
 The Board may adopt rules and regulations consistent with these Bylaws for the Organization's governance and operation.
-
 ARTICLE XII: DISSOLUTION
-
 Section 12.1 Voluntary Dissolution
 The Organization may be dissolved by a four-fifths (4/5) majority vote of Members present or represented at a General Meeting called for that purpose.
-
 Section 12.2 Distribution of Assets
 Upon dissolution of the Organization, after payment of all debts and obligations, remaining assets shall be distributed to one or more organizations:
-● Organized and operated exclusively for charitable or educational purposes
-● Qualifying under Section 501(c)(3) of the Internal Revenue Code (or corresponding provision of future law)
-● With purposes as similar as practicable to those of this Organization
-
+Organized and operated exclusively for charitable or educational purposes
+Qualifying under Section 501(c)(3) of the Internal Revenue Code (or corresponding provision of future law)
+With purposes as similar as practicable to those of this Organization
 Section 12.3 Prohibition Against Private Benefit
 No assets shall be distributed to any member, director, or officer upon dissolution.
-
 ARTICLE XIII: GENERAL PROVISIONS
-
 Section 13.1 Governing Law
 This Organization shall be governed by the laws of [State to be determined] and the United States, to the extent applicable.
-
 Section 13.2 Working Languages
 The Organization's working languages are English and sign languages appropriate for international communication.
-
 Section 13.3 Official Records
 The Organization shall maintain through electronic means:
-● These Bylaws and all amendments
-● Minutes of all General Meetings and Board meetings
-● Financial records and annual statements
-● Membership records
-● Other records required by law
-
+These Bylaws and all amendments
+Minutes of all General Meetings and Board meetings
+Financial records and annual statements
+Membership records
+Other records required by law
 Section 13.4 Inspection Rights
 Members may inspect the Organization's records at reasonable times for purposes reasonably related to their membership or participation.
-
 Section 13.5 Nondiscrimination
 The Organization shall not discriminate on the basis of race, color, religion, sex, national origin, age, disability, sexual orientation, gender identity, or any other protected characteristic.
-
 Section 13.6 Conflict of Interest
-The Board shall adopt and maintain and adhere to the conflict of interest policy requiring disclosure and management of conflicts of interest by directors, officers, and key employees.
-
+The Board shall adopt and maintain a conflict of interest policy requiring disclosure and management of conflicts of interest by directors, officers, and key employees.
 Section 13.7 Document Retention
 The Board shall adopt a document retention and destruction policy identifying records to be maintained and establishing retention periods as defined in the Policies and Procedures manual.
-
 Section 13.8 Accessibility Commitment
 The Organization shall strive to ensure that its meetings, conferences, publications, digital platforms, and other activities are accessible to Deaf and hard of hearing participants and other individuals with disabilities through appropriate communication access services and inclusive design practices consistent with the Organization's mission.
 
