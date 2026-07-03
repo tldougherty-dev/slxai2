@@ -37,6 +37,10 @@ import ResetPassword from "./pages/ResetPassword";
 import Interest from "./pages/Interest";
 import Bylaws from "./pages/Bylaws";
 import Summit2027Sponsorship from "./pages/Summit2027Sponsorship";
+import Academy from "./pages/Academy";
+import AcademySubmitProposal from "./pages/AcademySubmitProposal";
+import AcademyWorkshop from "./pages/AcademyWorkshop";
+import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
 import MetricoolTestPage from "./pages/MetricoolTestPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SandboxBanner } from "@/components/SandboxBanner";
@@ -78,6 +82,9 @@ const App = () => (
             <Route path="/interest" element={<Interest />} />
             <Route path="/bylaws" element={<Bylaws />} />
             <Route path="/summit2027" element={<Summit2027Sponsorship />} />
+            <Route path="/academy" element={<Academy />} />
+            <Route path="/academy/submit" element={<AcademySubmitProposal />} />
+            <Route path="/academy/workshop/:slug" element={<AcademyWorkshop />} />
             <Route
               path="/test"
               element={
@@ -289,6 +296,18 @@ const App = () => (
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <SummitPlanning />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/membership-portal/academy-admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <AcademyAdmin />
                   </ErrorBoundary>
                 </MembershipPortalLayout>
               </ProtectedRoute>

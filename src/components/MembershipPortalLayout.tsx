@@ -35,6 +35,7 @@ import {
   LogOut,
   Building2,
   Calendar,
+  GraduationCap,
   Trophy,
   Menu,
   Moon,
@@ -115,6 +116,13 @@ const adminMenuItemConfig = {
   titleKey: 'common.admin',
   icon: Shield,
   href: '/membership-portal/admin',
+};
+
+// Academy admin menu item (only for admins)
+const academyAdminMenuItemConfig = {
+  titleKey: 'common.academyAdmin',
+  icon: GraduationCap,
+  href: '/membership-portal/academy-admin',
 };
 
 // Summit 2026 menu item (only for admins)
@@ -393,6 +401,11 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
     title: t(summit2026MenuItemConfig.titleKey),
   };
 
+  const academyAdminMenuItem = {
+    ...academyAdminMenuItemConfig,
+    title: t(academyAdminMenuItemConfig.titleKey),
+  };
+
   // Summit Planning menu item
   const summitMenuItem = {
     titleKey: 'common.summitPlanning',
@@ -437,6 +450,7 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
   }
   if (userIsAdmin) {
     menuItems.push(summit2026MenuItem);
+    menuItems.push(academyAdminMenuItem);
     menuItems.push(adminMenuItem);
   }
 

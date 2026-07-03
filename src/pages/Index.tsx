@@ -28,21 +28,18 @@ import {
   Linkedin,
   Facebook,
   Instagram,
-  Rss,
+  GraduationCap,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/lib/supabase';
 import { sanitizeText, isValidLength } from '@/lib/security';
 import { useLanguage, SUPPORTED_LANGUAGES } from '@/contexts/LanguageContext';
 import { submitTicketReservation, getAvailableTicketCount, getReservedTicketCount } from '@/data/summit2026';
-import Summit2026ProgramBookContent from '@/components/summit2026/Summit2026ProgramBookContent';
 
 const METRICOOL_HASH = 'ac83e2d5ea5afb1178d6b5f3f3b451d5';
 const METRICOOL_SCRIPT_SRC = 'https://tracker.metricool.com/resources/be.js';
 const METRICOOL_SCRIPT_ATTR = 'data-metricool-be';
-const BLOG_RSS_FEED_URL = 'https://slxai.org/blog/rss.xml';
 
 function initMetricoolTracker() {
   window.beTracker?.t({ hash: METRICOOL_HASH });
@@ -64,31 +61,6 @@ const Index = () => {
     organization: '',
   });
 
-  const [waitlistForm, setWaitlistForm] = useState({
-    name: '',
-    email: '',
-    organization: '',
-  });
-  const [isSubmittingWaitlist, setIsSubmittingWaitlist] = useState(false);
-  const [isWaitlistSubmitted, setIsWaitlistSubmitted] = useState(false);
-  const landingBlogPosts = [
-    {
-      title: 'SLxAI Summit 2026: Why This Matters',
-      excerpt: 'A quick overview of the mission, participants, and long-term goals behind SLxAI.',
-      href: '/about',
-    },
-    {
-      title: 'Founding Membership: What To Expect',
-      excerpt: 'How board representation, governance, and collaboration work for founding members.',
-      href: '#waitlist',
-    },
-    {
-      title: 'Ethics, Benchmarks, and Shared Standards',
-      excerpt: 'How SLxAI approaches responsible AI development for sign language technology.',
-      href: '/bylaws',
-    },
-  ];
-  
   // Force light mode on homepage
   useEffect(() => {
     const root = document.documentElement;
@@ -410,95 +382,6 @@ const Index = () => {
     }
   };
 
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmittingWaitlist(true);
-
-    // Validate fields
-    if (!waitlistForm.name || waitlistForm.name.trim() === '') {
-      toast({
-        title: "Name required",
-        description: "Please enter your name.",
-        variant: "destructive",
-      });
-      setIsSubmittingWaitlist(false);
-      return;
-    }
-
-    if (!waitlistForm.email || waitlistForm.email.trim() === '') {
-      toast({
-        title: "Email required",
-        description: "Please enter your email address.",
-        variant: "destructive",
-      });
-      setIsSubmittingWaitlist(false);
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(waitlistForm.email)) {
-      toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      setIsSubmittingWaitlist(false);
-      return;
-    }
-
-    if (!isValidLength(waitlistForm.name, 1, 200) || !isValidLength(waitlistForm.email, 1, 200)) {
-      toast({
-        title: "Invalid input",
-        description: "Please check that all fields meet the length requirements.",
-        variant: "destructive",
-      });
-      setIsSubmittingWaitlist(false);
-      return;
-    }
-
-    // Validate organization length if provided (optional field)
-    if (waitlistForm.organization && !isValidLength(waitlistForm.organization, 1, 200)) {
-      toast({
-        title: "Invalid input",
-        description: "Organization name must be between 1 and 200 characters.",
-        variant: "destructive",
-      });
-      setIsSubmittingWaitlist(false);
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('waitlist')
-        .insert({
-          name: sanitizeText(waitlistForm.name.trim()),
-          email: waitlistForm.email.toLowerCase().trim(),
-          organization: waitlistForm.organization ? sanitizeText(waitlistForm.organization.trim()) : null,
-        });
-
-      if (error) throw error;
-
-      setIsWaitlistSubmitted(true);
-      setWaitlistForm({ name: '', email: '', organization: '' });
-      
-      toast({
-        title: "Thank you!",
-        description: "You've been added to the waitlist. We'll notify you when spots become available.",
-      });
-    } catch (error: any) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Error submitting waitlist:', error);
-      }
-      toast({
-        title: "Submission failed",
-        description: error.message || "Failed to submit your information. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmittingWaitlist(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-white" id="main-content" role="main">
       <Navigation />
@@ -721,156 +604,58 @@ const Index = () => {
         </div>
       </section>
 
-      <Summit2026ProgramBookContent
-        getText={getText}
-        landingSummit
-        showSchedule={false}
-      />
-
-      {/* Waitlist: bottom of page */}
-      <section id="waitlist" className="py-10 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-center">
-            <Card className="border-2 border-electric-blue shadow-xl w-full max-w-2xl">
-              <CardHeader className="bg-electric-blue text-white text-center py-3 rounded-t-lg">
-                <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
-                  Join the Waitlist
-                </CardTitle>
-                <CardDescription className="text-white/90 text-sm sm:text-base mt-2">
-                  Get notified when tickets become available
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                {isWaitlistSubmitted ? (
-                  <div className="text-center py-8">
-                    <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank You!</h3>
-                    <p className="text-gray-600 mb-4">
-                      You've been added to the waitlist. We'll notify you when spots become available.
-                    </p>
-                    <Button
-                      onClick={() => setIsWaitlistSubmitted(false)}
-                      variant="outline"
-                      className="bg-white"
-                    >
-                      Join Again
-                    </Button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleWaitlistSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="waitlist-name" className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-electric-blue" />
-                        Name
-                      </Label>
-                      <Input
-                        id="waitlist-name"
-                        type="text"
-                        placeholder="Your full name"
-                        value={waitlistForm.name}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
-                        required
-                        disabled={isSubmittingWaitlist}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="waitlist-email" className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-electric-blue" />
-                        Email
-                      </Label>
-                      <Input
-                        id="waitlist-email"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={waitlistForm.email}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
-                        required
-                        disabled={isSubmittingWaitlist}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="waitlist-organization" className="flex items-center gap-2">
-                        <Building2 className="h-4 w-4 text-electric-blue" />
-                        Organization (Optional)
-                      </Label>
-                      <Input
-                        id="waitlist-organization"
-                        type="text"
-                        placeholder="Your organization name"
-                        value={waitlistForm.organization}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, organization: e.target.value })}
-                        disabled={isSubmittingWaitlist}
-                        className="bg-white"
-                        maxLength={200}
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
-                      disabled={isSubmittingWaitlist}
-                    >
-                      {isSubmittingWaitlist ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Submitting...
-                        </>
-                      ) : (
-                        'Join Waitlist'
-                      )}
-                    </Button>
-                  </form>
+      {/* SLxAI Academy */}
+      <section id="academy" className="bg-gray-50 px-4 py-12 dark:bg-gray-900 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <Card className="overflow-hidden border-2 border-electric-blue shadow-xl">
+            <CardHeader className="bg-electric-blue py-4 text-center text-white">
+              <div className="mb-2 flex justify-center">
+                <GraduationCap className="h-10 w-10" aria-hidden />
+              </div>
+              <CardTitle className="text-2xl font-bold text-white sm:text-3xl">
+                {getText('academySectionTitle', 'SLxAI Academy')}
+              </CardTitle>
+              <CardDescription className="text-base text-white/90">
+                {getText('academySectionTagline', 'Live AI workshops in sign language')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 text-center">
+              <p className="mb-6 text-left text-sm leading-relaxed text-slate-700 sm:text-center sm:text-base">
+                {getText(
+                  'academySectionBody',
+                  'A global platform for live, interactive Zoom workshops in sign language that teach practical AI skills. Sessions are real time with hands-on practice and community connection on Zoom.',
                 )}
-              </CardContent>
-            </Card>
-          </div>
+              </p>
+              <Button asChild size="lg" className="bg-electric-blue hover:bg-electric-blue/90">
+                <Link to="/academy">{getText('academySectionCta', 'Explore SLxAI Academy')}</Link>
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      <section id="blog" className="bg-white py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">SLxAI Blog</h2>
-              <p className="mt-1 text-sm text-gray-600">
-                Updates, insights, and announcements from the SLxAI community.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <Button asChild variant="outline" className="border-electric-blue text-electric-blue hover:bg-electric-blue/10">
-                <a href={BLOG_RSS_FEED_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
-                  <Rss className="h-4 w-4" aria-hidden />
-                  RSS Feed
-                </a>
-              </Button>
-            </div>
-          </div>
+      {/* Waitlist section temporarily removed — restore when needed */}
 
-          <div className="mb-4 rounded-md border border-dashed border-electric-blue/40 bg-blue-50/40 p-3 text-sm text-gray-700">
-            Connect this feed URL: <code className="rounded bg-white px-1.5 py-0.5 text-xs">{BLOG_RSS_FEED_URL}</code>
-          </div>
+      {/* Blog section temporarily removed — restore when needed */}
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {landingBlogPosts.map((post) => (
-              <Card key={post.title} className="h-full border border-gray-200 shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg text-gray-900">{post.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <p className="text-sm text-gray-600">{post.excerpt}</p>
-                  <Button asChild variant="link" className="h-auto p-0 text-electric-blue">
-                    <Link to={post.href}>Read more</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      {/* Summit 2026 — past event archive */}
+      <section id="summit" className="border-t border-slate-200 bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="mb-3 inline-block rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600">
+            {getText('summitPastEventLabel', 'Past Event')}
+          </span>
+          <h2 className="mb-3 text-2xl font-bold text-slate-900 sm:text-3xl">
+            {getText('summitSectionTitle', 'SLxAI Summit 2026')}
+          </h2>
+          <p className="mb-6 text-slate-600">
+            {getText(
+              'summitSectionBody',
+              'Our inaugural summit has concluded. Explore the full program, workshops, sponsors, and schedule in the event archive.',
+            )}
+          </p>
+          <Button asChild size="lg" variant="outline" className="border-electric-blue text-electric-blue hover:bg-electric-blue/10">
+            <Link to="/2026">{getText('summitSectionCta', 'View SLxAI Summit 2026 Archive')}</Link>
+          </Button>
         </div>
       </section>
 

@@ -88,6 +88,7 @@ import { addNotification } from '@/lib/notifications';
 import { realtimeManager } from '@/lib/realtime';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 import { InterestedOrganizationsDirectory } from '@/components/admin/InterestedOrganizationsDirectory';
+import { AcademyWorkshopSubmissionsTab } from '@/components/admin/AcademyWorkshopSubmissionsTab';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -4585,7 +4586,7 @@ export default function Admin() {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-[repeat(13,minmax(0,1fr))] h-auto gap-1">
           <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
-          <TabsTrigger value="interest" className="text-xs sm:text-sm">Interest</TabsTrigger>
+          <TabsTrigger value="submissions" className="text-xs sm:text-sm">Submission</TabsTrigger>
           <TabsTrigger value="tickets" className="text-xs sm:text-sm">Tickets</TabsTrigger>
           <TabsTrigger value="waiting" className="text-xs sm:text-sm">Waiting</TabsTrigger>
           <TabsTrigger value="bylaws" className="text-xs sm:text-sm">Bylaws</TabsTrigger>
@@ -4732,8 +4733,9 @@ export default function Admin() {
           </Card>
         </TabsContent>
 
-        {/* Interest Tab */}
-        <TabsContent value="interest" className="space-y-6">
+        {/* Submission Tab */}
+        <TabsContent value="submissions" className="space-y-6">
+          <AcademyWorkshopSubmissionsTab />
           <InterestedOrganizationsDirectory />
           <InterestSubmissionsTab />
         </TabsContent>
