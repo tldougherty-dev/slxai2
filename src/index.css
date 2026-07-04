@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Allura&family=Great+Vibes&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Allura&family=Great+Vibes&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import './styles/glass-design.css';
 
 @tailwind base;
 @tailwind components;
@@ -345,7 +346,7 @@
     font-family: 'Times New Roman', Times, 'Liberation Serif', 'Noto Serif', serif;
     font-size: 12pt;
     line-height: 1.5;
-    color: #111827;
+    color: hsl(var(--public-text));
     text-align: justify;
     text-justify: inter-word;
     hyphens: auto;
@@ -354,6 +355,10 @@
     margin-right: auto;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+  }
+
+  .public-site.light-public .bylaws-document {
+    color: #111827;
   }
 
   html:not([data-sponsorship-page]).dark .bylaws-document {

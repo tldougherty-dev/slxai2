@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, ChevronDown, ExternalLink, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SUMMIT_SPONSORS } from '@/data/summitSponsors';
 import { getSummit2026WorkshopsInScheduleOrder } from '@/data/summit2026Workshops';
 import { WorkshopSessionCard } from '@/components/summit2026/WorkshopSessionCard';
 import { Summit2026ScheduleSection } from '@/components/summit2026/Summit2026ScheduleSection';
@@ -18,41 +17,10 @@ import {
   SUMMIT_2026_MOC_ANDREW_BOTTOMS_BIO,
   SUMMIT_2026_MOC_BARBARA_SPIECKER_BIO,
 } from '@/data/summit2026ProgramBookNarrative';
-import {
-  AMAZON_SPONSOR_LOGO_IMG_CLASS,
-  getSummitMarqueeScrollLogoClasses,
-  isAmazonSponsor,
-  isSummitSponsorCircularLogo,
-  SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS,
-  SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS,
-} from '@/components/summit2026/summit2026SponsorLogoClasses';
+import { SummitSponsorMarquee } from '@/components/summit2026/SummitSponsorMarquee';
 import type { Summit2026ProgramBookGetText } from '@/components/summit2026/summit2026ProgramBookTypes';
 
 export type { Summit2026ProgramBookGetText };
-
-/** Scrolling strip: same circular crop as tiered `SponsorRow` for With Direction LLC. */
-function SummitMarqueeSponsorLogo({ name, logo }: { name: string; logo: string }) {
-  if (isSummitSponsorCircularLogo(name)) {
-    return (
-      <span className={SUMMIT_SPONSOR_CIRCULAR_FRAME_CLASS}>
-        <img
-          src={logo}
-          alt={name}
-          className={SUMMIT_SPONSOR_CIRCULAR_IMG_CLASS}
-          loading="lazy"
-          decoding="async"
-        />
-      </span>
-    );
-  }
-  return (
-    <img
-      src={logo}
-      alt={name}
-      className={`${getSummitMarqueeScrollLogoClasses(name)} w-auto object-contain${isAmazonSponsor(name) ? ` ${AMAZON_SPONSOR_LOGO_IMG_CLASS}` : ''}`}
-    />
-  );
-}
 
 type Summit2026ProgramBookContentProps = {
   getText: Summit2026ProgramBookGetText;
@@ -84,8 +52,6 @@ const Summit2026ProgramBookContent = ({
 }: Summit2026ProgramBookContentProps) => {
   const [isAboutSummitExpanded, setIsAboutSummitExpanded] = useState(false);
   const [isWorkshopPanelExpanded, setIsWorkshopPanelExpanded] = useState(false);
-  const sponsors = SUMMIT_SPONSORS;
-  const sponsorSlotCount = sponsors.length * 3;
   const workshopsInScheduleOrder = showWorkshopsAndPanels ? getSummit2026WorkshopsInScheduleOrder() : [];
   /** Homepage landing: show only two-sentence preview per workshop in Workshops & Panels. */
   const workshopCardMaxSummarySentences = landingSummit ? 2 : undefined;
@@ -103,13 +69,6 @@ const Summit2026ProgramBookContent = ({
   const showAboutSummitCard = isFullProgramBook || landingSummit;
   const showMasterOfCeremoniesCard = isFullProgramBook;
   const showSummitCommitteeSection = isFullProgramBook;
-
-  const sponsorSectionOuterClass = 'mb-4 sm:mb-6 md:mb-8';
-  const sponsorCardClass =
-    'bg-white dark:bg-white rounded-lg shadow-xl border-2 border-electric-blue/20 px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4';
-  const sponsorHeadingClass =
-    'text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-900 mb-2 sm:mb-3 md:mb-4';
-  const sponsorCarouselClass = 'relative overflow-hidden h-52 sm:h-60 md:h-80 w-full bg-white dark:bg-white';
 
   return (
     <>
@@ -207,88 +166,7 @@ const Summit2026ProgramBookContent = ({
             </div>
           ) : null}
 
-          {/* Sponsors */}
-          <div className={sponsorSectionOuterClass}>
-            <div className={sponsorCardClass}>
-              <h3 className={sponsorHeadingClass}>Our Sponsors</h3>
-              <style>{`
-                @keyframes scrollSponsors {
-                  0% {
-                    transform: translateX(0);
-                  }
-                  100% {
-                    transform: translateX(calc(-33.333%));
-                  }
-                }
-                @keyframes scrollSponsorsMobile {
-                  0% {
-                    transform: translateX(0);
-                  }
-                  100% {
-                    transform: translateX(calc(-33.333%));
-                  }
-                }
-              `}</style>
-              <div className={sponsorCarouselClass}>
-                <div 
-                  className="md:hidden flex h-full items-center"
-                  style={{ 
-                    width: `calc(100% * ${sponsorSlotCount})`,
-                    animation: 'scrollSponsorsMobile 26.4s linear infinite'
-                  }}
-                >
-                  {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => (
-                    <div
-                      key={`${sponsor.name}-mobile-${index}`}
-                      className="flex items-center justify-center shrink-0 px-3"
-                      style={{
-                        width: `calc(100% / ${sponsorSlotCount})`,
-                        minWidth: `calc(100% / ${sponsorSlotCount})`,
-                        maxWidth: `calc(100% / ${sponsorSlotCount})`,
-                      }}
-                    >
-                      <a
-                        href={sponsor.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center hover:opacity-80 transition-opacity"
-                      >
-                        <SummitMarqueeSponsorLogo name={sponsor.name} logo={sponsor.logo} />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-                <div 
-                  className="hidden md:flex h-full items-center"
-                  style={{ 
-                    width: `calc(100% * ${sponsors.length})`,
-                    animation: 'scrollSponsors 26.4s linear infinite'
-                  }}
-                >
-                  {[...sponsors, ...sponsors, ...sponsors].map((sponsor, index) => (
-                    <div
-                      key={`${sponsor.name}-desktop-${index}`}
-                      className="flex items-center justify-center px-4 shrink-0"
-                      style={{
-                        width: `calc(100% / ${sponsorSlotCount})`,
-                        minWidth: `calc(100% / ${sponsorSlotCount})`,
-                        maxWidth: `calc(100% / ${sponsorSlotCount})`,
-                      }}
-                    >
-                      <a
-                        href={sponsor.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center hover:opacity-80 transition-opacity"
-                      >
-                        <SummitMarqueeSponsorLogo name={sponsor.name} logo={sponsor.logo} />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <SummitSponsorMarquee />
 
           {showTocAndSchedule ? <Summit2026TableOfContents getText={getText} /> : null}
 

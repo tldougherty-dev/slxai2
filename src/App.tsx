@@ -35,6 +35,7 @@ import MigrateData from "./pages/MigrateData";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import Interest from "./pages/Interest";
+import Newsletter from "./pages/Newsletter";
 import Bylaws from "./pages/Bylaws";
 import Summit2027Sponsorship from "./pages/Summit2027Sponsorship";
 import Academy from "./pages/Academy";
@@ -44,6 +45,7 @@ import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
 import MetricoolTestPage from "./pages/MetricoolTestPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SandboxBanner } from "@/components/SandboxBanner";
+import { PageTransition } from "@/components/public-design/PageTransition";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +75,7 @@ const App = () => (
             v7_relativeSplatPath: true,
           }}
         >
+          <PageTransition>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/2026" element={<ProgramBook2026 />} />
@@ -80,6 +83,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/interest" element={<Interest />} />
+            <Route path="/newsletter" element={<Newsletter />} />
             <Route path="/bylaws" element={<Bylaws />} />
             <Route path="/summit2027" element={<Summit2027Sponsorship />} />
             <Route path="/academy" element={<Academy />} />
@@ -348,6 +352,7 @@ const App = () => (
           />
           <Route path="*" element={<NotFound />} />
           </Routes>
+          </PageTransition>
         </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,8 +7,10 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
 import { sanitizeText, isValidLength } from '@/lib/security';
-import Navigation from '@/components/Navigation';
 import { BylawsDocument } from '@/components/BylawsDocument';
+import { PublicPageShell } from '@/components/public-design/PublicPageShell';
+import { PublicSection } from '@/components/public-design/PublicSection';
+import { GlassCard } from '@/components/public-design/GlassCard';
 import { ArrowLeft, ArrowUp, Loader2, Mail, User, Building2, MessageSquare } from 'lucide-react';
 
 export default function Bylaws() {
@@ -124,71 +125,62 @@ export default function Bylaws() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900" id="main-content">
-      <Navigation />
+    <PublicPageShell>
       <Button
         type="button"
         variant="default"
         size="icon"
         onClick={scrollToTop}
-        className="fixed top-4 right-4 z-[100] h-11 w-11 rounded-full shadow-lg bg-electric-blue hover:bg-electric-blue/90 text-white border-0"
+        className="fixed right-4 top-24 z-[100] h-11 w-11 rounded-full border-0 bg-electric-blue text-white shadow-lg hover:bg-electric-blue/90"
         aria-label="Back to top of page"
         title="Back to top"
       >
         <ArrowUp className="h-5 w-5" aria-hidden />
       </Button>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4 -ml-2">
-            <Link to="/" className="text-electric-blue">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to home
-            </Link>
-          </Button>
-          <h1 className="sr-only">Bylaws: SLxAI</h1>
+
+      <PublicSection className="py-10">
+        <Button variant="ghost" asChild className="mb-6 -ml-2 text-white/80 hover:bg-white/10 hover:text-white">
+          <Link to="/" className="inline-flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            Back to home
+          </Link>
+        </Button>
+
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-white sm:text-4xl public-section-title">Bylaws draft</h1>
+          <p className="mt-2 text-white/65">Review the SLxAI bylaws and share your feedback below.</p>
         </div>
 
-        <article
-          className="rounded-lg border border-gray-200 bg-white dark:bg-gray-950/50 p-6 sm:p-10 mb-12 shadow-sm"
-          aria-label="SLxAI bylaws full text"
-        >
+        <GlassCard strong as="article" className="mb-12 !p-6 sm:!p-10" aria-label="SLxAI bylaws full text">
           {loadError && (
-            <p className="text-red-600 text-sm" role="alert">
+            <p className="text-sm text-red-400" role="alert">
               {loadError}
             </p>
           )}
-          {!body && !loadError && (
-            <p className="text-gray-500 text-sm">Loading…</p>
-          )}
+          {!body && !loadError && <p className="text-sm text-white/60">Loading…</p>}
           {body && <BylawsDocument text={body} />}
-        </article>
+        </GlassCard>
 
-        <section
-          aria-labelledby="bylaws-feedback-heading"
-          className="flex justify-center w-full"
-        >
-          <Card className="border-2 border-electric-blue/30 shadow-lg max-w-2xl w-full mx-auto">
-            <CardHeader className="bg-electric-blue text-white rounded-t-lg text-center space-y-2 pb-4">
-              <CardTitle
-                id="bylaws-feedback-heading"
-                className="text-white text-2xl font-bold text-center"
-              >
+        <section aria-labelledby="bylaws-feedback-heading" className="mx-auto flex w-full max-w-2xl justify-center">
+          <GlassCard strong className="w-full !p-0 overflow-hidden">
+            <div className="border-b border-white/10 bg-electric-blue px-6 py-5 text-center">
+              <h2 id="bylaws-feedback-heading" className="text-2xl font-bold text-white">
                 Feedback on these bylaws
-              </CardTitle>
-              <CardDescription className="text-white/90 text-center text-sm leading-relaxed">
-                Share comments or questions. Name, email, organization, and your message are required before you
-                can send.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-white/90">
+                Share comments or questions. Name, email, organization, and your message are required before you can
+                send.
+              </p>
+            </div>
+            <div className="p-6">
               {isSubmitted ? (
-                <div className="text-center py-6 text-gray-700">
-                  <p className="text-lg font-medium text-gray-900 mb-2">Thank you. We received your feedback.</p>
+                <div className="py-6 text-center">
+                  <p className="mb-2 text-lg font-medium text-white">Thank you. We received your feedback.</p>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsSubmitted(false)}
-                    className="mt-2"
+                    className="mt-2 rounded-xl border-white/25 text-white hover:bg-white/10"
                   >
                     Send another message
                   </Button>
@@ -196,9 +188,9 @@ export default function Bylaws() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="bylaws-name" className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-electric-blue" />
-                      Name <span className="text-red-600">*</span>
+                    <Label htmlFor="bylaws-name" className="glass-form-label flex items-center gap-2">
+                      <User className="h-4 w-4 text-electric-blue" aria-hidden />
+                      Name <span className="text-red-400">*</span>
                     </Label>
                     <Input
                       id="bylaws-name"
@@ -207,13 +199,13 @@ export default function Bylaws() {
                       required
                       maxLength={200}
                       autoComplete="name"
-                      className="bg-white"
+                      className="glass-form-input"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="bylaws-email" className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-electric-blue" />
-                      Email <span className="text-red-600">*</span>
+                    <Label htmlFor="bylaws-email" className="glass-form-label flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-electric-blue" aria-hidden />
+                      Email <span className="text-red-400">*</span>
                     </Label>
                     <Input
                       id="bylaws-email"
@@ -223,13 +215,13 @@ export default function Bylaws() {
                       required
                       maxLength={200}
                       autoComplete="email"
-                      className="bg-white"
+                      className="glass-form-input"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="bylaws-org" className="flex items-center gap-2">
-                      <Building2 className="h-4 w-4 text-electric-blue" />
-                      Organization name <span className="text-red-600">*</span>
+                    <Label htmlFor="bylaws-org" className="glass-form-label flex items-center gap-2">
+                      <Building2 className="h-4 w-4 text-electric-blue" aria-hidden />
+                      Organization name <span className="text-red-400">*</span>
                     </Label>
                     <Input
                       id="bylaws-org"
@@ -237,13 +229,13 @@ export default function Bylaws() {
                       onChange={(e) => setForm((f) => ({ ...f, organization: e.target.value }))}
                       required
                       maxLength={200}
-                      className="bg-white"
+                      className="glass-form-input"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="bylaws-message" className="flex items-center gap-2">
-                      <MessageSquare className="h-4 w-4 text-electric-blue" />
-                      Your feedback <span className="text-red-600">*</span>
+                    <Label htmlFor="bylaws-message" className="glass-form-label flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4 text-electric-blue" aria-hidden />
+                      Your feedback <span className="text-red-400">*</span>
                     </Label>
                     <Textarea
                       id="bylaws-message"
@@ -254,18 +246,18 @@ export default function Bylaws() {
                       maxLength={8000}
                       rows={6}
                       placeholder="Your comments or questions..."
-                      className="bg-white resize-y min-h-[120px]"
+                      className="glass-form-input min-h-[120px] resize-y"
                     />
-                    <p className="text-xs text-gray-500">{form.message.length} / 8000</p>
+                    <p className="text-xs text-white/45">{form.message.length} / 8000</p>
                   </div>
                   <Button
                     type="submit"
-                    className="w-full bg-electric-blue hover:bg-electric-blue/90 text-white"
+                    className="btn-glow w-full rounded-xl bg-electric-blue text-white hover:bg-electric-blue/90"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
                         Sending…
                       </>
                     ) : (
@@ -274,10 +266,10 @@ export default function Bylaws() {
                   </Button>
                 </form>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </GlassCard>
         </section>
-      </div>
-    </div>
+      </PublicSection>
+    </PublicPageShell>
   );
 }

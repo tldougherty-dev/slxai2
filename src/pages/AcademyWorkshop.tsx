@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import AcademyPublicLayout from '@/components/academy/AcademyPublicLayout';
+import { PublicPageShell } from '@/components/public-design/PublicPageShell';
+import { GlassCard } from '@/components/public-design/GlassCard';
 import { getWorkshopBySlug, registerForWorkshop } from '@/data/academy';
 import type { AcademyWorkshop } from '@/data/academyTypes';
 import { SKILL_LEVEL_LABELS } from '@/data/academyTypes';
@@ -74,22 +75,22 @@ export default function AcademyWorkshopPage() {
 
   if (loading) {
     return (
-      <AcademyPublicLayout>
-        <p className="py-20 text-center text-slate-500">Loading workshop…</p>
-      </AcademyPublicLayout>
+      <PublicPageShell>
+        <p className="py-20 text-center text-white/60">Loading workshop…</p>
+      </PublicPageShell>
     );
   }
 
   if (!workshop) {
     return (
-      <AcademyPublicLayout>
+      <PublicPageShell>
         <div className="mx-auto max-w-lg px-4 py-20 text-center">
-          <h1 className="mb-4 text-2xl font-bold">Workshop not found</h1>
-          <Button asChild className="bg-electric-blue hover:bg-electric-blue/90">
+          <h1 className="mb-4 text-2xl font-bold text-white">Workshop not found</h1>
+          <Button asChild className="btn-glow bg-electric-blue hover:bg-electric-blue/90">
             <Link to="/academy">Back to Academy</Link>
           </Button>
         </div>
-      </AcademyPublicLayout>
+      </PublicPageShell>
     );
   }
 
@@ -99,7 +100,7 @@ export default function AcademyWorkshopPage() {
       : null;
 
   return (
-    <AcademyPublicLayout title={`${workshop.title} | SLxAI Academy`}>
+    <PublicPageShell>
       <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Button variant="ghost" asChild className="-ml-2 text-electric-blue">
@@ -336,6 +337,6 @@ export default function AcademyWorkshopPage() {
           </aside>
         </div>
       </div>
-    </AcademyPublicLayout>
+    </PublicPageShell>
   );
 }

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import AcademyPublicLayout from '@/components/academy/AcademyPublicLayout';
+import { PublicPageShell } from '@/components/public-design/PublicPageShell';
+import { GlassCard } from '@/components/public-design/GlassCard';
 import { useToast } from '@/hooks/use-toast';
 import { submitProposal } from '@/data/academy';
 import { sanitizeText, isValidLength } from '@/lib/security';
@@ -97,49 +97,48 @@ export default function AcademySubmitProposal() {
   };
 
   return (
-    <AcademyPublicLayout title="Become a Presenter | SLxAI Academy">
+    <PublicPageShell>
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-900">Propose a Workshop</h1>
-          <p className="mt-2 text-slate-600">
+          <h1 className="text-3xl font-bold text-white">Propose a Workshop</h1>
+          <p className="mt-2 text-white/65">
             Tell us about your live, sign-language workshop idea. All fields marked with * are required.
           </p>
         </div>
 
         {isSubmitted ? (
-          <Card className="border-green-200">
-            <CardContent className="py-10 text-center">
-              <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-green-600" />
-              <h2 className="mb-2 text-xl font-semibold">Proposal received!</h2>
-              <p className="mb-6 text-slate-600">
-                We will review your submission and contact you at {form.contactEmail}.
-              </p>
-              <Button asChild className="bg-electric-blue hover:bg-electric-blue/90">
-                <Link to="/academy">Back to Academy</Link>
-              </Button>
-            </CardContent>
-          </Card>
+          <GlassCard className="py-10 text-center">
+            <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-green-400" />
+            <h2 className="mb-2 text-xl font-semibold text-white">Proposal received!</h2>
+            <p className="mb-6 text-white/65">
+              We will review your submission and contact you at {form.contactEmail}.
+            </p>
+            <Button asChild className="btn-glow bg-electric-blue hover:bg-electric-blue/90">
+              <Link to="/academy">Back to Academy</Link>
+            </Button>
+          </GlassCard>
         ) : (
-          <Card>
-            <CardHeader>
-              <CardTitle>Workshop details</CardTitle>
-              <CardDescription>Designed for live, interactive Zoom sessions in sign language.</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <GlassCard strong className="!p-0 overflow-hidden">
+            <div className="border-b border-white/10 px-6 py-5">
+              <h2 className="text-xl font-semibold text-white">Workshop details</h2>
+              <p className="mt-1 text-sm text-white/60">Designed for live, interactive Zoom sessions in sign language.</p>
+            </div>
+            <div className="p-6">
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Workshop title *</Label>
+                  <Label htmlFor="title" className="glass-form-label">Workshop title *</Label>
                   <Input
                     id="title"
                     value={form.title}
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
                     placeholder="e.g. Prompt Engineering for Deaf Professionals"
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
+                  <Label htmlFor="description" className="glass-form-label">Description *</Label>
                   <Textarea
                     id="description"
                     value={form.description}
@@ -147,11 +146,12 @@ export default function AcademySubmitProposal() {
                     placeholder="What will participants learn? How will the live session be structured?"
                     rows={5}
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="duration">Duration *</Label>
+                  <Label htmlFor="duration" className="glass-form-label">Duration *</Label>
                   <Select
                     value={form.durationMinutes}
                     onValueChange={(v) => setForm({ ...form, durationMinutes: v })}
@@ -170,18 +170,19 @@ export default function AcademySubmitProposal() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="aiTools">AI tools covered *</Label>
+                  <Label htmlFor="aiTools" className="glass-form-label">AI tools covered *</Label>
                   <Input
                     id="aiTools"
                     value={aiToolsInput}
                     onChange={(e) => setAiToolsInput(e.target.value)}
                     placeholder="ChatGPT, Claude, Zapier (comma-separated)"
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="signLanguage">Your preferred Sign Language *</Label>
+                  <Label htmlFor="signLanguage" className="glass-form-label">Your preferred Sign Language *</Label>
                   <Select
                     value={form.signLanguage}
                     onValueChange={(v) => setForm({ ...form, signLanguage: v })}
@@ -199,20 +200,21 @@ export default function AcademySubmitProposal() {
                   </Select>
                 </div>
 
-                <hr className="border-slate-200" />
+                <hr className="border-white/10" />
 
                 <div className="space-y-2">
-                  <Label htmlFor="presenterName">Presenter name *</Label>
+                  <Label htmlFor="presenterName" className="glass-form-label">Presenter name *</Label>
                   <Input
                     id="presenterName"
                     value={form.presenterName}
                     onChange={(e) => setForm({ ...form, presenterName: e.target.value })}
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="presenterBio">Presenter bio *</Label>
+                  <Label htmlFor="presenterBio" className="glass-form-label">Presenter bio *</Label>
                   <Textarea
                     id="presenterBio"
                     value={form.presenterBio}
@@ -220,53 +222,58 @@ export default function AcademySubmitProposal() {
                     rows={4}
                     placeholder="Your background and expertise relevant to this workshop"
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="presenterOrganization">Organization</Label>
+                  <Label htmlFor="presenterOrganization" className="glass-form-label">Organization</Label>
                   <Input
                     id="presenterOrganization"
                     value={form.presenterOrganization}
                     onChange={(e) => setForm({ ...form, presenterOrganization: e.target.value })}
+                    className="glass-form-input"
                   />
                 </div>
 
-                <hr className="border-slate-200" />
+                <hr className="border-white/10" />
 
                 <div className="space-y-2">
-                  <Label htmlFor="contactName">Contact name *</Label>
+                  <Label htmlFor="contactName" className="glass-form-label">Contact name *</Label>
                   <Input
                     id="contactName"
                     value={form.contactName}
                     onChange={(e) => setForm({ ...form, contactName: e.target.value })}
                     required
+                    className="glass-form-input"
                   />
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="contactEmail">Contact email *</Label>
+                    <Label htmlFor="contactEmail" className="glass-form-label">Contact email *</Label>
                     <Input
                       id="contactEmail"
                       type="email"
                       value={form.contactEmail}
                       onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
                       required
+                      className="glass-form-input"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="contactPhone">Contact phone</Label>
+                    <Label htmlFor="contactPhone" className="glass-form-label">Contact phone</Label>
                     <Input
                       id="contactPhone"
                       type="tel"
                       value={form.contactPhone}
                       onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
+                      className="glass-form-input"
                     />
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-electric-blue hover:bg-electric-blue/90" disabled={isSubmitting}>
+                <Button type="submit" className="btn-glow w-full rounded-xl bg-electric-blue hover:bg-electric-blue/90" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -277,10 +284,10 @@ export default function AcademySubmitProposal() {
                   )}
                 </Button>
               </form>
-            </CardContent>
-          </Card>
+            </div>
+          </GlassCard>
         )}
       </div>
-    </AcademyPublicLayout>
+    </PublicPageShell>
   );
 }

@@ -1,61 +1,52 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { PublicPageShell } from '@/components/public-design/PublicPageShell';
+import { GlassCard } from '@/components/public-design/GlassCard';
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-blue-50">
-      <Card className="glass-card max-w-2xl w-full">
-        <CardHeader className="text-center">
-          <div className="text-6xl font-bold text-electric-blue mb-4">404</div>
-          <CardTitle className="text-3xl text-gray-900">Page Not Found</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 text-center">
-          <p className="text-gray-600 text-lg">
-            Sorry, we couldn't find the page you're looking for. The page may have been moved, deleted, or the URL might be incorrect.
+    <PublicPageShell>
+      <div className="flex min-h-[60vh] items-center justify-center px-4 py-16">
+        <GlassCard strong className="w-full max-w-2xl text-center">
+          <p className="text-7xl font-bold text-gradient-brand" aria-hidden>
+            404
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <h1 className="mt-4 text-3xl font-bold text-white public-section-title">Page not found</h1>
+          <p className="mx-auto mt-4 max-w-md text-white/65">
+            Sorry, we could not find the page you are looking for. It may have been moved, deleted, or the URL might be incorrect.
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button
               onClick={() => navigate(-1)}
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="rounded-xl border-white/25 text-white hover:bg-white/10"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Go Back
+              <ArrowLeft className="mr-2 h-4 w-4" aria-hidden />
+              Go back
             </Button>
-            <Button
-              asChild
-              className="bg-electric-blue hover:bg-electric-blue/90 text-white"
-            >
+            <Button asChild className="btn-glow bg-electric-blue hover:bg-electric-blue/90">
               <Link to="/">
-                <Home className="h-4 w-4 mr-2" />
-                Go Home
+                <Home className="mr-2 h-4 w-4" aria-hidden />
+                Go home
               </Link>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
-            >
-              <Link to="/membership-portal">
-                <Search className="h-4 w-4 mr-2" />
-                Member Portal
+            <Button asChild variant="outline" className="rounded-xl border-white/25 text-white hover:bg-white/10">
+              <Link to="/login">
+                <Search className="mr-2 h-4 w-4" aria-hidden />
+                Member portal
               </Link>
             </Button>
           </div>
 
-          <div className="pt-6 border-t border-gray-200">
-            <p className="text-sm text-gray-500">
-              If you believe this is an error, please contact support or try navigating from the main menu.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          <p className="mt-8 border-t border-white/10 pt-6 text-sm text-white/45">
+            If you believe this is an error, please contact support or navigate from the main menu.
+          </p>
+        </GlassCard>
+      </div>
+    </PublicPageShell>
   );
 }
-
