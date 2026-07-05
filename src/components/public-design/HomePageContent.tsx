@@ -12,6 +12,17 @@ import { useState } from 'react';
 
 type GetText = (key: string, fallback: string) => string;
 
+const ACADEMY_TRACKS = [
+  { key: 'academyTrackBeginners', label: 'AI for Beginners' },
+  { key: 'academyTrackWebsites', label: 'Build Websites with AI' },
+  { key: 'academyTrackVideos', label: 'Create Videos with AI' },
+  { key: 'academyTrackApps', label: 'Build AI Apps' },
+  { key: 'academyTrackBusiness', label: 'AI for Business' },
+  { key: 'academyTrackPrompt', label: 'Prompt Engineering' },
+  { key: 'academyTrackAccessibility', label: 'AI for Accessibility' },
+  { key: 'academyTrackAgents', label: 'AI Agents 101' },
+] as const;
+
 const STATS = [
   { label: 'Countries', value: '30+' },
   { label: 'Organizations', value: '250+' },
@@ -64,54 +75,114 @@ export function HomePageContent({ getText }: HomePageContentProps) {
                 'SLxAI unites industry leaders, researchers, and deaf communities worldwide to build ethical, accessible sign language AI through collaboration, not competition.',
               )}
             </p>
-            <div className="mt-6 flex justify-center">
-              <Button asChild size="lg" className="btn-glow h-12 rounded-2xl bg-electric-blue px-8 text-base hover:bg-electric-blue/90">
-                <Link to="/interest">
-                  Join the community
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-
-            <div id="academy" className="mx-auto mt-5 w-full">
-              <GlassCard strong className="text-center !p-6 sm:!p-8">
-                <h2
-                  className="flex flex-wrap items-center justify-center gap-2 sm:gap-3"
-                  aria-label={getText('academySectionTitle', 'SLxAI Academy')}
-                >
-                  <img
-                    src="/slxai-footer-logo.png"
-                    alt="SLxAI"
-                    className="h-[28px] w-auto shrink-0 sm:h-[34px] lg:h-[43px] brightness-0 invert public-logo-dark"
-                  />
-                  <img
-                    src="/slxai-footer-logo.png"
-                    alt=""
-                    aria-hidden
-                    className="hidden h-[28px] w-auto shrink-0 sm:h-[34px] lg:h-[43px] public-logo-light"
-                  />
-                  <span className="text-3xl font-bold tracking-tight text-gradient-brand sm:text-4xl lg:text-5xl">
-                    {getText('academySectionWord', 'Academy')}
-                  </span>
-                </h2>
-                <div className="mx-auto mt-3 max-w-3xl space-y-1 text-sm text-white/70 sm:text-base lg:text-lg">
-                  <p>
-                    {getText('academySectionBody', 'Live, interactive Zoom workshops in sign language.')}
-                  </p>
-                  <p>
-                    {getText(
-                      'academySectionBodyLine2',
-                      'Real-time sessions with hands-on practice and community connection.',
-                    )}
-                  </p>
-                </div>
-                <Button asChild className="btn-glow mt-5 bg-electric-blue hover:bg-electric-blue/90">
-                  <Link to="/academy">{getText('academySectionCta', 'Explore SLxAI Academy')}</Link>
-                </Button>
-              </GlassCard>
-            </div>
           </motion.div>
         </div>
+      </PublicSection>
+
+      <PublicSection className="pb-4 pt-2" aria-label="Community statistics">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+          {STATS.map((stat, i) => (
+            <ScrollReveal key={stat.label} delay={i * 0.08}>
+              <GlassCard className="text-center !p-5 sm:!p-6">
+                <p className="text-4xl font-bold text-white sm:text-5xl public-stat-value">{stat.value}</p>
+                <p className="mt-2 text-base text-white/60 sm:text-lg public-stat-label">{stat.label}</p>
+              </GlassCard>
+            </ScrollReveal>
+          ))}
+        </div>
+        <div className="mt-6 flex justify-center">
+          <Button asChild size="lg" className="btn-glow h-12 rounded-2xl bg-electric-blue px-8 text-base hover:bg-electric-blue/90">
+            <Link to="/interest">
+              Join the community
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </PublicSection>
+
+      <PublicSection id="academy" className="py-12 lg:py-20" aria-labelledby="academy-feature-heading">
+        <ScrollReveal>
+          <div className="academy-feature-panel relative px-6 py-12 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+            <div className="academy-feature-glow academy-feature-glow-left" aria-hidden />
+            <div className="academy-feature-glow academy-feature-glow-right" aria-hidden />
+
+            <div className="relative z-10 mx-auto max-w-4xl text-center">
+              <h2
+                id="academy-feature-heading"
+                className="flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+                aria-label={getText('academySectionTitle', 'SLxAI Academy')}
+              >
+                <img
+                  src="/slxai-footer-logo.png"
+                  alt="SLxAI"
+                  className="h-[2.0125rem] w-auto shrink-0 -translate-y-[3px] brightness-0 invert public-logo-dark sm:h-[2.415rem]"
+                />
+                <img
+                  src="/slxai-footer-logo.png"
+                  alt=""
+                  aria-hidden
+                  className="hidden h-[2.0125rem] w-auto shrink-0 -translate-y-[3px] public-logo-light sm:h-[2.415rem]"
+                />
+                <span className="text-3xl font-bold tracking-tight text-gradient-brand sm:text-4xl lg:text-5xl">
+                  {getText('academySectionWord', 'Academy')}
+                </span>
+              </h2>
+
+              <p className="mt-6 text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-6xl public-section-title">
+                {getText('academyFeatureTitleBefore', 'Learn AI in ')}
+                <span className="whitespace-nowrap text-gradient-brand">
+                  {getText('academyFeatureTitleHighlight', 'Sign Language')}
+                </span>
+              </p>
+              <p className="mx-auto mt-5 max-w-2xl text-lg text-white/80 sm:text-xl">
+                {getText('academyFeatureSubtitle', 'Practical live workshops taught by experts.')}
+              </p>
+
+              <div className="academy-feature-tagline mt-5" aria-label="Workshop highlights">
+                <span>{getText('academyFeatureTagLive', 'Live Zoom')}</span>
+                <span>{getText('academyFeatureTagHandsOn', 'Hands-on')}</span>
+                <span>{getText('academyFeatureTagExpert', 'Expert-led')}</span>
+              </div>
+
+              <div className="academy-feature-topics mx-auto mt-9 max-w-2xl px-7 py-6 sm:max-w-3xl">
+                <ul className="grid grid-cols-1 gap-3.5 text-left sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-4 sm:gap-x-12 sm:gap-y-3.5">
+                  {ACADEMY_TRACKS.map((track) => (
+                    <li key={track.key} className="flex items-start gap-3 text-base font-semibold text-white/92 sm:text-lg">
+                      <span
+                        className="mt-2.5 h-2.5 w-2.5 shrink-0 rounded-full bg-electric-blue shadow-[0_0_10px_rgba(0,128,255,0.85)]"
+                        aria-hidden
+                      />
+                      <span>{getText(track.key, track.label)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mx-auto mt-11 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="academy-feature-primary-cta btn-glow h-14 w-full rounded-2xl bg-electric-blue px-10 text-base font-semibold hover:bg-electric-blue/90 sm:h-16 sm:flex-1 sm:text-lg"
+                >
+                  <Link to="/academy">
+                    {getText('academySectionCta', 'Explore SLxAI Academy')}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="academy-feature-secondary h-14 w-full rounded-2xl px-10 text-base font-semibold sm:h-16 sm:flex-1 sm:text-lg"
+                >
+                  <Link to="/academy/submit">
+                    {getText('academyPresenterCta', 'Become a Presenter')}
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </PublicSection>
 
       <PublicSection id="about" className="py-10">
@@ -138,16 +209,6 @@ export function HomePageContent({ getText }: HomePageContentProps) {
               <GlassCard strong className="h-full !p-5 sm:!p-6">
                 <h3 className="text-xl font-semibold text-white public-card-title">{card.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/70">{card.text}</p>
-              </GlassCard>
-            </ScrollReveal>
-          ))}
-        </div>
-        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4" aria-label="Community statistics">
-          {STATS.map((stat, i) => (
-            <ScrollReveal key={stat.label} delay={i * 0.08}>
-              <GlassCard className="text-center !p-5 sm:!p-6">
-                <p className="text-4xl font-bold text-white sm:text-5xl public-stat-value">{stat.value}</p>
-                <p className="mt-2 text-base text-white/60 sm:text-lg public-stat-label">{stat.label}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
