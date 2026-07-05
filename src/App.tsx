@@ -43,6 +43,7 @@ import AcademySubmitProposal from "./pages/AcademySubmitProposal";
 import AcademyWorkshop from "./pages/AcademyWorkshop";
 import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
 import NewsletterAdmin from "./pages/membership-portal/NewsletterAdmin";
+import SummitAdmin from "./pages/membership-portal/SummitAdmin";
 import SignalNewsletterIndex from "./pages/SignalNewsletterIndex";
 import SignalNewsletterIssue from "./pages/SignalNewsletterIssue";
 import MetricoolTestPage from "./pages/MetricoolTestPage";
@@ -317,6 +318,18 @@ const App = () => (
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <AcademyAdmin />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/membership-portal/summit-admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <SummitAdmin />
                   </ErrorBoundary>
                 </MembershipPortalLayout>
               </ProtectedRoute>

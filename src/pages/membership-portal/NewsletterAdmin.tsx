@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { canAccessAdmin } from '@/lib/roles';
 import { getCurrentUser, getUserRole } from '@/lib/auth';
@@ -31,6 +32,7 @@ import {
 } from '@/lib/signalNewsletterTemplate';
 import { SignalNewsletterView } from '@/components/signal/SignalNewsletterView';
 import { NewsletterBlockEditor } from '@/components/signal/NewsletterBlockEditor';
+import { NewsletterSubscribersPanel } from '@/components/admin/NewsletterSubscribersPanel';
 import { GlassCard } from '@/components/public-design/GlassCard';
 import {
   Calendar,
@@ -74,6 +76,7 @@ export default function NewsletterAdmin() {
   });
   const [scheduledAt, setScheduledAt] = useState('');
   const [showPreview, setShowPreview] = useState(false);
+  const [adminTab, setAdminTab] = useState<'issues' | 'subscribers'>('issues');
 
   const previewNewsletter = useMemo(
     (): SignalNewsletter => ({
@@ -323,10 +326,10 @@ export default function NewsletterAdmin() {
             {SIGNAL_NEWSLETTER_BRAND}
           </h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-            Build issues with drag-and-drop blocks, images, and video embeds. Published at{' '}
-            <code className="text-xs">/signal/your-slug</code>.
+            Publish SLxAI Signal issues and track public newsletter subscribers.
           </p>
         </div>
+        {adminTab === 'issues' && (
         <div className="flex flex-wrap gap-2">
           <Button type="button" variant="outline" onClick={startNew}>
             <Plus className="mr-2 h-4 w-4" />
@@ -339,8 +342,20 @@ export default function NewsletterAdmin() {
             </Link>
           </Button>
         </div>
+        )}
       </div>
 
+      <Tabs value={adminTab} onValueChange={(v) => setAdminTab(v as 'issues' | 'subscribers')}>
+        <TabsList>
+          <TabsTrigger value="issues">Issues</TabsTrigger>
+          <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="subscribers" className="mt-6">
+          <NewsletterSubscribersPanel />
+        </TabsContent>
+
+        <TabsContent value="issues" className="mt-6 space-y-6">
       <div className="grid gap-6 xl:grid-cols-[320px_1fr]">
         <Card className="glass-card h-fit">
           <CardHeader>
@@ -525,6 +540,8 @@ export default function NewsletterAdmin() {
           )}
         </div>
       </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

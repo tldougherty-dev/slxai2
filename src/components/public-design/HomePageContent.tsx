@@ -8,6 +8,7 @@ import { PublicSection } from '@/components/public-design/PublicSection';
 import { SummitSponsorMarquee } from '@/components/summit2026/SummitSponsorMarquee';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import { useToast } from '@/hooks/use-toast';
+import { subscribeNewsletter } from '@/data/newsletterSubscribers';
 import { useState } from 'react';
 
 type GetText = (key: string, fallback: string) => string;
@@ -38,12 +39,31 @@ export function HomePageContent({ getText }: HomePageContentProps) {
   const reduced = usePrefersReducedMotion();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleNewsletter = (e: React.FormEvent) => {
+  const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
-    toast({ title: 'Thank you!', description: 'We will keep you updated on SLxAI news and events.' });
-    setEmail('');
+    if (!email.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      const result = await subscribeNewsletter(email.trim(), 'homepage');
+      toast({
+        title: result === 'already_subscribed' ? 'Already subscribed' : 'Thank you!',
+        description:
+          result === 'already_subscribed'
+            ? 'This email is already on our newsletter list.'
+            : 'We will keep you updated on SLxAI news and events.',
+      });
+      setEmail('');
+    } catch {
+      toast({
+        title: 'Subscription failed',
+        description: 'Please try again in a moment.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -257,8 +277,8 @@ export function HomePageContent({ getText }: HomePageContentProps) {
                 className="h-12 flex-1 rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/40 focus-visible:ring-electric-blue"
                 aria-label="Email address"
               />
-              <Button type="submit" className="btn-glow h-12 rounded-xl bg-electric-blue px-8 hover:bg-electric-blue/90">
-                Subscribe
+              <Button type="submit" disabled={submitting} className="btn-glow h-12 rounded-xl bg-electric-blue px-8 hover:bg-electric-blue/90">
+                {submitting ? 'Subscribing…' : 'Subscribe'}
               </Button>
             </form>
           </GlassCard>

@@ -6,6 +6,7 @@ import { PublicPageShell } from '@/components/public-design/PublicPageShell';
 import { PublicSection } from '@/components/public-design/PublicSection';
 import { GlassCard, ScrollReveal } from '@/components/public-design/GlassCard';
 import { useToast } from '@/hooks/use-toast';
+import { subscribeNewsletter } from '@/data/newsletterSubscribers';
 import { CheckCircle2, Loader2, Mail } from 'lucide-react';
 
 export default function Newsletter() {
@@ -29,13 +30,21 @@ export default function Newsletter() {
 
     setIsSubmitting(true);
     try {
-      // Placeholder until a newsletter provider is connected.
-      await new Promise((resolve) => setTimeout(resolve, 400));
+      const result = await subscribeNewsletter(email.trim(), 'newsletter');
       setIsSubscribed(true);
       setEmail('');
       toast({
-        title: 'Thank you!',
-        description: 'You are subscribed to SLxAI news and event updates.',
+        title: result === 'already_subscribed' ? 'Already subscribed' : 'Thank you!',
+        description:
+          result === 'already_subscribed'
+            ? 'This email is already on our newsletter list.'
+            : 'You are subscribed to SLxAI news and event updates.',
+      });
+    } catch {
+      toast({
+        title: 'Subscription failed',
+        description: 'Please try again in a moment.',
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
