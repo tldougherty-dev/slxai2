@@ -4,12 +4,13 @@ import { BookOpen, Database, PlayCircle, Video, FileText, Upload, ExternalLink }
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { getLibraryResourcesByType as fetchLibraryResourcesByType } from '@/data/libraryResources';
 import {
   LIBRARY_CONTENT_SECTIONS,
   LIBRARY_UPLOAD_SECTION,
-  getCuratedResourcesByType,
   type LibraryContentType,
   type LibraryTabType,
+  type LibraryResource,
 } from '@/data/libraryData';
 import { getCategories, getOrderedFiles, type FileCategory, type FileResource } from '@/data/filesOrder';
 import { getOrderedVideos } from '@/data/videosOrder';
@@ -53,6 +54,7 @@ export function LibrarySection() {
   const [files, setFiles] = useState<FileResource[]>([]);
   const [categories, setCategories] = useState<FileCategory[]>([]);
   const [legacyVideos, setLegacyVideos] = useState<LibraryEmbeddedVideo[]>([]);
+  const [curatedResources, setCuratedResources] = useState<LibraryResource[]>([]);
   const [isLoadingFiles, setIsLoadingFiles] = useState(true);
   const [isLoadingVideos, setIsLoadingVideos] = useState(false);
 
@@ -100,6 +102,11 @@ export function LibrarySection() {
   }, [activeTab, loadLegacyVideos]);
 
   useEffect(() => {
+    if (activeTab === 'upload') return;
+    fetchLibraryResourcesByType(activeTab as LibraryContentType).then(setCuratedResources);
+  }, [activeTab]);
+
+  useEffect(() => {
     setActiveTab(tabFromUrl);
   }, [tabFromUrl]);
 
@@ -130,7 +137,7 @@ export function LibrarySection() {
   }
 
   const activeSection = LIBRARY_CONTENT_SECTIONS.find((s) => s.type === activeTab)!;
-  const curated = getCuratedResourcesByType(activeTab);
+  const curated = curatedResources;
   const ActiveIcon = CONTENT_ICONS[activeTab];
 
   const legacyEmbedUrls = new Set(legacyVideos.map((video) => video.embedUrl.trim().toLowerCase()));

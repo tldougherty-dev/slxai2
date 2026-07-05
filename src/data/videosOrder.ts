@@ -28,6 +28,35 @@ function supabaseRowToVideo(row: any): VideoResource {
   };
 }
 
+// Get videos stored in Supabase only (no static fallback)
+export async function getVideosFromDatabase(): Promise<VideoResource[]> {
+  const { data, error } = await supabase
+    .from('videos')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) throw error;
+  return (data || []).map(supabaseRowToVideo);
+}
+
+/** Import static member-company catalog into the videos table if missing. */
+export async function importCompanyVideosCatalog(): Promise<number> {
+  const existing = await getVideosFromDatabase();
+  const existingUrls = new Set(existing.map((v) => v.embedUrl.toLowerCase()));
+  let count = 0;
+
+  for (const video of fallbackVideos) {
+    if (existingUrls.has(video.embedUrl.toLowerCase())) continue;
+    await addVideo({
+      ...video,
+      id: crypto.randomUUID(),
+    });
+    count++;
+  }
+
+  return count;
+}
+
 // Get ordered videos (newest first)
 export async function getOrderedVideos(): Promise<VideoResource[]> {
   try {

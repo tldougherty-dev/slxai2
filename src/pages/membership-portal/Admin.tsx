@@ -89,6 +89,7 @@ import { realtimeManager } from '@/lib/realtime';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 import { InterestSubmissionsTab } from '@/components/admin/summit/InterestSubmissionsTab';
 import { InterestedOrganizationsDirectory } from '@/components/admin/InterestedOrganizationsDirectory';
+import { LibraryAdminTab } from '@/components/admin/LibraryAdminTab';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -3408,7 +3409,7 @@ export default function Admin() {
           <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
           <TabsTrigger value="bylaws" className="text-xs sm:text-sm">Bylaws</TabsTrigger>
           <TabsTrigger value="members" className="text-xs sm:text-sm">Members</TabsTrigger>
-          <TabsTrigger value="files" className="text-xs sm:text-sm">Files</TabsTrigger>
+          <TabsTrigger value="library" className="text-xs sm:text-sm">Library</TabsTrigger>
           <TabsTrigger value="discussions" className="text-xs sm:text-sm">Discussions</TabsTrigger>
           <TabsTrigger value="voting" className="text-xs sm:text-sm">Voting</TabsTrigger>
           <TabsTrigger value="summit" className="text-xs sm:text-sm">Roles</TabsTrigger>
@@ -4027,102 +4028,9 @@ export default function Admin() {
           {memberSection === 'interested-orgs' && <InterestedOrganizationsDirectory />}
         </TabsContent>
 
-        {/* Files Tab */}
-        <TabsContent value="files" className="space-y-6">
-          {/* Files & Categories Management - Merged */}
-          <Card className="glass-card floating-hover">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Folder className="h-5 w-5 text-electric-blue" />
-                    Files & Categories
-                  </CardTitle>
-                  <CardDescription>
-                    Drag files into categories and reorder them. Click Save to apply changes.
-                  </CardDescription>
-                </div>
-                <div className="flex items-center gap-2">
-                  {(hasUnsavedFileOrder || hasUnsavedCategoryOrder) && (
-                    <Button 
-                      variant="outline"
-                      onClick={async () => {
-                        if (hasUnsavedFileOrder) await handleSaveFileOrder();
-                        if (hasUnsavedCategoryOrder) await handleSaveCategoryOrder();
-                      }}
-                      className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      Save Order
-                    </Button>
-                  )}
-                  <Button 
-                    className="bg-electric-blue hover:bg-electric-blue/90"
-                    onClick={() => handleOpenCategoryDialog()}
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Category
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <DndContext
-                sensors={sensors}
-                collisionDetection={rectIntersection}
-                onDragEnd={(event) => {
-                  // Check if dragging a category or a file
-                  const activeId = event.active.id as string;
-                  const isCategory = categories.some(c => c.id === activeId);
-                  
-                  if (isCategory) {
-                    handleCategoriesDragEnd(event);
-                  } else {
-                    handleFilesDragEnd(event);
-                  }
-                }}
-              >
-                <SortableContext
-                  items={categories.map(c => c.id)}
-                  strategy={verticalListSortingStrategy}
-                >
-                  <div className="space-y-4">
-                    {/* Category Containers */}
-                    {categories.length === 0 ? (
-                      <div className="text-sm text-gray-500 dark:text-white text-center py-8">Loading categories...</div>
-                    ) : (
-                      categories.map((category) => {
-                          const categoryFiles = filesByCategory[category.id] || [];
-                          return (
-                            <SortableCategory
-                              key={category.id}
-                              category={category}
-                              files={categoryFiles}
-                              onCategoryChange={() => {}}
-                              onEditCategory={handleOpenCategoryDialog}
-                              onDeleteCategory={handleDeleteCategoryClick}
-                              onDeleteFile={handleDeleteFileClick}
-                              onRenameFile={handleRenameFileClick}
-                            />
-                          );
-                        })
-                    )}
-                  </div>
-                </SortableContext>
-              </DndContext>
-              {isLoadingContent ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="h-6 w-6 animate-spin text-electric-blue" />
-                  <span className="ml-2 text-sm text-gray-600 dark:text-white">Loading files...</span>
-                </div>
-              ) : files.length === 0 ? (
-                <p className="text-sm text-gray-500 dark:text-white text-center py-8">No files available</p>
-              ) : categories.length === 0 ? (
-                <p className="text-sm text-gray-500 dark:text-white text-center py-8">Loading categories...</p>
-              ) : null}
-            </CardContent>
-          </Card>
-
+        {/* Library Tab */}
+        <TabsContent value="library" className="space-y-6">
+          <LibraryAdminTab />
         </TabsContent>
 
         {/* Discussions Tab */}

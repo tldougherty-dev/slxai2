@@ -15,6 +15,7 @@ export const BACKUP_TABLES = [
   'votes',
   'vote_options',
   'file_categories',
+  'library_resources',
   'files',
   'videos',
   'notifications',
