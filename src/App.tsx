@@ -43,6 +43,7 @@ import AcademySubmitProposal from "./pages/AcademySubmitProposal";
 import AcademyWorkshop from "./pages/AcademyWorkshop";
 import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
 import PortalAcademy from "./pages/membership-portal/PortalAcademy";
+import PortalLibrary from "./pages/membership-portal/PortalLibrary";
 import NewsletterAdmin from "./pages/membership-portal/NewsletterAdmin";
 import SignalNewsletterIndex from "./pages/SignalNewsletterIndex";
 import SignalNewsletterIssue from "./pages/SignalNewsletterIssue";
@@ -50,11 +51,11 @@ import MetricoolTestPage from "./pages/MetricoolTestPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SandboxBanner } from "@/components/SandboxBanner";
 import { PageTransition } from "@/components/public-design/PageTransition";
-import { academyFileViewPath } from "@/lib/academyLibraryPaths";
+import { libraryFileViewPath } from "@/lib/libraryPaths";
 
 function LegacyFileViewRedirect() {
   const { fileId } = useParams<{ fileId: string }>();
-  return <Navigate to={academyFileViewPath(fileId ?? '')} replace />;
+  return <Navigate to={libraryFileViewPath(fileId ?? '')} replace />;
 }
 
 const queryClient = new QueryClient();
@@ -186,7 +187,7 @@ const App = () => (
             }
           />
           <Route
-            path="/membership-portal/academy/files/:fileId"
+            path="/membership-portal/library/files/:fileId"
             element={
               <ProtectedRoute>
                 <MembershipPortalLayout>
@@ -196,6 +197,22 @@ const App = () => (
                 </MembershipPortalLayout>
               </ProtectedRoute>
             }
+          />
+          <Route
+            path="/membership-portal/library"
+            element={
+              <ProtectedRoute>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <PortalLibrary />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/membership-portal/academy/files/:fileId"
+            element={<LegacyFileViewRedirect />}
           />
           <Route
             path="/membership-portal/files"

@@ -9,7 +9,9 @@ import { supabase } from '@/lib/supabase';
 import { useIsMobile, useIsLandscape } from '@/hooks/use-mobile';
 import { PageTitle } from '@/components/PageTitle';
 import { useTheme } from '@/contexts/ThemeContext';
-import { ACADEMY_FILES_TAB_URL } from '@/lib/academyLibraryPaths';
+import { LIBRARY_UPLOAD_TAB_URL } from '@/lib/libraryPaths';
+import { getVideoEmbedUrl } from '@/lib/videoEmbed';
+import { LibraryVideoEmbed } from '@/components/library/LibraryVideoEmbed';
 
 export default function FileView() {
   const { fileId } = useParams<{ fileId: string }>();
@@ -30,7 +32,7 @@ export default function FileView() {
     
     const loadFile = async () => {
       if (!fileId) {
-        navigate(ACADEMY_FILES_TAB_URL);
+        navigate(LIBRARY_UPLOAD_TAB_URL);
         return;
       }
 
@@ -45,7 +47,7 @@ export default function FileView() {
             description: "The requested file could not be found.",
             variant: "destructive",
           });
-          navigate(ACADEMY_FILES_TAB_URL);
+          navigate(LIBRARY_UPLOAD_TAB_URL);
           return;
         }
         
@@ -123,7 +125,7 @@ export default function FileView() {
           description: "Failed to load file. Please try again.",
           variant: "destructive",
         });
-        navigate(ACADEMY_FILES_TAB_URL);
+        navigate(LIBRARY_UPLOAD_TAB_URL);
       } finally {
         setIsLoading(false);
       }
@@ -216,6 +218,15 @@ export default function FileView() {
           <FileText className="h-12 w-12 mb-4 text-gray-400" />
           <p>No preview available</p>
           <p className="text-sm mt-2">File URL not found. Please download the file to view it.</p>
+        </div>
+      );
+    }
+
+    const videoEmbedUrl = getVideoEmbedUrl(file.fileUrl);
+    if (videoEmbedUrl) {
+      return (
+        <div className="flex flex-1 flex-col p-4 md:p-8">
+          <LibraryVideoEmbed url={file.fileUrl} title={file.name} className="mx-auto w-full max-w-4xl" />
         </div>
       );
     }
@@ -610,7 +621,7 @@ export default function FileView() {
         title="Files"
         leftContent={
           <Button
-            onClick={() => navigate(ACADEMY_FILES_TAB_URL)}
+            onClick={() => navigate(LIBRARY_UPLOAD_TAB_URL)}
             variant="outline"
             size="sm"
             className="gap-2 border-gray-300 text-gray-700 dark:!text-gray-900 hover:bg-gray-50 hover:text-gray-900 dark:hover:!text-gray-900 bg-white text-xs md:text-sm ml-6"

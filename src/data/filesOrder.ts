@@ -1,8 +1,47 @@
 // File order management with Supabase
 import { supabase } from '@/lib/supabase';
-import { ACADEMY_FILES_TAB_URL } from '@/lib/academyLibraryPaths';
+import { libraryTabUrl } from '@/lib/libraryPaths';
+import type { LibraryContentType } from '@/data/libraryData';
 
-export type ResourceType = 'document' | 'spreadsheet' | 'ebook' | 'other';
+export type ResourceType = 'document' | 'spreadsheet' | 'ebook' | 'other' | 'video' | 'dataset';
+
+const LIBRARY_META_PREFIX = '__library__:';
+
+export function serializeFileDescription(libraryType: LibraryContentType, text?: string): string {
+  return LIBRARY_META_PREFIX + JSON.stringify({ libraryType, text: text?.trim() || '' });
+}
+
+export function parseFileDescription(description?: string | null): {
+  libraryType?: LibraryContentType;
+  text?: string;
+} {
+  if (!description?.startsWith(LIBRARY_META_PREFIX)) {
+    return { text: description || undefined };
+  }
+  try {
+    const parsed = JSON.parse(description.slice(LIBRARY_META_PREFIX.length));
+    return {
+      libraryType: parsed.libraryType as LibraryContentType | undefined,
+      text: parsed.text || undefined,
+    };
+  } catch {
+    return { text: description };
+  }
+}
+
+export function resolveFileLibraryType(
+  file: Pick<FileResource, 'libraryType' | 'categoryId' | 'description'>,
+  categoryName?: string,
+): LibraryContentType {
+  if (file.libraryType) return file.libraryType;
+  const fromDescription = parseFileDescription(file.description).libraryType;
+  if (fromDescription) return fromDescription;
+
+  const name = categoryName?.toLowerCase() ?? '';
+  if (name.includes('research')) return 'research';
+  if (name.includes('minute') || name.includes('standard') || name.includes('governance')) return 'files';
+  return 'files';
+}
 
 export interface FileCategory {
   id: string;
@@ -25,6 +64,7 @@ export interface FileResource {
   fileMonth?: number; // Optional month (1-12)
   fileYear?: number; // Required year
   authors?: string[]; // Array of author names
+  libraryType?: LibraryContentType;
 }
 
 // Default categories (stored in-memory for now)
@@ -57,6 +97,8 @@ function supabaseRowToFile(row: any): FileResource {
     }
   }
   
+  const { libraryType, text } = parseFileDescription(row.description);
+
   return {
     id: row.id,
     name: row.name,
@@ -64,12 +106,13 @@ function supabaseRowToFile(row: any): FileResource {
     size: '0 MB', // Size not stored in DB, will be calculated from file_url if needed
     lastModified: row.updated_at ? new Date(row.updated_at).toLocaleDateString() : new Date(row.created_at).toLocaleDateString(),
     uploadedBy: row.uploaded_by || 'Unknown',
-    description: row.description,
+    description: text,
     categoryId: row.category_id,
     fileUrl: row.file_url,
     fileMonth: row.file_month || undefined,
     fileYear: row.file_year || undefined,
     authors: authors,
+    libraryType,
   };
 }
 
@@ -386,7 +429,11 @@ export async function updateFile(fileId: string, updates: Partial<FileResource>)
 
     if (updates.name !== undefined) updateData.name = updates.name;
     if (updates.type !== undefined) updateData.type = updates.type;
-    if (updates.description !== undefined) updateData.description = updates.description;
+    if (updates.libraryType !== undefined) {
+      updateData.description = serializeFileDescription(updates.libraryType, updates.description ?? '');
+    } else if (updates.description !== undefined) {
+      updateData.description = updates.description;
+    }
     if (updates.categoryId !== undefined) updateData.category_id = updates.categoryId;
     if (updates.uploadedBy !== undefined) updateData.uploaded_by = updates.uploadedBy;
     if (updates.fileMonth !== undefined) updateData.file_month = updates.fileMonth;
@@ -416,9 +463,11 @@ export async function addFile(file: FileResource): Promise<void> {
         id: file.id,
         name: file.name,
         type: file.type,
-        description: file.description,
+        description: file.libraryType
+          ? serializeFileDescription(file.libraryType, file.description)
+          : file.description,
         category_id: file.categoryId,
-        file_url: '', // Will be set when file is uploaded to storage
+        file_url: file.fileUrl || '',
         uploaded_by: file.uploadedBy,
         file_month: file.fileMonth || null,
         file_year: file.fileYear || null,
@@ -445,7 +494,7 @@ export async function addFile(file: FileResource): Promise<void> {
 
     // Send email notifications to all users who want file notifications
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
-    const fileUrl = `${baseUrl}${ACADEMY_FILES_TAB_URL}`;
+    const fileUrl = `${baseUrl}${libraryTabUrl('research')}`;
     
     import('@/lib/emailNotifications').then(({ notifyAllUsers }) => {
       import('@/lib/email').then(({ sendNewFileNotification }) => {

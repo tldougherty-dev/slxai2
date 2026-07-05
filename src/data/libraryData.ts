@@ -1,13 +1,15 @@
-export type AcademyLibraryResourceType =
+export type LibraryContentType =
   | 'research'
   | 'dataset'
   | 'educational_video'
   | 'recorded_workshop'
   | 'files';
 
-export interface AcademyLibraryResource {
+export type LibraryTabType = LibraryContentType | 'upload';
+
+export interface LibraryResource {
   id: string;
-  type: AcademyLibraryResourceType;
+  type: LibraryContentType;
   title: string;
   description: string;
   url: string;
@@ -16,8 +18,8 @@ export interface AcademyLibraryResource {
   tags?: string[];
 }
 
-export const ACADEMY_LIBRARY_SECTIONS: {
-  type: AcademyLibraryResourceType;
+export const LIBRARY_CONTENT_SECTIONS: {
+  type: LibraryContentType;
   title: string;
   description: string;
 }[] = [
@@ -34,7 +36,7 @@ export const ACADEMY_LIBRARY_SECTIONS: {
   {
     type: 'educational_video',
     title: 'Educational videos',
-    description: 'Curated video lessons and explainers on AI tools and workflows.',
+    description: 'Curated sign language AI talks, demos, and explainers from SLxAI member companies. Members can also embed YouTube or Vimeo links.',
   },
   {
     type: 'recorded_workshop',
@@ -44,12 +46,18 @@ export const ACADEMY_LIBRARY_SECTIONS: {
   {
     type: 'files',
     title: 'Files',
-    description: 'Member-shared documents — research papers, meeting minutes, standards, governance, and more.',
+    description: 'Member-shared documents — meeting minutes, standards, governance, and general resources.',
   },
 ];
 
+export const LIBRARY_UPLOAD_SECTION = {
+  type: 'upload' as const,
+  title: 'Upload',
+  description: 'Share research, datasets, videos, workshop recordings, or documents with the community.',
+};
+
 /** Curated starter resources — expand via admin or data updates as the library grows. */
-export const ACADEMY_LIBRARY_RESOURCES: AcademyLibraryResource[] = [
+export const LIBRARY_CURATED_RESOURCES: LibraryResource[] = [
   {
     id: 'lib-asl-avatar-stages',
     type: 'research',
@@ -80,6 +88,15 @@ export const ACADEMY_LIBRARY_RESOURCES: AcademyLibraryResource[] = [
   },
 ];
 
-export function getLibraryResourcesByType(type: AcademyLibraryResourceType): AcademyLibraryResource[] {
-  return ACADEMY_LIBRARY_RESOURCES.filter((r) => r.type === type);
+export function getCuratedResourcesByType(type: LibraryContentType): LibraryResource[] {
+  return LIBRARY_CURATED_RESOURCES.filter((r) => r.type === type);
+}
+
+// Backward-compatible aliases
+export type AcademyLibraryResourceType = LibraryContentType;
+export type AcademyLibraryResource = LibraryResource;
+export const ACADEMY_LIBRARY_SECTIONS = LIBRARY_CONTENT_SECTIONS;
+export const ACADEMY_LIBRARY_RESOURCES = LIBRARY_CURATED_RESOURCES;
+export function getLibraryResourcesByType(type: LibraryContentType): LibraryResource[] {
+  return getCuratedResourcesByType(type);
 }

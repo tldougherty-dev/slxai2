@@ -45,6 +45,7 @@ import {
   MessageCircle,
   Globe,
   Bell,
+  BookOpen,
   Newspaper,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -80,6 +81,11 @@ const baseMenuItemsConfig = [
     titleKey: 'common.academy',
     icon: GraduationCap,
     href: '/membership-portal/academy',
+  },
+  {
+    titleKey: 'common.library',
+    icon: BookOpen,
+    href: '/membership-portal/library',
   },
   {
     titleKey: 'common.memberDirectory',
