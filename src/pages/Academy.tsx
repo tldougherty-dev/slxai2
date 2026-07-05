@@ -12,8 +12,22 @@ export default function Academy() {
       <PublicSection className="pt-4 pb-10">
         <div className="text-center">
           <ScrollReveal>
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-              <span className="text-gradient-brand">SLxAI Academy</span>
+            <h1
+              className="flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+              aria-label="SLxAI Academy"
+            >
+              <img
+                src="/slxai-footer-logo.png"
+                alt="SLxAI"
+                className="h-[2.21375rem] w-auto shrink-0 -translate-y-[3px] brightness-0 invert public-logo-dark sm:h-[2.6565rem]"
+              />
+              <img
+                src="/slxai-footer-logo.png"
+                alt=""
+                aria-hidden
+                className="hidden h-[2.21375rem] w-auto shrink-0 -translate-y-[3px] public-logo-light sm:h-[2.6565rem]"
+              />
+              <span className="text-4xl font-bold tracking-tight text-gradient-brand sm:text-5xl">Academy</span>
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/70">
               A global platform for live, interactive Zoom workshops in sign language that teach practical AI

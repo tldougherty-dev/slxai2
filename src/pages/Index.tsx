@@ -36,10 +36,8 @@ const TRANSLATION_KEYS: Record<string, string> = {
   academySectionWord: 'Academy',
   academyFeatureTitleBefore: 'Learn AI in ',
   academyFeatureTitleHighlight: 'Sign Language',
-  academyFeatureSubtitle: 'Practical live workshops taught by experts.',
-  academyFeatureTagLive: 'Live Zoom',
-  academyFeatureTagHandsOn: 'Hands-on',
-  academyFeatureTagExpert: 'Expert-led',
+  academyFeatureSubtitle:
+    'Learn practical AI skills from industry experts through live, interactive workshops in sign language.',
   academyTrackBeginners: 'AI for Beginners',
   academyTrackWebsites: 'Build Websites with AI',
   academyTrackVideos: 'Create Videos with AI',

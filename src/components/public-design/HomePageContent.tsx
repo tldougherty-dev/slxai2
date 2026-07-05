@@ -115,13 +115,13 @@ export function HomePageContent({ getText }: HomePageContentProps) {
                 <img
                   src="/slxai-footer-logo.png"
                   alt="SLxAI"
-                  className="h-[2.0125rem] w-auto shrink-0 -translate-y-[3px] brightness-0 invert public-logo-dark sm:h-[2.415rem]"
+                  className="h-[2.21375rem] w-auto shrink-0 -translate-y-[3px] brightness-0 invert public-logo-dark sm:h-[2.6565rem]"
                 />
                 <img
                   src="/slxai-footer-logo.png"
                   alt=""
                   aria-hidden
-                  className="hidden h-[2.0125rem] w-auto shrink-0 -translate-y-[3px] public-logo-light sm:h-[2.415rem]"
+                  className="hidden h-[2.21375rem] w-auto shrink-0 -translate-y-[3px] public-logo-light sm:h-[2.6565rem]"
                 />
                 <span className="text-3xl font-bold tracking-tight text-gradient-brand sm:text-4xl lg:text-5xl">
                   {getText('academySectionWord', 'Academy')}
@@ -135,14 +135,11 @@ export function HomePageContent({ getText }: HomePageContentProps) {
                 </span>
               </p>
               <p className="mx-auto mt-5 max-w-2xl text-lg text-white/80 sm:text-xl">
-                {getText('academyFeatureSubtitle', 'Practical live workshops taught by experts.')}
+                {getText(
+                  'academyFeatureSubtitle',
+                  'Learn practical AI skills from industry experts through live, interactive workshops in sign language.',
+                )}
               </p>
-
-              <div className="academy-feature-tagline mt-5" aria-label="Workshop highlights">
-                <span>{getText('academyFeatureTagLive', 'Live Zoom')}</span>
-                <span>{getText('academyFeatureTagHandsOn', 'Hands-on')}</span>
-                <span>{getText('academyFeatureTagExpert', 'Expert-led')}</span>
-              </div>
 
               <div className="academy-feature-topics mx-auto mt-9 max-w-2xl px-7 py-6 sm:max-w-3xl">
                 <ul className="grid grid-cols-1 gap-3.5 text-left sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-4 sm:gap-x-12 sm:gap-y-3.5">
