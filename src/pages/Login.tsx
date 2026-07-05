@@ -18,6 +18,7 @@ import { isRateLimited, resetRateLimit, getRateLimitResetTime } from '@/lib/rate
 import { COUNTRIES } from '@/lib/countries';
 import { cn } from '@/lib/utils';
 import { TermsAgreementDialog } from '@/components/TermsAgreementDialog';
+import { checkSignupEligibility } from '@/lib/signupEligibility';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -75,14 +76,24 @@ export default function Login() {
     };
   }, []);
 
-  // Load remembered email on mount
+  // Load remembered email on mount; open sign-up tab from approval email links
   useEffect(() => {
     const rememberedEmail = localStorage.getItem('remembered_email');
     if (rememberedEmail) {
       setLoginEmail(rememberedEmail);
       setRememberMe(true);
     }
-  }, []);
+
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab === 'signup') {
+      setActiveTab('signup');
+    }
+    const emailParam = params.get('email');
+    if (emailParam) {
+      setSignupEmail(emailParam);
+    }
+  }, [location.search]);
 
   // Signup form state
   const [signupName, setSignupName] = useState('');
@@ -91,7 +102,6 @@ export default function Login() {
   const [signupConfirmPassword, setSignupConfirmPassword] = useState('');
   const [signupOrganization, setSignupOrganization] = useState('');
   const [signupCountry, setSignupCountry] = useState('');
-  const [signupPasscode, setSignupPasscode] = useState('');
   const [countryOpen, setCountryOpen] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -291,7 +301,6 @@ export default function Login() {
       setSignupConfirmPassword('');
       setSignupOrganization('');
       setSignupCountry('');
-      setSignupPasscode('');
       setPendingSignupData(null);
     } catch (error: any) {
       if (import.meta.env.DEV) {
@@ -563,23 +572,13 @@ export default function Login() {
       return;
     }
 
-    // Validate Passcode
-    if (!signupPasscode || signupPasscode.trim() === '') {
+    // Must be approved by admin (pending member record) before signing up
+    const eligibility = await checkSignupEligibility(signupEmail);
+    if (!eligibility.allowed) {
       toast({
-        title: "Passcode required",
-        description: "Please enter the signup passcode.",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-      return;
-    }
-
-    // Validate passcode matches
-    if (signupPasscode.trim().toLowerCase() !== 'thebridge') {
-      toast({
-        title: "Invalid passcode",
-        description: "The passcode you entered is incorrect. Please contact an administrator for the correct passcode.",
-        variant: "destructive",
+        title: 'Sign up not available',
+        description: eligibility.reason,
+        variant: 'destructive',
       });
       setIsLoading(false);
       return;
@@ -807,37 +806,13 @@ export default function Login() {
                     </Popover>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-passcode" className="flex items-center gap-2">
-                      <Lock className="h-4 w-4 text-electric-blue" />
-                      Signup Passcode
-                    </Label>
-                    <Input
-                      id="signup-passcode"
-                      type="password"
-                      placeholder="Enter signup passcode"
-                      value={signupPasscode}
-                      onChange={(e) => setSignupPasscode(e.target.value)}
-                      required
-                      disabled={isLoading}
-                      className="bg-white"
-                    />
-                    <p className="text-xs text-gray-600">
-                      Don't have a code?{' '}
-                      <Link 
-                        to="/interest" 
-                        className="text-electric-blue hover:underline font-medium"
-                        onClick={(e) => {
-                          // Open in same tab
-                          e.preventDefault();
-                          window.location.href = '/interest';
-                        }}
-                      >
-                        Fill out this interest form
-                      </Link>
-                      .
-                    </p>
-                  </div>
+                  <p className="text-xs text-gray-600">
+                    Sign up is only available after your interest form is approved.{' '}
+                    <Link to="/interest" className="text-electric-blue hover:underline font-medium">
+                      Submit interest form
+                    </Link>
+                    . You will verify your email address after creating your account.
+                  </p>
 
                   <div className="space-y-2">
                     <Label htmlFor="signup-password" className="flex items-center gap-2">

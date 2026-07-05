@@ -7,11 +7,10 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
-  Building2, CheckCircle2, Clock, FileText, History, Loader2, Mail, Trash2, User,
+  Building2, CheckCircle2, Clock, Copy, FileText, History, Loader2, Mail, Trash2, User,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
-import { sendApprovalEmail as sendApprovalEmailService } from '@/lib/email';
 
 interface InterestSubmission {
   id: string;
@@ -25,16 +24,12 @@ interface InterestSubmission {
   created_at: string;
 }
 
-async function sendApprovalEmail(email: string, name: string, signupUrl: string, passcode: string, userId?: string): Promise<void> {
-  try {
-    const success = await sendApprovalEmailService(email, name, signupUrl, passcode, userId);
-    if (!success && import.meta.env.DEV) {
-      console.warn('Email sending failed. Check Amazon SES env vars on the server (Vercel).');
-    }
-  } catch (error) {
-    if (import.meta.env.DEV) console.error('Error sending approval email:', error);
-    throw error;
-  }
+function buildSignupLink(email: string): string {
+  const params = new URLSearchParams({
+    tab: 'signup',
+    email: email.trim().toLowerCase(),
+  });
+  return `${window.location.origin}/login?${params.toString()}`;
 }
 
 export function InterestSubmissionsTab() {
@@ -49,11 +44,10 @@ export function InterestSubmissionsTab() {
     loadSubmissions();
   }, []);
 
-  // Filter submissions based on current filter
-  const submissions = allSubmissions.filter(submission => {
+  const submissions = allSubmissions.filter((submission) => {
     if (filter === 'pending') return !submission.approved;
     if (filter === 'approved') return submission.approved;
-    return true; // 'all'
+    return true;
   });
 
   const loadSubmissions = async () => {
@@ -64,98 +58,109 @@ export function InterestSubmissionsTab() {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Error loading interest submissions:', error);
-        }
-        throw error;
-      }
+      if (error) throw error;
       setAllSubmissions(data || []);
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error loading interest submissions:', error);
       }
-      const errorMessage = error?.message || error?.details || 'Failed to load interest submissions.';
       toast({
-        title: "Error",
-        description: errorMessage,
-        variant: "destructive",
+        title: 'Error',
+        description:
+          error instanceof Error ? error.message : 'Failed to load interest submissions.',
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
     }
   };
 
+  const copySignupLink = async (submission: InterestSubmission) => {
+    try {
+      await navigator.clipboard.writeText(buildSignupLink(submission.email));
+      toast({
+        title: 'Sign-up link copied',
+        description: `Send this to ${submission.name}. They will verify their email via Supabase after signing up.`,
+      });
+    } catch {
+      toast({
+        title: 'Could not copy',
+        description: buildSignupLink(submission.email),
+      });
+    }
+  };
+
   const handleApproveSubmission = async (submission: InterestSubmission) => {
     if (submission.approved) {
       toast({
-        title: "Already approved",
-        description: "This submission has already been approved.",
+        title: 'Already approved',
+        description: 'This submission has already been approved.',
       });
       return;
     }
 
     setApprovingSubmission(submission.id);
-    
+
     try {
-      // Get current user for approved_by
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const approvedBy = user?.email || 'admin';
 
-      // Check if member already exists with this email
       const { data: existingPerson } = await supabase
         .from('member_persons')
-        .select('member_id, members!inner(id, organization_name, status)')
+        .select('member_id, status, members!inner(id, organization_name, status)')
         .ilike('email', submission.email.toLowerCase().trim())
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (existingPerson) {
-        toast({
-          title: "Member already exists",
-          description: `A member with email ${submission.email} already exists in the system.`,
-          variant: "destructive",
-        });
-        setApprovingSubmission(null);
-        return;
+        const memberStatus = (existingPerson.members as { status?: string } | null)?.status;
+        const personStatus = existingPerson.status;
+
+        if (memberStatus !== 'pending' && personStatus !== 'pending') {
+          toast({
+            title: 'Member already exists',
+            description: `${submission.email} already has an active portal account.`,
+            variant: 'destructive',
+          });
+          setApprovingSubmission(null);
+          return;
+        }
       }
 
-      // Create pending member organization
-      const { data: newMember, error: memberError } = await supabase
-        .from('members')
-        .insert({
-          organization_name: submission.organization,
-          country: 'Unknown', // Will be updated during signup
-          poc_name: submission.name,
-          poc_email: submission.email.toLowerCase().trim(),
-          poc_title: 'Pending',
-          member_count: 1,
-          status: 'pending', // Set as pending
-        })
-        .select()
-        .single();
+      if (!existingPerson) {
+        const { data: newMember, error: memberError } = await supabase
+          .from('members')
+          .insert({
+            organization_name: submission.organization,
+            country: 'Unknown',
+            poc_name: submission.name,
+            poc_email: submission.email.toLowerCase().trim(),
+            poc_title: 'Pending',
+            member_count: 1,
+            status: 'pending',
+          })
+          .select()
+          .single();
 
-      if (memberError) throw memberError;
+        if (memberError) throw memberError;
 
-      // Create pending member person
-      const { error: personError } = await supabase
-        .from('member_persons')
-        .insert({
+        const { error: personError } = await supabase.from('member_persons').insert({
           member_id: newMember.id,
           name: submission.name,
           email: submission.email.toLowerCase().trim(),
           title: 'Pending',
           is_voting_rep: true,
-          status: 'pending', // Set as pending
+          status: 'pending',
         });
 
-      if (personError) {
-        // Clean up member if person creation fails
-        await supabase.from('members').delete().eq('id', newMember.id);
-        throw personError;
+        if (personError) {
+          await supabase.from('members').delete().eq('id', newMember.id);
+          throw personError;
+        }
       }
 
-      // Update submission to approved
       const { error: updateError } = await supabase
         .from('interest_submissions')
         .update({
@@ -167,38 +172,28 @@ export function InterestSubmissionsTab() {
 
       if (updateError) throw updateError;
 
-      // Send approval email (placeholder)
-      const signupUrl = `${window.location.origin}/login`;
-      const passcode = 'thebridge';
-      
+      const signupLink = buildSignupLink(submission.email);
       try {
-        await sendApprovalEmail(submission.email, submission.name, signupUrl, passcode);
-        toast({
-          title: "Approved!",
-          description: `Pending member created and approval email sent to ${submission.email}. Passcode: ${passcode}`,
-        });
-      } catch (emailError) {
-        // Even if email fails, mark as approved
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Error sending approval email:', emailError);
-        }
-        toast({
-          title: "Approved",
-          description: `Pending member created, but email sending failed. Passcode: ${passcode}`,
-          variant: "destructive",
-        });
+        await navigator.clipboard.writeText(signupLink);
+      } catch {
+        // clipboard optional
       }
+
+      toast({
+        title: 'Approved!',
+        description: `${submission.name} can sign up at /login (link copied). Supabase will email them to verify their address.`,
+      });
 
       setApprovingSubmission(null);
       loadSubmissions();
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error approving submission:', error);
       }
       toast({
-        title: "Error",
-        description: error?.message || "Failed to approve submission.",
-        variant: "destructive",
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to approve submission.',
+        variant: 'destructive',
       });
       setApprovingSubmission(null);
     }
@@ -206,7 +201,7 @@ export function InterestSubmissionsTab() {
 
   const handleDeleteSubmission = async () => {
     if (!submissionToDelete) return;
-    
+
     try {
       const { error } = await supabase
         .from('interest_submissions')
@@ -216,20 +211,19 @@ export function InterestSubmissionsTab() {
       if (error) throw error;
 
       toast({
-        title: "Deleted",
-        description: "Interest submission has been deleted.",
+        title: 'Deleted',
+        description: 'Interest submission has been deleted.',
       });
-      
       setSubmissionToDelete(null);
       loadSubmissions();
-    } catch (error: any) {
+    } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error deleting submission:', error);
       }
       toast({
-        title: "Error",
-        description: "Failed to delete submission.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete submission.',
+        variant: 'destructive',
       });
     }
   };
@@ -251,22 +245,16 @@ export function InterestSubmissionsTab() {
           <div>
             <CardTitle>Interest Submissions</CardTitle>
             <CardDescription>
-              View and manage all interest form submissions
+              Approve applicants, then share the sign-up link. Email verification is handled by Supabase.
             </CardDescription>
           </div>
-          <Button
-            onClick={loadSubmissions}
-            variant="outline"
-            size="sm"
-            className="bg-white"
-          >
+          <Button onClick={loadSubmissions} variant="outline" size="sm" className="bg-white">
             <History className="h-4 w-4 mr-2" />
             Refresh
           </Button>
         </div>
       </CardHeader>
       <CardContent>
-        {/* Filter Tabs */}
         <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
           <button
             onClick={() => setFilter('pending')}
@@ -276,7 +264,7 @@ export function InterestSubmissionsTab() {
                 : 'border-transparent text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white'
             }`}
           >
-            Pending ({allSubmissions.filter(s => !s.approved).length})
+            Pending ({allSubmissions.filter((s) => !s.approved).length})
           </button>
           <button
             onClick={() => setFilter('approved')}
@@ -286,7 +274,7 @@ export function InterestSubmissionsTab() {
                 : 'border-transparent text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white'
             }`}
           >
-            Approved ({allSubmissions.filter(s => s.approved).length})
+            Approved ({allSubmissions.filter((s) => s.approved).length})
           </button>
           <button
             onClick={() => setFilter('all')}
@@ -308,17 +296,20 @@ export function InterestSubmissionsTab() {
           <div className="text-center py-12">
             <FileText className="h-12 w-12 text-gray-400 dark:text-white mx-auto mb-4" />
             <p className="text-gray-600 dark:text-white">
-              {filter === 'pending' 
-                ? 'No pending submissions.' 
-                : filter === 'approved' 
-                ? 'No approved submissions yet.' 
-                : 'No interest submissions yet.'}
+              {filter === 'pending'
+                ? 'No pending submissions.'
+                : filter === 'approved'
+                  ? 'No approved submissions yet.'
+                  : 'No interest submissions yet.'}
             </p>
           </div>
         ) : (
           <div className="space-y-4">
             {submissions.map((submission) => (
-              <Card key={submission.id} className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
+              <Card
+                key={submission.id}
+                className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]"
+              >
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 space-y-3">
@@ -355,7 +346,7 @@ export function InterestSubmissionsTab() {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap justify-end">
                       {!submission.approved && (
                         <Button
                           variant="default"
@@ -378,10 +369,21 @@ export function InterestSubmissionsTab() {
                         </Button>
                       )}
                       {submission.approved && (
-                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Approved
-                        </Badge>
+                        <>
+                          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                            Approved
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => copySignupLink(submission)}
+                            className="bg-white"
+                          >
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy sign-up link
+                          </Button>
+                        </>
                       )}
                       <Button
                         variant="ghost"
@@ -400,7 +402,6 @@ export function InterestSubmissionsTab() {
         )}
       </CardContent>
 
-      {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!submissionToDelete} onOpenChange={(open) => !open && setSubmissionToDelete(null)}>
         <AlertDialogContent className="bg-white dark:bg-[hsl(217,40%,18%)] border-gray-200 dark:border-[hsl(217,35%,25%)]">
           <AlertDialogHeader>
@@ -410,16 +411,13 @@ export function InterestSubmissionsTab() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel 
+            <AlertDialogCancel
               onClick={() => setSubmissionToDelete(null)}
               className="border-gray-300 dark:border-[hsl(217,35%,25%)] text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:text-white bg-white"
             >
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteSubmission}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            >
+            <AlertDialogAction onClick={handleDeleteSubmission} className="bg-red-600 hover:bg-red-700 text-white">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

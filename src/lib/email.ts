@@ -78,8 +78,12 @@ export async function sendEmail(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      const details =
+        (errorData as { details?: string; error?: string; message?: string }).details ||
+        (errorData as { error?: string }).error ||
+        (errorData as { message?: string }).message;
       console.error('Email API error:', response.status, errorData);
-      return false;
+      throw new Error(details || `Email API returned ${response.status}`);
     }
 
     const result = await response.json();
@@ -87,7 +91,11 @@ export async function sendEmail(
       console.log('Email sent successfully:', result);
     }
 
-    return result.success === true;
+    if (result.success !== true) {
+      throw new Error(result.error || 'Email send failed');
+    }
+
+    return true;
   } catch (error) {
     console.error('Error sending email:', error);
     return false;
@@ -149,39 +157,31 @@ export function createEmailTemplate(
 
 // Specific email functions for different notification types
 
-// Send approval email (for interest submissions)
+// Send approval email (deprecated — interest approvals use Supabase sign-up verification only)
 export async function sendApprovalEmail(
   email: string,
   name: string,
-  signupUrl: string,
-  passcode: string,
-  userId?: string
+  signupUrl?: string,
+  _passcode?: string,
+  _userId?: string,
 ): Promise<boolean> {
   const content = `
     <p>Dear ${name},</p>
-    
-    <p>Congratulations! Your interest in joining SLxAI has been approved.</p>
-    
-    <p><strong>Your signup passcode is: ${passcode}</strong></p>
-    
-    <p>Please use this code to create your account at the link below.</p>
-    
-    <p>We look forward to having you as part of our community!</p>
-    
-    <p>Best regards,<br>The SLxAI Team</p>
+    <p>Your interest in joining SLxAI has been approved.</p>
+    <p>Please create your account using the link below. You will receive a verification email from us to confirm your address.</p>
   `;
 
   return sendEmail({
     to: email,
-    subject: 'Welcome to SLxAI - Your Signup Code',
+    subject: 'Welcome to SLxAI - Complete Your Sign Up',
     html: createEmailTemplate(
       'Welcome to SLxAI!',
       content,
-      userId,
+      _userId,
       email,
-      { text: 'Create Your Account', url: signupUrl }
+      signupUrl ? { text: 'Create Your Account', url: signupUrl } : undefined,
     ),
-    userId,
+    userId: _userId,
   });
 }
 
