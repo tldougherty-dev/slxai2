@@ -24,6 +24,7 @@
     --public-muted: 215 16% 42%;
     --public-surface: 210 40% 98%;
     color: hsl(var(--public-text));
+    background-color: hsl(var(--public-surface));
   }
 }
 
@@ -288,6 +289,11 @@
     color: hsl(222 47% 11%);
   }
 
+  .public-site:not(.light-public) .public-section-title,
+  .public-site:not(.light-public) .public-card-title {
+    color: hsl(var(--public-text));
+  }
+
   .public-site.light-public .public-stat-label {
     color: hsl(215 16% 42%);
   }
@@ -419,6 +425,60 @@
 
   .public-site.light-public .public-aurora-vignette {
     opacity: 0.12;
+    background: radial-gradient(ellipse at top, hsl(210 40% 88% / 0.45), transparent 60%);
+  }
+
+  .signal-newsletter-view {
+    color: hsl(var(--public-text));
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .signal-newsletter-view .signal-newsletter-brand {
+    color: hsl(211 100% 50%);
+  }
+
+  .signal-newsletter-view .signal-newsletter-meta {
+    color: hsl(var(--public-muted));
+  }
+
+  .signal-newsletter-view .signal-newsletter-body {
+    color: hsl(var(--public-text) / 0.85);
+  }
+
+  .signal-newsletter-view .signal-newsletter-divider {
+    border-color: hsl(var(--public-muted) / 0.25);
+  }
+
+  .signal-newsletter-prose {
+    color: hsl(var(--public-text) / 0.9);
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .signal-newsletter-prose a {
+    color: hsl(211 100% 45%);
+    text-decoration: underline;
+  }
+
+  .public-site.light-public .signal-newsletter-prose {
+    color: hsl(222 47% 20%);
+  }
+
+  .public-site.light-public .signal-newsletter-prose a {
+    color: hsl(211 100% 40%);
+  }
+
+  .newsletter-rich-text:empty::before {
+    content: attr(data-placeholder);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  .signal-newsletter-preview-shell {
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--public-muted) / 0.2);
+    background-color: hsl(var(--public-surface));
   }
 
   html[data-public-theme='light'] body {

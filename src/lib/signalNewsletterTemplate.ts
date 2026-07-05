@@ -1,3 +1,6 @@
+import type { SignalNewsletterDocument } from '@/lib/signalNewsletterBlocks';
+import { EMPTY_NEWSLETTER_DOCUMENT } from '@/lib/signalNewsletterBlocks';
+
 export const SIGNAL_NEWSLETTER_BRAND = 'SLxAI Signal';
 
 export const SIGNAL_NEWSLETTER_SECTIONS = [
@@ -40,17 +43,9 @@ export const SIGNAL_NEWSLETTER_SECTIONS = [
 
 export type SignalNewsletterSectionKey = (typeof SIGNAL_NEWSLETTER_SECTIONS)[number]['key'];
 
-export type SignalNewsletterContent = Record<SignalNewsletterSectionKey, string>;
+export type SignalNewsletterContent = SignalNewsletterDocument;
 
-export const EMPTY_SIGNAL_CONTENT: SignalNewsletterContent = {
-  editors_note: '',
-  community_highlights: '',
-  academy_updates: '',
-  ai_in_sign_language: '',
-  events: '',
-  member_spotlight: '',
-  closing: '',
-};
+export const EMPTY_SIGNAL_CONTENT: SignalNewsletterDocument = EMPTY_NEWSLETTER_DOCUMENT;
 
 export type SignalNewsletterStatus = 'draft' | 'scheduled' | 'published';
 

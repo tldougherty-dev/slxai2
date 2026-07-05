@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
-import { SIGNAL_NEWSLETTER_BRAND, SIGNAL_NEWSLETTER_SECTIONS, type SignalNewsletter } from '@/lib/signalNewsletterTemplate';
+import { SIGNAL_NEWSLETTER_BRAND, type SignalNewsletter } from '@/lib/signalNewsletterTemplate';
+import { NewsletterBlockRenderer } from '@/components/signal/NewsletterBlockRenderer';
 
 type SignalNewsletterViewProps = {
   newsletter: SignalNewsletter;
@@ -13,15 +14,26 @@ export function SignalNewsletterView({ newsletter, showMeta = true }: SignalNews
 
   return (
     <article className="signal-newsletter-view">
-      <header className="mb-10 border-b border-white/10 pb-8 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-electric-blue">
+      {newsletter.content.coverImageUrl && (
+        <div className="mb-8 overflow-hidden rounded-2xl border border-[hsl(var(--public-muted)/0.15)]">
+          <img
+            src={newsletter.content.coverImageUrl}
+            alt=""
+            className="max-h-[420px] w-full object-cover"
+          />
+        </div>
+      )}
+
+      <header className="signal-newsletter-divider mb-10 border-b pb-8 text-center">
+        <p className="signal-newsletter-brand text-xs font-semibold uppercase tracking-[0.2em]">
           {SIGNAL_NEWSLETTER_BRAND}
         </p>
-        <h1 className="mt-3 text-3xl font-bold text-white sm:text-4xl public-section-title">
-          {newsletter.title}
-        </h1>
+        <h1 className="public-section-title mt-3 text-3xl font-bold sm:text-4xl">{newsletter.title}</h1>
+        {newsletter.content.subtitle?.trim() && (
+          <p className="signal-newsletter-meta mx-auto mt-3 max-w-2xl text-lg">{newsletter.content.subtitle}</p>
+        )}
         {showMeta && (
-          <p className="mt-3 text-sm text-white/55">
+          <p className="signal-newsletter-meta mt-3 text-sm">
             {newsletter.issueNumber ? `Issue ${newsletter.issueNumber}` : null}
             {newsletter.issueNumber && publishedLabel ? ' · ' : null}
             {publishedLabel}
@@ -29,23 +41,7 @@ export function SignalNewsletterView({ newsletter, showMeta = true }: SignalNews
         )}
       </header>
 
-      <div className="space-y-10">
-        {SIGNAL_NEWSLETTER_SECTIONS.map((section) => {
-          const body = newsletter.content[section.key]?.trim();
-          if (!body) return null;
-          return (
-            <section key={section.key} aria-labelledby={`signal-section-${section.key}`}>
-              <h2
-                id={`signal-section-${section.key}`}
-                className="mb-3 text-xl font-semibold text-white public-card-title"
-              >
-                {section.label}
-              </h2>
-              <div className="whitespace-pre-wrap text-base leading-relaxed text-white/80">{body}</div>
-            </section>
-          );
-        })}
-      </div>
+      <NewsletterBlockRenderer blocks={newsletter.content.blocks} />
     </article>
   );
 }

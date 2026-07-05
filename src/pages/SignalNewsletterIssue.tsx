@@ -29,18 +29,22 @@ export default function SignalNewsletterIssue() {
   return (
     <PublicPageShell>
       <PublicSection className="py-10">
-        <Button variant="ghost" asChild className="mb-6 -ml-2 text-white/80 hover:bg-white/10 hover:text-white">
+        <Button
+          variant="ghost"
+          asChild
+          className="mb-6 -ml-2 text-[hsl(var(--public-text)/0.8)] hover:bg-[hsl(var(--public-muted)/0.12)] hover:text-[hsl(var(--public-text))]"
+        >
           <Link to="/signal" className="inline-flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" aria-hidden />
             All issues
           </Link>
         </Button>
 
-        {loading && <p className="text-white/60">Loading…</p>}
+        {loading && <p className="signal-newsletter-meta">Loading…</p>}
         {notFound && (
           <GlassCard className="text-center !p-10">
-            <h1 className="text-2xl font-bold text-white">Issue not found</h1>
-            <p className="mt-2 text-white/65">This newsletter may be unpublished or the link is incorrect.</p>
+            <h1 className="public-section-title text-2xl font-bold">Issue not found</h1>
+            <p className="signal-newsletter-meta mt-2">This newsletter may be unpublished or the link is incorrect.</p>
             <Button asChild className="mt-6 bg-electric-blue hover:bg-electric-blue/90">
               <Link to="/signal">View archive</Link>
             </Button>

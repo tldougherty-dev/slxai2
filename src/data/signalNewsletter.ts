@@ -1,6 +1,9 @@
 import { supabase } from '@/lib/supabase';
 import {
-  EMPTY_SIGNAL_CONTENT,
+  normalizeNewsletterDocument,
+  type SignalNewsletterDocument,
+} from '@/lib/signalNewsletterBlocks';
+import {
   type SignalNewsletter,
   type SignalNewsletterContent,
   type SignalNewsletterStatus,
@@ -15,7 +18,7 @@ type Row = {
   status: SignalNewsletterStatus;
   scheduled_at: string | null;
   published_at: string | null;
-  content: Partial<SignalNewsletterContent> | null;
+  content: Partial<SignalNewsletterContent> | Record<string, string> | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;
@@ -30,15 +33,15 @@ function mapRow(row: Row): SignalNewsletter {
     status: row.status,
     scheduledAt: row.scheduled_at ? new Date(row.scheduled_at) : null,
     publishedAt: row.published_at ? new Date(row.published_at) : null,
-    content: { ...EMPTY_SIGNAL_CONTENT, ...(row.content ?? {}) },
+    content: normalizeNewsletterDocument(row.content),
     createdBy: row.created_by,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
   };
 }
 
-function mergeContent(content: SignalNewsletterContent): SignalNewsletterContent {
-  return { ...EMPTY_SIGNAL_CONTENT, ...content };
+function mergeContent(content: SignalNewsletterContent): SignalNewsletterDocument {
+  return normalizeNewsletterDocument(content);
 }
 
 export async function promoteDueScheduledNewsletters(): Promise<void> {

@@ -5,13 +5,11 @@ import { PageTitle } from '@/components/PageTitle';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { canAccessAdmin } from '@/lib/roles';
-import { getUserRole } from '@/lib/auth';
+import { getCurrentUser, getUserRole } from '@/lib/auth';
 import {
   deleteNewsletter,
   listAllNewsletters,
@@ -19,28 +17,32 @@ import {
   saveNewsletter,
   scheduleNewsletter,
 } from '@/data/signalNewsletter';
-import { requestNewsletterDraft } from '@/lib/newsletterDraftApi';
 import {
-  EMPTY_SIGNAL_CONTENT,
+  createDefaultTemplateBlocks,
+  duplicateBlocks,
+  normalizeNewsletterDocument,
+  type SignalNewsletterDocument,
+} from '@/lib/signalNewsletterBlocks';
+import { uploadNewsletterImage } from '@/lib/newsletterMedia';
+import {
   SIGNAL_NEWSLETTER_BRAND,
-  SIGNAL_NEWSLETTER_SECTIONS,
   defaultNewsletterTitle,
   type SignalNewsletter,
-  type SignalNewsletterContent,
-  type SignalNewsletterSectionKey,
 } from '@/lib/signalNewsletterTemplate';
 import { SignalNewsletterView } from '@/components/signal/SignalNewsletterView';
+import { NewsletterBlockEditor } from '@/components/signal/NewsletterBlockEditor';
+import { GlassCard } from '@/components/public-design/GlassCard';
 import {
-  Bot,
   Calendar,
+  Copy,
   ExternalLink,
   Loader2,
   Newspaper,
   Plus,
   Save,
   Send,
-  Sparkles,
   Trash2,
+  Upload,
 } from 'lucide-react';
 
 function statusBadge(status: string) {
@@ -62,14 +64,15 @@ export default function NewsletterAdmin() {
   const [issues, setIssues] = useState<SignalNewsletter[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [aiLoading, setAiLoading] = useState(false);
+  const [coverUploading, setCoverUploading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState(defaultNewsletterTitle());
   const [issueNumber, setIssueNumber] = useState<string>('');
-  const [content, setContent] = useState<SignalNewsletterContent>({ ...EMPTY_SIGNAL_CONTENT });
+  const [document, setDocument] = useState<SignalNewsletterDocument>({
+    version: 2,
+    blocks: createDefaultTemplateBlocks(),
+  });
   const [scheduledAt, setScheduledAt] = useState('');
-  const [aiSection, setAiSection] = useState<SignalNewsletterSectionKey>('editors_note');
-  const [aiPrompt, setAiPrompt] = useState('');
   const [showPreview, setShowPreview] = useState(false);
 
   const previewNewsletter = useMemo(
@@ -81,12 +84,12 @@ export default function NewsletterAdmin() {
       status: 'draft',
       scheduledAt: null,
       publishedAt: null,
-      content,
+      content: document,
       createdBy: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     }),
-    [content, editingId, issueNumber, title],
+    [document, editingId, issueNumber, title],
   );
 
   useEffect(() => {
@@ -118,28 +121,62 @@ export default function NewsletterAdmin() {
     setEditingId(null);
     setTitle(defaultNewsletterTitle(nextIssue));
     setIssueNumber(String(nextIssue));
-    setContent({ ...EMPTY_SIGNAL_CONTENT });
+    setDocument({ version: 2, blocks: createDefaultTemplateBlocks() });
     setScheduledAt('');
-    setAiPrompt('');
     setShowPreview(false);
   };
 
   const startNew = () => {
     resetEditor();
-    const nextIssue = issues.length > 0 ? Math.max(...issues.map((i) => i.issueNumber ?? 0)) + 1 : 1;
-    setIssueNumber(String(nextIssue));
-    setTitle(defaultNewsletterTitle(nextIssue));
   };
 
   const openIssue = (issue: SignalNewsletter) => {
     setEditingId(issue.id);
     setTitle(issue.title);
     setIssueNumber(issue.issueNumber != null ? String(issue.issueNumber) : '');
-    setContent({ ...EMPTY_SIGNAL_CONTENT, ...issue.content });
+    setDocument(normalizeNewsletterDocument(issue.content));
     setScheduledAt(
       issue.scheduledAt ? format(issue.scheduledAt, "yyyy-MM-dd'T'HH:mm") : '',
     );
     setShowPreview(false);
+  };
+
+  const duplicateIssue = (issue: SignalNewsletter) => {
+    const nextIssue = issues.length > 0 ? Math.max(...issues.map((i) => i.issueNumber ?? 0)) + 1 : 1;
+    setEditingId(null);
+    setTitle(defaultNewsletterTitle(nextIssue));
+    setIssueNumber(String(nextIssue));
+    const normalized = normalizeNewsletterDocument(issue.content);
+    setDocument({
+      ...normalized,
+      blocks: duplicateBlocks(normalized.blocks),
+    });
+    setScheduledAt('');
+    setShowPreview(false);
+    toast({ title: 'Duplicated', description: 'Edit and save as a new draft.' });
+  };
+
+  const handleCoverUpload = async (file: File | null) => {
+    if (!file) return;
+    const user = getCurrentUser();
+    if (!user?.id) {
+      toast({ title: 'Sign in required', variant: 'destructive' });
+      return;
+    }
+    setCoverUploading(true);
+    try {
+      const url = await uploadNewsletterImage(file, user.id);
+      setDocument((prev) => ({ ...prev, coverImageUrl: url }));
+      toast({ title: 'Cover image uploaded' });
+    } catch (e) {
+      toast({
+        title: 'Upload failed',
+        description: e instanceof Error ? e.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    } finally {
+      setCoverUploading(false);
+    }
   };
 
   const handleSaveDraft = async () => {
@@ -149,7 +186,7 @@ export default function NewsletterAdmin() {
         id: editingId ?? undefined,
         title,
         issueNumber: issueNumber ? Number(issueNumber) : null,
-        content,
+        content: document,
         status: 'draft',
       });
       setEditingId(saved.id);
@@ -173,7 +210,7 @@ export default function NewsletterAdmin() {
       const saved = await saveNewsletter({
         title,
         issueNumber: issueNumber ? Number(issueNumber) : null,
-        content,
+        content: document,
         status: 'draft',
       });
       setEditingId(saved.id);
@@ -262,29 +299,6 @@ export default function NewsletterAdmin() {
     }
   };
 
-  const handleAiDraft = async () => {
-    setAiLoading(true);
-    try {
-      const draft = await requestNewsletterDraft({
-        section: aiSection,
-        title,
-        issueNumber: issueNumber ? Number(issueNumber) : null,
-        prompt: aiPrompt || undefined,
-        currentContent: content[aiSection],
-      });
-      setContent((prev) => ({ ...prev, [aiSection]: draft }));
-      toast({ title: 'Draft generated', description: `Updated ${SIGNAL_NEWSLETTER_SECTIONS.find((s) => s.key === aiSection)?.label}` });
-    } catch (e) {
-      toast({
-        title: 'AI draft failed',
-        description: e instanceof Error ? e.message : 'Unknown error',
-        variant: 'destructive',
-      });
-    } finally {
-      setAiLoading(false);
-    }
-  };
-
   if (isAdmin === null) {
     return (
       <div className="flex min-h-[40vh] items-center justify-center">
@@ -309,7 +323,7 @@ export default function NewsletterAdmin() {
             {SIGNAL_NEWSLETTER_BRAND}
           </h1>
           <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-            Draft issues, use the AI assistant, schedule publishing, and publish to public pages at{' '}
+            Build issues with drag-and-drop blocks, images, and video embeds. Published at{' '}
             <code className="text-xs">/signal/your-slug</code>.
           </p>
         </div>
@@ -339,28 +353,34 @@ export default function NewsletterAdmin() {
               <p className="text-sm text-gray-500">No issues yet. Create your first newsletter.</p>
             )}
             {issues.map((issue) => (
-              <button
+              <div
                 key={issue.id}
-                type="button"
-                onClick={() => openIssue(issue)}
-                className={`w-full rounded-lg border p-3 text-left transition-colors ${
+                className={`rounded-lg border p-3 transition-colors ${
                   editingId === issue.id
                     ? 'border-electric-blue bg-electric-blue/5'
-                    : 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800/50'
+                    : 'border-gray-200 dark:border-gray-700'
                 }`}
               >
-                <div className="flex items-start justify-between gap-2">
-                  <span className="font-medium text-sm text-gray-900 dark:text-white">{issue.title}</span>
-                  {statusBadge(issue.status)}
+                <button type="button" onClick={() => openIssue(issue)} className="w-full text-left">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{issue.title}</span>
+                    {statusBadge(issue.status)}
+                  </div>
+                  <p className="mt-1 text-xs text-gray-500">
+                    {issue.issueNumber ? `Issue ${issue.issueNumber}` : 'No issue #'}
+                    {issue.publishedAt ? ` · ${format(issue.publishedAt, 'MMM d, yyyy')}` : ''}
+                    {issue.scheduledAt && issue.status === 'scheduled'
+                      ? ` · Scheduled ${format(issue.scheduledAt, 'MMM d, h:mm a')}`
+                      : ''}
+                  </p>
+                </button>
+                <div className="mt-2 flex gap-1">
+                  <Button type="button" variant="ghost" size="sm" className="h-7 px-2 text-xs" onClick={() => duplicateIssue(issue)}>
+                    <Copy className="mr-1 h-3 w-3" />
+                    Duplicate
+                  </Button>
                 </div>
-                <p className="mt-1 text-xs text-gray-500">
-                  {issue.issueNumber ? `Issue ${issue.issueNumber}` : 'No issue #'}
-                  {issue.publishedAt ? ` · ${format(issue.publishedAt, 'MMM d, yyyy')}` : ''}
-                  {issue.scheduledAt && issue.status === 'scheduled'
-                    ? ` · Scheduled ${format(issue.scheduledAt, 'MMM d, h:mm a')}`
-                    : ''}
-                </p>
-              </button>
+              </div>
             ))}
           </CardContent>
         </Card>
@@ -369,7 +389,7 @@ export default function NewsletterAdmin() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle>Issue details</CardTitle>
-              <CardDescription>Title and issue number appear on the public newsletter page.</CardDescription>
+              <CardDescription>Title, subtitle, cover image, and schedule.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2 sm:col-span-2">
@@ -380,6 +400,54 @@ export default function NewsletterAdmin() {
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder={defaultNewsletterTitle()}
                 />
+              </div>
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="newsletter-subtitle">Subtitle (optional)</Label>
+                <Input
+                  id="newsletter-subtitle"
+                  value={document.subtitle ?? ''}
+                  onChange={(e) => setDocument((prev) => ({ ...prev, subtitle: e.target.value }))}
+                  placeholder="A short line under the title on the public page"
+                />
+              </div>
+              <div className="space-y-2 sm:col-span-2">
+                <Label>Cover image (optional)</Label>
+                {document.coverImageUrl && (
+                  <img
+                    src={document.coverImageUrl}
+                    alt=""
+                    className="mb-2 max-h-40 rounded-lg border object-cover"
+                  />
+                )}
+                <div className="flex flex-wrap gap-2">
+                  <Label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-dashed border-gray-300 px-3 py-2 text-sm hover:bg-gray-50 dark:border-gray-600">
+                    {coverUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    Upload cover
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/gif,image/webp"
+                      className="sr-only"
+                      disabled={coverUploading}
+                      onChange={(e) => handleCoverUpload(e.target.files?.[0] ?? null)}
+                    />
+                  </Label>
+                  <Input
+                    className="max-w-md flex-1"
+                    value={document.coverImageUrl ?? ''}
+                    onChange={(e) => setDocument((prev) => ({ ...prev, coverImageUrl: e.target.value }))}
+                    placeholder="Or paste image URL"
+                  />
+                  {document.coverImageUrl && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setDocument((prev) => ({ ...prev, coverImageUrl: undefined }))}
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="newsletter-issue">Issue number</Label>
@@ -403,88 +471,11 @@ export default function NewsletterAdmin() {
             </CardContent>
           </Card>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle>Newsletter template</CardTitle>
-                <CardDescription>Fill each section for the SLxAI Signal template.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                {SIGNAL_NEWSLETTER_SECTIONS.map((section) => (
-                  <div key={section.key} className="space-y-2">
-                    <Label htmlFor={`section-${section.key}`}>{section.label}</Label>
-                    <Textarea
-                      id={`section-${section.key}`}
-                      value={content[section.key]}
-                      onChange={(e) =>
-                        setContent((prev) => ({ ...prev, [section.key]: e.target.value }))
-                      }
-                      placeholder={section.placeholder}
-                      rows={4}
-                      className="min-h-[100px] resize-y"
-                    />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card className="glass-card h-fit border-electric-blue/30">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bot className="h-5 w-5 text-electric-blue" aria-hidden />
-                  AI drafting assistant
-                </CardTitle>
-                <CardDescription>
-                  Generate or refine a section. Requires <code className="text-xs">OPENAI_API_KEY</code> on the server.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Section</Label>
-                  <Select value={aiSection} onValueChange={(v) => setAiSection(v as SignalNewsletterSectionKey)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {SIGNAL_NEWSLETTER_SECTIONS.map((s) => (
-                        <SelectItem key={s.key} value={s.key}>
-                          {s.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="ai-prompt">Instructions (optional)</Label>
-                  <Textarea
-                    id="ai-prompt"
-                    value={aiPrompt}
-                    onChange={(e) => setAiPrompt(e.target.value)}
-                    placeholder="e.g. Mention the Academy workshop on prompt engineering…"
-                    rows={4}
-                  />
-                </div>
-                <Button
-                  type="button"
-                  className="w-full bg-electric-blue hover:bg-electric-blue/90"
-                  onClick={handleAiDraft}
-                  disabled={aiLoading}
-                >
-                  {aiLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Drafting…
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2 h-4 w-4" />
-                      Draft with AI
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="glass-card">
+            <CardContent className="pt-6">
+              <NewsletterBlockEditor document={document} onChange={setDocument} />
+            </CardContent>
+          </Card>
 
           <div className="flex flex-wrap gap-2">
             <Button type="button" onClick={handleSaveDraft} disabled={saving}>
@@ -524,14 +515,13 @@ export default function NewsletterAdmin() {
           </div>
 
           {showPreview && (
-            <Card className="glass-card border-gray-700 bg-slate-950">
-              <CardHeader>
-                <CardTitle className="text-white">Preview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <SignalNewsletterView newsletter={previewNewsletter} />
-              </CardContent>
-            </Card>
+            <div className="public-site light-public signal-newsletter-preview-shell">
+              <div className="relative px-4 py-8 sm:px-8">
+                <GlassCard strong className="!p-6 sm:!p-10">
+                  <SignalNewsletterView newsletter={previewNewsletter} showMeta />
+                </GlassCard>
+              </div>
+            </div>
           )}
         </div>
       </div>
