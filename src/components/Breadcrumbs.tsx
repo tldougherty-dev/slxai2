@@ -24,7 +24,7 @@ const routeLabels: Record<string, string> = {
   '/membership-portal/profile': 'My Profile',
   '/membership-portal/my-organization': 'My Organization',
   '/membership-portal/admin': 'Admin',
-  '/membership-portal/summit-planning': 'Summit Planning',
+  '/membership-portal/summit-admin': 'Summit Admin',
   '/membership-portal/summit-2026': 'Summit 2026',
   '/membership-portal/academy-admin': 'Academy Admin',
   '/membership-portal/resources': 'Resources',

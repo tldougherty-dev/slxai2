@@ -69,10 +69,13 @@ import {
   SummitTask,
   SummitMember,
 } from '@/data/summit';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUser, getUserRole } from '@/lib/auth';
+import { canAccessAdmin } from '@/lib/roles';
 import { format, isPast, isToday, isTomorrow } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { UserAvatar } from '@/components/UserAvatar';
+import { TicketReservationsTab } from '@/components/admin/summit/TicketReservationsTab';
+import { WaitlistTab } from '@/components/admin/summit/WaitlistTab';
 import {
   getChannels,
   getMessages,
@@ -337,7 +340,9 @@ export default function SummitPlanning() {
     const load = async () => {
       if (!cancelled) {
         await loadData();
-        await loadSummitChannels();
+        if (canAccessAdmin(getUserRole())) {
+          await loadSummitChannels();
+        }
       }
     };
     load();
@@ -1014,7 +1019,7 @@ export default function SummitPlanning() {
       <div className="space-y-6">
         <Card className="glass-card">
           <CardContent className="pt-1 pb-4">
-            <h1 className="text-4xl font-bold text-gray-900 text-center whitespace-nowrap">Summit Planning</h1>
+            <h1 className="text-4xl font-bold text-gray-900 text-center whitespace-nowrap">Summit Admin</h1>
           </CardContent>
         </Card>
         <Card className="bg-yellow-50 border-yellow-200">
@@ -1040,7 +1045,7 @@ export default function SummitPlanning() {
   return (
     <div className="space-y-0 md:space-y-6 w-full" style={isMobile ? { maxWidth: '100vw', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' } : {}}>
       <PageTitle 
-        title="Summit Planning"
+        title="Summit Admin"
         fullWidthLandscape={true}
         titleClassName="whitespace-nowrap"
         rightContent={
@@ -1157,7 +1162,8 @@ export default function SummitPlanning() {
         </div>
       </DndContext>
 
-      {/* Summit Planning Discussions - Full Board */}
+      {/* Summit Planning Discussions - Full Board (admin only) */}
+      {canAccessAdmin(getUserRole()) && (
       <Card className="glass-card floating-hover overflow-hidden w-full" style={isMobile ? { maxWidth: '100vw', width: '100%', boxSizing: 'border-box' } : {}}>
         <CardHeader className="p-3 md:p-6 w-full overflow-visible">
           <CardTitle className="text-base md:text-lg flex flex-wrap items-center gap-2 break-words overflow-visible w-full">
@@ -1493,6 +1499,7 @@ export default function SummitPlanning() {
           </div>
         </CardContent>
       </Card>
+      )}
 
       {/* Workshop/Panel Submissions Review */}
       <Card className="glass-card floating-hover overflow-visible w-full max-w-full">
@@ -1746,6 +1753,9 @@ export default function SummitPlanning() {
           )}
         </CardContent>
       </Card>
+
+      <TicketReservationsTab />
+      <WaitlistTab />
 
       {/* Create/Edit Task Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

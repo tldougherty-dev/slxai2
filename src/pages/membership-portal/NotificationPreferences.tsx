@@ -339,7 +339,8 @@ export default function NotificationPreferences() {
         </CardContent>
       </Card>
 
-      {/* Discussion Notifications */}
+      {/* Discussion Notifications (admin only) */}
+      {userIsAdmin && (
       <Card className="mb-6">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -386,6 +387,7 @@ export default function NotificationPreferences() {
           </div>
         </CardContent>
       </Card>
+      )}
 
       {/* Post & Comment Notifications */}
       <Card className="mb-6">

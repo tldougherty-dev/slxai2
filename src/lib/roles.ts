@@ -24,7 +24,7 @@ export interface RolePermissions {
 // Define permissions for each role
 const rolePermissions: Record<UserRole, RolePermissions> = {
   member: {
-    canDiscuss: true,
+    canDiscuss: false,
     canUploadFiles: true,
     canUploadVideos: true,
     canViewDirectory: true,
@@ -43,7 +43,7 @@ const rolePermissions: Record<UserRole, RolePermissions> = {
     canAccessAdmin: false,
   },
   voting_member: {
-    canDiscuss: true,
+    canDiscuss: false,
     canUploadFiles: true,
     canUploadVideos: true,
     canViewDirectory: true,

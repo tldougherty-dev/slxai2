@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { getFeedPosts, createPost, getPostComments, addComment, toggleReaction, deletePost, deleteComment, updatePost, FeedPost, PostComment, ReactionType } from '@/data/feed';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUser, getUserRole } from '@/lib/auth';
+import { canAccessAdmin } from '@/lib/roles';
 import { UserAvatar } from '@/components/UserAvatar';
 import { sanitizeText, isValidLength, isValidUrl, isValidYouTubeUrl, isValidVimeoUrl } from '@/lib/security';
 import { PostContent } from '@/components/PostContent';
@@ -40,6 +41,7 @@ export default function Feed() {
   const navigate = useNavigate();
   const { t, translate, language } = useLanguage();
   const user = getCurrentUser();
+  const userCanAccessDiscussions = canAccessAdmin(getUserRole());
   const isLandscape = useIsLandscape();
   
   // Reaction labels with translations
@@ -531,13 +533,15 @@ export default function Feed() {
               >
                 {t('feed.createPost')}
               </Button>
-              <Button 
-                onClick={() => navigate('/membership-portal/discussions')}
-                variant="outline"
-                className="text-sm"
-              >
-                {t('feed.joinDiscussions') || "Join Discussions"}
-              </Button>
+              {userCanAccessDiscussions && (
+                <Button 
+                  onClick={() => navigate('/membership-portal/discussions')}
+                  variant="outline"
+                  className="text-sm"
+                >
+                  {t('feed.joinDiscussions') || "Join Discussions"}
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>

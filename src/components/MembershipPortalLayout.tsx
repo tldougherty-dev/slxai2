@@ -5,6 +5,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarFooter,
   SidebarMenu,
@@ -14,6 +15,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from '@/components/ui/sidebar';
+import type { LucideIcon } from 'lucide-react';
 import {
   Tooltip,
   TooltipContent,
@@ -44,14 +46,12 @@ import {
   Globe,
   Bell,
   Newspaper,
-  Ticket,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { logout, getCurrentUser, isAuthenticated, getUserRole } from '@/lib/auth';
 import { canAccessAdmin } from '@/lib/roles';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
-import { isSummitMember } from '@/data/summit';
 import { OnboardingWizard } from '@/components/Onboarding';
 import { useIsMobile, useIsLandscape } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
@@ -70,11 +70,6 @@ const baseMenuItemsConfig = [
     titleKey: 'common.globalFeed',
     icon: Video,
     href: '/membership-portal',
-  },
-  {
-    titleKey: 'common.discussions',
-    icon: MessageSquare,
-    href: '/membership-portal/discussions',
   },
   {
     titleKey: 'common.voting',
@@ -113,38 +108,45 @@ const baseMenuItemsConfig = [
   },
 ];
 
-// Admin menu item (only for admins)
-const adminMenuItemConfig = {
-  titleKey: 'common.admin',
-  icon: Shield,
-  href: '/membership-portal/admin',
+type MenuItemConfig = {
+  titleKey: string;
+  icon: LucideIcon;
+  href: string;
 };
 
-// Academy admin menu item (only for admins)
-const academyAdminMenuItemConfig = {
-  titleKey: 'common.academyAdmin',
-  icon: GraduationCap,
-  href: '/membership-portal/academy-admin',
-};
-
-const newsletterAdminMenuItemConfig = {
-  titleKey: 'common.newsletterAdmin',
-  icon: Newspaper,
-  href: '/membership-portal/newsletter',
-};
-
-const summitAdminMenuItemConfig = {
-  titleKey: 'common.summitAdmin',
-  icon: Ticket,
-  href: '/membership-portal/summit-admin',
-};
-
-// Summit 2026 menu item (only for admins)
-const summit2026MenuItemConfig = {
-  titleKey: 'common.summit2026',
-  icon: Trophy,
-  href: '/membership-portal/summit-2026',
-};
+// Admin-only sidebar items (order shown to admins)
+const adminMenuItemsConfig: MenuItemConfig[] = [
+  {
+    titleKey: 'common.admin',
+    icon: Shield,
+    href: '/membership-portal/admin',
+  },
+  {
+    titleKey: 'common.newsletterAdmin',
+    icon: Newspaper,
+    href: '/membership-portal/newsletter',
+  },
+  {
+    titleKey: 'common.academyAdmin',
+    icon: GraduationCap,
+    href: '/membership-portal/academy-admin',
+  },
+  {
+    titleKey: 'common.summitAdmin',
+    icon: Calendar,
+    href: '/membership-portal/summit-admin',
+  },
+  {
+    titleKey: 'common.summit2026',
+    icon: Trophy,
+    href: '/membership-portal/summit-2026',
+  },
+  {
+    titleKey: 'common.discussions',
+    icon: MessageSquare,
+    href: '/membership-portal/discussions',
+  },
+];
 
 function CollapseButton() {
   const { toggleSidebar, state } = useSidebar();
@@ -379,13 +381,61 @@ const MenuItemLink = React.forwardRef<
 });
 MenuItemLink.displayName = 'MenuItemLink';
 
+type ResolvedMenuItem = MenuItemConfig & { title: string };
+
+function isMenuItemActive(href: string, pathname: string): boolean {
+  if (href === '/membership-portal') {
+    return pathname === '/membership-portal' || pathname === '/membership-portal/feed';
+  }
+  return pathname === href;
+}
+
+function PortalNavMenu({
+  items,
+  pathname,
+}: {
+  items: ResolvedMenuItem[];
+  pathname: string;
+}) {
+  return (
+    <>
+      {items.map((item) => {
+        const Icon = item.icon;
+        const isActive = isMenuItemActive(item.href, pathname);
+        return (
+          <SidebarMenuItem key={item.href}>
+            <SidebarMenuButton
+              asChild
+              isActive={isActive}
+              tooltip={item.title}
+              size="sm"
+              className={cn(
+                'transition-all duration-200 hover:bg-electric-blue/10 h-9 md:h-8 text-xs md:text-sm lg:text-base pl-1.5 md:pl-2 pr-1 md:pr-1 min-h-[36px] md:min-h-[32px]',
+                isActive ? 'font-semibold' : '',
+              )}
+            >
+              <MenuItemLink
+                href={item.href}
+                isActive={isActive}
+                className="flex items-center gap-1.5 md:gap-2 w-full"
+              >
+                <Icon className="h-3.5 w-3.5 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5 flex-shrink-0" />
+                <span className="text-xs md:text-sm lg:text-base truncate">{item.title}</span>
+              </MenuItemLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        );
+      })}
+    </>
+  );
+}
+
 export default function MembershipPortalLayout({ children }: MembershipPortalLayoutProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useLanguage();
   const [userIsAdmin, setUserIsAdmin] = useState(false);
-  const [userIsSummitMember, setUserIsSummitMember] = useState(false);
   const isMobile = useIsMobile();
   const [isTablet, setIsTablet] = useState(false);
 
@@ -399,86 +449,32 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
     return () => window.removeEventListener('resize', checkTablet);
   }, []);
 
-  // Create menu items with translated titles
-  const baseMenuItems = baseMenuItemsConfig.map(item => ({
+  const memberMenuItems: ResolvedMenuItem[] = baseMenuItemsConfig.map((item) => ({
     ...item,
     title: t(item.titleKey),
   }));
 
-  const adminMenuItem = {
-    ...adminMenuItemConfig,
-    title: t(adminMenuItemConfig.titleKey),
-  };
+  const adminMenuItems: ResolvedMenuItem[] = adminMenuItemsConfig.map((item) => ({
+    ...item,
+    title: t(item.titleKey),
+  }));
 
-  const summit2026MenuItem = {
-    ...summit2026MenuItemConfig,
-    title: t(summit2026MenuItemConfig.titleKey),
-  };
-
-  const academyAdminMenuItem = {
-    ...academyAdminMenuItemConfig,
-    title: t(academyAdminMenuItemConfig.titleKey),
-  };
-
-  const newsletterAdminMenuItem = {
-    ...newsletterAdminMenuItemConfig,
-    title: t(newsletterAdminMenuItemConfig.titleKey),
-  };
-
-  const summitAdminMenuItem = {
-    ...summitAdminMenuItemConfig,
-    title: t(summitAdminMenuItemConfig.titleKey),
-  };
-
-  // Summit Planning menu item
-  const summitMenuItem = {
-    titleKey: 'common.summitPlanning',
-    title: t('common.summitPlanning'),
-    icon: Calendar,
-    href: '/membership-portal/summit-planning',
-  };
-
-  // Check admin and summit member status
+  // Check admin status
   useEffect(() => {
     const checkAccess = async () => {
-      // Make sure we're authenticated first
       await isAuthenticated();
-      
+
       const user = getCurrentUser();
       if (!user?.email) return;
-      
+
       const role = getUserRole();
-      const canAccess = canAccessAdmin(role);
-      setUserIsAdmin(canAccess);
-      
-      // Check if user is a summit member
-      try {
-        const isSummit = await isSummitMember(user.email);
-        setUserIsSummitMember(isSummit);
-      } catch (error) {
-        console.error('Error checking summit member status:', error);
-        setUserIsSummitMember(false);
-      }
+      setUserIsAdmin(canAccessAdmin(role));
     };
-    
+
     checkAccess();
-    // Re-check periodically in case user state updates
     const interval = setInterval(checkAccess, 2000);
     return () => clearInterval(interval);
-  }, [location.pathname]); // Re-check when route changes
-
-  // Build menu items based on admin and summit member status
-  let menuItems = [...baseMenuItems];
-  if (userIsSummitMember || userIsAdmin) {
-    menuItems.push(summitMenuItem);
-  }
-  if (userIsAdmin) {
-    menuItems.push(summit2026MenuItem);
-    menuItems.push(summitAdminMenuItem);
-    menuItems.push(academyAdminMenuItem);
-    menuItems.push(newsletterAdminMenuItem);
-    menuItems.push(adminMenuItem);
-  }
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     await logout();
@@ -561,43 +557,28 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
           <SidebarHeaderWithTooltip />
           <SidebarContent className="bg-slate-300 dark:bg-black py-0.5 md:py-2">
             <SidebarGroup className="pl-0 pr-0">
+              <SidebarGroupLabel className="px-2 text-[10px] font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                {t('common.menuSectionMembers')}
+              </SidebarGroupLabel>
               <SidebarGroupContent className="pl-0 pr-0">
                 <SidebarMenu className="gap-0">
-                  {menuItems.map((item) => {
-                    const Icon = item.icon;
-                    // Handle Global Feed being the default landing page
-                    const isActive = item.href === '/membership-portal' 
-                      ? location.pathname === '/membership-portal' || location.pathname === '/membership-portal/feed'
-                      : location.pathname === item.href;
-                    return (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                          asChild
-                          isActive={isActive}
-                          tooltip={item.title}
-                          size="sm"
-                          className={cn(
-                            "transition-all duration-200 hover:bg-electric-blue/10 h-9 md:h-8 text-xs md:text-sm lg:text-base pl-1.5 md:pl-2 pr-1 md:pr-1 min-h-[36px] md:min-h-[32px]",
-                            isActive 
-                              ? "font-semibold" 
-                              : ""
-                          )}
-                        >
-                          <MenuItemLink 
-                            href={item.href}
-                            isActive={isActive}
-                            className="flex items-center gap-1.5 md:gap-2 w-full"
-                          >
-                            <Icon className="h-3.5 w-3.5 md:h-4 md:w-4 lg:h-3.5 lg:w-3.5 flex-shrink-0" />
-                            <span className="text-xs md:text-sm lg:text-base truncate">{item.title}</span>
-                          </MenuItemLink>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    );
-                  })}
+                  <PortalNavMenu items={memberMenuItems} pathname={location.pathname} />
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
+            {userIsAdmin && (
+              <SidebarGroup className="mt-2 border-t border-electric-blue/25 pt-2 pl-0 pr-0">
+                <SidebarGroupLabel className="flex items-center gap-1.5 px-2 text-[10px] font-semibold uppercase tracking-wider text-electric-blue dark:text-electric-blue">
+                  <Shield className="h-3 w-3 flex-shrink-0" />
+                  {t('common.menuSectionAdmin')}
+                </SidebarGroupLabel>
+                <SidebarGroupContent className="pl-0 pr-0">
+                  <SidebarMenu className="gap-0">
+                    <PortalNavMenu items={adminMenuItems} pathname={location.pathname} />
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            )}
           </SidebarContent>
           <SidebarFooter className="bg-slate-300 dark:bg-black border-t border-electric-blue/20 dark:border-white/20 py-0.5 md:py-2">
             <SidebarGroup className="pl-0 pr-0">

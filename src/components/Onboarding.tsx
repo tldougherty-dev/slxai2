@@ -6,7 +6,8 @@ import {
   User, Building2, MessageSquare, FileText, Vote, Users, 
   CheckCircle2, ArrowRight, ArrowLeft, Sparkles, Video, Calendar
 } from 'lucide-react';
-import { getCurrentUser } from '@/lib/auth';
+import { getCurrentUser, getUserRole } from '@/lib/auth';
+import { canAccessAdmin } from '@/lib/roles';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 
@@ -124,8 +125,12 @@ export function OnboardingWizard() {
     }
   };
 
+  const visibleSteps = onboardingSteps.filter(
+    (step) => step.id !== 3 || canAccessAdmin(getUserRole())
+  );
+
   const handleNext = () => {
-    if (currentStep < onboardingSteps.length - 1) {
+    if (currentStep < visibleSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -149,7 +154,7 @@ export function OnboardingWizard() {
 
   if (!isOpen) return null;
 
-  const step = onboardingSteps[currentStep];
+  const step = visibleSteps[currentStep];
   const Icon = step.icon;
 
   return (
@@ -169,7 +174,7 @@ export function OnboardingWizard() {
 
         {/* Step Indicator */}
         <div className="flex items-center justify-center gap-2 py-4">
-          {onboardingSteps.map((s, index) => (
+          {visibleSteps.map((s, index) => (
             <div
               key={s.id}
               className={`h-2 w-2 rounded-full transition-all ${
@@ -195,7 +200,7 @@ export function OnboardingWizard() {
                 Previous
               </Button>
             )}
-            {currentStep === onboardingSteps.length - 1 ? (
+            {currentStep === visibleSteps.length - 1 ? (
               <Button
                 onClick={() => handleAction('/membership-portal')}
                 className="bg-electric-blue hover:bg-electric-blue/90 text-white w-32"

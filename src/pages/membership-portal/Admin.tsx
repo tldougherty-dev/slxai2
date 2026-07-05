@@ -21,7 +21,7 @@ import {
   Shield, Users, Building2, MessageSquare, Vote as VoteIcon, FileText, Video,
   Settings, TrendingUp, AlertCircle, CheckCircle2, XCircle, Edit, Trash2,
   Plus, Search, Filter, Save, X, Hand, Mail, Globe, Upload, History, Calendar, Clock, Folder,
-  Download, Loader2, CheckSquare, Square, Pencil, GripVertical, Hash, Pin, User, MessageCircle, Ticket, Phone, RefreshCw
+  Download, Loader2, CheckSquare, Square, Pencil, GripVertical, Hash, Pin, User, MessageCircle, Ticket, Phone, RefreshCw, Heart
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Member, MemberPerson } from '@/data/members';
@@ -87,6 +87,8 @@ import { getMetrics, trackPageView, trackEvent } from '@/lib/analytics';
 import { addNotification } from '@/lib/notifications';
 import { realtimeManager } from '@/lib/realtime';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
+import { InterestSubmissionsTab } from '@/components/admin/summit/InterestSubmissionsTab';
+import { InterestedOrganizationsDirectory } from '@/components/admin/InterestedOrganizationsDirectory';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -943,7 +945,7 @@ export default function Admin() {
   const [isLoadingChannels, setIsLoadingChannels] = useState(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [selectedChannelForMessages, setSelectedChannelForMessages] = useState<string | null>(null);
-  const [memberSection, setMemberSection] = useState<'companies' | 'individuals' | 'email'>('individuals');
+  const [memberSection, setMemberSection] = useState<'companies' | 'individuals' | 'email' | 'interest' | 'interested-orgs'>('individuals');
   const [emailSubject, setEmailSubject] = useState('');
   const [emailBody, setEmailBody] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -3592,6 +3594,30 @@ export default function Admin() {
               <Mail className="h-4 w-4 mr-2" />
               Email
             </Button>
+            <Button
+              variant={memberSection === 'interest' ? 'default' : 'ghost'}
+              onClick={() => setMemberSection('interest')}
+              className={`rounded-b-none ${
+                memberSection === 'interest' 
+                  ? 'bg-electric-blue text-white hover:bg-electric-blue/90' 
+                  : 'text-gray-700 dark:text-white hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
+              }`}
+            >
+              <Heart className="h-4 w-4 mr-2" />
+              Interest
+            </Button>
+            <Button
+              variant={memberSection === 'interested-orgs' ? 'default' : 'ghost'}
+              onClick={() => setMemberSection('interested-orgs')}
+              className={`rounded-b-none ${
+                memberSection === 'interested-orgs' 
+                  ? 'bg-electric-blue text-white hover:bg-electric-blue/90' 
+                  : 'text-gray-700 dark:text-white hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
+              }`}
+            >
+              <Building2 className="h-4 w-4 mr-2" />
+              Interested Orgs
+            </Button>
           </div>
 
           {memberSection === 'individuals' && (
@@ -3997,6 +4023,8 @@ export default function Admin() {
             </CardContent>
           </Card>
           )}
+          {memberSection === 'interest' && <InterestSubmissionsTab />}
+          {memberSection === 'interested-orgs' && <InterestedOrganizationsDirectory />}
         </TabsContent>
 
         {/* Files Tab */}

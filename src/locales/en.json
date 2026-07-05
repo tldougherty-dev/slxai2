@@ -11,7 +11,7 @@
     "memberDirectory": "Member Directory",
     "myProfile": "My Profile",
     "myOrganization": "My Organization",
-    "summitPlanning": "Summit Planning",
+    "summitPlanning": "Summit Admin",
     "admin": "Admin",
     "feedback": "Feedback",
     "notifications": "Notifications",
@@ -21,7 +21,9 @@
     "cookiePolicy": "Cookie Policy",
     "termsOfService": "Terms of Service",
     "language": "Language",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "menuSectionMembers": "Members",
+    "menuSectionAdmin": "Admin only"
   },
   "feed": {
     "createPost": "Create a post",

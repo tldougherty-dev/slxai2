@@ -18,18 +18,15 @@ import {
 } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
 import { canAccessAdmin } from '@/lib/roles';
-import { getCurrentUser, getUserRole } from '@/lib/auth';
+import { getUserRole } from '@/lib/auth';
 import {
-  approveSubmissionAsWorkshop,
   getAcademyAnalytics,
   getAllPresenters,
-  getCategories,
   getEmailLogs,
   getRegistrations,
   getSubmissions,
   getWorkshops,
   sendReminderEmail,
-  updateSubmissionStatus,
   updateWorkshopSchedule,
 } from '@/data/academy';
 import type {
@@ -39,20 +36,17 @@ import type {
   AcademyRegistration,
   AcademySubmission,
   AcademyWorkshop,
-  SubmissionStatus,
   WorkshopStatus,
 } from '@/data/academyTypes';
-import { SKILL_LEVEL_LABELS } from '@/data/academyTypes';
+import { AcademyWorkshopSubmissionsTab } from '@/components/admin/AcademyWorkshopSubmissionsTab';
 import { format } from 'date-fns';
 import {
   BarChart3,
   Calendar,
-  Check,
   GraduationCap,
   Loader2,
   Mail,
   Users,
-  X,
 } from 'lucide-react';
 
 function statusBadge(status: string) {
@@ -84,7 +78,6 @@ export default function AcademyAdmin() {
   const [presenters, setPresenters] = useState<AcademyPresenter[]>([]);
   const [registrations, setRegistrations] = useState<AcademyRegistration[]>([]);
   const [emailLogs, setEmailLogs] = useState<AcademyEmailLog[]>([]);
-  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
   const [scheduleEdits, setScheduleEdits] = useState<Record<string, { scheduledAt: string; zoomUrl: string; status: WorkshopStatus }>>({});
 
   useEffect(() => {
@@ -95,14 +88,13 @@ export default function AcademyAdmin() {
   const loadAll = async () => {
     setLoading(true);
     try {
-      const [a, s, w, p, r, e, c] = await Promise.all([
+      const [a, s, w, p, r, e] = await Promise.all([
         getAcademyAnalytics(),
         getSubmissions(),
         getWorkshops(),
         getAllPresenters(),
         getRegistrations(),
         getEmailLogs(),
-        getCategories(),
       ]);
       setAnalytics(a);
       setSubmissions(s);
@@ -110,7 +102,6 @@ export default function AcademyAdmin() {
       setPresenters(p);
       setRegistrations(r);
       setEmailLogs(e);
-      setCategories(c.map((cat) => ({ id: cat.id, name: cat.name })));
       const edits: typeof scheduleEdits = {};
       w.forEach((ws) => {
         edits[ws.id] = {
@@ -134,33 +125,6 @@ export default function AcademyAdmin() {
   useEffect(() => {
     if (isAdmin) loadAll();
   }, [isAdmin]);
-
-  const handleReview = async (id: string, status: SubmissionStatus, notes?: string) => {
-    try {
-      const user = await getCurrentUser();
-      await updateSubmissionStatus(id, status, notes, user?.email ?? undefined);
-      toast({ title: `Submission ${status}` });
-      loadAll();
-    } catch (err) {
-      toast({ title: 'Update failed', description: err instanceof Error ? err.message : '', variant: 'destructive' });
-    }
-  };
-
-  const handleApproveAsWorkshop = async (submission: AcademySubmission) => {
-    const slug = submission.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '')
-      .slice(0, 60);
-    const categoryId = categories[0]?.id ?? 'cat-prompting';
-    try {
-      await approveSubmissionAsWorkshop(submission, slug, categoryId);
-      toast({ title: 'Workshop created from submission' });
-      loadAll();
-    } catch (err) {
-      toast({ title: 'Approval failed', description: err instanceof Error ? err.message : '', variant: 'destructive' });
-    }
-  };
 
   const handleSaveSchedule = async (workshopId: string) => {
     const edit = scheduleEdits[workshopId];
@@ -237,50 +201,7 @@ export default function AcademyAdmin() {
           </TabsContent>
 
           <TabsContent value="submissions" className="mt-4">
-            {submissions.length === 0 ? (
-              <p className="text-slate-500">No submissions yet.</p>
-            ) : (
-              <div className="space-y-4">
-                {submissions.map((sub) => (
-                  <Card key={sub.id}>
-                    <CardHeader className="flex flex-row items-start justify-between gap-4 pb-2">
-                      <div>
-                        <CardTitle className="text-lg">{sub.title}</CardTitle>
-                        <p className="text-sm text-slate-500">
-                          {sub.presenterName} · {sub.contactEmail} · {format(sub.submittedAt, 'MMM d, yyyy')}
-                        </p>
-                      </div>
-                      {statusBadge(sub.status)}
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <p className="text-sm text-slate-700">{sub.description}</p>
-                      <div className="flex flex-wrap gap-2 text-xs text-slate-500">
-                        <span>{SKILL_LEVEL_LABELS[sub.skillLevel]}</span>
-                        <span>·</span>
-                        <span>{sub.durationMinutes} min</span>
-                        <span>·</span>
-                        <span>{sub.signLanguage}</span>
-                        <span>·</span>
-                        <span>{sub.aiTools.join(', ')}</span>
-                      </div>
-                      {sub.status === 'pending' && (
-                        <div className="flex flex-wrap gap-2">
-                          <Button size="sm" onClick={() => handleApproveAsWorkshop(sub)} className="bg-electric-blue hover:bg-electric-blue/90">
-                            <Check className="mr-1 h-4 w-4" /> Approve & create workshop
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => handleReview(sub.id, 'under_review')}>
-                            Mark under review
-                          </Button>
-                          <Button size="sm" variant="destructive" onClick={() => handleReview(sub.id, 'rejected')}>
-                            <X className="mr-1 h-4 w-4" /> Reject
-                          </Button>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+            <AcademyWorkshopSubmissionsTab />
           </TabsContent>
 
           <TabsContent value="workshops" className="mt-4 space-y-4">

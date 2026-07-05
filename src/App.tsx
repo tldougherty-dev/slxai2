@@ -43,7 +43,6 @@ import AcademySubmitProposal from "./pages/AcademySubmitProposal";
 import AcademyWorkshop from "./pages/AcademyWorkshop";
 import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
 import NewsletterAdmin from "./pages/membership-portal/NewsletterAdmin";
-import SummitAdmin from "./pages/membership-portal/SummitAdmin";
 import SignalNewsletterIndex from "./pages/SignalNewsletterIndex";
 import SignalNewsletterIssue from "./pages/SignalNewsletterIssue";
 import MetricoolTestPage from "./pages/MetricoolTestPage";
@@ -146,7 +145,7 @@ const App = () => (
           <Route
             path="/membership-portal/discussions"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requireAdmin>
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <Discussions />
@@ -300,9 +299,9 @@ const App = () => (
             }
           />
           <Route
-            path="/membership-portal/summit-planning"
+            path="/membership-portal/summit-admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requireAdmin>
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <SummitPlanning />
@@ -312,24 +311,16 @@ const App = () => (
             }
           />
           <Route
+            path="/membership-portal/summit-planning"
+            element={<Navigate to="/membership-portal/summit-admin" replace />}
+          />
+          <Route
             path="/membership-portal/academy-admin"
             element={
               <ProtectedRoute requireAdmin>
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <AcademyAdmin />
-                  </ErrorBoundary>
-                </MembershipPortalLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/membership-portal/summit-admin"
-            element={
-              <ProtectedRoute requireAdmin>
-                <MembershipPortalLayout>
-                  <ErrorBoundary>
-                    <SummitAdmin />
                   </ErrorBoundary>
                 </MembershipPortalLayout>
               </ProtectedRoute>
