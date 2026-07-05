@@ -43,6 +43,7 @@ import {
   MessageCircle,
   Globe,
   Bell,
+  Newspaper,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { logout, getCurrentUser, isAuthenticated, getUserRole } from '@/lib/auth';
@@ -123,6 +124,12 @@ const academyAdminMenuItemConfig = {
   titleKey: 'common.academyAdmin',
   icon: GraduationCap,
   href: '/membership-portal/academy-admin',
+};
+
+const newsletterAdminMenuItemConfig = {
+  titleKey: 'common.newsletterAdmin',
+  icon: Newspaper,
+  href: '/membership-portal/newsletter',
 };
 
 // Summit 2026 menu item (only for admins)
@@ -406,6 +413,11 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
     title: t(academyAdminMenuItemConfig.titleKey),
   };
 
+  const newsletterAdminMenuItem = {
+    ...newsletterAdminMenuItemConfig,
+    title: t(newsletterAdminMenuItemConfig.titleKey),
+  };
+
   // Summit Planning menu item
   const summitMenuItem = {
     titleKey: 'common.summitPlanning',
@@ -451,6 +463,7 @@ export default function MembershipPortalLayout({ children }: MembershipPortalLay
   if (userIsAdmin) {
     menuItems.push(summit2026MenuItem);
     menuItems.push(academyAdminMenuItem);
+    menuItems.push(newsletterAdminMenuItem);
     menuItems.push(adminMenuItem);
   }
 

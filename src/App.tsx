@@ -42,6 +42,9 @@ import Academy from "./pages/Academy";
 import AcademySubmitProposal from "./pages/AcademySubmitProposal";
 import AcademyWorkshop from "./pages/AcademyWorkshop";
 import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
+import NewsletterAdmin from "./pages/membership-portal/NewsletterAdmin";
+import SignalNewsletterIndex from "./pages/SignalNewsletterIndex";
+import SignalNewsletterIssue from "./pages/SignalNewsletterIssue";
 import MetricoolTestPage from "./pages/MetricoolTestPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SandboxBanner } from "@/components/SandboxBanner";
@@ -84,6 +87,8 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/interest" element={<Interest />} />
             <Route path="/newsletter" element={<Newsletter />} />
+            <Route path="/signal" element={<SignalNewsletterIndex />} />
+            <Route path="/signal/:slug" element={<SignalNewsletterIssue />} />
             <Route path="/bylaws" element={<Bylaws />} />
             <Route path="/summit2027" element={<Summit2027Sponsorship />} />
             <Route path="/academy" element={<Academy />} />
@@ -312,6 +317,18 @@ const App = () => (
                 <MembershipPortalLayout>
                   <ErrorBoundary>
                     <AcademyAdmin />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/membership-portal/newsletter"
+            element={
+              <ProtectedRoute requireAdmin>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <NewsletterAdmin />
                   </ErrorBoundary>
                 </MembershipPortalLayout>
               </ProtectedRoute>

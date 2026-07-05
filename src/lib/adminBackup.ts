@@ -36,6 +36,7 @@ export const BACKUP_TABLES = [
   'interest_submissions',
   'feedback_submissions',
   'bylaws_feedback',
+  'signal_newsletters',
   'waitlist',
 ] as const;
 
