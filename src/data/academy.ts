@@ -1,9 +1,4 @@
 import { supabase } from '@/lib/supabase';
-import {
-  ACADEMY_CATEGORIES,
-  ACADEMY_PRESENTERS,
-  ACADEMY_WORKSHOPS,
-} from './academySeed';
 import type {
   AcademyAnalytics,
   AcademyCategory,
@@ -149,11 +144,10 @@ export async function getCategories(): Promise<AcademyCategory[]> {
     .order('display_order');
 
   if (error) {
-    if (isMissingTableError(error)) return [...ACADEMY_CATEGORIES].sort((a, b) => a.displayOrder - b.displayOrder);
+    if (isMissingTableError(error)) return [];
     throw error;
   }
-  if (!data?.length) return [...ACADEMY_CATEGORIES].sort((a, b) => a.displayOrder - b.displayOrder);
-  return data.map(mapCategory);
+  return (data ?? []).map(mapCategory);
 }
 
 export async function getFeaturedPresenters(): Promise<AcademyPresenter[]> {
@@ -164,21 +158,19 @@ export async function getFeaturedPresenters(): Promise<AcademyPresenter[]> {
     .order('name');
 
   if (error) {
-    if (isMissingTableError(error)) return ACADEMY_PRESENTERS.filter((p) => p.featured);
+    if (isMissingTableError(error)) return [];
     throw error;
   }
-  if (!data?.length) return ACADEMY_PRESENTERS.filter((p) => p.featured);
-  return data.map(mapPresenter);
+  return (data ?? []).filter((row) => row.featured).map(mapPresenter);
 }
 
 export async function getAllPresenters(): Promise<AcademyPresenter[]> {
   const { data, error } = await supabase.from('academy_presenters').select('*').order('name');
   if (error) {
-    if (isMissingTableError(error)) return ACADEMY_PRESENTERS;
+    if (isMissingTableError(error)) return [];
     throw error;
   }
-  if (!data?.length) return ACADEMY_PRESENTERS;
-  return data.map(mapPresenter);
+  return (data ?? []).map(mapPresenter);
 }
 
 export async function getUpcomingWorkshops(): Promise<AcademyWorkshop[]> {
@@ -195,18 +187,10 @@ export async function getWorkshops(options?: { status?: WorkshopStatus }): Promi
 
   const { data, error } = await query;
   if (error) {
-    if (isMissingTableError(error)) {
-      let seed = [...ACADEMY_WORKSHOPS];
-      if (options?.status) seed = seed.filter((w) => w.status === options.status);
-      return seed;
-    }
+    if (isMissingTableError(error)) return [];
     throw error;
   }
-  if (!data?.length) {
-    let seed = [...ACADEMY_WORKSHOPS];
-    if (options?.status) seed = seed.filter((w) => w.status === options.status);
-    return seed;
-  }
+  if (!data?.length) return [];
 
   const [presenters, categories] = await Promise.all([getAllPresenters(), getCategories()]);
   const presenterMap = new Map(presenters.map((p) => [p.id, p]));
@@ -250,10 +234,10 @@ export async function getWorkshops(options?: { status?: WorkshopStatus }): Promi
 export async function getWorkshopBySlug(slug: string): Promise<AcademyWorkshop | null> {
   const { data, error } = await supabase.from('academy_workshops').select('*').eq('slug', slug).maybeSingle();
   if (error) {
-    if (isMissingTableError(error)) return ACADEMY_WORKSHOPS.find((w) => w.slug === slug) ?? null;
+    if (isMissingTableError(error)) return null;
     throw error;
   }
-  if (!data) return ACADEMY_WORKSHOPS.find((w) => w.slug === slug) ?? null;
+  if (!data) return null;
 
   const [presenters, categories] = await Promise.all([getAllPresenters(), getCategories()]);
   const presenter = presenters.find((p) => p.id === data.presenter_id);
