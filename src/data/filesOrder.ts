@@ -1,5 +1,6 @@
 // File order management with Supabase
 import { supabase } from '@/lib/supabase';
+import { ACADEMY_FILES_TAB_URL } from '@/lib/academyLibraryPaths';
 
 export type ResourceType = 'document' | 'spreadsheet' | 'ebook' | 'other';
 
@@ -444,7 +445,7 @@ export async function addFile(file: FileResource): Promise<void> {
 
     // Send email notifications to all users who want file notifications
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://slxai.org';
-    const fileUrl = `${baseUrl}/membership-portal/files`;
+    const fileUrl = `${baseUrl}${ACADEMY_FILES_TAB_URL}`;
     
     import('@/lib/emailNotifications').then(({ notifyAllUsers }) => {
       import('@/lib/email').then(({ sendNewFileNotification }) => {

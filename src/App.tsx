@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -14,8 +14,8 @@ import Voting from "./pages/membership-portal/Voting";
 import Discussions from "./pages/membership-portal/Discussions";
 import Resources from "./pages/membership-portal/Resources";
 import Feed from "./pages/membership-portal/Feed";
-import Files from "./pages/membership-portal/Files";
 import FileView from "./pages/membership-portal/FileView";
+import Files from "./pages/membership-portal/Files";
 import Directory from "./pages/membership-portal/Directory";
 import MemberProfile from "./pages/membership-portal/MemberProfile";
 import IndividualMemberProfile from "./pages/membership-portal/IndividualMemberProfile";
@@ -42,6 +42,7 @@ import Academy from "./pages/Academy";
 import AcademySubmitProposal from "./pages/AcademySubmitProposal";
 import AcademyWorkshop from "./pages/AcademyWorkshop";
 import AcademyAdmin from "./pages/membership-portal/AcademyAdmin";
+import PortalAcademy from "./pages/membership-portal/PortalAcademy";
 import NewsletterAdmin from "./pages/membership-portal/NewsletterAdmin";
 import SignalNewsletterIndex from "./pages/SignalNewsletterIndex";
 import SignalNewsletterIssue from "./pages/SignalNewsletterIssue";
@@ -49,6 +50,12 @@ import MetricoolTestPage from "./pages/MetricoolTestPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { SandboxBanner } from "@/components/SandboxBanner";
 import { PageTransition } from "@/components/public-design/PageTransition";
+import { academyFileViewPath } from "@/lib/academyLibraryPaths";
+
+function LegacyFileViewRedirect() {
+  const { fileId } = useParams<{ fileId: string }>();
+  return <Navigate to={academyFileViewPath(fileId ?? '')} replace />;
+}
 
 const queryClient = new QueryClient();
 
@@ -179,6 +186,18 @@ const App = () => (
             }
           />
           <Route
+            path="/membership-portal/academy/files/:fileId"
+            element={
+              <ProtectedRoute>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <FileView />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/membership-portal/files"
             element={
               <ProtectedRoute>
@@ -192,15 +211,7 @@ const App = () => (
           />
           <Route
             path="/membership-portal/files/:fileId"
-            element={
-              <ProtectedRoute>
-                <MembershipPortalLayout>
-                  <ErrorBoundary>
-                    <FileView />
-                  </ErrorBoundary>
-                </MembershipPortalLayout>
-              </ProtectedRoute>
-            }
+            element={<LegacyFileViewRedirect />}
           />
           <Route
             path="/membership-portal/directory"
@@ -313,6 +324,18 @@ const App = () => (
           <Route
             path="/membership-portal/summit-planning"
             element={<Navigate to="/membership-portal/summit-admin" replace />}
+          />
+          <Route
+            path="/membership-portal/academy"
+            element={
+              <ProtectedRoute>
+                <MembershipPortalLayout>
+                  <ErrorBoundary>
+                    <PortalAcademy />
+                  </ErrorBoundary>
+                </MembershipPortalLayout>
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/membership-portal/academy-admin"

@@ -77,9 +77,9 @@ const baseMenuItemsConfig = [
     href: '/membership-portal/voting',
   },
   {
-    titleKey: 'common.files',
-    icon: FileText,
-    href: '/membership-portal/files',
+    titleKey: 'common.academy',
+    icon: GraduationCap,
+    href: '/membership-portal/academy',
   },
   {
     titleKey: 'common.memberDirectory',

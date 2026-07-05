@@ -30,9 +30,14 @@ import { trackEvent, trackPageView } from '@/lib/analytics';
 import { supabase } from '@/lib/supabase';
 import { addNotification } from '@/lib/notifications';
 import { realtimeManager, useRealtimeUpdates } from '@/lib/realtime';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { ACADEMY_FILES_TAB_URL, academyFileViewPath } from '@/lib/academyLibraryPaths';
 
-export default function Files() {
+type MemberFilesLibraryProps = {
+  embedded?: boolean;
+};
+
+export function MemberFilesLibrary({ embedded = false }: MemberFilesLibraryProps) {
   const { toast } = useToast();
   const navigate = useNavigate();
   const user = getCurrentUser();
@@ -82,7 +87,7 @@ export default function Files() {
 
   // Track page view
   useEffect(() => {
-    trackPageView('/membership-portal/files', user?.id);
+    trackPageView(embedded ? '/membership-portal/academy' : '/membership-portal/files', user?.id);
   }, [user?.id]);
 
   // Subscribe to real-time file updates to sync with Admin panel
@@ -364,7 +369,7 @@ export default function Files() {
             title: 'New file uploaded',
             message: `${selectedFile.name} has been uploaded`,
             userId: user?.id,
-            link: '/membership-portal/files',
+            link: ACADEMY_FILES_TAB_URL,
           });
 
           await addActivity({
@@ -455,21 +460,30 @@ export default function Files() {
   };
 
   return (
-    <div className="space-y-0 md:space-y-6">
-      <PageTitle 
-        title="Files"
-        fullWidthLandscape={true}
-        rightContent={
-          <Button size="sm" className="bg-electric-blue hover:bg-blue-600 text-xs md:text-sm" onClick={handleFileUpload}>
-            <Upload className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            <span className="hidden sm:inline">Upload File</span>
-            <span className="sm:hidden">Upload</span>
+    <div className={embedded ? 'space-y-4' : 'space-y-0 md:space-y-6'}>
+      {embedded ? (
+        <div className="flex justify-end">
+          <Button size="sm" className="bg-electric-blue hover:bg-blue-600" onClick={handleFileUpload}>
+            <Upload className="mr-2 h-4 w-4" />
+            Upload File
           </Button>
-        }
-      />
+        </div>
+      ) : (
+        <PageTitle
+          title="Files"
+          fullWidthLandscape={true}
+          rightContent={
+            <Button size="sm" className="bg-electric-blue hover:bg-blue-600 text-xs md:text-sm" onClick={handleFileUpload}>
+              <Upload className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Upload File</span>
+              <span className="sm:hidden">Upload</span>
+            </Button>
+          }
+        />
+      )}
 
       {/* Files List - Grouped by Category */}
-      {isLoading ? (
+      {isLoadingFiles ? (
         <Card className="glass-card">
           <CardContent className="py-12 text-center">
             <Loader2 className="h-8 w-8 animate-spin text-electric-blue mx-auto mb-4" />
@@ -524,7 +538,7 @@ export default function Files() {
                           <div className="flex items-center gap-2 flex-wrap">
                             <h3 
                               className="font-medium text-sm text-gray-900 dark:text-white cursor-pointer hover:text-electric-blue transition-colors"
-                              onClick={() => navigate(`/membership-portal/files/${file.id}`)}
+                              onClick={() => navigate(academyFileViewPath(file.id))}
                             >
                               {file.name}
                             </h3>
@@ -550,7 +564,7 @@ export default function Files() {
                             variant="outline" 
                             size="sm" 
                             className="h-7 px-2"
-                            onClick={() => navigate(`/membership-portal/files/${file.id}`)}
+                            onClick={() => navigate(academyFileViewPath(file.id))}
                             title="View file"
                           >
                             <Eye className="h-3 w-3" />
@@ -854,5 +868,9 @@ export default function Files() {
 
     </div>
   );
+}
+
+export default function Files() {
+  return <Navigate to={ACADEMY_FILES_TAB_URL} replace />;
 }
 

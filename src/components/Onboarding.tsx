@@ -49,8 +49,8 @@ const onboardingSteps: OnboardingStep[] = [
   },
   {
     id: 5,
-    title: 'Files',
-    description: 'Access shared resources, documents, and files uploaded by members and administrators. Search for specific files and download what you need.',
+    title: 'Academy Library',
+    description: 'Browse workshops, research, datasets, videos, and member-shared files in the Academy Library under the Files tab.',
     icon: FileText,
   },
   {

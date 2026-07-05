@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase';
 import { useIsMobile, useIsLandscape } from '@/hooks/use-mobile';
 import { PageTitle } from '@/components/PageTitle';
 import { useTheme } from '@/contexts/ThemeContext';
+import { ACADEMY_FILES_TAB_URL } from '@/lib/academyLibraryPaths';
 
 export default function FileView() {
   const { fileId } = useParams<{ fileId: string }>();
@@ -29,7 +30,7 @@ export default function FileView() {
     
     const loadFile = async () => {
       if (!fileId) {
-        navigate('/membership-portal/files');
+        navigate(ACADEMY_FILES_TAB_URL);
         return;
       }
 
@@ -44,7 +45,7 @@ export default function FileView() {
             description: "The requested file could not be found.",
             variant: "destructive",
           });
-          navigate('/membership-portal/files');
+          navigate(ACADEMY_FILES_TAB_URL);
           return;
         }
         
@@ -122,7 +123,7 @@ export default function FileView() {
           description: "Failed to load file. Please try again.",
           variant: "destructive",
         });
-        navigate('/membership-portal/files');
+        navigate(ACADEMY_FILES_TAB_URL);
       } finally {
         setIsLoading(false);
       }
@@ -609,7 +610,7 @@ export default function FileView() {
         title="Files"
         leftContent={
           <Button
-            onClick={() => navigate('/membership-portal/files')}
+            onClick={() => navigate(ACADEMY_FILES_TAB_URL)}
             variant="outline"
             size="sm"
             className="gap-2 border-gray-300 text-gray-700 dark:!text-gray-900 hover:bg-gray-50 hover:text-gray-900 dark:hover:!text-gray-900 bg-white text-xs md:text-sm ml-6"
