@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { BookOpen, Database, PlayCircle, Video, FileText, Upload, ExternalLink } from 'lucide-react';
+import { BookOpen, Database, PlayCircle, FileText, Upload, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { getLibraryResourcesByType as fetchLibraryResourcesByType } from '@/data/libraryResources';
+import { getAllLibraryResources } from '@/data/libraryResources';
 import {
   LIBRARY_CONTENT_SECTIONS,
   LIBRARY_UPLOAD_SECTION,
@@ -23,14 +23,12 @@ import { LibraryMemberUploads } from '@/components/library/LibraryMemberUploads'
 import { LibraryUploadPanel } from '@/components/library/LibraryUploadPanel';
 import { LibraryVideoGrid } from '@/components/library/LibraryVideoGrid';
 import { useToast } from '@/hooks/use-toast';
-import { useRealtimeUpdates } from '@/lib/realtime';
 import { getVideoEmbedUrl } from '@/lib/videoEmbed';
 
 const CONTENT_ICONS: Record<LibraryContentType, typeof BookOpen> = {
   research: BookOpen,
   dataset: Database,
   educational_video: PlayCircle,
-  recorded_workshop: Video,
   files: FileText,
 };
 
@@ -54,65 +52,53 @@ export function LibrarySection() {
   const [files, setFiles] = useState<FileResource[]>([]);
   const [categories, setCategories] = useState<FileCategory[]>([]);
   const [legacyVideos, setLegacyVideos] = useState<LibraryEmbeddedVideo[]>([]);
-  const [curatedResources, setCuratedResources] = useState<LibraryResource[]>([]);
-  const [isLoadingFiles, setIsLoadingFiles] = useState(true);
-  const [isLoadingVideos, setIsLoadingVideos] = useState(false);
+  const [curatedByType, setCuratedByType] = useState<Partial<Record<LibraryContentType, LibraryResource[]>>>({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  const loadFiles = useCallback(async () => {
-    setIsLoadingFiles(true);
-    try {
-      const [filesData, categoriesData] = await Promise.all([getOrderedFiles(), getCategories()]);
-      setFiles(filesData);
-      setCategories(categoriesData);
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to load library uploads. Please refresh the page.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoadingFiles(false);
-    }
-  }, [toast]);
+  const loadLibraryData = useCallback(
+    async (options?: { showLoading?: boolean }) => {
+      const showLoading = options?.showLoading ?? false;
+      if (showLoading) setIsLoading(true);
+      try {
+        const [filesData, categoriesData, videosData, curatedData] = await Promise.all([
+          getOrderedFiles(),
+          getCategories(),
+          getOrderedVideos(),
+          getAllLibraryResources(),
+        ]);
 
-  const loadLegacyVideos = useCallback(async () => {
-    setIsLoadingVideos(true);
-    try {
-      const videos = await getOrderedVideos();
-      setLegacyVideos(dedupeEmbeddedVideosByUrl(videos.map(videoResourceToEmbedded)));
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'Failed to load educational videos. Please refresh the page.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoadingVideos(false);
-    }
-  }, [toast]);
+        setFiles(filesData);
+        setCategories(categoriesData);
+        setLegacyVideos(dedupeEmbeddedVideosByUrl(videosData.map(videoResourceToEmbedded)));
 
-  useEffect(() => {
-    loadFiles();
-  }, [loadFiles]);
+        const grouped: Partial<Record<LibraryContentType, LibraryResource[]>> = {};
+        for (const resource of curatedData) {
+          if (!grouped[resource.type]) grouped[resource.type] = [];
+          grouped[resource.type]!.push(resource);
+        }
+        setCuratedByType(grouped);
+      } catch {
+        toast({
+          title: 'Error',
+          description: 'Failed to load library. Please refresh the page.',
+          variant: 'destructive',
+        });
+      } finally {
+        if (showLoading) setIsLoading(false);
+      }
+    },
+    [toast],
+  );
 
   useEffect(() => {
-    if (activeTab === 'educational_video') {
-      loadLegacyVideos();
-    }
-  }, [activeTab, loadLegacyVideos]);
-
-  useEffect(() => {
-    if (activeTab === 'upload') return;
-    fetchLibraryResourcesByType(activeTab as LibraryContentType).then(setCuratedResources);
-  }, [activeTab]);
+    loadLibraryData({ showLoading: true });
+    // Load once on mount / browser refresh only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setActiveTab(tabFromUrl);
   }, [tabFromUrl]);
-
-  useRealtimeUpdates((update) => {
-    if (update.type === 'file') loadFiles();
-  }, []);
 
   const handleTabChange = (tab: LibraryTabType) => {
     setActiveTab(tab);
@@ -131,13 +117,13 @@ export function LibrarySection() {
     return (
       <div className="space-y-6">
         <TabBar tabs={allTabs} activeTab={activeTab} onChange={handleTabChange} />
-        <LibraryUploadPanel categories={categories} onUploaded={loadFiles} />
+        <LibraryUploadPanel categories={categories} onUploaded={() => loadLibraryData()} />
       </div>
     );
   }
 
   const activeSection = LIBRARY_CONTENT_SECTIONS.find((s) => s.type === activeTab)!;
-  const curated = curatedResources;
+  const curated = curatedByType[activeTab as LibraryContentType] ?? [];
   const ActiveIcon = CONTENT_ICONS[activeTab];
 
   const legacyEmbedUrls = new Set(legacyVideos.map((video) => video.embedUrl.trim().toLowerCase()));
@@ -167,17 +153,12 @@ export function LibrarySection() {
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          {activeTab === 'educational_video' && (
-            <>
-              {isLoadingVideos ? (
-                <p className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">Loading videos...</p>
-              ) : (
-                <LibraryVideoGrid
-                  videos={legacyVideos}
-                  title="Member company videos"
-                />
-              )}
-            </>
+          {activeTab === 'educational_video' && !isLoading && (
+            <LibraryVideoGrid videos={legacyVideos} title="Member company videos" />
+          )}
+
+          {activeTab === 'educational_video' && isLoading && (
+            <p className="py-6 text-center text-sm text-gray-500 dark:text-gray-400">Loading videos...</p>
           )}
 
           {curated.length > 0 && (
@@ -228,7 +209,7 @@ export function LibrarySection() {
             files={filesForTab}
             categories={categories}
             libraryType={activeTab}
-            isLoading={isLoadingFiles}
+            isLoading={isLoading}
           />
         </CardContent>
       </Card>

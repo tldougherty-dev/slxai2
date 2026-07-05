@@ -28,6 +28,24 @@ function supabaseRowToVideo(row: any): VideoResource {
   };
 }
 
+// Get videos for library admin (DB + built-in catalog so admins can always edit)
+export async function getLibraryAdminVideos(): Promise<VideoResource[]> {
+  try {
+    const dbVideos = await getVideosFromDatabase();
+    const dbUrls = new Set(dbVideos.map((v) => v.embedUrl.toLowerCase()));
+    const catalogOnly = fallbackVideos.filter((v) => !dbUrls.has(v.embedUrl.toLowerCase()));
+    return [...dbVideos, ...catalogOnly];
+  } catch {
+    return [...fallbackVideos];
+  }
+}
+
+function isVideoDbId(id: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
+}
+
+export { isVideoDbId };
+
 // Get videos stored in Supabase only (no static fallback)
 export async function getVideosFromDatabase(): Promise<VideoResource[]> {
   const { data, error } = await supabase

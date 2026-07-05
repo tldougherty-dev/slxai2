@@ -2,7 +2,6 @@ export type LibraryContentType =
   | 'research'
   | 'dataset'
   | 'educational_video'
-  | 'recorded_workshop'
   | 'files';
 
 export type LibraryTabType = LibraryContentType | 'upload';
@@ -39,11 +38,6 @@ export const LIBRARY_CONTENT_SECTIONS: {
     description: 'Curated sign language AI talks, demos, and explainers from SLxAI member companies. Members can also embed YouTube or Vimeo links.',
   },
   {
-    type: 'recorded_workshop',
-    title: 'Recorded Zoom workshops',
-    description: 'Past SLxAI Academy sessions and community workshop recordings.',
-  },
-  {
     type: 'files',
     title: 'Files',
     description: 'Member-shared documents — meeting minutes, standards, governance, and general resources.',
@@ -53,7 +47,7 @@ export const LIBRARY_CONTENT_SECTIONS: {
 export const LIBRARY_UPLOAD_SECTION = {
   type: 'upload' as const,
   title: 'Upload',
-  description: 'Share research, datasets, videos, workshop recordings, or documents with the community.',
+  description: 'Share research, datasets, videos, or documents with the community.',
 };
 
 /** Curated starter resources — expand via admin or data updates as the library grows. */
@@ -90,6 +84,17 @@ export const LIBRARY_CURATED_RESOURCES: LibraryResource[] = [
 
 export function getCuratedResourcesByType(type: LibraryContentType): LibraryResource[] {
   return LIBRARY_CURATED_RESOURCES.filter((r) => r.type === type);
+}
+
+/** Legacy uploads may still use this type — treat as educational videos. */
+export const LEGACY_RECORDED_WORKSHOP_TYPE = 'recorded_workshop' as const;
+
+export function normalizeLibraryContentType(type?: string): LibraryContentType {
+  if (type === LEGACY_RECORDED_WORKSHOP_TYPE) return 'educational_video';
+  if (type === 'research' || type === 'dataset' || type === 'educational_video' || type === 'files') {
+    return type;
+  }
+  return 'files';
 }
 
 // Backward-compatible aliases

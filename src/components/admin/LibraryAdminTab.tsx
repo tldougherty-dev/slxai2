@@ -54,8 +54,9 @@ import {
 import {
   addVideo,
   deleteVideo,
-  getVideosFromDatabase,
+  getLibraryAdminVideos,
   importCompanyVideosCatalog,
+  isVideoDbId,
   updateVideo,
   type VideoResource,
 } from '@/data/videosOrder';
@@ -68,7 +69,6 @@ const SECTION_ICONS: Record<LibraryContentType, typeof BookOpen> = {
   research: BookOpen,
   dataset: Database,
   educational_video: PlayCircle,
-  recorded_workshop: Video,
   files: FileText,
 };
 
@@ -107,7 +107,7 @@ export function LibraryAdminTab() {
         getAllLibraryResources(),
         getOrderedFiles(),
         getCategories(),
-        getVideosFromDatabase(),
+        getLibraryAdminVideos(),
       ]);
       setCurated(curatedData);
       setFiles(filesData);
@@ -260,11 +260,11 @@ export function LibraryAdminTab() {
         description: videoForm.description?.trim(),
         embedUrl: embed.embedUrl,
       };
-      const existing = videos.find((v) => v.id === payload.id);
-      if (existing) {
+      const existing = isVideoDbId(payload.id) ? videos.find((v) => v.id === payload.id) : undefined;
+      if (existing && isVideoDbId(existing.id)) {
         await updateVideo(payload.id, payload);
       } else {
-        await addVideo(payload);
+        await addVideo({ ...payload, id: crypto.randomUUID() });
       }
       setVideoDialogOpen(false);
       await loadAll();
@@ -278,6 +278,15 @@ export function LibraryAdminTab() {
 
   const confirmDeleteVideo = async () => {
     if (!videoToDelete) return;
+    if (!isVideoDbId(videoToDelete)) {
+      toast({
+        title: 'Built-in catalog video',
+        description: 'Click “Import company catalog” first, then delete the imported copy from the database.',
+        variant: 'destructive',
+      });
+      setVideoToDelete(null);
+      return;
+    }
     try {
       await deleteVideo(videoToDelete);
       setVideoToDelete(null);
@@ -399,15 +408,18 @@ export function LibraryAdminTab() {
                 </Card>
 
                 {section.type === 'educational_video' && (
-                  <Card className="glass-card">
-                    <CardHeader className="flex flex-row items-center justify-between gap-4">
+                  <Card className="glass-card border-electric-blue/30">
+                    <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <CardTitle className="text-lg">Embedded videos</CardTitle>
-                        <CardDescription>YouTube/Vimeo videos shown in the educational videos grid.</CardDescription>
+                        <CardTitle className="text-lg">Educational videos</CardTitle>
+                        <CardDescription>
+                          {videos.length} video{videos.length === 1 ? '' : 's'} — member company catalog plus any you add.
+                          Edit title, URL, or description; import to database to enable delete.
+                        </CardDescription>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         <Button variant="outline" size="sm" onClick={handleImportCompanyVideos} disabled={isSaving}>
-                          Import company catalog
+                          Import to database
                         </Button>
                         <Button size="sm" onClick={() => openVideoDialog()} className="bg-electric-blue hover:bg-electric-blue/90">
                           <Plus className="mr-2 h-4 w-4" />
@@ -418,7 +430,7 @@ export function LibraryAdminTab() {
                     <CardContent className="space-y-2">
                       {videos.length === 0 ? (
                         <p className="py-4 text-center text-sm text-gray-500">
-                          No videos in database. Import the company catalog or add a video URL.
+                          No videos found. Click Add video or Import to database.
                         </p>
                       ) : (
                         videos.map((video) => (
@@ -426,18 +438,30 @@ export function LibraryAdminTab() {
                             key={video.id}
                             className="flex items-start justify-between gap-3 rounded-lg border border-gray-200 p-3 dark:border-[hsl(217,35%,25%)]"
                           >
-                            <div className="min-w-0">
-                              <p className="font-medium text-gray-900 dark:text-white">{video.name}</p>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <p className="font-medium text-gray-900 dark:text-white">{video.name}</p>
+                                {!isVideoDbId(video.id) && (
+                                  <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+                                    Catalog
+                                  </span>
+                                )}
+                              </div>
                               <p className="truncate text-xs text-gray-500">{video.embedUrl}</p>
+                              {video.description && (
+                                <p className="mt-1 line-clamp-2 text-xs text-gray-600 dark:text-gray-300">
+                                  {video.description}
+                                </p>
+                              )}
                               {video.uploadedBy && (
                                 <p className="text-xs text-gray-400">{video.uploadedBy}</p>
                               )}
                             </div>
                             <div className="flex shrink-0 gap-1">
-                              <Button variant="ghost" size="sm" onClick={() => openVideoDialog(video)}>
+                              <Button variant="ghost" size="sm" onClick={() => openVideoDialog(video)} title="Edit">
                                 <Pencil className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="sm" onClick={() => setVideoToDelete(video.id)}>
+                              <Button variant="ghost" size="sm" onClick={() => setVideoToDelete(video.id)} title="Delete">
                                 <Trash2 className="h-4 w-4 text-red-500" />
                               </Button>
                             </div>

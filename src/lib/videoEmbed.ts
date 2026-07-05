@@ -16,7 +16,7 @@ export function isVideoEmbedUrl(url?: string | null): boolean {
   return getVideoEmbedUrl(url) !== null;
 }
 
-export const VIDEO_EMBED_LIBRARY_TYPES = ['educational_video', 'recorded_workshop'] as const;
+export const VIDEO_EMBED_LIBRARY_TYPES = ['educational_video'] as const;
 
 export function supportsVideoUrlEmbed(libraryType: string): boolean {
   return (VIDEO_EMBED_LIBRARY_TYPES as readonly string[]).includes(libraryType);

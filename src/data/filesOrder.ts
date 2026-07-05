@@ -1,7 +1,7 @@
 // File order management with Supabase
 import { supabase } from '@/lib/supabase';
 import { libraryTabUrl } from '@/lib/libraryPaths';
-import type { LibraryContentType } from '@/data/libraryData';
+import { normalizeLibraryContentType, type LibraryContentType } from '@/data/libraryData';
 
 export type ResourceType = 'document' | 'spreadsheet' | 'ebook' | 'other' | 'video' | 'dataset';
 
@@ -33,9 +33,9 @@ export function resolveFileLibraryType(
   file: Pick<FileResource, 'libraryType' | 'categoryId' | 'description'>,
   categoryName?: string,
 ): LibraryContentType {
-  if (file.libraryType) return file.libraryType;
+  if (file.libraryType) return normalizeLibraryContentType(file.libraryType);
   const fromDescription = parseFileDescription(file.description).libraryType;
-  if (fromDescription) return fromDescription;
+  if (fromDescription) return normalizeLibraryContentType(fromDescription);
 
   const name = categoryName?.toLowerCase() ?? '';
   if (name.includes('research')) return 'research';

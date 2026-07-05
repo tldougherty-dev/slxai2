@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import {
   LIBRARY_CURATED_RESOURCES,
+  normalizeLibraryContentType,
   type LibraryContentType,
   type LibraryResource,
 } from '@/data/libraryData';
@@ -9,7 +10,7 @@ function rowToResource(row: Record<string, unknown>): LibraryResource {
   const tags = row.tags;
   return {
     id: String(row.id),
-    type: row.type as LibraryContentType,
+    type: normalizeLibraryContentType(String(row.type)),
     title: String(row.title),
     description: String(row.description || ''),
     url: String(row.url),
