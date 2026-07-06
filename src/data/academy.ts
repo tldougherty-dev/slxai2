@@ -264,24 +264,20 @@ export async function getWorkshopBySlug(slug: string): Promise<AcademyWorkshop |
 }
 
 export async function submitProposal(input: SubmitProposalInput): Promise<AcademySubmission> {
-  const { data, error } = await supabase
-    .from('academy_workshop_submissions')
-    .insert({
-      title: input.title,
-      description: input.description,
-      skill_level: input.skillLevel ?? 'all_levels',
-      ai_tools: input.aiTools,
-      sign_language: input.signLanguage,
-      duration_minutes: input.durationMinutes,
-      presenter_name: input.presenterName,
-      presenter_bio: input.presenterBio,
-      presenter_organization: input.presenterOrganization ?? null,
-      contact_name: input.contactName,
-      contact_email: input.contactEmail,
-      contact_phone: input.contactPhone ?? null,
-    })
-    .select()
-    .single();
+  const { error } = await supabase.from('academy_workshop_submissions').insert({
+    title: input.title,
+    description: input.description,
+    skill_level: input.skillLevel ?? 'all_levels',
+    ai_tools: input.aiTools,
+    sign_language: input.signLanguage,
+    duration_minutes: input.durationMinutes,
+    presenter_name: input.presenterName,
+    presenter_bio: input.presenterBio,
+    presenter_organization: input.presenterOrganization ?? null,
+    contact_name: input.contactName,
+    contact_email: input.contactEmail,
+    contact_phone: input.contactPhone ?? null,
+  });
 
   if (error) {
     if (isMissingTableError(error)) {
@@ -293,22 +289,30 @@ export async function submitProposal(input: SubmitProposalInput): Promise<Academ
         submittedAt: new Date(),
       };
     }
+    if (error.code === '42501' || error.message?.includes('permission') || error.message?.includes('denied')) {
+      throw new Error(
+        `Permission denied (RLS): ${error.message}. Run activity-logs/sql/FIX_ACADEMY_RLS.sql in the Supabase SQL Editor.`,
+      );
+    }
     throw new Error(error.message);
   }
-  return mapSubmission(data);
+
+  return {
+    id: `submitted-${Date.now()}`,
+    ...input,
+    skillLevel: input.skillLevel ?? 'all_levels',
+    status: 'pending',
+    submittedAt: new Date(),
+  };
 }
 
 export async function registerForWorkshop(input: RegisterWorkshopInput): Promise<AcademyRegistration> {
-  const { data, error } = await supabase
-    .from('academy_registrations')
-    .insert({
-      workshop_id: input.workshopId,
-      name: input.name,
-      email: input.email,
-      organization: input.organization ?? null,
-    })
-    .select()
-    .single();
+  const { error } = await supabase.from('academy_registrations').insert({
+    workshop_id: input.workshopId,
+    name: input.name,
+    email: input.email,
+    organization: input.organization ?? null,
+  });
 
   if (error) {
     if (error.code === '23505') throw new Error('You are already registered for this workshop.');
@@ -322,17 +326,33 @@ export async function registerForWorkshop(input: RegisterWorkshopInput): Promise
         registeredAt: new Date(),
       };
     }
+    if (error.code === '42501' || error.message?.includes('permission') || error.message?.includes('denied')) {
+      throw new Error(
+        `Permission denied (RLS): ${error.message}. Run activity-logs/sql/FIX_ACADEMY_RLS.sql in the Supabase SQL Editor.`,
+      );
+    }
     throw new Error(error.message);
   }
 
-  await logEmail({
-    workshopId: input.workshopId,
-    recipientEmail: input.email,
-    subject: 'Workshop registration confirmed',
-    emailType: 'registration_confirmation',
-  });
+  try {
+    await logEmail({
+      workshopId: input.workshopId,
+      recipientEmail: input.email,
+      subject: 'Workshop registration confirmed',
+      emailType: 'registration_confirmation',
+    });
+  } catch {
+    // Email logging is best-effort; registration already succeeded.
+  }
 
-  return mapRegistration(data);
+  return {
+    id: `registered-${Date.now()}`,
+    workshopId: input.workshopId,
+    name: input.name,
+    email: input.email,
+    organization: input.organization,
+    registeredAt: new Date(),
+  };
 }
 
 async function logEmail(input: {
@@ -341,13 +361,14 @@ async function logEmail(input: {
   subject: string;
   emailType: EmailType;
 }): Promise<void> {
-  await supabase.from('academy_email_logs').insert({
+  const { error } = await supabase.from('academy_email_logs').insert({
     workshop_id: input.workshopId ?? null,
     recipient_email: input.recipientEmail,
     subject: input.subject,
     email_type: input.emailType,
     status: 'sent',
   });
+  if (error) throw error;
 }
 
 // Admin functions

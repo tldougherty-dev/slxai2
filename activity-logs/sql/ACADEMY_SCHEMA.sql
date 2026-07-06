@@ -133,6 +133,27 @@ CREATE TRIGGER update_academy_workshops_updated_at
   FOR EACH ROW EXECUTE FUNCTION update_academy_updated_at();
 
 -- RLS
+-- Requires check_user_is_admin() (see INTEREST_SUBMISSIONS_SCHEMA.sql or FIX_ACADEMY_RLS.sql)
+
+CREATE OR REPLACE FUNCTION get_user_email()
+RETURNS TEXT
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  user_email TEXT;
+BEGIN
+  SELECT email INTO user_email
+  FROM auth.users
+  WHERE id = auth.uid();
+
+  RETURN user_email;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION get_user_email() TO authenticated, anon;
+
 ALTER TABLE academy_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE academy_presenters ENABLE ROW LEVEL SECURITY;
 ALTER TABLE academy_workshop_submissions ENABLE ROW LEVEL SECURITY;
@@ -150,20 +171,42 @@ CREATE POLICY "Public can view workshop resources" ON academy_workshop_resources
 
 -- Anyone can submit proposals and register
 CREATE POLICY "Anyone can submit workshop proposals" ON academy_workshop_submissions FOR INSERT TO authenticated, anon WITH CHECK (true);
+CREATE POLICY "Users can view their own workshop proposals" ON academy_workshop_submissions FOR SELECT TO authenticated, anon
+  USING (contact_email = get_user_email() OR submitted_at >= NOW() - INTERVAL '5 minutes' OR check_user_is_admin());
 CREATE POLICY "Anyone can register for workshops" ON academy_registrations FOR INSERT TO authenticated, anon WITH CHECK (true);
+CREATE POLICY "Users can view their own registrations" ON academy_registrations FOR SELECT TO authenticated, anon
+  USING (email = get_user_email() OR registered_at >= NOW() - INTERVAL '5 minutes' OR check_user_is_admin());
+CREATE POLICY "Anyone can log registration emails" ON academy_email_logs FOR INSERT TO authenticated, anon
+  WITH CHECK (email_type = 'registration_confirmation');
 
 -- Admin policies (reuse check_user_is_admin if available)
 CREATE POLICY "Admins manage categories" ON academy_categories FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
 CREATE POLICY "Admins manage presenters" ON academy_presenters FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
-CREATE POLICY "Admins view submissions" ON academy_workshop_submissions FOR SELECT TO authenticated USING (check_user_is_admin());
-CREATE POLICY "Admins update submissions" ON academy_workshop_submissions FOR UPDATE TO authenticated
+CREATE POLICY "Admins manage submissions" ON academy_workshop_submissions FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
 CREATE POLICY "Admins manage workshops" ON academy_workshops FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
 CREATE POLICY "Admins manage resources" ON academy_workshop_resources FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
-CREATE POLICY "Admins view registrations" ON academy_registrations FOR SELECT TO authenticated USING (check_user_is_admin());
+CREATE POLICY "Admins manage registrations" ON academy_registrations FOR ALL TO authenticated
+  USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
 CREATE POLICY "Admins manage email logs" ON academy_email_logs FOR ALL TO authenticated
   USING (check_user_is_admin()) WITH CHECK (check_user_is_admin());
+
+-- Table grants (anon key used on public forms)
+GRANT SELECT ON academy_categories TO authenticated, anon;
+GRANT SELECT ON academy_presenters TO authenticated, anon;
+GRANT SELECT ON academy_workshops TO authenticated, anon;
+GRANT SELECT ON academy_workshop_resources TO authenticated, anon;
+GRANT INSERT ON academy_workshop_submissions TO authenticated, anon;
+GRANT INSERT ON academy_registrations TO authenticated, anon;
+GRANT INSERT ON academy_email_logs TO authenticated, anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_categories TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_presenters TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_workshop_submissions TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_workshops TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_workshop_resources TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_registrations TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON academy_email_logs TO authenticated;
