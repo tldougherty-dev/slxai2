@@ -26,24 +26,6 @@ export function AcademyPageContent({
   if (isPortal) {
     return (
       <div className="space-y-8">
-        <Card className="glass-card floating-hover border border-gray-200 dark:border-[hsl(217,35%,25%)]">
-          <CardContent className="space-y-4 p-6 text-center sm:p-8">
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              <img
-                src="/slxai-footer-logo.png"
-                alt="SLxAI"
-                className="h-10 w-auto shrink-0 dark:brightness-0 dark:invert"
-              />
-              <span className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-                Academy
-              </span>
-            </div>
-            <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-600 dark:text-gray-300 sm:text-lg">
-              {INTRO}
-            </p>
-          </CardContent>
-        </Card>
-
         <AcademyCatalogSection variant="portal" />
 
         <Card className="glass-card floating-hover border border-electric-blue/20 dark:border-electric-blue/30">
