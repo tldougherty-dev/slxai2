@@ -10,7 +10,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "cors": "^2.8.5",
-    "nodemailer": "^6.9.14",
+    "@aws-sdk/client-ses": "^3.600.0",
     "googleapis": "^140.0.0"
   }
 }
