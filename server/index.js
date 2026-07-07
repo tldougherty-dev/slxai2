@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const DEFAULT_AWS_REGION = 'us-east-1';
-const DEFAULT_FROM_EMAIL = 'SLxAI Portal <contact@slxai.org>';
+const DEFAULT_FROM_EMAIL = 'contact@slxai.org';
 
 function getTransporter() {
   const region = process.env.AWS_REGION?.trim() || DEFAULT_AWS_REGION;
