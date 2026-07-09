@@ -1,41 +1,37 @@
 import express from 'express';
 import cors from 'cors';
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
+import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const DEFAULT_AWS_REGION = 'us-east-1';
 const DEFAULT_FROM_EMAIL = 'SLxAI Portal <notifications@slxai.org>';
 
-function getSesClient() {
-  const region = process.env.AWS_REGION?.trim() || DEFAULT_AWS_REGION;
-  const accessKeyId = process.env.AWS_ACCESS_KEY_ID?.trim();
-  const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY?.trim();
-  if (!accessKeyId || !secretAccessKey) return null;
-  return new SESClient({ region, credentials: { accessKeyId, secretAccessKey } });
+function getTransporter() {
+  const host = process.env.SMTP_HOST?.trim();
+  const port = parseInt(process.env.SMTP_PORT?.trim() || '587', 10);
+  const user = process.env.SMTP_USER?.trim();
+  const pass = process.env.SMTP_PASSWORD?.trim();
+  if (!host || !user || !pass) return null;
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
 }
 
 async function sendTransactionalEmail({ to, subject, html, from }) {
-  const client = getSesClient();
-  if (!client) {
-    throw new Error('Email service not configured. Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.');
+  const transporter = getTransporter();
+  if (!transporter) {
+    throw new Error('Email service not configured. Set SMTP_HOST, SMTP_USER and SMTP_PASSWORD.');
   }
   const fromHeader = (from || process.env.SES_FROM_EMAIL?.trim() || DEFAULT_FROM_EMAIL).trim();
-  const result = await client.send(
-    new SendEmailCommand({
-      Source: fromHeader,
-      Destination: { ToAddresses: [to] },
-      Message: {
-        Subject: { Data: subject, Charset: 'UTF-8' },
-        Body: { Html: { Data: html, Charset: 'UTF-8' } },
-      },
-    }),
-  );
-  if (!result.MessageId) throw new Error('SES did not return a message id.');
-  return { messageId: result.MessageId };
+  const info = await transporter.sendMail({ from: fromHeader, to, subject, html });
+  if (!info.messageId) throw new Error('SMTP server did not return a message id.');
+  return { messageId: info.messageId };
 }
 
 app.post('/api/send-email', async (req, res) => {
@@ -51,11 +47,10 @@ app.post('/api/send-email', async (req, res) => {
     const { messageId } = await sendTransactionalEmail({ to, subject, html, from });
     return res.status(200).json({ success: true, id: messageId });
   } catch (error) {
-    console.error('SES error:', error);
+    console.error('SMTP error:', error);
     return res.status(500).json({
       error: 'Failed to send email',
       details: error.message || 'Unknown error',
-      help: "Verify the From address and domain in Amazon SES (sandbox: only verified recipients).",
     });
   }
 });
