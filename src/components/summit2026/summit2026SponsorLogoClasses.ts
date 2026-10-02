@@ -47,6 +47,7 @@ export function getSummitSponsorMarqueeLogoClasses(name: string): string {
     n.includes('360 direct access') ||
     n.includes('nagish') ||
     n.includes('sorenson') ||
+    n.includes('open mind') ||
     n.includes('tcs') ||
     n.includes('mcdhh') ||
     n.includes('avocado')

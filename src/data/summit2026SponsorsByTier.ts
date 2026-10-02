@@ -111,6 +111,11 @@ export const SUMMIT_2026_SPONSORS_BY_TIER: Summit2026SponsorTierGroup[] = [
         url: 'https://sorenson.com',
         logo: '/sponsors/sorenson.png',
       },
+      {
+        name: 'Open Mind Software',
+        url: 'https://www.openmind-sw.de',
+        logo: '/sponsors/open-mind-software.png',
+      },
     ],
   },
   {
