@@ -49,8 +49,7 @@ export function getSummitSponsorMarqueeLogoClasses(name: string): string {
     n.includes('sorenson') ||
     n.includes('open mind') ||
     n.includes('tcs') ||
-    n.includes('mcdhh') ||
-    n.includes('avocado')
+    n.includes('mcdhh')
   ) {
     return 'max-h-56 md:max-h-64';
   }

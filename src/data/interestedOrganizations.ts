@@ -15,7 +15,6 @@ const RAW: InterestedOrgRow[] = [
   { name: 'Gallaudet University', country: 'USA', code: 'us' },
   { name: 'American Corner of Zinder/Maradi', country: 'Niger', code: 'ne' },
   { name: 'ASL Nexus Company', country: 'United States', code: 'us' },
-  { name: 'AvocadoWeb Services', country: 'USA', code: 'us' },
   { name: 'Birnbaum Interpreting Services', country: 'USA', code: 'us' },
   { name: 'Cisco Systems', country: 'USA', code: 'us' },
   { name: 'Clear View Innovations', country: 'USA', code: 'us' },

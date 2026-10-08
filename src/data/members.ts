@@ -654,18 +654,6 @@ export const members: Member[] = [
     ]
   },
   {
-    id: '51',
-    organizationName: 'AvocadoWeb Services LLC',
-    country: 'USA',
-    pocName: 'Joseph Brzezowski',
-    pocEmail: 'joseph@avocadoweb.net',
-    pocTitle: 'Voting Representative',
-    memberCount: 1,
-    members: [
-      { id: '51-1', name: 'Joseph Brzezowski', email: 'joseph@avocadoweb.net', isVotingRep: true }
-    ]
-  },
-  {
     id: '52',
     organizationName: 'Cisco systems',
     country: 'USA',

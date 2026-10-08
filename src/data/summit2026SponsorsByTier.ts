@@ -47,11 +47,6 @@ export const SUMMIT_2026_SPONSORS_BY_TIER: Summit2026SponsorTierGroup[] = [
     tierLabel: 'Gold Sponsors',
     sponsors: [
       {
-        name: 'AvocadoWeb Services',
-        url: 'https://avocadoweb.net',
-        logo: '/sponsors/avocadoweb-services.png',
-      },
-      {
         name: 'Microsoft',
         url: 'https://www.microsoft.com',
         logo: '/sponsors/microsoft.png',

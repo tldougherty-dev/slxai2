@@ -12,7 +12,6 @@ const MAX_LOGIN_ATTEMPTS = 5; // Max 5 attempts per window
 /** Emails exempt from client-side login attempt limits (lowercase). */
 const RATE_LIMIT_EXEMPT_EMAILS = new Set([
   'andy@glwmax.com',
-  'joseph@avocadoweb.net',
 ]);
 
 function normalizeId(identifier: string): string {

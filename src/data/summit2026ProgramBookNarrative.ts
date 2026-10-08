@@ -41,12 +41,6 @@ export type Summit2026CommitteeMember = {
 };
 
 export const SUMMIT_2026_COMMITTEE_MEMBERS: Summit2026CommitteeMember[] = [
-  {
-    name: 'Joseph Brzezowski',
-    organization: 'AvocadoWeb Services',
-    photoUrl: '/summit-2026/photos/joseph-brzezowski.png',
-    photoImgClassName: 'origin-top scale-[1.38] object-[66%_0]',
-  },
   { name: 'Dr. Naomi Caselli', organization: 'Boston University', photoUrl: '/summit-2026/photos/naomi-caselli.png' },
   { name: 'Travis Dougherty', organization: 'Signapse', photoUrl: '/summit-2026/photos/travis-dougherty.png' },
   { name: 'Molly Glass', organization: 'Kara Technologies', photoUrl: '/summit-2026/photos/molly-glass.png' },
